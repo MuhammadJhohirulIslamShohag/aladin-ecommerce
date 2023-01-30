@@ -1,6 +1,9 @@
 import React from "react";
 
-const CustomButton = ({ children, className }) => {
+const CustomButton = ({ children, className }:{
+    children:React.ReactNode,
+    className: string
+}) => {
     return (
         <div>
             <button
