@@ -9,7 +9,23 @@ module.exports = {
         "./src/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
+        screens: {
+            sm: { max: "767px" },
+            md: { min: "768px", max: "991px" },
+            lg: { min: "992px", max: "1200px" },
+        },
         extend: {},
     },
-    plugins: [],
+    daisyui: {
+        themes: [
+            {
+                sellerTheme: {
+                    primary: "#000000",
+                    secondary: "#F2F2F2",
+                    accent: "#FFFFFF",
+                },
+            },
+        ],
+    },
+    plugins: [require("daisyui")],
 };

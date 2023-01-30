@@ -1,6 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Payment from "../../../assets/footer/2.png";
+import Link from 'next/link';
+import Image from 'next/image';
+import Payment from "../../../public/images/footer/payment.png";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { BsTwitter } from "react-icons/bs";
 
@@ -11,7 +12,7 @@ const Footer = () => {
                 <footer className="grid gap-7 grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 p-10 sm:p-5 text-base-content">
                     <div>
                         <Link
-                            to="/"
+                            href="/"
                             className="text-success italic font-bold text-4xl lg:text-3xl sm:text-3xl cursor-pointer"
                         >
                             <span className="mb-2">BdSellerComputer</span>
@@ -28,7 +29,7 @@ const Footer = () => {
                         </div>
                         <div className="mt-1">
                             <Link
-                                to="/blogs"
+                                href="/blogs"
                                 className="link block text-primary link-hover hover:text-success transition ease-in-out delay-15"
                             >
                                 Blogs
@@ -41,13 +42,13 @@ const Footer = () => {
                         </div>
                         <div className="mt-1">
                             <Link
-                                to=""
+                                href=""
                                 className="link block text-primary link-hover hover:text-success transition ease-in-out delay-15"
                             >
                                 Privacy Policy
                             </Link>
                             <Link
-                                to=""
+                                href=""
                                 className="link block text-primary link-hover hover:text-success transition ease-in-out delay-15"
                             >
                                 Terms & Conditions
@@ -78,18 +79,18 @@ const Footer = () => {
                     </div>
                 </footer>
                 <footer className="footer px-10 py-4 border-t bg-secondary text-primary border-base-300 flex justify-around sm:block cursor-pointer">
-                    <img src={Payment} alt="" />
+                    <Image src={Payment} alt="" />
                     <div className="flex sm:mt-2 sm:justify-center">
-                        <Link to="">
+                        <Link href="">
                             <FaFacebookF className="text-xl hover:text-success transition ease-in-out delay-15" />
                         </Link>
-                        <Link to="">
+                        <Link href="">
                             <BsTwitter className="text-xl hover:text-success transition ease-in-out delay-15" />
                         </Link>
-                        <Link to="">
+                        <Link href="">
                             <FaInstagram className="text-xl hover:text-success transition ease-in-out delay-15" />
                         </Link>
-                        <Link to="">
+                        <Link href="">
                             <FaLinkedinIn className="text-xl hover:text-success transition ease-in-out delay-15" />
                         </Link>
                     </div>
