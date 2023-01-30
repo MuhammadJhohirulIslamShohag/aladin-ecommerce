@@ -1,7 +1,6 @@
 import React from "react";
 import Link from 'next/link';
 import Image from 'next/image';
-import Payment from "../../../public/images/footer/payment.png";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { BsTwitter } from "react-icons/bs";
 
@@ -79,7 +78,7 @@ const Footer = () => {
                     </div>
                 </footer>
                 <footer className="footer px-10 py-4 border-t bg-secondary text-primary border-base-300 flex justify-around sm:block cursor-pointer">
-                    <Image src={Payment} alt="" />
+                    <Image src={"/static/images/footer/payment.png"} alt="" />
                     <div className="flex sm:mt-2 sm:justify-center">
                         <Link href="">
                             <FaFacebookF className="text-xl hover:text-success transition ease-in-out delay-15" />

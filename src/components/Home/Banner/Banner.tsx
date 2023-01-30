@@ -1,12 +1,10 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper";
-import BannerImg from "../../../public/images/banner/laptop.jpg";
-import BannerImg1 from "../../../public/images/banner/laptop1Banner.jpg";
-import "swiper/css/pagination";
+import { Navigation, Pagination } from "swiper";
 import "swiper/css/navigation";
-import CustomButton from './../UI/CustomButton/CustomButton';
-
+import "swiper/css/pagination";
+import CustomButton from "../../UI/CustomButton/CustomButton";
+import { Swiper, SwiperSlide } from "swiper/react";
+// import BannerImg from "/static/images/banner/laptop.jpg";
+// import BannerImg1 from "/static/images/banner/laptop1Banner.jpg";
 
 const Banner = () => {
     return (
@@ -24,7 +22,7 @@ const Banner = () => {
             >
                 <SwiperSlide>
                     <div
-                        style={{ backgroundImage: `url(${BannerImg.src})` }}
+                        style={{ backgroundImage: `url(/static/images/banner/laptop.jpg)` }}
                         className="bg-contain md:bg-cover sm:bg-cover z-20 bg-no-repeat bg-left md:bg-center w-full h-[444px] sm:h-[380px] flex items-center justify-center"
                     >
                         <div className="text-center">
@@ -42,7 +40,7 @@ const Banner = () => {
                 </SwiperSlide>
                 <SwiperSlide>
                     <div
-                        style={{ backgroundImage: `url(${BannerImg1.src})` }}
+                        style={{ backgroundImage: `url(/static/images/banner/laptop1Banner.jpg)` }}
                         className="bg-contain md:bg-cover sm:bg-cover z-20 bg-no-repeat bg-left md:bg-center w-full h-[444px] sm:h-[380px] flex items-center justify-center"
                     >
                         <div className="text-center">

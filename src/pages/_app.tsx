@@ -1,7 +1,12 @@
+import "@/styles/globals.css";
 import "swiper/swiper.min.css";
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app";
+import StoreContextProvider from "./../lib/contexts/StoreContextProvider";
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+    return (
+        <StoreContextProvider>
+            <Component {...pageProps} />
+        </StoreContextProvider>
+    );
 }

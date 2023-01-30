@@ -6,7 +6,22 @@ import {
 
 export const initialState: StoreDataType = {
     user: null,
+    carts: [],
 };
+
+//  to add data from window local storage to the initial state
+if (typeof window !== "undefined") {
+    if (window.localStorage.getItem("carts")) {
+        // checking already carts to the window localStorage
+        let cartsFromLocalStorage: string | null =
+            window.localStorage.getItem("carts");
+        if (cartsFromLocalStorage !== null) {
+            initialState.carts = JSON.parse(cartsFromLocalStorage);
+        }
+    } else {
+        initialState.carts = [];
+    }
+}
 
 export const storeReducer = (
     state: StoreDataType = initialState,
@@ -17,6 +32,11 @@ export const storeReducer = (
             return { ...state, user: action.payload };
         case StoreActionType.LOGOUT_USER:
             return { ...state, user: action.payload };
+        case StoreActionType.ADD_TO_CART:
+            return {
+                ...state,
+                carts: action.payload,
+            };
         default:
             return state;
     }

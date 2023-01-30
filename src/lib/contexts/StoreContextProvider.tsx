@@ -1,28 +1,26 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from "react";
+import { StoreContextType } from "./StoreContext.type";
 import {
     storeReducer,
     initialState,
 } from "../states/storeReducer/storeReducer";
-import {
-    StoreDataType,
-    StoreAction,
-} from "../states/storeReducer/storeReducer.type";
 
-const StoreContext = createContext(null);
+const StoreContext = createContext<StoreContextType | null>(null);
 
-const StoreContextProvider = () => {
+export const useStoreContext = () => {
+    return useContext(StoreContext) as StoreContextType;
+};
+
+const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(storeReducer, initialState);
 
-    const values:
-        | {
-              state: StoreDataType;
-              dispatch: React.Dispatch<StoreAction>;
-          }
-        | any = {
+    const values = {
         state,
         dispatch,
     };
-    return <StoreContext.Provider value={values}></StoreContext.Provider>;
+    return (
+        <StoreContext.Provider value={values}>{children}</StoreContext.Provider>
+    );
 };
 
 export default StoreContextProvider;
