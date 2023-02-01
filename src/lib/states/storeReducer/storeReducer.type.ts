@@ -6,9 +6,10 @@ export enum StoreActionType {
 
 interface UserType {
     email: string;
-    name: string;
+    fullName: string;
     role: string;
     token: string;
+    image:string;
     _id: string;
 }
 interface CartType {

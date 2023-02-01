@@ -3,8 +3,10 @@ import React, {
     useContext,
     useEffect,
     useState,
-    useReducer,
+    useReducer
 } from "react";
+import app from "./../../firebase/firebase.config";
+
 import {
     sendSignInLinkToEmail,
     signInWithEmailLink,
@@ -15,44 +17,53 @@ import {
     signOut,
     updateProfile,
     sendPasswordResetEmail,
-    updatePassword,
-    User,
-    GoogleAuthProvider,
+    updatePassword
 } from "firebase/auth";
-import { ActionConfigType, StoreContextType } from "./StoreContext.type";
-import {
-    storeReducer,
-    initialState,
-} from "../states/storeReducer/storeReducer";
-import firebaseApp from "../config/firebase/firebase.config";
-import { StoreActionType } from "../states/storeReducer/storeReducer.type";
 
-const StoreContext = createContext<StoreContextType | null>(null);
-const auth = getAuth(firebaseApp);
+const AuthContext = createContext();
+const auth = getAuth(app);
 
-export const useStoreContext = () => {
-    return useContext(StoreContext) as StoreContextType;
+export const useAuth = () => {
+    return useContext(AuthContext);
 };
 
-const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
-    const [state, dispatch] = useReducer(storeReducer, initialState);
+const authUserReducer = (state, action) => {
+    switch (action.type) {
+        case "LOGGED_IN_USER":
+            // const a = {...state, user:action.payload}
+            // console.log(a,"abc")
+            return { ...state, user: action.payload };
+        default:
+            return state;
+    }
+};
+
+const initialState = {
+    user: null,
+};
+
+const AuthProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(authUserReducer, initialState);
     const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            setUser(currentUser);
+            let user = auth.currentUser;
             if (currentUser) {
-                const idTokenResult = await currentUser.getIdTokenResult();
+                const idTokenResult = await user.getIdTokenResult();
                 dispatch({
-                    type: StoreActionType.LOGGED_IN_USER,
+                    type: "LOGGED_IN_USER",
                     payload: {
                         token: idTokenResult.token,
                         fullName: currentUser.displayName,
                         email: currentUser.email,
                     },
-                });
+                })
             } else {
                 dispatch({
-                    type: StoreActionType.LOGOUT_USER,
+                    type: "LOGGED_IN_USER",
                     payload: null,
                 });
             }
@@ -63,44 +74,38 @@ const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
         };
     }, []);
 
-    const sendForSignInLinkToEmail = (
-        email: string,
-        actionCodeSettings: ActionConfigType
-    ) => {
+    const sendForSignInLinkToEmail = (email, actionCodeSettings) => {
         setLoading(true);
         return sendSignInLinkToEmail(auth, email, actionCodeSettings);
-        
     };
 
-    const createUser = (email: string, location: string) => {
+    const createUser = (email, location) => {
         setLoading(true);
         return signInWithEmailLink(auth, email, location);
     };
 
-    const userProfileUpdate = (profile: any) => {
+    const userProfileUpdate = (profile) => {
         setLoading(true);
-        return updateProfile(auth.currentUser as User, profile);
+        return updateProfile(auth.currentUser, profile);
     };
-    const loginWithEmailAndPassword = (email: string, password: string) => {
+    const loginWithEmailAndPassword = (email, password) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     };
 
-    const registerAndLoginWithProvider = (provider: GoogleAuthProvider) => {
+    const registerAndLoginWithProvider = (provider) => {
         setLoading(true);
         return signInWithPopup(auth, provider);
     };
-    const forgotPassword = (email: string, actionCodeSettings: any) => {
+    const forgotPassword = (email, actionCodeSettings) => {
         setLoading(true);
         return sendPasswordResetEmail(auth, email, actionCodeSettings);
-    };
+    }
 
-    const updateThePassword = (newPassword: string) => {
+    const updateThePassword = (newPassword) => {
         setLoading(true);
-        if (auth.currentUser !== null) {
-            return updatePassword(auth.currentUser, newPassword);
-        }
-    };
+        return updatePassword(auth.currentUser, newPassword);
+    }
 
     const logOut = () => {
         setLoading(true);
@@ -108,23 +113,26 @@ const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const values = {
+        user,
+        setUser,
+        auth,
+        loading,
         state,
         dispatch,
-        auth,
-        setLoading,
-        loading,
         sendForSignInLinkToEmail,
         userProfileUpdate,
+        setLoading,
         createUser,
         logOut,
         loginWithEmailAndPassword,
         registerAndLoginWithProvider,
         forgotPassword,
-        updateThePassword,
+        updateThePassword
     };
+
     return (
-        <StoreContext.Provider value={values}>{children}</StoreContext.Provider>
+        <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
     );
 };
 
-export default StoreContextProvider;
+export default AuthProvider;
