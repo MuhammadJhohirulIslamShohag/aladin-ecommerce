@@ -1,7 +1,18 @@
 import React from "react";
 import Link from "next/link";
+import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import { useRouter } from "next/router";
 
 const NavbarMiddle: React.FC = (): JSX.Element => {
+    const { state, logOut } = useStoreContext();
+    const { user } = state;
+    const router = useRouter();
+    const handleLogOut = () => {
+        logOut().then(()=> {
+            // Clear email from storage.
+            window.localStorage.removeItem("accountInfo");
+        }).catch(error=> console.log(error))
+    }
     const menuListItem = () => {
         return (
             <>
@@ -90,25 +101,34 @@ const NavbarMiddle: React.FC = (): JSX.Element => {
             </div>
             <div className="navbar-end md:hidden sm:hidden">
                 <ul className="menu flex flex-row">
-                    <li>
-                        <Link
-                            className="text-primary hover:bg-transparent hover:text-success text-lg"
-                            href="/login"
-                        >
-                            Login
-                        </Link>{" "}
-                    </li>
-                    <li className="text-primary hover:bg-transparent flex items-center justify-center">
-                        or
-                    </li>
-                    <li>
-                        <Link
-                            className="text-primary hover:bg-transparent hover:text-success text-lg"
-                            href="/register"
-                        >
-                            Register
-                        </Link>
-                    </li>
+                    {user !== null && user.email ? (
+                       <li onClick={handleLogOut} className="text-primary hover:bg-transparent hover:text-success text-lg cursor-pointer">
+                       LogOut
+                   </li>
+                    ) : (
+                        <>
+                        <li>
+                            <label
+                                className="text-primary hover:bg-transparent hover:text-success text-lg"
+                                onClick={() => router.push("/login")}
+                            >
+                                Login
+                            </label>{" "}
+                        </li>
+                        <li className="text-primary hover:bg-transparent flex items-center justify-center">
+                            or
+                        </li>
+                        <li>
+                            <label
+                                className="text-primary hover:bg-transparent hover:text-success text-lg"
+                                onClick={() => router.push("/register")}
+                            >
+                                Register
+                            </label>
+                        </li>
+                    </>
+                        
+                    )}
                 </ul>
             </div>
         </div>

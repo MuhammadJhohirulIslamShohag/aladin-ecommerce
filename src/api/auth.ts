@@ -1,36 +1,36 @@
 import axios from "axios";
 import { ICurrentUser } from "types/user.type";
 
-export const createOrUpdateUser = async (authToken:string, userData:ICurrentUser) => {
+export const createOrUpdateUser = async (token:string, userData:ICurrentUser) => {
     return await axios.post(
-        `${process.env.REACT_APP_API_URL}/create-or-update-user`,
+        `${process.env.NEXT_PUBLIC_server_api}/create-or-update-user`,
         {...userData},
         {
             headers: {
-                authToken,
+                token,
             },
         }
     );
 };
 
-export const currentUser = async (authToken:string) => {
+export const currentUser = async (token:string) => {
     return await axios.post(
-        `${process.env.REACT_APP_API_URL}/current-user`,
+        `${process.env.NEXT_PUBLIC_server_api}/current-user`,
         {},
         {
             headers: {
-                authToken,
+                token,
             },
         }
     );
 };
-export const adminUser = async (authToken:string) => {
+export const adminUser = async (token:string) => {
     return await axios.post(
-        `${process.env.REACT_APP_API_URL}/admin-user`,
+        `${process.env.NEXT_PUBLIC_server_api}/admin-user`,
         {},
         {
             headers: {
-                authToken,
+                token,
             },
         }
     );

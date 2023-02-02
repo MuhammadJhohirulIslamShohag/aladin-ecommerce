@@ -25,6 +25,32 @@
     right: 50px !important;
 }
 
+.firebaseui-container {
+    width: 100%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center !important;
+    top: 69px !important;
+}
+
+.firebaseui-subtitle, .firebaseui-title {
+    color: rgb(83 173 76 / 87%) !important;
+    text-align: center !important;
+}
+.mdl-button--raised.mdl-button--colored:active {
+    background-color: rgb(0 0 0 / 10%) !important;
+    color: #000 !important;
+}
+.mdl-button--raised.mdl-button--colored:hover {
+    background-color: transparent;
+    color: #000;
+}
+.mdl-button--raised.mdl-button--colored {
+    background: #050505 !important;
+    color: hsl(0deg 0% 100% / 90%);
+}
+
+
 /* Start Small Devices */
 @media only screen and (max-width: 767px) {
     .swiper-button-prev {

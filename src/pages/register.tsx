@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import { createOrUpdateUser } from "@/api/auth";
+import FormGroup from "@/components/Form/FormGroup";
 
 type FormValues = {
     email: string;
@@ -18,7 +19,12 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    const { state, dispatch, registerAndLoginWithProvider, sendForSignInLinkToEmail } = useStoreContext();
+    const {
+        state,
+        dispatch,
+        registerAndLoginWithProvider,
+        sendForSignInLinkToEmail,
+    } = useStoreContext();
     const { user } = state;
     const googleProvider = new GoogleAuthProvider();
     const {
@@ -34,10 +40,10 @@ const Register = () => {
         }
     }, [user]);
 
-    const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const submitHandler: SubmitHandler<FormValues> = async (data) => {
         const { email } = data;
         const actionCodeSettings = {
-            url: process.env.REACT_APP_REGISTER_REDIRECT_URL!,
+            url: process.env.NEXT_PUBLIC_REGISTER_REDIRECT_URL!,
             handleCodeInApp: true,
         };
         setLoading(true);
@@ -52,6 +58,7 @@ const Register = () => {
                 setLoading(false);
                 //clear state
                 reset();
+                console.log(email, "down");
             })
             .catch((error) => {
                 toast.error(
@@ -59,16 +66,20 @@ const Register = () => {
                 );
                 setLoading(false);
             });
+        console.log(actionCodeSettings, "down");
     };
 
-    const handleSignUpWithProvider = (event:React.MouseEvent<HTMLButtonElement, MouseEvent>, providerName:string) => {
+    const handleSignUpWithProvider = (
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+        providerName: string
+    ) => {
         event.preventDefault();
         if (providerName === "google") {
             popupForSignInProvider(googleProvider);
         }
     };
 
-    const popupForSignInProvider =  async (provider:GoogleAuthProvider) => {
+    const popupForSignInProvider = async (provider: GoogleAuthProvider) => {
         registerAndLoginWithProvider(provider)
             .then(async (result) => {
                 const user = result.user;
@@ -90,6 +101,7 @@ const Register = () => {
                                 email: res.data.fullName.email,
                                 token: idTokenResult.token,
                                 image: res.data.image.url,
+                                _id: res.data._id,
                             },
                         });
                         router.push("/");
@@ -97,8 +109,6 @@ const Register = () => {
                     .catch((error) => {
                         console.log(error);
                     });
-
-               
             })
             .catch((error) => {
                 toast.error(error?.message);
@@ -109,22 +119,24 @@ const Register = () => {
     };
 
     const registerForm = () => (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <label htmlFor="email">email</label>
-            <input
-                id="email"
-                {...register("email", {
-                    required: "required",
+        <form onSubmit={handleSubmit(submitHandler)}>
+            <FormGroup
+                register={register}
+                inputName={"email"}
+                labelName={"Email"}
+                isRequirePattern={true}
+                requirePattern={{
+                    required: "Email is required",
                     pattern: {
                         value: /\S+@\S+\.\S+/,
                         message: "Entered value does not match email format",
                     },
-                })}
-                type="email"
-                placeholder="Enter Your Email"
-                className="input input-bordered input-success w-full text-primary"
+                }}
+                errorField={errors.email}
+                inputType={"email"}
+                placeholder={"Please Enter Your Email"}
+                required="Email is required"
             />
-            {errors.email && <span role="alert">{errors.email.message}</span>}
             <button
                 type="submit"
                 className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
@@ -138,7 +150,7 @@ const Register = () => {
         <div className="container my-14 sm:my-8">
             <div className="w-[560px] sm:w-[280px] m-auto p-8 sm:p-4 bg-secondary rounded-lg">
                 <h2 className="text-center font-medium text-primary text-2xl">
-                    Login Now!
+                    Register Now!
                 </h2>
                 <div className="space-y-2 mt-4">
                     <button
@@ -155,10 +167,20 @@ const Register = () => {
                 {registerForm()}
                 <hr className="my-4"></hr>
                 <p className="text-primary">
-                    If You Do Not Have Account?{" "}
-                    <Link className="text-success" href="/register">
-                        Register Now
-                    </Link>
+                    If You Have Account?{" "}
+                    <label
+                        className="mr-2 text-success cursor-pointer"
+                        onClick={() => router.push("/login")}
+                    >
+                        Login Now
+                    </label>
+                    Or
+                    <label
+                        className="ml-2 text-success cursor-pointer"
+                        onClick={() => router.push("/")}
+                    >
+                       Back Home
+                    </label>
                 </p>
             </div>
         </div>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {
     createContext,
     useContext,
@@ -37,19 +38,37 @@ export const useStoreContext = () => {
 const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(storeReducer, initialState);
     const [loading, setLoading] = useState(true);
-
+    console.log(state.user, "up");
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
                 const idTokenResult = await currentUser.getIdTokenResult();
-                dispatch({
-                    type: StoreActionType.LOGGED_IN_USER,
-                    payload: {
-                        token: idTokenResult.token,
-                        fullName: currentUser.displayName,
-                        email: currentUser.email,
-                    },
-                });
+                //  to add data from window local storage to the initial state
+                if (typeof window !== "undefined") {
+                    if (window.localStorage.getItem("accountInfo")) {
+                        // checking already carts to the window localStorage
+                        let accountInfoFromLocalStorage: string | null =
+                            window.localStorage.getItem("accountInfo");
+                        if (accountInfoFromLocalStorage !== null) {
+                            dispatch({
+                                type: StoreActionType.LOGGED_IN_USER,
+                                payload: JSON.parse(
+                                    accountInfoFromLocalStorage
+                                ),
+                            });
+                        }
+                    } else {
+                        dispatch({
+                            type: StoreActionType.LOGGED_IN_USER,
+                            payload: {
+                                ...state.user,
+                                token: idTokenResult.token,
+                                fullName: currentUser.displayName,
+                                email: currentUser.email,
+                            },
+                        });
+                    }
+                }
             } else {
                 dispatch({
                     type: StoreActionType.LOGOUT_USER,
@@ -69,7 +88,6 @@ const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
     ) => {
         setLoading(true);
         return sendSignInLinkToEmail(auth, email, actionCodeSettings);
-        
     };
 
     const createUser = (email: string, location: string) => {
@@ -90,7 +108,10 @@ const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
         setLoading(true);
         return signInWithPopup(auth, provider);
     };
-    const forgotPassword = (email: string, actionCodeSettings: any) => {
+    const forgotPassword = (
+        email: string,
+        actionCodeSettings: ActionConfigType
+    ) => {
         setLoading(true);
         return sendPasswordResetEmail(auth, email, actionCodeSettings);
     };

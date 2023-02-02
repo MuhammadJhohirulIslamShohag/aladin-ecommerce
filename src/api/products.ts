@@ -1,13 +1,13 @@
 import axios from "axios";
 
 // for creating product
-export const createProduct = async (authToken: string, productObject: any) => {
+export const createProduct = async (token: string, productObject: any) => {
     return await axios.post(
         `${process.env.NEXT_PUBLIC_server_api}/product`,
         productObject,
         {
             headers: {
-                authToken,
+                token,
             },
         }
     );
@@ -39,7 +39,7 @@ export const getProduct = async (slug: any) => {
 
 // for update product
 export const updateProduct = async (
-    authToken: string,
+    token: string,
     slug: any,
     updateProducts: any
 ) => {
@@ -48,19 +48,19 @@ export const updateProduct = async (
         updateProducts,
         {
             headers: {
-                authToken,
+                token,
             },
         }
     );
 };
 
 // for removing product
-export const deleteProduct = async (authToken: string, slug: any) => {
+export const deleteProduct = async (token: string, slug: any) => {
     return await axios.delete(
         `${process.env.NEXT_PUBLIC_server_api}/products/${slug}`,
         {
             headers: {
-                authToken,
+                token,
             },
         }
     );
@@ -68,7 +68,7 @@ export const deleteProduct = async (authToken: string, slug: any) => {
 
 // for ratings  product
 export const productRating = async (
-    authToken: string,
+    token: string,
     productId: any,
     star: any
 ) => {
@@ -77,7 +77,7 @@ export const productRating = async (
         { star },
         {
             headers: {
-                authToken,
+                token,
             },
         }
     );
