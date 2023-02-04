@@ -7,6 +7,7 @@ import {
 export const initialState: StoreDataType = {
     user: null,
     carts: [],
+    text: "",
 };
 
 //  to add data from window local storage to the initial state
@@ -37,6 +38,8 @@ export const storeReducer = (
                 ...state,
                 carts: action.payload,
             };
+        case StoreActionType.SEARCH_FILTER_VALUE:
+            return { ...state, text: action.payload };
         default:
             return state;
     }

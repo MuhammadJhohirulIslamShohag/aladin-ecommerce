@@ -2,7 +2,7 @@ import FormGroup from "@/components/Form/FormGroup";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { useStoreContext } from '../lib/contexts/StoreContextProvider';
+import { useStoreContext } from '../../lib/contexts/StoreContextProvider';
 
 type FormValues = {
     password: string;

@@ -2,6 +2,7 @@ export enum StoreActionType {
     LOGGED_IN_USER = "LOGGED_IN_USER",
     LOGOUT_USER = "LOGOUT_USER",
     ADD_TO_CART = "ADD_TO_CART",
+    SEARCH_FILTER_VALUE = "SEARCH_FILTER_VALUE",
 }
 
 interface UserType {
@@ -9,7 +10,7 @@ interface UserType {
     fullName: string;
     role: string;
     token: string;
-    image:string;
+    image: string;
     _id: string;
 }
 interface CartType {
@@ -18,11 +19,12 @@ interface CartType {
     images: string;
     description: string;
     quantity: number | string;
-};
+}
 
 export type StoreDataType = {
     user: UserType | null;
     carts: CartType[];
+    text:string
 };
 
 export interface StoreAction {

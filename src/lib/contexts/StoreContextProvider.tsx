@@ -38,7 +38,6 @@ export const useStoreContext = () => {
 const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(storeReducer, initialState);
     const [loading, setLoading] = useState(true);
-    console.log(state.user, "up");
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
