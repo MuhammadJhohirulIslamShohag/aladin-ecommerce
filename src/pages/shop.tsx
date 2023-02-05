@@ -16,7 +16,7 @@ const shippingArray = ["No", "Yes"];
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
-    const [openSortingMenu,setOpenSortingMenu] = useState(false);
+    const [openSortingMenu, setOpenSortingMenu] = useState(false);
     const [loading, setLoading] = useState(false);
     const [price, setPrice] = useState<number[]>([0, 0]);
     const [ok, setOk] = useState(false);
@@ -105,6 +105,28 @@ const Shop = () => {
     useEffect(() => {
         fetchProducts({ price });
     }, [ok]);
+
+    // 4. fetching or filtering products based on price values
+    const showRange = () => (
+        <div className="pt-6" id="filter-section-0">
+            <div className="space-y-4">
+                <div className="flex items-center">
+                    <input
+                        type="range"
+                        min={0}
+                        max={5000}
+                        defaultValue={500}
+                        onChange={(e) =>
+                            onAfterPriceChangeHandler([
+                                0,
+                                parseInt(e.target.value),
+                            ])
+                        }
+                    />
+                </div>
+            </div>
+        </div>
+    );
 
     const onAfterPriceChangeHandler = (value: number[]) => {
         dispatch({
@@ -409,7 +431,10 @@ const Shop = () => {
                     Filter Products
                 </h1>
 
-                <SortingMenu openSortingMenu={openSortingMenu} setOpenSortingMenu={setOpenSortingMenu}/>
+                <SortingMenu
+                    openSortingMenu={openSortingMenu}
+                    setOpenSortingMenu={setOpenSortingMenu}
+                />
             </div>
             <section aria-labelledby="products-heading" className="pt-6 pb-24">
                 <h2 id="products-heading" className="sr-only">
@@ -425,6 +450,7 @@ const Shop = () => {
                         checkboxSubCategories={checkboxSubCategories}
                         starRatingFilter={starRatingFilter}
                         showCategories={showCategories}
+                        showRange={showRange}
                     />
                     <div className="col-span-3">
                         <div className="sm:h-96 h-full">

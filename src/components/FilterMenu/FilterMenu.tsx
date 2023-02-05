@@ -7,6 +7,7 @@ type FilterMenuType = {
     checkboxSubCategories: () => false | JSX.Element[];
     starRatingFilter: () => JSX.Element;
     showCategories: () => 0 | JSX.Element[];
+    showRange: () => JSX.Element;
 };
 const FilterMenu = ({
     checkboxColor,
@@ -15,9 +16,14 @@ const FilterMenu = ({
     checkboxSubCategories,
     starRatingFilter,
     showCategories,
+    showRange,
 }: FilterMenuType) => {
     return (
         <form className="sm:hidden md:hidden block">
+            <FilterMenuItem
+                filterMenuItemName={"Price Range"}
+                filterMenuSubItems={showRange}
+            />
             <FilterMenuItem
                 filterMenuItemName={"Categories"}
                 filterMenuSubItems={showCategories}
@@ -30,7 +36,7 @@ const FilterMenu = ({
                 filterMenuItemName={"Rating"}
                 filterMenuSubItems={starRatingFilter}
             />
-            
+
             <FilterMenuItem
                 filterMenuItemName={"Color"}
                 filterMenuSubItems={checkboxColor}
