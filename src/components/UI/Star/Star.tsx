@@ -1,5 +1,5 @@
 import React from "react";
-import StarRatings from "react-star-ratings";
+import Ratings from 'react-star-ratings';
 
 type StarType = {
     clickRating: (numberOfStars: number) => void;
@@ -8,7 +8,7 @@ type StarType = {
 const Star = ({ clickRating, numberOfStars }: StarType) => {
     return (
         <>
-            <StarRatings
+            <Ratings
                 starRatedColor="red"
                 changeRating={() => clickRating(numberOfStars)}
                 numberOfStars={numberOfStars}

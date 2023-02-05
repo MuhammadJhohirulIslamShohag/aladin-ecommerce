@@ -9,6 +9,7 @@ import Star from "@/components/UI/Star/Star";
 import FilterMenu from "@/components/FilterMenu/FilterMenu";
 import Product from "@/components/Product/Product";
 import SortingMenu from "@/components/SortingMenu/SortingMenu";
+import RangeSlider from "@/components/UI/RangeSlider/RangeSlider";
 
 const brandArray = ["Apple", "Life-Digital", "Samsung", "ASUS", "Lenovo", "HP"];
 const colorArray = ["Green", "Black", "Red", "White"];
@@ -40,15 +41,17 @@ const Shop = () => {
     }, []);
 
     const fetchProducts = (arg: any) => {
+        setLoading(true);
         getFilterRelatedProducts(arg)
             .then((res) => {
                 setProducts(res.data);
+                setLoading(false);
             })
             .catch((error) => {
                 console.log(error);
+                setLoading(false);
             });
     };
-
     // 1. loading products
     const loadingProducts = () => {
         setLoading(true);
@@ -111,17 +114,14 @@ const Shop = () => {
         <div className="pt-6" id="filter-section-0">
             <div className="space-y-4">
                 <div className="flex items-center">
-                    <input
-                        type="range"
-                        min={0}
-                        max={5000}
-                        defaultValue={500}
-                        onChange={(e) =>
-                            onAfterPriceChangeHandler([
-                                0,
-                                parseInt(e.target.value),
-                            ])
+                    <RangeSlider
+                        onAfterChange={(v: number[]) =>
+                            onAfterPriceChangeHandler(v)
                         }
+                        className="w-64 h-8"
+                        min={0}
+                        max={3000}
+                        defaultValue={[100, 2000]}
                     />
                 </div>
             </div>
@@ -424,6 +424,15 @@ const Shop = () => {
             fetchProducts({ shipping: e.target.value });
         }, 300);
     };
+    // sorting products
+    const handleSortingProducts = (sort: string, order: number | string) => {
+        fetchProducts({
+            sortingObject: {
+                sort,
+                order,
+            },
+        });
+    };
     return (
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
@@ -432,6 +441,7 @@ const Shop = () => {
                 </h1>
 
                 <SortingMenu
+                    handleSortingProducts={handleSortingProducts}
                     openSortingMenu={openSortingMenu}
                     setOpenSortingMenu={setOpenSortingMenu}
                 />

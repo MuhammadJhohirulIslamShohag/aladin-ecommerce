@@ -3,10 +3,12 @@ import React from "react";
 type SortingMenuType = {
     openSortingMenu: boolean;
     setOpenSortingMenu: React.Dispatch<React.SetStateAction<boolean>>;
+    handleSortingProducts: (sort: string, order: number | string) => void;
 };
 const SortingMenu = ({
     openSortingMenu,
     setOpenSortingMenu,
+    handleSortingProducts,
 }: SortingMenuType) => {
     return (
         <div className="flex items-center">
@@ -37,19 +39,39 @@ const SortingMenu = ({
                 {openSortingMenu && (
                     <div className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1" role="none">
-                            <li className="transition-all cursor-pointer  hover:text-green-500 text-gray-900 block px-4 py-2 text-sm">
+                            <li
+                                className="transition-all cursor-pointer  hover:text-green-500 text-gray-900 block px-4 py-2 text-sm"
+                                onClick={() =>
+                                    handleSortingProducts("sold", "desc")
+                                }
+                            >
                                 Most Popular
                             </li>
 
-                            <li className="transition-all cursor-pointer  hover:text-green-500  text-gray-900 block px-4 py-2 text-sm">
+                            <li
+                                className="transition-all cursor-pointer  hover:text-green-500  text-gray-900 block px-4 py-2 text-sm"
+                                onClick={() =>
+                                    handleSortingProducts("createdAt", "desc")
+                                }
+                            >
                                 Newest
                             </li>
 
-                            <li className="transition-all cursor-pointer  hover:text-green-500  text-gray-900 block px-4 py-2 text-sm">
+                            <li
+                                className="transition-all cursor-pointer  hover:text-green-500  text-gray-900 block px-4 py-2 text-sm"
+                                onClick={() =>
+                                    handleSortingProducts("price", 1)
+                                }
+                            >
                                 Price: Low to High
                             </li>
 
-                            <li className="transition-all cursor-pointer hover:text-green-500  text-gray-900 block px-4 py-2 text-sm">
+                            <li
+                                className="transition-all cursor-pointer hover:text-green-500  text-gray-900 block px-4 py-2 text-sm"
+                                onClick={() =>
+                                    handleSortingProducts("price", -1)
+                                }
+                            >
                                 Price: High to Low
                             </li>
                         </div>
