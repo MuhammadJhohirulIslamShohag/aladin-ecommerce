@@ -77,7 +77,7 @@ const Product = ({ product }: any) => {
                     </li>
 
                     <label htmlFor="my-modal-3">
-                        <Link href={`products/${_id}`}>
+                        <Link href={`products/${slug}`}>
                             <li
                                 className={`py-3 flex items-center px-3 rounded-lg ml-2 border-2 border-success hover:bg-primary hover:border-primary hover:text-white  text-white bg-success transition ease-in-out delay-15 cursor-pointer tooltip tooltip-primary`}
                                 data-tip={"Details Product"}

@@ -34,6 +34,7 @@ const Login = () => {
     } = useForm<FormValues>();
     const googleProvider = new GoogleAuthProvider();
     const router = useRouter();
+    const { redirect } = router.query;
 
     useEffect(() => {
         if (user) {
@@ -79,7 +80,9 @@ const Login = () => {
                         );
                         reset();
                         setLoadingLogin(false);
-                        router.push("/");
+                        if(typeof redirect === "string"){
+                            router.push(redirect || "/");
+                        }
                         Swal.fire({
                             position: "top",
                             icon: "success",
