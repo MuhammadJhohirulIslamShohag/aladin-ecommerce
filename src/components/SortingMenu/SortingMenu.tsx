@@ -1,14 +1,23 @@
 import React from "react";
+import SortingMenuItem from "./SortingMenuItem";
 
 type SortingMenuType = {
     openSortingMenu: boolean;
     setOpenSortingMenu: React.Dispatch<React.SetStateAction<boolean>>;
+    setGridColumn: React.Dispatch<React.SetStateAction<boolean>>;
+    gridColumn: boolean;
     handleSortingProducts: (sort: string, order: number | string) => void;
+    openFilterMobileMenu: boolean;
+    setOpenFilterMobileMenu: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const SortingMenu = ({
     openSortingMenu,
+    setGridColumn,
+    gridColumn,
     setOpenSortingMenu,
     handleSortingProducts,
+    openFilterMobileMenu,
+    setOpenFilterMobileMenu,
 }: SortingMenuType) => {
     return (
         <div className="flex items-center">
@@ -39,41 +48,30 @@ const SortingMenu = ({
                 {openSortingMenu && (
                     <div className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1" role="none">
-                            <li
-                                className="transition-all cursor-pointer  hover:text-green-500 text-gray-900 block px-4 py-2 text-sm"
-                                onClick={() =>
-                                    handleSortingProducts("sold", "desc")
-                                }
-                            >
-                                Most Popular
-                            </li>
-
-                            <li
-                                className="transition-all cursor-pointer  hover:text-green-500  text-gray-900 block px-4 py-2 text-sm"
-                                onClick={() =>
-                                    handleSortingProducts("createdAt", "desc")
-                                }
-                            >
-                                Newest
-                            </li>
-
-                            <li
-                                className="transition-all cursor-pointer  hover:text-green-500  text-gray-900 block px-4 py-2 text-sm"
-                                onClick={() =>
-                                    handleSortingProducts("price", 1)
-                                }
-                            >
-                                Price: Low to High
-                            </li>
-
-                            <li
-                                className="transition-all cursor-pointer hover:text-green-500  text-gray-900 block px-4 py-2 text-sm"
-                                onClick={() =>
-                                    handleSortingProducts("price", -1)
-                                }
-                            >
-                                Price: High to Low
-                            </li>
+                            <SortingMenuItem
+                                sortingMenuItemName={"Most Popular"}
+                                handleSortingProducts={handleSortingProducts}
+                                sort={"sold"}
+                                order={"desc"}
+                            />
+                            <SortingMenuItem
+                                sortingMenuItemName={"Newest"}
+                                handleSortingProducts={handleSortingProducts}
+                                sort={"createdAt"}
+                                order={"desc"}
+                            />
+                            <SortingMenuItem
+                                sortingMenuItemName={"Price: Low to High"}
+                                handleSortingProducts={handleSortingProducts}
+                                sort={"price"}
+                                order={1}
+                            />
+                            <SortingMenuItem
+                                sortingMenuItemName={"Price: High to Low"}
+                                handleSortingProducts={handleSortingProducts}
+                                sort={"price"}
+                                order={-1}
+                            />
                         </div>
                     </div>
                 )}
@@ -82,6 +80,7 @@ const SortingMenu = ({
             <button
                 type="button"
                 className="-m-2 ml-5 p-2 text-gray-400 transition-all hover:text-green-500 sm:ml-7"
+                onClick={() => setGridColumn(!gridColumn)}
             >
                 <span className="sr-only">View grid</span>
 
@@ -102,6 +101,7 @@ const SortingMenu = ({
             <button
                 type="button"
                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 hidden md:block sm:block"
+                onClick={() => setOpenFilterMobileMenu(!openFilterMobileMenu)}
             >
                 <span className="sr-only">Filters</span>
 

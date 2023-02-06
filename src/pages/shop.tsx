@@ -10,6 +10,8 @@ import FilterMenu from "@/components/FilterMenu/FilterMenu";
 import Product from "@/components/Product/Product";
 import SortingMenu from "@/components/SortingMenu/SortingMenu";
 import RangeSlider from "@/components/UI/RangeSlider/RangeSlider";
+import Skeleton from "@/components/Skeleton/Skeleton";
+import FilterMobileMenu from "@/components/FilterMenu/FilterMobileMenu/FilterMobileMenu";
 
 const brandArray = ["Apple", "Life-Digital", "Samsung", "ASUS", "Lenovo", "HP"];
 const colorArray = ["Green", "Black", "Red", "White"];
@@ -17,8 +19,11 @@ const shippingArray = ["No", "Yes"];
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
-    const [openSortingMenu, setOpenSortingMenu] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [openSortingMenu, setOpenSortingMenu] = useState<boolean>(false);
+    const [openFilterMobileMenu, setOpenFilterMobileMenu] =
+        useState<boolean>(false);
+    const [gridColumn, setGridColumn] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
     const [price, setPrice] = useState<number[]>([0, 0]);
     const [ok, setOk] = useState(false);
     const [categories, setCategories] = useState([]);
@@ -434,56 +439,95 @@ const Shop = () => {
         });
     };
     return (
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
-                <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-                    Filter Products
-                </h1>
+        <>
+            <FilterMobileMenu
+                checkboxColor={checkboxColor}
+                checkboxShipping={checkboxShipping}
+                checkboxBrands={checkboxBrands}
+                checkboxSubCategories={checkboxSubCategories}
+                starRatingFilter={starRatingFilter}
+                showCategories={showCategories}
+                showRange={showRange}
+                openFilterMobileMenu={openFilterMobileMenu}
+                setOpenFilterMobileMenu={setOpenFilterMobileMenu}
+            />
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
+                    <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+                        Filter Products
+                    </h1>
 
-                <SortingMenu
-                    handleSortingProducts={handleSortingProducts}
-                    openSortingMenu={openSortingMenu}
-                    setOpenSortingMenu={setOpenSortingMenu}
-                />
-            </div>
-            <section aria-labelledby="products-heading" className="pt-6 pb-24">
-                <h2 id="products-heading" className="sr-only">
-                    Products
-                </h2>
-
-                <div className="grid sm:grid-cols-1 md:grid-cols-1 gap-x-8 gap-y-10 grid-cols-4">
-                    {/* Filter Side Bar Menu */}
-                    <FilterMenu
-                        checkboxColor={checkboxColor}
-                        checkboxShipping={checkboxShipping}
-                        checkboxBrands={checkboxBrands}
-                        checkboxSubCategories={checkboxSubCategories}
-                        starRatingFilter={starRatingFilter}
-                        showCategories={showCategories}
-                        showRange={showRange}
+                    <SortingMenu
+                        handleSortingProducts={handleSortingProducts}
+                        openSortingMenu={openSortingMenu}
+                        setOpenSortingMenu={setOpenSortingMenu}
+                        setGridColumn={setGridColumn}
+                        gridColumn={gridColumn}
+                        openFilterMobileMenu={openFilterMobileMenu}
+                        setOpenFilterMobileMenu={setOpenFilterMobileMenu}
                     />
-                    <div className="col-span-3">
-                        <div className="sm:h-96 h-full">
-                            {loading ? (
-                                <div className="pt-3">Loading...</div>
-                            ) : products && products.length < 1 ? (
-                                <p>No Product Found</p>
-                            ) : (
-                                <div className="grid gap-5 grid-cols-2">
-                                    {products &&
-                                        products.length &&
-                                        products.map((product: any) => (
-                                            <div key={product._id}>
-                                                <Product product={product} />
-                                            </div>
-                                        ))}
-                                </div>
-                            )}
+                </div>
+                <section
+                    aria-labelledby="products-heading"
+                    className="pt-6 pb-24"
+                >
+                    <h2 id="products-heading" className="sr-only">
+                        Products
+                    </h2>
+
+                    <div className="grid sm:grid-cols-1 md:grid-cols-1 gap-x-8 gap-y-10 grid-cols-4">
+                        {/* Filter Side Bar Menu */}
+                        <FilterMenu
+                            openFilterMobileMenu={openFilterMobileMenu}
+                            checkboxColor={checkboxColor}
+                            checkboxShipping={checkboxShipping}
+                            checkboxBrands={checkboxBrands}
+                            checkboxSubCategories={checkboxSubCategories}
+                            starRatingFilter={starRatingFilter}
+                            showCategories={showCategories}
+                            showRange={showRange}
+                        />
+                        <div className="col-span-3">
+                            <div className="sm:h-96 h-full">
+                                {loading ? (
+                                    <div
+                                        className={`grid gap-5 ${
+                                            gridColumn
+                                                ? `grid-cols-2 md:grid-cols-1 sm:grid-cols-1`
+                                                : `grid-cols-1`
+                                        }`}
+                                    >
+                                        <Skeleton numbers={2} />
+                                    </div>
+                                ) : products && products.length < 1 ? (
+                                    <p className="text-center text-xl text-primary">
+                                        No Product Found
+                                    </p>
+                                ) : (
+                                    <div
+                                        className={`grid gap-5 ${
+                                            gridColumn
+                                                ? `grid-cols-2 md:grid-cols-1 sm:grid-cols-1`
+                                                : `grid-cols-1`
+                                        }`}
+                                    >
+                                        {products &&
+                                            products.length &&
+                                            products.map((product: any) => (
+                                                <div key={product._id}>
+                                                    <Product
+                                                        product={product}
+                                                    />
+                                                </div>
+                                            ))}
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </div>
+                </section>
+            </div>
+        </>
     );
 };
 

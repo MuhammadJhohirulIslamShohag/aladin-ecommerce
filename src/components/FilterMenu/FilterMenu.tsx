@@ -8,6 +8,7 @@ type FilterMenuType = {
     starRatingFilter: () => JSX.Element;
     showCategories: () => 0 | JSX.Element[];
     showRange: () => JSX.Element;
+    openFilterMobileMenu:boolean;
 };
 const FilterMenu = ({
     checkboxColor,
@@ -17,12 +18,14 @@ const FilterMenu = ({
     starRatingFilter,
     showCategories,
     showRange,
+    openFilterMobileMenu
 }: FilterMenuType) => {
     return (
         <form className="sm:hidden md:hidden block">
             <FilterMenuItem
                 filterMenuItemName={"Price Range"}
                 filterMenuSubItems={showRange}
+                isShowCloseOpenButton={true}
             />
             <FilterMenuItem
                 filterMenuItemName={"Categories"}
