@@ -15,24 +15,6 @@ module.exports = {
             lg: { min: "992px", max: "1200px" },
         },
         extend: {
-            keyframes: {
-                entering: {
-                    from: {
-                        opacity: 0,
-                    },
-                    to: {
-                        opacity: 100,
-                    },
-                },
-                leaving: {
-                    from: {
-                        opacity: 100,
-                    },
-                    to: {
-                        opacity: 0,
-                    },
-                },
-            },
         },
     },
     daisyui: {

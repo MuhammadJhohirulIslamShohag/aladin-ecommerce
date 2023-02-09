@@ -440,6 +440,7 @@ const Shop = () => {
     };
     return (
         <>
+            {/* Filter Mobile Side Bar Menu */}
             <FilterMobileMenu
                 checkboxColor={checkboxColor}
                 checkboxShipping={checkboxShipping}
@@ -456,7 +457,7 @@ const Shop = () => {
                     <h1 className="text-4xl font-bold tracking-tight text-gray-900">
                         Filter Products
                     </h1>
-
+                    {/* Filter Sorting Menu */}
                     <SortingMenu
                         handleSortingProducts={handleSortingProducts}
                         openSortingMenu={openSortingMenu}
@@ -487,6 +488,8 @@ const Shop = () => {
                             showCategories={showCategories}
                             showRange={showRange}
                         />
+
+                        {/* Filter Products */}
                         <div className="col-span-3">
                             <div className="sm:h-96 h-full">
                                 {loading ? (
