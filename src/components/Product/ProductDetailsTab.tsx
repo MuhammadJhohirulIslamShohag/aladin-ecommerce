@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Tab } from "@headlessui/react";
 import ProductDescription from "./ProductDescription/ProductDescription";
+import ProductReview from "./ProductReview/ProductReview";
 const ProductDetailsTab = ({ product }: any) => {
     return (
         <Tab.Group>
@@ -26,7 +27,7 @@ const ProductDetailsTab = ({ product }: any) => {
             <Tab.Panels className="border-x-2 border-gray-400">
                 <ProductDescription product={product}/>
                 <Tab.Panel>Content 2</Tab.Panel>
-                <Tab.Panel>Content 3</Tab.Panel>
+                <ProductReview product={product}/>
             </Tab.Panels>
         </Tab.Group>
     );

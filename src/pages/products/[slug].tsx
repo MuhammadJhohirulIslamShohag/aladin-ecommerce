@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { getProduct } from "@/api/products";
 import ProductDetailsTab from "../../components/Product/ProductDetailsTab";
 import ProductInfo from "@/components/Product/ProductInfo/ProductInfo";
+import MainLayout from "@/layouts/MainLayout/MainLayout";
 
 type ProductDetailsParamsType = {
     params: {
@@ -112,40 +113,41 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
     };
 
     return (
-        <div className="bg-white container">
-            <div className="grid grid-cols-2 sm:grid-cols-1 pt-6">
+        <MainLayout>
+            <div className="bg-white container">
+                <div className="grid grid-cols-2 sm:grid-cols-1 pt-6">
+                    {/* Image gallery */}
+                    <div className="z-10">
+                        {product &&
+                        title &&
+                        product.images &&
+                        product.images.length ? (
+                            <CardZoomCarousel images={images} title={title} />
+                        ) : (
+                            <h2>No Image On The Product</h2>
+                        )}
+                    </div>
 
-                {/* Image gallery */}
-                <div className="z-10">
-                    {product &&
-                    title &&
-                    product.images &&
-                    product.images.length ? (
-                        <CardZoomCarousel images={images} title={title} />
-                    ) : (
-                        <h2>No Image On The Product</h2>
-                    )}
+                    {/* Product info */}
+                    <div className="mx-auto max-w-7xl relative">
+                        <ProductInfo
+                            product={product}
+                            colorArray={colorArray}
+                            sizeArray={sizeArray}
+                            selectedColor={selectedColor}
+                            setSelectedColor={setSelectedColor}
+                            selectedSize={selectedSize}
+                            setSelectedSize={setSelectedSize}
+                        />
+                    </div>
                 </div>
 
-                {/* Product info */}
-                <div className="mx-auto max-w-7xl relative">
-                    <ProductInfo
-                        product={product}
-                        colorArray={colorArray}
-                        sizeArray={sizeArray}
-                        selectedColor={selectedColor}
-                        setSelectedColor={setSelectedColor}
-                        selectedSize={selectedSize}
-                        setSelectedSize={setSelectedSize}
-                    />
+                {/* Product Details Tab */}
+                <div className="mt-10">
+                    <ProductDetailsTab product={product} />
                 </div>
             </div>
-
-             {/* Product Details Tab */}
-            <div className="mt-10">
-                <ProductDetailsTab product={product} />
-            </div>
-        </div>
+        </MainLayout>
     );
 };
 
