@@ -175,6 +175,8 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
                     />
                 </div>
             </div>
+
+             {/*Show Rating Modal */}
             {showReviewModal && (
                 <RatingModal
                     productName={title}

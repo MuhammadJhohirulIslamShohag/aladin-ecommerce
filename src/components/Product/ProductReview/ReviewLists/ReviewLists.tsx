@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import SearchForm from "@/components/UI/SearchForm/SearchForm";
+import ReviewList from "./ReviewList";
 
-const ReviewLists = ({ handleReviewShowModal }: any) => {
+const ReviewLists = ({ product, handleReviewShowModal }: any) => {
     return (
         <div className="p-10">
             <div className="flex">
@@ -46,6 +47,11 @@ const ReviewLists = ({ handleReviewShowModal }: any) => {
                         <option value="1">One start</option>
                     </select>
                 </div>
+            </div>
+            <div className="mt-10">
+                {product.ratings.map((rating: any) => (
+                    <ReviewList key={rating._id} ratings={rating} />
+                ))}
             </div>
         </div>
     );

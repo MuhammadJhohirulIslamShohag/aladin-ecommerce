@@ -6,7 +6,7 @@ const ProductDetailsTab = ({ product,handleReviewShowModal }: any) => {
     return (
         <Tab.Group>
             <Tab.List className="bg-primary">
-                {["Description", "Warranty", "Show Reviews"].map(
+                {["Description","Show Reviews"].map(
                     (tabList: string, i: number) => (
                         <Tab key={i} as={Fragment}>
                             {({ selected }) => (
@@ -26,7 +26,6 @@ const ProductDetailsTab = ({ product,handleReviewShowModal }: any) => {
             </Tab.List>
             <Tab.Panels className="border-x-2 border-b-2 border-gray-400">
                 <ProductDescription product={product}/>
-                <Tab.Panel>Content 2</Tab.Panel>
                 <ProductReview  handleReviewShowModal={handleReviewShowModal} product={product}/>
             </Tab.Panels>
         </Tab.Group>
