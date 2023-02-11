@@ -12,6 +12,7 @@ import SortingMenu from "@/components/SortingMenu/SortingMenu";
 import RangeSlider from "@/components/UI/RangeSlider/RangeSlider";
 import Skeleton from "@/components/Skeleton/Skeleton";
 import FilterMobileMenu from "@/components/FilterMenu/FilterMobileMenu/FilterMobileMenu";
+import MainLayout from "@/layouts/MainLayout/MainLayout";
 
 const brandArray = ["Apple", "Life-Digital", "Samsung", "ASUS", "Lenovo", "HP"];
 const colorArray = ["Green", "Black", "Red", "White"];
@@ -439,7 +440,7 @@ const Shop = () => {
         });
     };
     return (
-        <>
+        <MainLayout>
             {/* Filter Mobile Side Bar Menu */}
             <FilterMobileMenu
                 checkboxColor={checkboxColor}
@@ -454,7 +455,7 @@ const Shop = () => {
             />
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
-                    <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+                    <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-2xl">
                         Filter Products
                     </h1>
                     {/* Filter Sorting Menu */}
@@ -530,7 +531,7 @@ const Shop = () => {
                     </div>
                 </section>
             </div>
-        </>
+        </MainLayout>
     );
 };
 
