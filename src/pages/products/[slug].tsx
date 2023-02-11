@@ -34,13 +34,12 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
     const [selectedColor, setSelectedColor] = useState<string>("");
     const [selectedSize, setSelectedSize] = useState<string>("");
     const [heartFillIcon, setHeartFillIcon] = useState(false);
-    const [tooltipTitle, setTooltipTitle] = useState("Add to Cart");
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [comment, setComment] = useState("");
     const [star, setStar] = useState(0);
     const { title, images, _id, slug } = product;
     const {
-        state: { user },
+        state: { user, carts },
         dispatch,
     } = useStoreContext();
 
@@ -59,43 +58,46 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
     // const loadWishList = (user) => {
 
     // }
-
+    const isAddToCart = carts.filter((cart:any) => cart._id === _id);
+    const objProduct = {
+        ...product
+    }
     const handleAddCart = () => {
-        let carts = [];
+       
+        if(isAddToCart?.length <= 0){
+            let carts = [];
 
-        if (typeof window !== "undefined") {
-            if (window.localStorage.getItem("carts")) {
-                // checking already carts to the window localStorage
-                let cartsFromLocalStorage: string | null =
-                    window.localStorage.getItem("carts");
-                if (cartsFromLocalStorage !== null) {
-                    carts = JSON.parse(cartsFromLocalStorage);
+            if (typeof window !== "undefined") {
+                if (window.localStorage.getItem("carts")) {
+                    // checking already carts to the window localStorage
+                    let cartsFromLocalStorage: string | null =
+                        window.localStorage.getItem("carts");
+                    if (cartsFromLocalStorage !== null) {
+                        carts = JSON.parse(cartsFromLocalStorage);
+                    }
                 }
             }
+            // push carts into carts array
+            carts.push({
+                ...objProduct,
+                count: 1,
+            });
+    
+            // remove duplicates value
+            const uniqueCarts = _.uniqWith(carts, _.isEqual);
+    
+            // set data local storage
+            window.localStorage.setItem("carts", JSON.stringify(uniqueCarts));
+          
+            dispatch({
+                type: StoreActionType.ADD_TO_CART,
+                payload: uniqueCarts,
+            });
+            toast.success("Product Added To The Carts");
+        }else{
+            toast.error("Product Already Added To The Cart");
         }
-        // push carts into carts array
-        carts.push({
-            ...product,
-            count: 1,
-        });
-
-        // remove duplicates value
-        const uniqueCarts = _.uniqWith(carts, _.isEqual);
-
-        // set data local storage
-        window.localStorage.setItem("carts", JSON.stringify(uniqueCarts));
-        setTooltipTitle("Added!");
-
-        dispatch({
-            type: StoreActionType.ADD_TO_CART,
-            payload: uniqueCarts,
-        });
-
-        // // show drawer carts in the side bar
-        // dispatch({
-        //     type: "VISIBLE_DRAWER",
-        //     payload: true,
-        // });
+        
     };
 
     const handleAddToWishList = () => {
@@ -112,7 +114,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
                 });
             }
         } else {
-            router.push(`/auth/login?redirect=/products/${product._id}`);
+            router.push(`/auth/login?redirect=/products/${slug}`);
         }
     };
 
@@ -137,9 +139,10 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
             toast.error(error.message);
         }
     };
+    
     return (
         <MainLayout>
-            <div className="bg-white container">
+            <div className="bg-white container mt-10">
                 <div className="grid grid-cols-2 sm:grid-cols-1 pt-6">
                     {/* Image gallery */}
                     <div className="z-10">
@@ -163,6 +166,10 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
                             setSelectedColor={setSelectedColor}
                             selectedSize={selectedSize}
                             setSelectedSize={setSelectedSize}
+                            handleAddCart={handleAddCart}
+                            handleAddToWishList={handleAddToWishList}
+                            heartFillIcon={heartFillIcon}
+                            isAddToCart={isAddToCart}
                         />
                     </div>
                 </div>

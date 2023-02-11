@@ -1,51 +1,22 @@
 import React, { useState } from "react";
+import {  BsFillHeartFill } from "react-icons/bs";
 import Image from "next/image";
 import Link from "next/link";
 import _ from "lodash";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdPageview } from "react-icons/md";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 
-const Product = ({ product }: any) => {
-    // const [isAddToCart, setIsAddToCart] = useState(false);
-    const { _id, slug, title, images, description, quantity } = product;
-    const { dispatch, state:{carts} } = useStoreContext();
-    const handleAddCart = () => {
-        // create cart array
-        let carts = [];
-        // // checking available window or not
-        if (typeof window !== "undefined") {
-            // checking already carts to the window localStorage
-            let cartsFromLocalStorage: string | null =
-                window.localStorage.getItem("carts");
-            if (cartsFromLocalStorage !== null) {
-                carts = JSON.parse(cartsFromLocalStorage);
-            }
-        }
-        // added cart
-        carts.push({
-            ...product,
-            count: 1,
-        });
-        // remove duplicates
-        const uniqueCarts = _.uniqWith(carts, _.isEqual);
-        // set cart object in windows localStorage
-        window.localStorage.setItem("carts", JSON.stringify(uniqueCarts));
-
-        // added cart in store context
-        dispatch({
-            type: StoreActionType.ADD_TO_CART,
-            payload: uniqueCarts,
-        });
-    };
-
-    const isAddToCart = carts.filter((cart:any) => cart._id === _id);
+const WishlistProduct = ({
+    product,
+    handleRemovedToWishList,
+    handleAddCart,
+}: any) => {
+    const { _id, slug, title, images, description } = product;
 
     // const offerProductPercentage = Math.round(
     //     ((originalPrice - price) / originalPrice) * 100
     // );
-
+    console.log(product);
     return (
         <div className="rounded-lg shadow-md group cursor-pointer">
             <div className="h-72 relative">
@@ -58,17 +29,18 @@ const Product = ({ product }: any) => {
                 </div>
                 <ul className="transition duration-300 ease-in-out invisible flex absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 group-hover:visible">
                     <li
-                        className={`py-3 flex items-center px-3 rounded-lg ml-2 border-2 border-success hover:bg-primary hover:border-primary hover:text-white  text-white ${
-                            isAddToCart?.length > 0 ? "bg-primary" : "bg-success"
-                        } bg-success transition ease-in-out delay-15 cursor-pointer tooltip tooltip-primary`}
-                        data-tip={
-                            isAddToCart?.length > 0
-                                ? "Already To Cart"
-                                : "Add To Cart"
-                        }
-                        onClick={() => handleAddCart()}
+                        className={`py-3 flex items-center px-3 rounded-lg ml-2 border-2 border-success hover:bg-primary hover:border-primary hover:text-white  text-white bg-success transition ease-in-out delay-15 cursor-pointer tooltip tooltip-primary`}
+                        data-tip={"Add To Cart"}
+                        onClick={() => handleAddCart(product)}
                     >
                         <FaShoppingCart />
+                    </li>
+                    <li
+                        className={`py-3 flex items-center px-3 rounded-lg ml-2 border-2 border-success hover:bg-primary hover:border-primary hover:text-white  text-white bg-success transition ease-in-out delay-15 cursor-pointer tooltip tooltip-primary`}
+                        data-tip={"Removed From WishList"}
+                        onClick={() => handleRemovedToWishList(_id)}
+                    >
+                        <BsFillHeartFill />
                     </li>
 
                     <label htmlFor="my-modal-3">
@@ -77,7 +49,7 @@ const Product = ({ product }: any) => {
                                 className={`py-3 flex items-center px-3 rounded-lg ml-2 border-2 border-success hover:bg-primary hover:border-primary hover:text-white  text-white bg-success transition ease-in-out delay-15 cursor-pointer tooltip tooltip-primary`}
                                 data-tip={"Details Product"}
                             >
-                                 <MdPageview fill="#fff"/>
+                                <MdPageview fill="#fff" />
                             </li>
                         </Link>
                     </label>
@@ -96,7 +68,7 @@ const Product = ({ product }: any) => {
                 </h5>
 
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                    {description.length > 90
+                    {description?.length > 90
                         ? `${description.slice(0, 90)} ...`
                         : description}
                 </p>
@@ -105,4 +77,4 @@ const Product = ({ product }: any) => {
     );
 };
 
-export default Product;
+export default WishlistProduct;

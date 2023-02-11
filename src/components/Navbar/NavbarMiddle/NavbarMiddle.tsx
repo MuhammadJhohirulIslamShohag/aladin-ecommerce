@@ -35,9 +35,9 @@ const NavbarMiddle: React.FC = (): JSX.Element => {
                 <li>
                     <Link
                         className="text-primary hover:bg-transparent hover:text-success text-lg"
-                        href="/"
+                        href="/blogs"
                     >
-                        New Products
+                       Blogs
                     </Link>
                 </li>
                 <li>
@@ -48,14 +48,7 @@ const NavbarMiddle: React.FC = (): JSX.Element => {
                         Shop
                     </Link>
                 </li>
-                <li>
-                    <Link
-                        className="text-primary hover:bg-transparent hover:text-success text-lg"
-                        href="/contact"
-                    >
-                        Contact Us
-                    </Link>
-                </li>
+               
             </>
         );
     };
@@ -110,7 +103,7 @@ const NavbarMiddle: React.FC = (): JSX.Element => {
                         <li>
                             <label
                                 className="text-primary hover:bg-transparent hover:text-success text-lg"
-                                onClick={() => router.push("/login")}
+                                onClick={() => router.push("/auth/login")}
                             >
                                 Login
                             </label>{" "}
@@ -121,7 +114,7 @@ const NavbarMiddle: React.FC = (): JSX.Element => {
                         <li>
                             <label
                                 className="text-primary hover:bg-transparent hover:text-success text-lg"
-                                onClick={() => router.push("/register")}
+                                onClick={() => router.push("/auth/register")}
                             >
                                 Register
                             </label>

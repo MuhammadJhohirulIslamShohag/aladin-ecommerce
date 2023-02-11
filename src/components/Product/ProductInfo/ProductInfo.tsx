@@ -16,7 +16,11 @@ const ProductInfo = ({
     selectedColor,
     setSelectedColor,
     selectedSize,
-    setSelectedSize
+    setSelectedSize,
+    handleAddCart,
+    handleAddToWishList,
+    heartFillIcon,
+    isAddToCart
 }: any) => {
     const { title, price, category, shipping, brand, _id } = product;
     return (
@@ -39,7 +43,7 @@ const ProductInfo = ({
                     </span>
                 </div>
 
-                <div className="mt-10">
+                <div className="mt-5">
                     <ProductDescriptionItem
                         isBorderClassName={true}
                         name="Brand"
@@ -115,7 +119,7 @@ const ProductInfo = ({
                             className="mt-4"
                         >
                             <div className="grid grid-cols-4 gap-4 sm:grid-cols-4 md:grid-cols-4">
-                                {sizeArray.map((size:any) => (
+                                {sizeArray.map((size: any) => (
                                     <RadioGroup.Option
                                         key={size.name}
                                         value={size}
@@ -181,19 +185,33 @@ const ProductInfo = ({
 
                     <div className="grid grid-cols-2 sm:grid-cols-1 gap-4">
                         <CustomButton
-                            buttonType="submit"
+                            buttonType="button"
                             className="mt-10 sm:mt-5 w-full"
+                            handleClick={handleAddCart}
                         >
                             <BsHandbagFill className="mr-1" />
-                            Add To Cart
+                            {isAddToCart?.length > 0 ? "Added To Cart" : "Add To Cart"}
                         </CustomButton>
-                        <CustomButton
-                            buttonType="button"
-                            className="mt-10 sm:mt-0 w-full"
-                        >
-                            <BsFillHeartFill className="mr-1" />
-                            Add To WishList
-                        </CustomButton>
+                        {heartFillIcon ? (
+                            <CustomButton
+                                buttonType="button"
+                                className="mt-10 sm:mt-0 w-full"
+                                handleClick={handleAddToWishList}
+                                
+                            >
+                                <BsFillHeartFill className="mr-1" />
+                                Removed To Wishlist
+                            </CustomButton>
+                        ) : (
+                            <CustomButton
+                                buttonType="button"
+                                className="mt-10 sm:mt-0 w-full"
+                                handleClick={handleAddToWishList}
+                            >
+                                <BsFillHeartFill className="mr-1" />
+                                Add To WishList
+                            </CustomButton>
+                        )}
                     </div>
                 </form>
             </div>

@@ -40,7 +40,7 @@ const Login = () => {
         if (user) {
             router.push("/");
         }
-    }, [user]);
+    }, []);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -142,7 +142,10 @@ const Login = () => {
                                 _id: res.data._id,
                             },
                         });
-                        router.push("/");
+                        if(typeof redirect === "string"){
+                            console.log(redirect)
+                            router.push(redirect || "/");
+                        }
                     })
                     .catch((error) => {
                         console.log(error);
