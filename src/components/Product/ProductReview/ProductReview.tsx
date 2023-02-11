@@ -4,12 +4,12 @@ import ReviewStatistic from "./ReviewStatistic/ReviewStatistic";
 import CreateReview from "./CreateReview";
 import ReviewLists from "./ReviewLists";
 
-const ProductReview = ({ product }: any) => {
+const ProductReview = ({ product, handleReviewShowModal }: any) => {
     return (
         <Tab.Panel>
             <ReviewStatistic product={product}/>
             <CreateReview />
-            <ReviewLists />
+            <ReviewLists handleReviewShowModal={handleReviewShowModal}/>
         </Tab.Panel>
     );
 };

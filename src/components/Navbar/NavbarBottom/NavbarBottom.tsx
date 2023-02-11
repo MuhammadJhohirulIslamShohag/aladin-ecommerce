@@ -6,7 +6,7 @@ const NavbarBottom: React.FC = (): JSX.Element => {
     return (
         <div className="container grid grid-cols-3 pt-2 gap-3 sm:gap-0">
             <div className="col-span-2 flex justify-end sm:justify-start">
-                <SearchForm className={"w-2/3"} />
+                <SearchForm className={"w-2/3"} placeholder={"What are you looking for?"}/>
             </div>
             <div className="flex justify-start">
                 <ul className="flex items-center">

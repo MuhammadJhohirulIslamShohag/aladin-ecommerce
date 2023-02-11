@@ -11,6 +11,7 @@ import { getProduct } from "@/api/products";
 import ProductDetailsTab from "../../components/Product/ProductDetailsTab";
 import ProductInfo from "@/components/Product/ProductInfo/ProductInfo";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
+import RatingModal from "@/components/Modal/RatingModal/RatingModal";
 
 type ProductDetailsParamsType = {
     params: {
@@ -34,7 +35,10 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
     const [selectedSize, setSelectedSize] = useState<string>("");
     const [heartFillIcon, setHeartFillIcon] = useState(false);
     const [tooltipTitle, setTooltipTitle] = useState("Add to Cart");
-    const { title, images, _id } = product;
+    const [showReviewModal, setShowReviewModal] = useState(false);
+    const [comment, setComment] = useState("");
+    const [star, setStar] = useState(0);
+    const { title, images, _id, slug } = product;
     const {
         state: { user },
         dispatch,
@@ -112,6 +116,27 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
         }
     };
 
+    const handleReviewShowModal = () => {
+        if ( user && user?.email ) {
+            setShowReviewModal((prev) => !prev);
+            return;
+        }
+        return router.push(`/auth/login?redirect=products/${slug}`);
+    };
+    const handleClickRating = (newRating: number) => {
+        setStar(newRating);
+    };
+
+    const handleReviewSubmit = async (
+        event: React.FormEvent<HTMLFormElement>
+    ) => {
+        try {
+            event.preventDefault();
+            setComment("");
+        } catch (error: any) {
+            toast.error(error.message);
+        }
+    };
     return (
         <MainLayout>
             <div className="bg-white container">
@@ -144,9 +169,23 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
 
                 {/* Product Details Tab */}
                 <div className="mt-10">
-                    <ProductDetailsTab product={product} />
+                    <ProductDetailsTab
+                        product={product}
+                        handleReviewShowModal={handleReviewShowModal}
+                    />
                 </div>
             </div>
+            {showReviewModal && (
+                <RatingModal
+                    productName={title}
+                    handleReviewSubmit={handleReviewSubmit}
+                    setShowReviewModal={setShowReviewModal}
+                    showReviewModal={showReviewModal}
+                    handleClickRating={handleClickRating}
+                    setComment={setComment}
+                    star={star}
+                />
+            )}
         </MainLayout>
     );
 };

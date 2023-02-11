@@ -16,7 +16,7 @@ const ProductInfo = ({
     selectedColor,
     setSelectedColor,
     selectedSize,
-    setSelectedSize,
+    setSelectedSize
 }: any) => {
     const { title, price, category, shipping, brand, _id } = product;
     return (

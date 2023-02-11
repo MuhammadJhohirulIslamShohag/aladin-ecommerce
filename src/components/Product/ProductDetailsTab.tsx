@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Tab } from "@headlessui/react";
 import ProductDescription from "./ProductDescription/ProductDescription";
 import ProductReview from "./ProductReview/ProductReview";
-const ProductDetailsTab = ({ product }: any) => {
+const ProductDetailsTab = ({ product,handleReviewShowModal }: any) => {
     return (
         <Tab.Group>
             <Tab.List className="bg-primary">
@@ -24,10 +24,10 @@ const ProductDetailsTab = ({ product }: any) => {
                     )
                 )}
             </Tab.List>
-            <Tab.Panels className="border-x-2 border-gray-400">
+            <Tab.Panels className="border-x-2 border-b-2 border-gray-400">
                 <ProductDescription product={product}/>
                 <Tab.Panel>Content 2</Tab.Panel>
-                <ProductReview product={product}/>
+                <ProductReview  handleReviewShowModal={handleReviewShowModal} product={product}/>
             </Tab.Panels>
         </Tab.Group>
     );

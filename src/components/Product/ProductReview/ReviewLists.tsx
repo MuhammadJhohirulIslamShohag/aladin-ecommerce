@@ -1,13 +1,31 @@
 import React, { useState } from "react";
 import SearchForm from "@/components/UI/SearchForm/SearchForm";
 
-const ReviewLists = () => {
+const ReviewLists = ({ handleReviewShowModal }: any) => {
     return (
         <div className="p-10">
-            <h2 className="text-3xl font-bold text-gray-900 ">Reviews</h2>
-            <div className="flex items-center space-x-4  mt-7">
+            <div className="flex">
                 <div className="flex-initial w-2/5">
-                    <SearchForm className={"w-full"} />
+                    <h2 className="text-3xl font-bold text-gray-900 ">
+                        Reviews
+                    </h2>
+                </div>
+                <div className="flex-initial">
+                    <label
+                        className="text-xl ml-5 cursor-pointer font-bold text-orange-400"
+                        onClick={handleReviewShowModal}
+                        htmlFor="my-modal"
+                    >
+                        Write a Review
+                    </label>
+                </div>
+            </div>
+            <div className="flex items-center space-x-4  mt-12">
+                <div className="flex-initial w-2/5">
+                    <SearchForm
+                        className={"w-full"}
+                        placeholder={"Search Reviews"}
+                    />
                 </div>
                 <div className="flex-initial relative -top-4">
                     <label

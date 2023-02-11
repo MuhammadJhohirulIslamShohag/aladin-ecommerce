@@ -2,8 +2,8 @@ import StarRatings from "react-star-ratings";
 import { BsFillStarFill } from "react-icons/bs";
 
 export const AvgRating = ({ product, isTotalReviewRating = false }: any) => {
-    let avgRating: number;
-    let length;
+    let avgRating: number | undefined;
+    let length:number | undefined;
     if (product && product.ratings) {
         let total: number[] = [];
         product.ratings.forEach((rating: any) => total.push(rating.star));
@@ -20,11 +20,11 @@ export const AvgRating = ({ product, isTotalReviewRating = false }: any) => {
                     <h3 className="sr-only">Reviews</h3>
                     <div className="flex items-center">
                         <div className="flex items-center mr-3">
-                            {[0, 1, 2, 3, 4].map((rating: number) => (
+                            {avgRating && [0, 1, 2, 3, 4].map((rating: number) => (
                                 <BsFillStarFill
                                     key={rating}
                                     className={`${
-                                        avgRating > rating
+                                        avgRating! > rating
                                             ? "text-rose-600"
                                             : "text-gray-200"
                                     }
@@ -44,13 +44,13 @@ export const AvgRating = ({ product, isTotalReviewRating = false }: any) => {
             ) : (
                 <div className="mt-1">
                     <div className="flex items-center flex-col">
-                        <h3 className="text-orange-400 text-7xl font-extrabold">{length && length}</h3>
+                        <h3 className="text-orange-400 text-7xl font-extrabold">{avgRating && avgRating}</h3>
                         <div className="flex items-center mr-3">
-                            {[0, 1, 2, 3, 4].map((rating: number) => (
+                            {avgRating && [0, 1, 2, 3, 4].map((rating: number) => (
                                 <BsFillStarFill
                                     key={rating}
                                     className={`${
-                                        avgRating > rating
+                                        avgRating! > rating
                                             ? "text-orange-400"
                                             : "text-gray-200"
                                     }
