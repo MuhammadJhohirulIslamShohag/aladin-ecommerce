@@ -2,7 +2,7 @@ import { getListOfCategory } from "@/api/category";
 import { getProductsBySort } from "@/api/products";
 import Banner from "@/components/Home/Banner/Banner";
 import BestSellers from "@/components/Home/BestSellers/BestSellers";
-import Categories from "@/components/Home/SubCategories/SubCategories";
+import SubCategories from "@/components/Home/SubCategories/SubCategories";
 import NewArrivals from "@/components/Home/NewArrivals/NewArrivals";
 import Services from "@/components/Home/Services/Services";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
@@ -10,18 +10,23 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { IProduct } from "./../../types/product.type";
 import { getAllSubCategories } from "@/api/sub-categories";
+import Categories from "@/components/Home/Categories/Categories";
+import { ICategories } from "types/category.type";
+import { ISubCategories } from "types/sub-category.type";
 
-type PropsType = {
+type HomePropType = {
     products: IProduct[];
     bestSellerProducts: IProduct[];
-    subCategories: any;
+    subCategories: ISubCategories[];
+    categories:ICategories[]
 };
 
 export default function Home({
     products,
     bestSellerProducts,
     subCategories,
-}: PropsType) {
+    categories
+}: HomePropType) {
     return (
         <>
             <Head>
@@ -39,7 +44,8 @@ export default function Home({
             <MainLayout>
                 <Banner />
                 <Services />
-                <Categories subCategories={subCategories} />
+                <Categories categories={categories} />
+                <SubCategories subCategories={subCategories} />
                 <NewArrivals products={products} />
                 <BestSellers products={bestSellerProducts} />
             </MainLayout>
@@ -53,12 +59,14 @@ export const getServerSideProps: GetServerSideProps = async () => {
         "sold",
         "desc"
     );
+    const { data: categoriesData } = await getListOfCategory();
     const { data: subCategoriesData } = await getAllSubCategories();
     return {
         props: {
             products: data,
             bestSellerProducts: bestSellerProductData,
             subCategories: subCategoriesData,
+            categories: categoriesData,
         },
     };
 };

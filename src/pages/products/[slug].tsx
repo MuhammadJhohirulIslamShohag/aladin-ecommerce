@@ -7,16 +7,23 @@ import { IProduct } from "../../../types/product.type";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import CardZoomCarousel from "@/components/Card/CardZoomCarousel";
 import { useRouter } from "next/router";
-import { getProduct } from "@/api/products";
+import { getProduct, relatedProducts } from "@/api/products";
 import ProductDetailsTab from "../../components/Product/ProductDetailsTab";
 import ProductInfo from "@/components/Product/ProductInfo/ProductInfo";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import RatingModal from "@/components/Modal/RatingModal/RatingModal";
+import SectionTitle from "@/components/SectionTitle/SectionTitle";
+import Product from "@/components/Product/Product";
 
 type ProductDetailsParamsType = {
     params: {
         slug: string;
     };
+};
+
+type ProductDetailsPropType = {
+    product: IProduct;
+    relatedProducts: IProduct[];
 };
 
 const colorArray = ["Green", "White", "Black", "Rose"];
@@ -30,13 +37,16 @@ const sizeArray = [
     { name: "2XL", inStock: true },
     { name: "3XL", inStock: true },
 ];
-const ProductDetails = ({ product }: { product: IProduct }) => {
+const ProductDetails = ({
+    product,
+    relatedProducts,
+}: ProductDetailsPropType) => {
     const [selectedColor, setSelectedColor] = useState<string>("");
     const [selectedSize, setSelectedSize] = useState<string>("");
-    const [heartFillIcon, setHeartFillIcon] = useState(false);
-    const [showReviewModal, setShowReviewModal] = useState(false);
-    const [comment, setComment] = useState("");
-    const [star, setStar] = useState(0);
+    const [heartFillIcon, setHeartFillIcon] = useState<boolean>(false);
+    const [showReviewModal, setShowReviewModal] = useState<boolean>(false);
+    const [comment, setComment] = useState<string>("");
+    const [star, setStar] = useState<number>(0);
     const { title, images, _id, slug } = product;
     const {
         state: { user, carts },
@@ -58,13 +68,12 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
     // const loadWishList = (user) => {
 
     // }
-    const isAddToCart = carts.filter((cart:any) => cart._id === _id);
+    const isAddToCart = carts.filter((cart: any) => cart._id === _id);
     const objProduct = {
-        ...product
-    }
+        ...product,
+    };
     const handleAddCart = () => {
-       
-        if(isAddToCart?.length <= 0){
+        if (isAddToCart?.length <= 0) {
             let carts = [];
 
             if (typeof window !== "undefined") {
@@ -82,22 +91,21 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
                 ...objProduct,
                 count: 1,
             });
-    
+
             // remove duplicates value
             const uniqueCarts = _.uniqWith(carts, _.isEqual);
-    
+
             // set data local storage
             window.localStorage.setItem("carts", JSON.stringify(uniqueCarts));
-          
+
             dispatch({
                 type: StoreActionType.ADD_TO_CART,
                 payload: uniqueCarts,
             });
             toast.success("Product Added To The Carts");
-        }else{
+        } else {
             toast.error("Product Already Added To The Cart");
         }
-        
     };
 
     const handleAddToWishList = () => {
@@ -119,7 +127,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
     };
 
     const handleReviewShowModal = () => {
-        if ( user && user?.email ) {
+        if (user && user?.email) {
             setShowReviewModal((prev) => !prev);
             return;
         }
@@ -139,7 +147,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
             toast.error(error.message);
         }
     };
-    
+
     return (
         <MainLayout>
             <div className="bg-white container mt-10">
@@ -181,9 +189,32 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
                         handleReviewShowModal={handleReviewShowModal}
                     />
                 </div>
+
+                {/* Related Product */}
+                <section className="mt-10">
+                    <SectionTitle title="Related Products" />
+                    <div>
+                        {relatedProducts && relatedProducts.length < 1 ? (
+                            <p className="text-center text-xl text-primary">
+                                No Product Found By The {product.title}
+                            </p>
+                        ) : (
+                            <div className="grid  mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+                                {relatedProducts &&
+                                    relatedProducts.length &&
+                                    relatedProducts.slice(0,3).map((product: IProduct) => (
+                                        <Product
+                                            key={product._id}
+                                            product={product}
+                                        />
+                                    ))}
+                            </div>
+                        )}
+                    </div>
+                </section>
             </div>
 
-             {/*Show Rating Modal */}
+            {/*Show Rating Modal */}
             {showReviewModal && (
                 <RatingModal
                     productName={title}
@@ -201,9 +232,11 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
 
 export async function getServerSideProps({ params }: ProductDetailsParamsType) {
     const { data } = await getProduct(params.slug);
+    const { data: relatedProductsData } = await relatedProducts(data._id);
     return {
         props: {
             product: data,
+            relatedProducts: relatedProductsData,
         },
     };
 }

@@ -66,7 +66,7 @@ const SubCategories = ({ subCategories }: {subCategories: ISubCategories[]}) => 
                         </>
                     ) : (
                         <h2 className="text-center text-xl text-primary">
-                            There is no category
+                            There is no sub-category
                         </h2>
                     )}
                 </Swiper>

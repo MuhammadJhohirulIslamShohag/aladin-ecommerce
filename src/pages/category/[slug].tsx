@@ -1,28 +1,28 @@
-import { getSubCategory } from "@/api/sub-categories";
+import { useEffect, useState } from "react";
 import SectionTitle from "@/components/SectionTitle/SectionTitle";
 import Skeleton from "@/components/Skeleton/Skeleton";
 import React from "react";
 import { IProduct } from "types/product.type";
-import { useEffect, useState } from "react";
 import Product from "@/components/Product/Product";
-import { ISubCategories } from "types/sub-category.type";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
+import { ICategories } from "types/category.type";
+import { getSingleCategory } from "@/api/category";
 
-type ProductBySubCategoryParamsType = {
+type ProductByCategoryParamsType = {
     params: {
         slug: string;
     };
 };
 
-type ProductBySubCategoryPropsType = {
+type ProductByCategoryPropsType = {
     products: IProduct[];
-    subCategory: ISubCategories;
+    category: ICategories;
 };
 
-const ProductBySubCategory = ({
+const ProductByCategory = ({
     products,
-    subCategory,
-}: ProductBySubCategoryPropsType) => {
+    category,
+}: ProductByCategoryPropsType) => {
     const [productsData, setProductsData] = useState<IProduct[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -36,27 +36,27 @@ const ProductBySubCategory = ({
 
     return (
         <MainLayout>
-            <div className="container mt-10">
+            <div className="container mt-12">
                 <SectionTitle
                     title={`${
                         productsData?.length > 1 ? "Products" : "Product"
-                    } By The Sub Category of "${subCategory.name}"`}
+                    } By The Category of "${category?.name}"`}
                 />
                 {loading ? (
                     <div className="grid mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
                         <Skeleton numbers={3} />
                     </div>
-                ) : productsData && productsData.length < 1 ? (
-                    <div className="h-80 flex item-center">
+                ) : productsData && productsData?.length < 1 ? (
+                    <div className="h-80 flex items-center justify-center">
                         <p className="text-center text-xl text-primary">
-                            No Product Found By The {subCategory.name}
+                            No Product Found By The {category.name}
                         </p>
                     </div>
                 ) : (
                     <div className="grid  mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
                         {productsData &&
-                            productsData.length &&
-                            productsData.map((product: any) => (
+                            productsData?.length &&
+                            productsData?.map((product: IProduct) => (
                                 <Product key={product._id} product={product} />
                             ))}
                     </div>
@@ -68,14 +68,14 @@ const ProductBySubCategory = ({
 
 export async function getServerSideProps({
     params,
-}: ProductBySubCategoryParamsType) {
-    const { data } = await getSubCategory(params.slug);
+}: ProductByCategoryParamsType) {
+    const { data } = await getSingleCategory(params.slug);
     return {
         props: {
-            products: data.subCategoryProduct,
-            subCategory: data.subCategory,
+            products: data.products,
+            category: data.category,
         },
     };
 }
 
-export default ProductBySubCategory;
+export default ProductByCategory;
