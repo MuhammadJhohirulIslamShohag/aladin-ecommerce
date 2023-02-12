@@ -47,7 +47,7 @@ const WishLists = () => {
     const handleAddCart = (product: any) => {
         // create cart array
         let carts = [];
-        // // checking available window or not
+        //checking available window or not
         if (typeof window !== "undefined") {
             // checking already carts to the window localStorage
             let cartsFromLocalStorage: string | null =

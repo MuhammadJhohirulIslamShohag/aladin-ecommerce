@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
@@ -169,12 +169,12 @@ const ShoppingCarts = ({ openShoppingCart, setOpenShoppingCart }: any) => {
                                                     <p>{`$${getTotalPrice()}`}</p>
                                                 </div>
                                                 <div className="mt-6">
-                                                    <a
-                                                        href="#"
+                                                    <Link
+                                                        href="/cart"
                                                         className="flex transition-all items-center justify-center rounded-md border border-primary bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-transparent hover:text-primary"
                                                     >
                                                         Checkout
-                                                    </a>
+                                                    </Link>
                                                 </div>
                                                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                                                     <p>

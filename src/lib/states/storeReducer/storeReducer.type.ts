@@ -3,6 +3,9 @@ export enum StoreActionType {
     LOGOUT_USER = "LOGOUT_USER",
     ADD_TO_CART = "ADD_TO_CART",
     SEARCH_FILTER_VALUE = "SEARCH_FILTER_VALUE",
+    CASH_ON_DELIVERY = "CASH_ON_DELIVERY",
+    ADD_SHIPPING_ADDRESS = "ADD_SHIPPING_ADDRESS",
+    ADD_COUPON = "ADD_COUPON",
 }
 
 interface UserType {
@@ -24,7 +27,10 @@ interface CartType {
 export type StoreDataType = {
     user: UserType | null;
     carts: CartType[];
-    text:string
+    text: string;
+    isCashOnDelivery: boolean;
+    isCouponed: boolean;
+    shippingAddress: {};
 };
 
 export interface StoreAction {

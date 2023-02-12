@@ -8,6 +8,9 @@ export const initialState: StoreDataType = {
     user: null,
     carts: [],
     text: "",
+    isCashOnDelivery:false,
+    shippingAddress:{},
+    isCouponed:false
 };
 
 //  to add data from window local storage to the initial state
@@ -37,6 +40,21 @@ export const storeReducer = (
             return {
                 ...state,
                 carts: action.payload,
+            };
+        case StoreActionType.ADD_SHIPPING_ADDRESS:
+                return {
+                    ...state,
+                    shippingAddress: action.payload,
+                };
+        case StoreActionType.ADD_COUPON:
+                return {
+                    ...state,
+                    isCouponed: action.payload,
+                };
+        case StoreActionType.CASH_ON_DELIVERY:
+            return {
+                ...state,
+                isCashOnDelivery: action.payload,
             };
         case StoreActionType.SEARCH_FILTER_VALUE:
             return { ...state, text: action.payload };
