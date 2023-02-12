@@ -1,18 +1,27 @@
-import { GetServerSideProps } from "next";
-import MainLayout from "@/layouts/MainLayout/MainLayout";
-import Head from "next/head";
-import NewArrivals from "@/components/Home/NewArrivals/NewArrivals";
-import Banner from "@/components/Home/Banner/Banner";
+import { getListOfCategory } from "@/api/category";
 import { getProductsBySort } from "@/api/products";
-import { IProduct } from "./../../types/product.type";
+import Banner from "@/components/Home/Banner/Banner";
 import BestSellers from "@/components/Home/BestSellers/BestSellers";
+import Categories from "@/components/Home/SubCategories/SubCategories";
+import NewArrivals from "@/components/Home/NewArrivals/NewArrivals";
+import Services from "@/components/Home/Services/Services";
+import MainLayout from "@/layouts/MainLayout/MainLayout";
+import { GetServerSideProps } from "next";
+import Head from "next/head";
+import { IProduct } from "./../../types/product.type";
+import { getAllSubCategories } from "@/api/sub-categories";
 
 type PropsType = {
     products: IProduct[];
     bestSellerProducts: IProduct[];
+    subCategories: any;
 };
 
-export default function Home({ products, bestSellerProducts }: PropsType) {
+export default function Home({
+    products,
+    bestSellerProducts,
+    subCategories,
+}: PropsType) {
     return (
         <>
             <Head>
@@ -29,6 +38,8 @@ export default function Home({ products, bestSellerProducts }: PropsType) {
             </Head>
             <MainLayout>
                 <Banner />
+                <Services />
+                <Categories subCategories={subCategories} />
                 <NewArrivals products={products} />
                 <BestSellers products={bestSellerProducts} />
             </MainLayout>
@@ -42,10 +53,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
         "sold",
         "desc"
     );
+    const { data: subCategoriesData } = await getAllSubCategories();
     return {
         props: {
             products: data,
             bestSellerProducts: bestSellerProductData,
+            subCategories: subCategoriesData,
         },
     };
 };

@@ -1,4 +1,5 @@
 import { Navigation, Pagination } from "swiper";
+import Link from "next/link";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import CustomButton from "../../UI/CustomButton/CustomButton";
@@ -22,7 +23,9 @@ const Banner = () => {
             >
                 <SwiperSlide>
                     <div
-                        style={{ backgroundImage: `url(/static/images/banner/laptop.jpg)` }}
+                        style={{
+                            backgroundImage: `url(/static/images/banner/laptop.jpg)`,
+                        }}
                         className="bg-contain md:bg-cover sm:bg-cover z-20 bg-no-repeat bg-left md:bg-center w-full h-[444px] sm:h-[380px] flex items-center justify-center"
                     >
                         <div className="text-center">
@@ -32,15 +35,19 @@ const Banner = () => {
                             <h2 className="text-5xl sm:text-3xl text-primary w-[34rem] sm:w-64 ">
                                 Smartest and Affordable Devices
                             </h2>
-                            <CustomButton className="mt-10 sm:mt-5">
-                                Shop Now
-                            </CustomButton>
+                            <Link href="/shop">
+                                <CustomButton className="mt-10 sm:mt-5">
+                                    Shop Now
+                                </CustomButton>
+                            </Link>
                         </div>
                     </div>
                 </SwiperSlide>
                 <SwiperSlide>
                     <div
-                        style={{ backgroundImage: `url(/static/images/banner/laptop1Banner.jpg)` }}
+                        style={{
+                            backgroundImage: `url(/static/images/banner/laptop1Banner.jpg)`,
+                        }}
                         className="bg-contain md:bg-cover sm:bg-cover z-20 bg-no-repeat bg-left md:bg-center w-full h-[444px] sm:h-[380px] flex items-center justify-center"
                     >
                         <div className="text-center">
@@ -50,9 +57,11 @@ const Banner = () => {
                             <h2 className="text-5xl sm:text-3xl text-primary w-[34rem] sm:w-64">
                                 Smartest and Affordable Devices
                             </h2>
-                            <CustomButton className="mt-10 sm:mt-5">
-                                Shop Now
-                            </CustomButton>
+                            <Link href="/shop">
+                                <CustomButton className="mt-10 sm:mt-5">
+                                    Shop Now
+                                </CustomButton>
+                            </Link>
                         </div>
                     </div>
                 </SwiperSlide>
