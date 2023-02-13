@@ -414,7 +414,7 @@ const Checkout = () => {
                                             ...loading,
                                             processingOrderLoading: true,
                                         });
-                                        router.push("/user/payment");
+                                        router.push("/cart/checkout/payment");
                                     }}
                                 >
                                     {loading.processingOrderLoading
