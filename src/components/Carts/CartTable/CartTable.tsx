@@ -7,6 +7,7 @@ import Image from "next/image";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import toast from "react-hot-toast";
 const colorArray = ["Green", "Black", "Red", "White"];
+
 const CartTable = ({ product }: any) => {
     const [countNumber, setCountNumber] = useState(product.count);
     const { images, title, shipping, color, brand, price, quantity } = product;

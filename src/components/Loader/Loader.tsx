@@ -1,6 +1,10 @@
 import React from "react";
 
-const Loader = ({height}) => {
+type LoaderPropType = {
+    height?:string
+};
+
+const Loader = ({height}:LoaderPropType) => {
     return (
         <div className={`text-center ${height ? height:"h-96"} w-full flex items-center justify-center`}>
             <div role="status">

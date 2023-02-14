@@ -42,7 +42,7 @@ const StripeCheckout = () => {
     const handleChange = async (event: StripeCardElementChangeEvent) => {
         // Listen for changes in the CardElement
         // and display any errors as the customer types their card details
-        setDisabled(event.empty); // button is diabled when pay is error
+        setDisabled(event.empty); // button is disabled when pay is error
         setError(event.error ? event.error.message : "");
     };
 

@@ -65,9 +65,6 @@ const ProductDetails = ({
         }
     }, [user, _id]);
 
-    // const loadWishList = (user) => {
-
-    // }
     const isAddToCart = carts.filter((cart: any) => cart._id === _id);
     const objProduct = {
         ...product,
