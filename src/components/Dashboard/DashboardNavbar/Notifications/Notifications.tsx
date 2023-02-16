@@ -5,7 +5,6 @@ import Notification from "./Notification";
 import { NotificationType } from "./Notification.types";
 
 const Notifications = ({ showNotification }:{showNotification:boolean} ) => {
-    console.log(notificationsData)
     return (
         <div
             className={`z-50 absolute origin-top-right transition-all top-6 max-w-lg w-96 max-h-[80vh] right-0 overflow-y-auto my-4 overflow-hidden text-base list-none bg-white divide-y divide-gray-100 rounded  shadow-lg shadow-gray-200 ${

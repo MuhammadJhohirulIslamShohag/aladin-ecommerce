@@ -106,7 +106,7 @@ const DashboardNavbar = () => {
                             <div className="w-10 rounded-full">
                                 {user !== null && (
                                     <Image
-                                        src={user && user?.image}
+                                        src={"/doc"}
                                         alt={user?.fullName}
                                         width={100}
                                         height={100}
