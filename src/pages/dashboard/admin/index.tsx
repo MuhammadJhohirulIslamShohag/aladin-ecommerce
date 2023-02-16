@@ -12,15 +12,18 @@ import { GetServerSideProps } from "next";
 import { getProductsBySort } from "@/api/products";
 import { allUsers, getOrders } from "@/api/admin";
 import { IProduct } from "types/product.type";
+import RecentOrder from "@/components/Dashboard/Admin/Dashborad/RecentOrder/RecentOrders";
+import RecentProduct from "@/components/Dashboard/Admin/Dashborad/RecentProduct/RecentProducts";
+import RecentUsers from "@/components/Dashboard/Admin/Dashborad/RecentUsers/RecentUsers";
+import Geography from "@/components/Dashboard/Admin/Dashborad/Geography/Geography";
 
 type DashboardPropType = {
     products: IProduct[];
 };
-export default function Dashboard({ products }: DashboardPropType){
+export default function Dashboard({ products }: DashboardPropType) {
     const [fetching, setFetching] = useState(true);
     const [users, setUsers] = useState([]);
     const [orders, setOrders] = useState<any[]>([]);
-    const [totalEarning, setTotalEarning] = useState(0);
     const { state } = useStoreContext();
     const { user } = state;
 
@@ -28,7 +31,6 @@ export default function Dashboard({ products }: DashboardPropType){
         loadingAllUsers();
         loadingOrders();
         setFetching(false);
-       
     }, [user]);
 
     // loading all users
@@ -36,7 +38,7 @@ export default function Dashboard({ products }: DashboardPropType){
         try {
             setFetching(true);
             if (user !== null && user.token) {
-                const data  = await allUsers(user.token);
+                const data = await allUsers(user.token);
                 setUsers(data.data);
             }
         } catch (error) {
@@ -48,15 +50,14 @@ export default function Dashboard({ products }: DashboardPropType){
         try {
             setFetching(true);
             if (user !== null && user.token) {
-                const data  = await getOrders(user.token);
+                const data = await getOrders(user.token);
                 setOrders(data.data);
             }
         } catch (error) {
             console.log(error);
         }
     };
-    
-   
+
     return (
         <DashboardLayout>
             {fetching ? (
@@ -79,9 +80,7 @@ export default function Dashboard({ products }: DashboardPropType){
                             <DashWidget
                                 icon={<MdOutlineProductionQuantityLimits />}
                                 title={"Products"}
-                                account={
-                                    products?.length && products.length
-                                }
+                                account={products?.length && products.length}
                             />
                             <DashWidget
                                 icon={<GiTakeMyMoney />}
@@ -89,14 +88,36 @@ export default function Dashboard({ products }: DashboardPropType){
                                 orders={orders}
                             />
                         </div>
-                        
+                    </section>
+                    
+                     {/* Recent Order And Product Table */}
+                    <section className="mt-10">
+                        <div className="grid grid-cols-12 space-x-3">
+                            <div className="col-span-8">
+                                <RecentOrder  orders={orders}/>
+                            </div>
+                            <div className="col-span-4">
+                                <RecentProduct products={products}/>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Recent Users And Geography */}
+                    <section className="mt-10">
+                        <div className="grid grid-cols-12 space-x-3">
+                            <div className="col-span-6">
+                                <Geography/>
+                            </div>
+                            <div className="col-span-6">
+                               <RecentUsers users={users}/>
+                            </div>
+                        </div>
                     </section>
                 </div>
             )}
-
         </DashboardLayout>
     );
-};
+}
 
 export const getServerSideProps: GetServerSideProps = async () => {
     const { data } = await getProductsBySort("createdAt", "desc");
@@ -106,6 +127,3 @@ export const getServerSideProps: GetServerSideProps = async () => {
         },
     };
 };
-
-
-
