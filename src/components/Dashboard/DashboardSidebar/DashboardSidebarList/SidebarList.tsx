@@ -17,6 +17,7 @@ type SidebarListPropType = {
 const SidebarList = ({ toggleAdminSidebar }:SidebarListPropType) => {
     const [openProduct, setOpenProduct] = useState<boolean>(false);
     const [openCategories, setOpenCategories] = useState<boolean>(false);
+    const [openSubCategories, setOpenSubCategories] = useState<boolean>(false);
     const [openAllUsers, setOpenAllUsers] = useState<boolean>(false);
 
     const { dispatch, logOut } = useStoreContext();
@@ -82,12 +83,30 @@ const SidebarList = ({ toggleAdminSidebar }:SidebarListPropType) => {
                     isDropdownList
                 >
                     <SideBarDropdownListItem
-                        dropdownNavigationLink="/dashboard/seller/allCategories"
+                        dropdownNavigationLink="/dashboard/admin/categories"
                         name="All Categories"
                     />
                     <SideBarDropdownListItem
-                        dropdownNavigationLink="/dashboard/seller/addCategories"
+                        dropdownNavigationLink="/dashboard/admin/categories/addCategory"
                         name="Add Category"
+                    />
+                </SideBarListItem>
+                <SideBarListItem
+                    open={openSubCategories}
+                    setOpen={setOpenSubCategories}
+                    icon={<BiCategory className="h-[19px] w-[19px]" />}
+                    toggleAdminSidebar={toggleAdminSidebar}
+                    dropdownMainMenuName="SubCategories"
+                    tooltipName="SubCategories"
+                    isDropdownList
+                >
+                    <SideBarDropdownListItem
+                        dropdownNavigationLink="/dashboard/admin/subCategories"
+                        name="All SubCategory"
+                    />
+                    <SideBarDropdownListItem
+                        dropdownNavigationLink="/dashboard/admin/subCategories/addSubCategory"
+                        name="Add SubCategory"
                     />
                 </SideBarListItem>
             

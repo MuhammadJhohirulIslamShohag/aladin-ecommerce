@@ -1,7 +1,7 @@
 export interface ISubCategories {
     name: string;
     slug: string;
-    images?: {
+    image?: {
         url: string;
         public_id: string;
     };
