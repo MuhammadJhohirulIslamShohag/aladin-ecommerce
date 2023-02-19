@@ -5,14 +5,14 @@ import {
     flexRender,
     getCoreRowModel,
 } from "@tanstack/react-table";
-import { ICustomers } from "types/customers.type";
-import { CustomerColumn } from "./CustomerColumn";
 import TablePagination from "@/components/TablePagination/TablePagination";
+import { IOrder } from "types/order.types";
+import { OrdersColumn } from "./OrdersColumn";
 
-const CustomerTable = ({ data }: { data: ICustomers[] }) => {
+const OrdersTable = ({ data }: { data: IOrder[] }) => {
     console.log(data, "data");
-    const columns = React.useMemo<ColumnDef<ICustomers>[]>(
-        () => CustomerColumn,
+    const columns = React.useMemo<ColumnDef<IOrder>[]>(
+        () => OrdersColumn,
         []
     );
 
@@ -26,7 +26,7 @@ const CustomerTable = ({ data }: { data: ICustomers[] }) => {
             <div className="flex justify-between px-4 py-3">
                 <div>
                     <h6 className="text-gray-900 text-lg font-bold">
-                        Customers
+                        All Orders
                     </h6>
                 </div>
                 <div className="text-gray-500 text-sm font-bold hover:text-green-500 transition-all cursor-pointer">
@@ -93,4 +93,4 @@ const CustomerTable = ({ data }: { data: ICustomers[] }) => {
     );
 };
 
-export default CustomerTable;
+export default OrdersTable;
