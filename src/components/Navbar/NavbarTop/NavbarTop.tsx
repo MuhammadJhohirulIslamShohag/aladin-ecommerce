@@ -59,6 +59,12 @@ const NavbarTop: React.FC = (): JSX.Element => {
                                         Profile
                                     </DropdownListItem>
                                     <DropdownListItem
+                                        link="/dashboard/admin"
+                                        className="text-primary hover:text-success"
+                                    >
+                                        Dashboard
+                                    </DropdownListItem>
+                                    <DropdownListItem
                                         link="/wish-list"
                                         className="text-primary hover:text-success"
                                     >

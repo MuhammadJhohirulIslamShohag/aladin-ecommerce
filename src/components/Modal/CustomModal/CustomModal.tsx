@@ -5,8 +5,9 @@ type CustomModalPropType = {
     title: string;
     closeModal: () => void;
     handleEditSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-    updateValue:string;
+    updateValue: string;
     setUpdateValue: React.Dispatch<React.SetStateAction<string>>;
+    children?: React.ReactNode;
 };
 const CustomModal = (props: CustomModalPropType) => {
     const {
@@ -16,10 +17,15 @@ const CustomModal = (props: CustomModalPropType) => {
         updateValue,
         title,
         labelName,
+        children,
     } = props;
     return (
         <>
-            <input type="checkbox" id="my-custom-modal" className="modal-toggle" />
+            <input
+                type="checkbox"
+                id="my-custom-modal"
+                className="modal-toggle"
+            />
             <div className="modal">
                 <div className="modal-box relative">
                     <label
@@ -46,7 +52,7 @@ const CustomModal = (props: CustomModalPropType) => {
                             onChange={(e) => setUpdateValue(e.target.value)}
                             placeholder="Leave a update here"
                         />
-
+                        {children}
                         <div className="mt-5">
                             <input
                                 type="submit"

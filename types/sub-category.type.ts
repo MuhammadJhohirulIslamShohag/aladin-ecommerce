@@ -1,3 +1,5 @@
+import { ICategories } from "./category.type";
+
 export interface ISubCategories {
     name: string;
     slug: string;
@@ -6,7 +8,7 @@ export interface ISubCategories {
         public_id: string;
     };
     createdAt: Date;
-    parent: string;
+    parent: ICategories;
     updatedAt: Date;
     __v: number;
     _id: string;
