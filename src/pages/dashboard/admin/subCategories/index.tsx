@@ -3,6 +3,8 @@ import {
     getAllSubCategories,
     createSubCategory,
     deleteSubCategory,
+    updateSubCategory,
+    getSubCategory,
 } from "@/api/sub-categories";
 import SubCategoryTable from "@/components/Dashboard/Admin/SubCategoryTable/SubCategoryTable";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
@@ -11,14 +13,19 @@ import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { getListOfCategory } from "@/api/category";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
+import CustomModal from "@/components/Modal/CustomModal/CustomModal";
 
 const AllSubCategory = () => {
-    const [subCategoryName, setSubCategoryName] = useState("");
+    const [subCategoryName, setSubCategoryName] = useState<string>("");
+    const [updateSubCategoryName, setUpdateSubCategoryName] =
+        useState<string>("");
+    const [subCategorySlug, setSubCategorySlug] = useState<string>("");
+    const [parentCategory, setParentCategory] = useState<string>("");
+    const [openModal, setOpenModal] = useState<boolean>(false);
     const [subCategories, setSubCategories] = useState<ISubCategories[]>([]);
     const [categories, setCategories] = useState([]);
-    const [parentCategory, setParentCategory] = useState("");
-    const [keyword, setKeyword] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [keyword, setKeyword] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
     const { state } = useStoreContext();
     const { user } = state;
 
@@ -60,6 +67,48 @@ const AllSubCategory = () => {
             });
     };
 
+    // handle update category
+    const closeModal = () => {
+        setOpenModal(false);
+        setUpdateSubCategoryName("");
+    }
+    const handleEditSubCategory = (slug: string) => {
+        setOpenModal(true);
+        getSubCategory(slug)
+            .then((res) => {
+                setUpdateSubCategoryName(res.data.subCategory.name);
+                setParentCategory(res.data.subCategory.parent);
+                setSubCategorySlug(res.data.subCategory.slug);
+               
+            })
+            .catch((error) => console.log(error.message));
+    };
+    const handleUpdateSubmit = async (
+        event: React.FormEvent<HTMLFormElement>
+    ) => {
+        event.preventDefault();
+        setLoading(true);
+        updateSubCategory(
+            user!.token,
+            updateSubCategoryName,
+            parentCategory,
+            subCategorySlug
+        )
+            .then((res) => {
+                toast.success(`${res.data.name} Sub-Category Updated!`);
+                setLoading(false);
+                allSubCategories();
+                closeModal();
+            })
+            .catch((error) => {
+                if (error.response.status === 400) {
+                    toast.error("Sub-Category Updating Failed!");
+                }
+                setLoading(false);
+            });
+    };
+
+    // removed Sub Category value
     const handleRemoveSubCategory = async (slug: string) => {
         if (
             window.confirm(
@@ -87,8 +136,20 @@ const AllSubCategory = () => {
                 <SubCategoryTable
                     subCategories={subCategories}
                     handleRemoveSubCategory={handleRemoveSubCategory}
+                    handleEditSubCategory={handleEditSubCategory}
                 />
             </div>
+            {/*Show Update Category Modal */}
+            {openModal && (
+                <CustomModal
+                closeModal={closeModal}
+                    handleEditSubmit={handleUpdateSubmit}
+                    setUpdateValue={setUpdateSubCategoryName}
+                    updateValue={updateSubCategoryName}
+                    title={"Update Sub Category"}
+                    labelName={" Sub-Category Name"}
+                />
+            )}
         </DashboardLayout>
     );
 };

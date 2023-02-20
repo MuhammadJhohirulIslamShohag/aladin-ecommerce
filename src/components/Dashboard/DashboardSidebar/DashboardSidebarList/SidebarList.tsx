@@ -9,12 +9,10 @@ import { useRouter } from "next/router";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 
-
-
 type SidebarListPropType = {
-    toggleAdminSidebar:boolean;  
-}
-const SidebarList = ({ toggleAdminSidebar }:SidebarListPropType) => {
+    toggleAdminSidebar: boolean;
+};
+const SidebarList = ({ toggleAdminSidebar }: SidebarListPropType) => {
     const [openProduct, setOpenProduct] = useState<boolean>(false);
     const [openCategories, setOpenCategories] = useState<boolean>(false);
     const [openSubCategories, setOpenSubCategories] = useState<boolean>(false);
@@ -24,17 +22,16 @@ const SidebarList = ({ toggleAdminSidebar }:SidebarListPropType) => {
 
     const router = useRouter();
 
-
     const handleLogOut = () => {
         logOut()
             .then(() => {
-                router.push("/")
+                router.push("/");
                 dispatch({
                     type: StoreActionType.LOGOUT_USER,
                     payload: null,
                 });
             })
-            .catch((error:any) => {
+            .catch((error: any) => {
                 console.log(error.message);
             });
     };
@@ -42,7 +39,7 @@ const SidebarList = ({ toggleAdminSidebar }:SidebarListPropType) => {
     return (
         <ul className="space-y-2 px-3 ">
             <SideBarListItem
-                navigationLink="/dashboard"
+                navigationLink="/dashboard/admin"
                 tooltipName="Dashboard"
                 toggleAdminSidebar={toggleAdminSidebar}
             >
@@ -50,128 +47,133 @@ const SidebarList = ({ toggleAdminSidebar }:SidebarListPropType) => {
 
                 {!toggleAdminSidebar && <span className="ml-3">Dashboard</span>}
             </SideBarListItem>
-           
-                <SideBarListItem
-                    open={openProduct}
-                    setOpen={setOpenProduct}
-                    icon={
-                        <MdOutlineProductionQuantityLimits className="h-[19px] w-[19px]" />
-                    }
-                    toggleAdminSidebar={toggleAdminSidebar}
-                    dropdownMainMenuName="Products"
-                    isDropdownList
-                    tooltipName="Products"
-                >
-                    <SideBarDropdownListItem
-                        dropdownNavigationLink="/dashboard/seller/allProducts"
-                        name="My Products"
-                    />
-                    <SideBarDropdownListItem
-                        dropdownNavigationLink="/dashboard/seller/addProduct"
-                        name="Add Product"
-                    />
-                </SideBarListItem>
-           
-           
-                <SideBarListItem
-                    open={openCategories}
-                    setOpen={setOpenCategories}
-                    icon={<BiCategory className="h-[19px] w-[19px]" />}
-                    toggleAdminSidebar={toggleAdminSidebar}
-                    dropdownMainMenuName="Categories"
-                    tooltipName="Categories"
-                    isDropdownList
-                >
-                    <SideBarDropdownListItem
-                        dropdownNavigationLink="/dashboard/admin/categories"
-                        name="All Categories"
-                    />
-                    <SideBarDropdownListItem
-                        dropdownNavigationLink="/dashboard/admin/categories/addCategory"
-                        name="Add Category"
-                    />
-                </SideBarListItem>
-                <SideBarListItem
-                    open={openSubCategories}
-                    setOpen={setOpenSubCategories}
-                    icon={<BiCategory className="h-[19px] w-[19px]" />}
-                    toggleAdminSidebar={toggleAdminSidebar}
-                    dropdownMainMenuName="SubCategories"
-                    tooltipName="SubCategories"
-                    isDropdownList
-                >
-                    <SideBarDropdownListItem
-                        dropdownNavigationLink="/dashboard/admin/subCategories"
-                        name="All SubCategory"
-                    />
-                    <SideBarDropdownListItem
-                        dropdownNavigationLink="/dashboard/admin/subCategories/addSubCategory"
-                        name="Add SubCategory"
-                    />
-                </SideBarListItem>
-            
 
-          
-                    <SideBarListItem
-                        navigationLink="/dashboard/buyer/wishlist"
-                        tooltipName="My WishList"
-                        toggleAdminSidebar={toggleAdminSidebar}
-                    >
-                        <FaHeart className="h-[19px] w-[19px]" />
-                        {!toggleAdminSidebar && (
-                            <span className="flex-1 ml-3 whitespace-nowrap">
-                                My WishList
-                            </span>
-                        )}
-                    </SideBarListItem>
-                    <SideBarListItem
-                        navigationLink="/dashboard/buyer/orders"
-                        tooltipName="My Orders"
-                        toggleAdminSidebar={toggleAdminSidebar}
-                    >
-                        <FaShoppingBag className="h-[19px] w-[19px]" />
-                        {!toggleAdminSidebar && (
-                            <span className="flex-1 ml-3 whitespace-nowrap">
-                                My Orders
-                            </span>
-                        )}
-                    </SideBarListItem>
-        
+            <SideBarListItem
+                open={openProduct}
+                setOpen={setOpenProduct}
+                icon={
+                    <MdOutlineProductionQuantityLimits className="h-[19px] w-[19px]" />
+                }
+                toggleAdminSidebar={toggleAdminSidebar}
+                dropdownMainMenuName="Products"
+                isDropdownList
+                tooltipName="Products"
+            >
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/products"
+                    name="My Products"
+                />
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/addProduct"
+                    name="Add Product"
+                />
+            </SideBarListItem>
 
-           
-                <SideBarListItem
-                    navigationLink="/dashboard/seller/myBuyers"
-                    tooltipName="My Buyers"
-                    toggleAdminSidebar={toggleAdminSidebar}
-                >
-                    <FaUsers className="h-[19px] w-[19px]" />
-                    {!toggleAdminSidebar && (
-                        <span className="flex-1 ml-3 whitespace-nowrap">
-                            My Buyers
-                        </span>
-                    )}
-                </SideBarListItem>
-          
-           
-                <SideBarListItem
-                    open={openAllUsers}
-                    setOpen={setOpenAllUsers}
-                    icon={<FaUsers className="h-[19px] w-[19px]" />}
-                    toggleAdminSidebar={toggleAdminSidebar}
-                    dropdownMainMenuName="All Users"
-                    tooltipName="All Users"
-                    isDropdownList
-                >
-                    <SideBarDropdownListItem
-                        dropdownNavigationLink="/dashboard/admin/allSellers"
-                        name="All Sellers"
-                    />
-                    <SideBarDropdownListItem
-                        dropdownNavigationLink="/dashboard/admin/allBuyers"
-                        name="All Buyers"
-                    />
-                </SideBarListItem>
-          
+            <SideBarListItem
+                open={openCategories}
+                setOpen={setOpenCategories}
+                icon={<BiCategory className="h-[19px] w-[19px]" />}
+                toggleAdminSidebar={toggleAdminSidebar}
+                dropdownMainMenuName="Categories"
+                tooltipName="Categories"
+                isDropdownList
+            >
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/categories"
+                    name="All Categories"
+                />
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/categories/addCategory"
+                    name="Add Category"
+                />
+            </SideBarListItem>
+            <SideBarListItem
+                open={openSubCategories}
+                setOpen={setOpenSubCategories}
+                icon={<BiCategory className="h-[19px] w-[19px]" />}
+                toggleAdminSidebar={toggleAdminSidebar}
+                dropdownMainMenuName="SubCategories"
+                tooltipName="SubCategories"
+                isDropdownList
+            >
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/subCategories"
+                    name="All SubCategory"
+                />
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/subCategories/addSubCategory"
+                    name="Add SubCategory"
+                />
+            </SideBarListItem>
+
+            <SideBarListItem
+                navigationLink="/dashboard/buyer/wishlist"
+                tooltipName="My WishList"
+                toggleAdminSidebar={toggleAdminSidebar}
+            >
+                <FaHeart className="h-[19px] w-[19px]" />
+                {!toggleAdminSidebar && (
+                    <span className="flex-1 ml-3 whitespace-nowrap">
+                        My WishList
+                    </span>
+                )}
+            </SideBarListItem>
+            <SideBarListItem
+                navigationLink="/dashboard/admin/customers"
+                tooltipName="Customers"
+                toggleAdminSidebar={toggleAdminSidebar}
+            >
+                <FaShoppingBag className="h-[19px] w-[19px]" />
+                {!toggleAdminSidebar && (
+                    <span className="flex-1 ml-3 whitespace-nowrap">
+                        Customers
+                    </span>
+                )}
+            </SideBarListItem>
+            <SideBarListItem
+                navigationLink="/dashboard/admin/orders"
+                tooltipName="Orders"
+                toggleAdminSidebar={toggleAdminSidebar}
+            >
+                <FaShoppingBag className="h-[19px] w-[19px]" />
+                {!toggleAdminSidebar && (
+                    <span className="flex-1 ml-3 whitespace-nowrap">
+                        Orders
+                    </span>
+                )}
+            </SideBarListItem>
+
+            <SideBarListItem
+                navigationLink="/dashboard/seller/myBuyers"
+                tooltipName="My Buyers"
+                toggleAdminSidebar={toggleAdminSidebar}
+            >
+                <FaUsers className="h-[19px] w-[19px]" />
+                {!toggleAdminSidebar && (
+                    <span className="flex-1 ml-3 whitespace-nowrap">
+                        My Buyers
+                    </span>
+                )}
+            </SideBarListItem>
+
+            <SideBarListItem
+                open={openAllUsers}
+                setOpen={setOpenAllUsers}
+                icon={<FaUsers className="h-[19px] w-[19px]" />}
+                toggleAdminSidebar={toggleAdminSidebar}
+                dropdownMainMenuName="All Users"
+                tooltipName="All Users"
+                isDropdownList
+            >
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/allSellers"
+                    name="All Sellers"
+                />
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/allBuyers"
+                    name="All Buyers"
+                />
+            </SideBarListItem>
 
             <SideBarListItem
                 navigationLink="/dashboard/profile"
@@ -204,7 +206,10 @@ const SidebarList = ({ toggleAdminSidebar }:SidebarListPropType) => {
             >
                 <MdLogout className="h-[19px] w-[19px]" />
                 {!toggleAdminSidebar && (
-                    <span onClick={handleLogOut} className="flex-1 ml-3 cursor-pointer whitespace-nowrap">
+                    <span
+                        onClick={handleLogOut}
+                        className="flex-1 ml-3 cursor-pointer whitespace-nowrap"
+                    >
                         LogOut
                     </span>
                 )}

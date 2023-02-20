@@ -4,10 +4,13 @@ import SubCategoryRow from "./SubCategoryRow";
 
 type SubCategoryTablePropType = {
     subCategories: ISubCategories[];
-    handleRemoveSubCategory: (slug:string) => void;
-}
-const SubCategoryTable = (props:SubCategoryTablePropType) => {
-    const {subCategories,handleRemoveSubCategory} = props;
+    handleRemoveSubCategory: (slug: string) => void;
+    handleEditSubCategory: (slug: string) => void;
+};
+const SubCategoryTable = (props: SubCategoryTablePropType) => {
+    const { subCategories, handleRemoveSubCategory, handleEditSubCategory } =
+        props;
+
     return (
         <div className="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl shadow-md  rounded-2xl bg-clip-border ">
             <div className="px-4 py-3">
@@ -23,9 +26,6 @@ const SubCategoryTable = (props:SubCategoryTablePropType) => {
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
                             <th scope="col" className="px-6 py-3">
-                                Image
-                            </th>
-                            <th scope="col" className="px-6 py-3">
                                 Name
                             </th>
                             <th scope="col" className="px-6 py-3">
@@ -39,7 +39,12 @@ const SubCategoryTable = (props:SubCategoryTablePropType) => {
                                 <SubCategoryRow
                                     key={subCategory._id}
                                     subCategory={subCategory}
-                                    handleRemoveSubCategory={handleRemoveSubCategory}
+                                    handleRemoveSubCategory={
+                                        handleRemoveSubCategory
+                                    }
+                                    handleEditSubCategory={
+                                        handleEditSubCategory
+                                    }
                                 />
                             ))}
                     </tbody>
