@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    getPaginationRowModel,
     useReactTable,
     ColumnDef,
     flexRender,
@@ -11,14 +12,12 @@ import { OrdersColumn } from "./OrdersColumn";
 
 const OrdersTable = ({ data }: { data: IOrder[] }) => {
     console.log(data, "data");
-    const columns = React.useMemo<ColumnDef<IOrder>[]>(
-        () => OrdersColumn,
-        []
-    );
 
+    const columns = React.useMemo<ColumnDef<IOrder>[]>(() => OrdersColumn, []);
     const table = useReactTable({
         data,
         columns,
+        getPaginationRowModel: getPaginationRowModel(),
         getCoreRowModel: getCoreRowModel(),
     });
     return (
@@ -29,8 +28,20 @@ const OrdersTable = ({ data }: { data: IOrder[] }) => {
                         All Orders
                     </h6>
                 </div>
-                <div className="text-gray-500 text-sm font-bold hover:text-green-500 transition-all cursor-pointer">
-                    View All
+                <div>
+                    <select
+                        value={table.getState().pagination.pageSize}
+                        onChange={(e) => {
+                            table.setPageSize(Number(e.target.value));
+                        }}
+                        className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-32 p-2 text-black font-semibold mt-1"
+                    >
+                        {[10, 20, 30, 40, 50].map((pageSize) => (
+                            <option key={pageSize} value={pageSize}>
+                                Show {pageSize}
+                            </option>
+                        ))}
+                    </select>
                 </div>
             </div>
             <div className="relative overflow-x-auto sm:rounded-lg">
@@ -86,6 +97,7 @@ const OrdersTable = ({ data }: { data: IOrder[] }) => {
                     </tbody>
                 </table>
             </div>
+            {/* Pagination table page bottom */}
             <div>
                 <TablePagination table={table} />
             </div>
