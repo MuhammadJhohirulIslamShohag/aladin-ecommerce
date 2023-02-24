@@ -5,7 +5,7 @@ type FormGroupType = {
     inputName: string;
     register: any;
     errorField?: any;
-    inputType: string;
+    inputType?: string;
     placeholder?: string;
     required?: string;
     isReadOnly?: boolean;
@@ -13,6 +13,7 @@ type FormGroupType = {
     defaultValue?: string;
     isRequirePattern?: boolean;
     requirePattern?: any;
+    isTextArea?: boolean;
 };
 
 const FormGroup = ({
@@ -28,11 +29,12 @@ const FormGroup = ({
     defaultValue,
     isRequirePattern = false,
     requirePattern,
+    isTextArea = false,
 }: FormGroupType) => {
     return (
         <div className="mb-3">
             <label
-                htmlFor="email"
+                htmlFor={inputName}
                 className="block mb-2 text-sm font-medium text-primary"
             >
                 {labelName}
@@ -84,6 +86,15 @@ const FormGroup = ({
                     placeholder={placeholder}
                     className="input input-bordered input-success w-full text-primary"
                 />
+            )}
+            {isTextArea && (
+                <textarea
+                    {...register(inputName, {
+                        required: `${required}`,
+                    })}
+                    className="textarea textarea-success w-full text-primary"
+                    placeholder={placeholder}
+                ></textarea>
             )}
             {errorField && (
                 <p className="text-red-600">{errorField?.message}</p>

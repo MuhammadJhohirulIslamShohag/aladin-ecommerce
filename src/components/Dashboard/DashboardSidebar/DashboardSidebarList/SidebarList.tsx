@@ -64,7 +64,7 @@ const SidebarList = ({ toggleAdminSidebar }: SidebarListPropType) => {
                     name="My Products"
                 />
                 <SideBarDropdownListItem
-                    dropdownNavigationLink="/dashboard/admin/addProduct"
+                    dropdownNavigationLink="/dashboard/admin/products/addProduct"
                     name="Add Product"
                 />
             </SideBarListItem>
