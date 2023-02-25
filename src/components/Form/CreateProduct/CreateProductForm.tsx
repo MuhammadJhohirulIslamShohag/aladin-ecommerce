@@ -1,19 +1,16 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import Select, { OnChangeValue } from "react-select";
-import makeAnimated from "react-select/animated";
-import { ICategories } from "types/category.type";
+import { OnChangeValue } from "react-select";
 import { ISubCategories } from "types/sub-category.type";
 import FormGroup from "../FormGroup";
 import ImageFileUploadForm from "../ImageFileUploadForm/ImageFileUploadForm";
+import MultiSelect from "../MultiSelect";
 import SelectInput from "../SelectInput";
 import { IFormInput } from "./FormInput.types";
 
-const animatedComponents = makeAnimated();
 
 type CreateProductFormType = {
     handleAddProduct: any;
-    handleChange: any;
     setLoading: any;
     handleChangeCategory: any;
     values: any;
@@ -22,17 +19,10 @@ type CreateProductFormType = {
     isShow: boolean;
     loading: boolean;
 };
-const customStyles = {
-    option: (provided: any, state: any) => ({
-        ...provided,
-        borderBottom: "1px solid transparent",
-        color: state.isSelected ? "#fff" : "black",
-    }),
-};
+
 const CreateProductForm = (props: CreateProductFormType) => {
     const {
         handleAddProduct,
-        handleChange,
         handleChangeCategory,
         values,
         setValues,
@@ -41,26 +31,21 @@ const CreateProductForm = (props: CreateProductFormType) => {
         loading,
         setLoading,
     } = props;
-    const {
-        title,
-        description,
-        price,
-        quantity,
-        colors,
-        brands,
-        categories,
-        subCategory,
-    } = values;
+
+    const { sizes, colors, brands, categories, subCategory, sizesData,   colorsData, } =
+        values;
     const {
         handleSubmit,
         register,
         formState: { errors },
         reset,
     } = useForm<IFormInput>();
-    console.log(values, loading, "loading");
-
+    console.log(values, "values");
     return (
-        <form onSubmit={handleSubmit((data) => handleAddProduct(data, reset))} className="mt-5">
+        <form
+            onSubmit={handleSubmit((data) => handleAddProduct(data, reset))}
+            className="mt-5"
+        >
             <div className="grid grid-cols-2">
                 <ImageFileUploadForm
                     values={values}
@@ -132,43 +117,17 @@ const CreateProductForm = (props: CreateProductFormType) => {
             </div>
             {isShow && (
                 <div className="mb-6">
-                    <label
-                        htmlFor="subCategory"
-                        className="block mb-2 text-sm font-medium text-primary"
-                    >
-                        Sub Category
-                    </label>
-                    <Select
-                        className="react-select-container bg-white border border-green-300 text-sm rounded-md block  text-black font-semibold"
-                        closeMenuOnSelect={false}
-                        components={animatedComponents}
-                        isMulti
-                        options={subCategories.map((sc) => {
-                            const scObject = {
-                                label: sc.name,
-                                value: sc._id,
-                            };
-                            return scObject;
-                        })}
-                        value={subCategory}
-                        onChange={(
+                    <MultiSelect
+                        dataArray={subCategories}
+                        onChangeHandler={(
                             newValue: OnChangeValue<
                                 { label: string; value: string },
                                 true
                             >
                         ) => setValues({ ...values, subCategory: newValue })}
-                        classNamePrefix="react-select"
-                        placeholder="Select Sub Category"
-                        theme={(theme) => ({
-                            ...theme,
-                            borderRadius: 0,
-                            colors: {
-                                ...theme.colors,
-                                primary25: "#d4d4d8",
-                                primary: "#d4d4d8",
-                            },
-                        })}
-                        styles={customStyles}
+                        valueData={subCategory}
+                        placeholder={"Select the Sub Category"}
+                        multiLabel={"Sub Category"}
                     />
                 </div>
             )}
@@ -185,17 +144,34 @@ const CreateProductForm = (props: CreateProductFormType) => {
                 />
             </div>
             <div className="mb-6">
-                <SelectInput
-                    dataArray={colors}
-                    labelName={"Color"}
-                    inputName={"color"}
-                    register={register}
-                    errorField={errors.color}
-                    required={{
-                        required: "Product Color Is Required!",
-                    }}
+                <MultiSelect
+                    onChangeHandler={(
+                        newValue: OnChangeValue<
+                            { label: string; value: string },
+                            true
+                        >
+                    ) => setValues({ ...values, colors: newValue })}
+                    dataArray={colorsData}
+                    valueData={colors}
+                    placeholder={"Select the Colors"}
+                    multiLabel={"Product Colors"}
                 />
             </div>
+            <div className="mb-6">
+                <MultiSelect
+                    dataArray={sizesData}
+                    onChangeHandler={(
+                        newValue: OnChangeValue<
+                            { label: string; value: string },
+                            true
+                        >
+                    ) => setValues({ ...values, sizes: newValue })}
+                    valueData={sizes}
+                    placeholder={"Select the Sizes"}
+                    multiLabel={"Product Sizes"}
+                />
+            </div>
+
             <div className="mb-6">
                 <SelectInput
                     dataArray={["Yes", "No"]}

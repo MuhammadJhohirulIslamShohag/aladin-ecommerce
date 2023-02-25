@@ -6,6 +6,9 @@ import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { createProduct } from "@/api/products";
 import toast from "react-hot-toast";
 import CreateProductForm from "@/components/Form/CreateProduct/CreateProductForm";
+import { getListOfColor } from "@/api/color";
+import { getListOfSizes } from "@/api/size";
+import { GetServerSideProps } from "next";
 
 const initialValues = {
     title: "",
@@ -15,41 +18,26 @@ const initialValues = {
     shipping: "",
     quantity: 0,
     discount: 0,
-    color: "",
-    colors: ["Green", "Black", "Red", "White"],
+    colors: [],
+    colorsData: [],
+    sizesData: [],
+    sizes:[],
     brand: "",
-    brands: ["Apple", "Life-Digital", "Samsung", "ASUS", "Lenvo", "HP"],
+    brands: ["Apple", "Life-Digital", "Samsung", "ASUS", "Lenovo", "HP"],
     category: "",
     categories: [],
     subCategory: [],
 };
 
-const AddProduct = () => {
-    const [values, setValues] = useState(initialValues);
+const AddProduct = ({categories,colorsData,sizesData}:any) => {
+    const [values, setValues] = useState({...initialValues,categories:categories, colorsData:colorsData, sizesData:sizesData});
     const [subCategories, setSubCategories] = useState([]);
     const [isShow, setIsShow] = useState(false);
     const [loading, setLoading] = useState(false);
     const { state } = useStoreContext();
     const { user } = state;
+    
 
-    useEffect(() => {
-        loadingCategories();
-    }, []);
-
-    const loadingCategories = () => {
-        getListOfCategory().then((res) => {
-            setValues({
-                ...values,
-                categories: res.data,
-            });
-        });
-    };
-    const handleChange = (event: any) => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value,
-        });
-    };
     const handleChangeCategory = (event: any) => {
         console.log(event, "event");
         setValues({
@@ -73,10 +61,16 @@ const AddProduct = () => {
         }
     };
 
-    const handleAddProduct = (data: any, reset:any) => {
+    const handleAddProduct = (data: any, reset: any) => {
         setLoading(true);
         const updateSubCategory = values.subCategory.map(
             (sc: { value: string; label: string }) => sc.value
+        );
+        const updateColors = values.colors.map(
+            (c: { value: string; label: string }) => c.value
+        );
+        const updateSizes = values.sizes.map(
+            (s: { value: string; label: string }) => s.value
         );
         const updatedValues = {
             ...values,
@@ -85,7 +79,8 @@ const AddProduct = () => {
             description: data.description,
             price: data.price,
             quantity: data.quantity,
-            color: data.color,
+            colors: updateColors,
+            sizes: updateSizes,
             brand: data.brand,
             shipping: data.shipping,
             discount: data.discount,
@@ -113,7 +108,6 @@ const AddProduct = () => {
                     </h2>
                     <CreateProductForm
                         handleAddProduct={handleAddProduct}
-                        handleChange={handleChange}
                         handleChangeCategory={handleChangeCategory}
                         subCategories={subCategories}
                         values={values}
@@ -129,3 +123,16 @@ const AddProduct = () => {
 };
 
 export default AddProduct;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+    const { data } = await getListOfCategory();
+    const { data:colorsData } = await getListOfColor();
+    const { data: sizesData } = await getListOfSizes();
+    return {
+        props: {
+            categories: data,
+            colorsData,
+            sizesData
+        },
+    };
+};
