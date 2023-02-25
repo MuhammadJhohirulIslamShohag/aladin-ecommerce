@@ -1,18 +1,20 @@
 import React from "react";
-import Select, { OnChangeValue } from 'react-select';
-import makeAnimated from "react-select/animated";
 import { useForm } from "react-hook-form";
+import Select, { OnChangeValue } from "react-select";
+import makeAnimated from "react-select/animated";
 import { ICategories } from "types/category.type";
 import { ISubCategories } from "types/sub-category.type";
 import FormGroup from "../FormGroup";
+import ImageFileUploadForm from "../ImageFileUploadForm/ImageFileUploadForm";
+import SelectInput from "../SelectInput";
+import { IFormInput } from "./FormInput.types";
 
 const animatedComponents = makeAnimated();
+
 type CreateProductFormType = {
     handleAddProduct: any;
-    handleSubmit:any;
     handleChange: any;
-    register:any;
-    errors:any;
+    setLoading: any;
     handleChangeCategory: any;
     values: any;
     setValues: any;
@@ -20,20 +22,24 @@ type CreateProductFormType = {
     isShow: boolean;
     loading: boolean;
 };
-
+const customStyles = {
+    option: (provided: any, state: any) => ({
+        ...provided,
+        borderBottom: "1px solid transparent",
+        color: state.isSelected ? "#fff" : "black",
+    }),
+};
 const CreateProductForm = (props: CreateProductFormType) => {
     const {
         handleAddProduct,
         handleChange,
         handleChangeCategory,
-        handleSubmit,
         values,
-        errors,
         setValues,
         subCategories,
-        register,
         isShow,
         loading,
+        setLoading,
     } = props;
     const {
         title,
@@ -45,19 +51,24 @@ const CreateProductForm = (props: CreateProductFormType) => {
         categories,
         subCategory,
     } = values;
-    console.log(errors)
+    const {
+        handleSubmit,
+        register,
+        formState: { errors },
+        reset,
+    } = useForm<IFormInput>();
+    console.log(values, loading, "loading");
+
     return (
-        <form onSubmit={handleSubmit(handleAddProduct)} className="mt-5">
+        <form onSubmit={handleSubmit((data) => handleAddProduct(data, reset))} className="mt-5">
             <div className="grid grid-cols-2">
-                <div className="my-5">
-                    <input
-                        type="file"
-                        {...register("productImg", {
-                            required: "product Img Is Required!",
-                        })}
-                        className="file-input file-input-bordered file-input-success w-full max-w-xs"
-                    />
-                </div>
+                <ImageFileUploadForm
+                    values={values}
+                    setValues={setValues}
+                    setLoading={setLoading}
+                    errorField={errors.productImg}
+                    register={register}
+                />
             </div>
             <div className="grid gap-6 mb-6 grid-cols-2">
                 <div>
@@ -78,7 +89,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         inputName={"price"}
                         labelName={"Price"}
                         errorField={errors.price}
-                        inputType={"text"}
+                        inputType={"number"}
                         placeholder={"Enter Your Product Price"}
                         required="Product Price Is Required!"
                     />
@@ -107,35 +118,17 @@ const CreateProductForm = (props: CreateProductFormType) => {
                 </div>
             </div>
             <div className="mb-6">
-                <label
-                    htmlFor="productCategory"
-                    className="block mb-2 text-sm font-medium text-primary"
-                >
-                    Category
-                </label>
-                <select
-                    className="select select-success w-full max-w-xs text-primary text-base"
-                    {...register("productCategory", {
+                <SelectInput
+                    dataArray={categories}
+                    labelName={"Product Category"}
+                    inputName={"productCategory"}
+                    register={register}
+                    errorField={errors.productCategory}
+                    required={{
                         required: "Product Category Is Required!",
-                        onChange: (e:any) => handleChangeCategory(e)
-                    })}
-                >
-                    <option>Select Category</option>
-                    {categories.map((category:any) => (
-                        <option
-                            className="text-sm"
-                            key={category._id}
-                            value={category._id}
-                        >
-                            {category.name}
-                        </option>
-                    ))}
-                </select>
-                {errors.productCategory && (
-                    <p className="text-red-600">
-                        {errors.productCategory?.message}
-                    </p>
-                )}
+                        onChange: (e: any) => handleChangeCategory(e),
+                    }}
+                />
             </div>
             {isShow && (
                 <div className="mb-6">
@@ -146,80 +139,74 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         Sub Category
                     </label>
                     <Select
+                        className="react-select-container bg-white border border-green-300 text-sm rounded-md block  text-black font-semibold"
                         closeMenuOnSelect={false}
                         components={animatedComponents}
                         isMulti
-                        options={subCategories.map(sc=> {
+                        options={subCategories.map((sc) => {
                             const scObject = {
                                 label: sc.name,
-                                value:sc._id
-                            }
+                                value: sc._id,
+                            };
                             return scObject;
                         })}
                         value={subCategory}
-                        onChange={(newValue:OnChangeValue<{ label:string; value:string}, true>) =>
-                            setValues({ ...values, subCategory: newValue})
-                        }
+                        onChange={(
+                            newValue: OnChangeValue<
+                                { label: string; value: string },
+                                true
+                            >
+                        ) => setValues({ ...values, subCategory: newValue })}
+                        classNamePrefix="react-select"
+                        placeholder="Select Sub Category"
+                        theme={(theme) => ({
+                            ...theme,
+                            borderRadius: 0,
+                            colors: {
+                                ...theme.colors,
+                                primary25: "#d4d4d8",
+                                primary: "#d4d4d8",
+                            },
+                        })}
+                        styles={customStyles}
                     />
                 </div>
             )}
             <div className="mb-6">
-                <label
-                    htmlFor="brand"
-                    className="block mb-2 text-sm font-medium text-primary"
-                >
-                    Brand
-                </label>
-                <select
-                    className="select select-success w-full max-w-xs text-primary text-base"
-                    {...register("brand", {
+                <SelectInput
+                    dataArray={brands}
+                    labelName={"Brand"}
+                    inputName={"brand"}
+                    register={register}
+                    errorField={errors.brand}
+                    required={{
                         required: "Product Brand Is Required!",
-                    })}
-                >
-                    <option>Select Brand</option>
-                    {brands.map((brand:string) => (
-                        <option
-                            className="text-sm"
-                            key={brand} 
-                            value={brand}
-                        >
-                            {brand}
-                        </option>
-                    ))}
-                </select>
-                {errors.brand && (
-                    <p className="text-red-600">
-                        {errors.brand?.message}
-                    </p>
-                )}
+                    }}
+                />
             </div>
             <div className="mb-6">
-                <label
-                    htmlFor="color"
-                    className="block mb-2 text-sm font-medium text-primary"
-                >
-                    Color
-                </label>
-                <select
-                    className="select select-success w-full max-w-xs text-primary text-base"
-                   {...register('color', { required: true })}
-                >
-                    <option >Select Color</option>
-                    {colors.map((color:string) => (
-                        <option
-                            className="text-sm"
-                            key={color} 
-                            value={color}
-                        >
-                            {color}
-                        </option>
-                    ))}
-                </select>
-                {errors.color && (
-                    <p className="text-red-600">
-                        {errors.color?.message}
-                    </p>
-                )}
+                <SelectInput
+                    dataArray={colors}
+                    labelName={"Color"}
+                    inputName={"color"}
+                    register={register}
+                    errorField={errors.color}
+                    required={{
+                        required: "Product Color Is Required!",
+                    }}
+                />
+            </div>
+            <div className="mb-6">
+                <SelectInput
+                    dataArray={["Yes", "No"]}
+                    labelName={"Shipping"}
+                    inputName={"shipping"}
+                    register={register}
+                    errorField={errors.shipping}
+                    required={{
+                        required: "Product Shipping Is Required!",
+                    }}
+                />
             </div>
 
             <div>

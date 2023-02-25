@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@avidian/react-modal-image": "^2.5.2",
     "@headlessui/react": "^1.7.9",
     "@hookform/resolvers": "^2.9.11",
     "@next/font": "13.1.6",

@@ -9,6 +9,14 @@
         margin: 0 auto;
     }
 }
+.react-select__control{
+    box-shadow: none !important;
+    border-color:white !important;
+    border-radius: 30px !important;
+}
+.react-select__placeholder {
+    color: black !important;
+}  
 .swiper-button-next,
 .swiper-button-prev {
     color: #000 !important;

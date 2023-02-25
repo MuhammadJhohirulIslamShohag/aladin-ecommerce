@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { getListOfCategory, subCategoryOnCategory } from "@/api/category";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { ICategories } from "types/category.type";
@@ -8,14 +7,14 @@ import { createProduct } from "@/api/products";
 import toast from "react-hot-toast";
 import CreateProductForm from "@/components/Form/CreateProduct/CreateProductForm";
 
-
 const initialValues = {
     title: "",
     description: "",
     images: [],
-    price: "",
+    price: 0,
     shipping: "",
-    quantity: "",
+    quantity: 0,
+    discount: 0,
     color: "",
     colors: ["Green", "Black", "Red", "White"],
     brand: "",
@@ -32,13 +31,6 @@ const AddProduct = () => {
     const [loading, setLoading] = useState(false);
     const { state } = useStoreContext();
     const { user } = state;
-
-    const {
-        handleSubmit,
-        register,
-        formState: { errors },
-        reset,
-    } = useForm();
 
     useEffect(() => {
         loadingCategories();
@@ -59,7 +51,7 @@ const AddProduct = () => {
         });
     };
     const handleChangeCategory = (event: any) => {
-        console.log(event, "event")
+        console.log(event, "event");
         setValues({
             ...values,
             subCategory: [],
@@ -68,7 +60,7 @@ const AddProduct = () => {
         if (event.target.value === "Select Category") {
             setIsShow(false);
         } else {
-            console.log(event.target.value, "target")
+            console.log(event.target.value, "target");
             subCategoryOnCategory(user!.token, event.target.value)
                 .then((res) => {
                     setSubCategories(res.data);
@@ -81,25 +73,36 @@ const AddProduct = () => {
         }
     };
 
-    const handleAddProduct = (data: any) => {
-        setLoading(true); 
-        const b = values.subCategory.map((sc:{value:string; label:string}) => sc.value);
-        
-
-        const a = {...values, subCategory: b}
-        console.log(a,data);
-        // createProduct(user!.token, values)
-        //     .then((res) => {
-        //         setLoading(false);
-        //         window.alert(`${res.data.title} Product Created!`);
-        //         window.location.reload();
-        //     })
-        //     .catch((error: any) => {
-        //         if (error.response.status === 400) {
-        //             toast.error(`${error.data.error}`);
-        //         }
-        //         setLoading(false);
-        //     });
+    const handleAddProduct = (data: any, reset:any) => {
+        // setLoading(true);
+        const updateSubCategory = values.subCategory.map(
+            (sc: { value: string; label: string }) => sc.value
+        );
+        const updatedValues = {
+            ...values,
+            subCategory: updateSubCategory,
+            title: data.productName,
+            description: data.description,
+            price: data.price,
+            quantity: data.quantity,
+            color: data.color,
+            brand: data.brand,
+            shipping: data.shipping,
+            discount: data.discount,
+            category: data.productCategory,
+        };
+        createProduct(user!.token, updatedValues)
+            .then((res) => {
+                setLoading(false);
+                window.alert(`${res.data.title} Product Created!`);
+                reset();
+            })
+            .catch((error: any) => {
+                if (error.response.status === 400) {
+                    toast.error(`${error.data.error}`);
+                }
+                setLoading(false);
+            });
     };
     return (
         <DashboardLayout>
@@ -109,9 +112,6 @@ const AddProduct = () => {
                         Add New Product
                     </h2>
                     <CreateProductForm
-                        handleSubmit={handleSubmit}
-                        register={register}
-                        errors={errors}
                         handleAddProduct={handleAddProduct}
                         handleChange={handleChange}
                         handleChangeCategory={handleChangeCategory}
@@ -120,6 +120,7 @@ const AddProduct = () => {
                         setValues={setValues}
                         isShow={isShow}
                         loading={loading}
+                        setLoading={setLoading}
                     />
                 </div>
             </div>
