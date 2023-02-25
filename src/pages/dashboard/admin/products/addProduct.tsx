@@ -74,7 +74,7 @@ const AddProduct = () => {
     };
 
     const handleAddProduct = (data: any, reset:any) => {
-        // setLoading(true);
+        setLoading(true);
         const updateSubCategory = values.subCategory.map(
             (sc: { value: string; label: string }) => sc.value
         );

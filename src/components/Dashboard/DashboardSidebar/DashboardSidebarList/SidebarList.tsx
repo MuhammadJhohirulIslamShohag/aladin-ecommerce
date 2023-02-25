@@ -15,6 +15,8 @@ type SidebarListPropType = {
 const SidebarList = ({ toggleAdminSidebar }: SidebarListPropType) => {
     const [openProduct, setOpenProduct] = useState<boolean>(false);
     const [openCategories, setOpenCategories] = useState<boolean>(false);
+    const [openColors, setOpenColors] = useState<boolean>(false);
+    const [openSizes, setOpenSizes] = useState<boolean>(false);
     const [openSubCategories, setOpenSubCategories] = useState<boolean>(false);
     const [openAllUsers, setOpenAllUsers] = useState<boolean>(false);
 
@@ -85,6 +87,42 @@ const SidebarList = ({ toggleAdminSidebar }: SidebarListPropType) => {
                 <SideBarDropdownListItem
                     dropdownNavigationLink="/dashboard/admin/categories/addCategory"
                     name="Add Category"
+                />
+            </SideBarListItem>
+            <SideBarListItem
+                open={openColors}
+                setOpen={setOpenColors}
+                icon={<BiCategory className="h-[19px] w-[19px]" />}
+                toggleAdminSidebar={toggleAdminSidebar}
+                dropdownMainMenuName="Colors"
+                tooltipName="Colors"
+                isDropdownList
+            >
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/colors"
+                    name="All Colors"
+                />
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/colors/addColor"
+                    name="Add Color"
+                />
+            </SideBarListItem>
+            <SideBarListItem
+                open={openSizes}
+                setOpen={setOpenSizes}
+                icon={<BiCategory className="h-[19px] w-[19px]" />}
+                toggleAdminSidebar={toggleAdminSidebar}
+                dropdownMainMenuName="Sizes"
+                tooltipName="Sizes"
+                isDropdownList
+            >
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/sizes"
+                    name="All Sizes"
+                />
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/sizes/addSize"
+                    name="Add Size"
                 />
             </SideBarListItem>
             <SideBarListItem
