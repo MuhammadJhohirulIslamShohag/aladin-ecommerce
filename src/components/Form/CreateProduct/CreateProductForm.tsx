@@ -1,6 +1,5 @@
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
-import { OnChangeValue } from "react-select";
+import { DefaultValues, useForm } from "react-hook-form";
 import { ISubCategories } from "types/sub-category.type";
 import FormGroup from "../FormGroup";
 import ImageFileUploadForm from "../ImageFileUploadForm/ImageFileUploadForm";
@@ -18,6 +17,9 @@ type CreateProductFormType = {
     subCategories: ISubCategories[];
     isShow: boolean;
     loading: boolean;
+    setSubCategoryRef:any;
+    setColorRef:any;
+    setSizeRef:any;
 };
 
 const CreateProductForm = (props: CreateProductFormType) => {
@@ -30,21 +32,25 @@ const CreateProductForm = (props: CreateProductFormType) => {
         isShow,
         loading,
         setLoading,
+        setSubCategoryRef,
+        setColorRef,
+        setSizeRef,
     } = props;
 
-    const { sizes, colors, brands, categories, subCategory, sizesData,   colorsData, } =
+    const { sizes, colors, brands, categories, subCategory, sizesData,   colorsData } =
         values;
+        
     const {
         handleSubmit,
         register,
         control,
+        setValue,
         formState: { errors },
         reset,
     } = useForm<IFormInput>();
-    console.log(errors, values);
     return (
         <form
-            onSubmit={handleSubmit((data) => handleAddProduct(data, reset))}
+            onSubmit={handleSubmit((data) => handleAddProduct(data, reset, setValue))}
             className="mt-5"
         >
             <div className="grid grid-cols-2">
@@ -120,21 +126,14 @@ const CreateProductForm = (props: CreateProductFormType) => {
                 <div className="mb-6">
                     <MultiSelect
                         dataArray={subCategories}
-                        onChangeHandler={(
-                            newValue: OnChangeValue<
-                                { label: string; value: string },
-                                true
-                            >
-                        ) => setValues({ ...values, subCategory: newValue })}
                         valueData={subCategory}
                         placeholder={"Select the Sub Category"}
                         multiLabel={"Sub Category"}
                         multiName={"subCategory"}
                         required={"Sub Category Is Required!"}
                         errorFields={errors.subCategory}
-                        Controller={Controller}
-                        errors={errors}
                         control={control}
+                        setValueRef={setSubCategoryRef}
                     />
                 </div>
             )}
@@ -152,42 +151,28 @@ const CreateProductForm = (props: CreateProductFormType) => {
             </div>
             <div className="mb-6">
                 <MultiSelect
-                    onChangeHandler={(
-                        newValue: OnChangeValue<
-                            { label: string; value: string },
-                            true
-                        >
-                    ) => setValues({ ...values, colors: newValue })}
                     dataArray={colorsData}
                     valueData={colors}
                     placeholder={"Select the Colors"}
                     multiLabel={"Product Colors"}
-                    multiName={"color"}
+                    multiName={"colors"}
                     required={"Color Is Required!"}
-                    errors={errors}
-                    errorFields={errors.color}
-                    Controller={Controller}
+                    errorFields={errors.colors}
                     control={control}
+                    setValueRef={setColorRef}
                 />
             </div>
             <div className="mb-6">
                 <MultiSelect
                     dataArray={sizesData}
-                    onChangeHandler={(
-                        newValue: OnChangeValue<
-                            { label: string; value: string },
-                            true
-                        >
-                    ) => setValues({ ...values, sizes: newValue })}
                     valueData={sizes}
                     placeholder={"Select the Sizes"}
                     multiLabel={"Product Sizes"}
-                    multiName={"size"}
+                    multiName={"sizes"}
                     required={"Size Is Required!"}
-                    errorFields={errors.size}
-                    Controller={Controller}
+                    errorFields={errors.sizes}
                     control={control}
-                    errors={errors}
+                    setValueRef={setSizeRef}
                 />
             </div>
 

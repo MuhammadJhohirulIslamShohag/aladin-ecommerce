@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getListOfCategory, subCategoryOnCategory } from "@/api/category";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { ICategories } from "types/category.type";
@@ -11,8 +11,30 @@ import CreateProductForm from "@/components/Form/CreateProduct/CreateProductForm
 import { getListOfColor } from "@/api/color";
 import { getListOfSizes } from "@/api/size";
 import { GetServerSideProps } from "next";
+import { IBrand } from "types/brand.types";
+import { getListOfBrands } from "@/api/brand";
+import { UseFormReset, UseFormSetValue } from "react-hook-form";
+import { IFormInput } from "@/components/Form/CreateProduct/FormInput.types";
 
-const initialValues = {
+type a = {
+    title: string;
+    description: string;
+    images: any[];
+    price: number;
+    shipping: string;
+    quantity: number;
+    discount: number;
+    colors: any[];
+    colorsData: any[];
+    sizesData: any[];
+    sizes: any[];
+    brand: string;
+    brands: any[];
+    category: string,
+    categories: any[],
+    subCategory: any[],
+}
+const initialValues:a = {
     title: "",
     description: "",
     images: [],
@@ -25,29 +47,38 @@ const initialValues = {
     sizesData: [],
     sizes: [],
     brand: "",
-    brands: ["Apple", "Life-Digital", "Samsung", "ASUS", "Lenovo", "HP"],
+    brands: [],
     category: "",
     categories: [],
     subCategory: [],
 };
 
 type AddProductPropType = {
-    categories:ICategories[]; 
-    colorsData:IColor[]; 
-    sizesData:ISize[];
-}
+    categories: ICategories[];
+    colorsData: IColor[];
+    sizesData: ISize[];
+    brandsData: IBrand[];
+};
 
-const AddProduct = ({ categories, colorsData, sizesData }: AddProductPropType) => {
+const AddProduct = ({
+    categories,
+    colorsData,
+    sizesData,
+    brandsData,
+}: AddProductPropType) => {
     const [values, setValues] = useState({
         ...initialValues,
         categories: categories,
         colorsData: colorsData,
         sizesData: sizesData,
+        brands: brandsData,
     });
     const [subCategories, setSubCategories] = useState([]);
-    const [subCategoryError, setSubCategoryError] = useState("");
     const [isShow, setIsShow] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [subCategoryRef, setSubCategoryRef] = useState<any>(null);
+    const [colorRef, setColorRef] = useState<any>(null);
+    const [sizeRef, setSizeRef] = useState<any>(null);
     const { state } = useStoreContext();
     const { user } = state;
 
@@ -73,17 +104,22 @@ const AddProduct = ({ categories, colorsData, sizesData }: AddProductPropType) =
         }
     };
 
-    const handleAddProduct = (data: any, reset: any) => {
+    const handleAddProduct = (data: IFormInput, reset: UseFormReset<IFormInput>, setValue:UseFormSetValue<IFormInput>) => {
         // setLoading(true);
-        const updateSubCategory = values.subCategory.map(
-            (sc: { value: string; label: string }) => sc.value
-        );
-        const updateColors = values.colors.map(
-            (c: { value: string; label: string }) => c.value
-        );
-        const updateSizes = values.sizes.map(
-            (s: { value: string; label: string }) => s.value
-        );
+        let updateSubCategory;
+        let updateColors;
+        let updateSizes;
+        if(Array.isArray(data.subCategory) && Array.isArray(data.colors) && Array.isArray(data.sizes)){
+            updateSubCategory = data.subCategory.map(
+                (sc: { value: string; label: string }) => sc.value
+            );
+            updateColors = data.colors.map(
+                (c: { value: string; label: string }) => c.value
+            );
+            updateSizes = data.sizes.map(
+                (s: { value: string; label: string }) => s.value
+            );
+        }
         const updatedValues = {
             ...values,
             subCategory: updateSubCategory,
@@ -98,20 +134,28 @@ const AddProduct = ({ categories, colorsData, sizesData }: AddProductPropType) =
             discount: data.discount,
             category: data.productCategory,
         };
-        console.log(updatedValues,"up")
-        // createProduct(user!.token, updatedValues)
-        //     .then((res) => {
-        //         setLoading(false);
-        //         window.alert(`${res.data.title} Product Created!`);
-        //         reset();
-        //     })
-        //     .catch((error: any) => {
-        //         if (error.response.status === 400) {
-        //             toast.error(`${error.data.error}`);
-        //         }
-        //         setLoading(false);
-        //     });
+        console.log(updatedValues, "up", data, "data");
+        createProduct(user!.token, updatedValues)
+            .then((res) => {
+                setLoading(false);
+                toast.success(`${res.data.title} Product Created!`);
+                subCategoryRef.clearValue();
+                sizeRef.clearValue();
+                colorRef.clearValue();
+                // window.location.reload();
+                reset();
+                setValues({...values, images:[]})
+            })
+            .catch((error: any) => {
+                if (error.response.status === 400) {
+                    toast.error(`${error.data.error}`);
+                }
+                setLoading(false);
+            });
     };
+    console.log(subCategoryRef,
+        colorRef,
+        sizeRef,);
     return (
         <DashboardLayout>
             <div className="container py-10">
@@ -128,7 +172,9 @@ const AddProduct = ({ categories, colorsData, sizesData }: AddProductPropType) =
                         isShow={isShow}
                         loading={loading}
                         setLoading={setLoading}
-                        subCategoryError={subCategoryError}
+                        setSubCategoryRef={setSubCategoryRef}
+                        setColorRef={setColorRef}
+                        setSizeRef={setSizeRef}
                     />
                 </div>
             </div>
@@ -142,11 +188,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const { data } = await getListOfCategory();
     const { data: colorsData } = await getListOfColor();
     const { data: sizesData } = await getListOfSizes();
+    const { data: brandsData } = await getListOfBrands();
     return {
         props: {
             categories: data,
             colorsData,
             sizesData,
+            brandsData,
         },
     };
 };

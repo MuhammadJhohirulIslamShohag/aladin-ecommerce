@@ -6,9 +6,9 @@ export interface IFormInput {
     quantity:number;
     productCategory:string;
     brand:string;
-    color:string;
-    size:string;
-    subCategory:string;
+    colors:{ value: string; label: string }[] | string;
+    sizes:{ value: string; label: string }[] | string;
+    subCategory:{ value: string; label: string }[] |string;
     description:string;
     productImg:string;
 }
