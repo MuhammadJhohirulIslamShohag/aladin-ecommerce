@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { getListOfCategory, subCategoryOnCategory } from "@/api/category";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { ICategories } from "types/category.type";
+import { IColor } from "types/color.types";
+import { ISize } from "types/size.types";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { createProduct } from "@/api/products";
 import toast from "react-hot-toast";
@@ -21,7 +23,7 @@ const initialValues = {
     colors: [],
     colorsData: [],
     sizesData: [],
-    sizes:[],
+    sizes: [],
     brand: "",
     brands: ["Apple", "Life-Digital", "Samsung", "ASUS", "Lenovo", "HP"],
     category: "",
@@ -29,17 +31,27 @@ const initialValues = {
     subCategory: [],
 };
 
-const AddProduct = ({categories,colorsData,sizesData}:any) => {
-    const [values, setValues] = useState({...initialValues,categories:categories, colorsData:colorsData, sizesData:sizesData});
+type AddProductPropType = {
+    categories:ICategories[]; 
+    colorsData:IColor[]; 
+    sizesData:ISize[];
+}
+
+const AddProduct = ({ categories, colorsData, sizesData }: AddProductPropType) => {
+    const [values, setValues] = useState({
+        ...initialValues,
+        categories: categories,
+        colorsData: colorsData,
+        sizesData: sizesData,
+    });
     const [subCategories, setSubCategories] = useState([]);
+    const [subCategoryError, setSubCategoryError] = useState("");
     const [isShow, setIsShow] = useState(false);
     const [loading, setLoading] = useState(false);
     const { state } = useStoreContext();
     const { user } = state;
-    
 
     const handleChangeCategory = (event: any) => {
-        console.log(event, "event");
         setValues({
             ...values,
             subCategory: [],
@@ -62,7 +74,7 @@ const AddProduct = ({categories,colorsData,sizesData}:any) => {
     };
 
     const handleAddProduct = (data: any, reset: any) => {
-        setLoading(true);
+        // setLoading(true);
         const updateSubCategory = values.subCategory.map(
             (sc: { value: string; label: string }) => sc.value
         );
@@ -86,18 +98,19 @@ const AddProduct = ({categories,colorsData,sizesData}:any) => {
             discount: data.discount,
             category: data.productCategory,
         };
-        createProduct(user!.token, updatedValues)
-            .then((res) => {
-                setLoading(false);
-                window.alert(`${res.data.title} Product Created!`);
-                reset();
-            })
-            .catch((error: any) => {
-                if (error.response.status === 400) {
-                    toast.error(`${error.data.error}`);
-                }
-                setLoading(false);
-            });
+        console.log(updatedValues,"up")
+        // createProduct(user!.token, updatedValues)
+        //     .then((res) => {
+        //         setLoading(false);
+        //         window.alert(`${res.data.title} Product Created!`);
+        //         reset();
+        //     })
+        //     .catch((error: any) => {
+        //         if (error.response.status === 400) {
+        //             toast.error(`${error.data.error}`);
+        //         }
+        //         setLoading(false);
+        //     });
     };
     return (
         <DashboardLayout>
@@ -115,6 +128,7 @@ const AddProduct = ({categories,colorsData,sizesData}:any) => {
                         isShow={isShow}
                         loading={loading}
                         setLoading={setLoading}
+                        subCategoryError={subCategoryError}
                     />
                 </div>
             </div>
@@ -126,13 +140,13 @@ export default AddProduct;
 
 export const getServerSideProps: GetServerSideProps = async () => {
     const { data } = await getListOfCategory();
-    const { data:colorsData } = await getListOfColor();
+    const { data: colorsData } = await getListOfColor();
     const { data: sizesData } = await getListOfSizes();
     return {
         props: {
             categories: data,
             colorsData,
-            sizesData
+            sizesData,
         },
     };
 };

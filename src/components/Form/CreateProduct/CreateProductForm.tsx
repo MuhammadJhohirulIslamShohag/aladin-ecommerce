@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { OnChangeValue } from "react-select";
 import { ISubCategories } from "types/sub-category.type";
 import FormGroup from "../FormGroup";
@@ -37,10 +37,11 @@ const CreateProductForm = (props: CreateProductFormType) => {
     const {
         handleSubmit,
         register,
+        control,
         formState: { errors },
         reset,
     } = useForm<IFormInput>();
-    console.log(values, "values");
+    console.log(errors, values);
     return (
         <form
             onSubmit={handleSubmit((data) => handleAddProduct(data, reset))}
@@ -128,6 +129,12 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         valueData={subCategory}
                         placeholder={"Select the Sub Category"}
                         multiLabel={"Sub Category"}
+                        multiName={"subCategory"}
+                        required={"Sub Category Is Required!"}
+                        errorFields={errors.subCategory}
+                        Controller={Controller}
+                        errors={errors}
+                        control={control}
                     />
                 </div>
             )}
@@ -155,6 +162,12 @@ const CreateProductForm = (props: CreateProductFormType) => {
                     valueData={colors}
                     placeholder={"Select the Colors"}
                     multiLabel={"Product Colors"}
+                    multiName={"color"}
+                    required={"Color Is Required!"}
+                    errors={errors}
+                    errorFields={errors.color}
+                    Controller={Controller}
+                    control={control}
                 />
             </div>
             <div className="mb-6">
@@ -169,6 +182,12 @@ const CreateProductForm = (props: CreateProductFormType) => {
                     valueData={sizes}
                     placeholder={"Select the Sizes"}
                     multiLabel={"Product Sizes"}
+                    multiName={"size"}
+                    required={"Size Is Required!"}
+                    errorFields={errors.size}
+                    Controller={Controller}
+                    control={control}
+                    errors={errors}
                 />
             </div>
 

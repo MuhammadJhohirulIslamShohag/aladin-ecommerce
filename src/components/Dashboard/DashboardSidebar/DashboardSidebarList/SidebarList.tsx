@@ -15,6 +15,7 @@ type SidebarListPropType = {
 const SidebarList = ({ toggleAdminSidebar }: SidebarListPropType) => {
     const [openProduct, setOpenProduct] = useState<boolean>(false);
     const [openCategories, setOpenCategories] = useState<boolean>(false);
+    const [openBrands, setOpenBrands] = useState<boolean>(false);
     const [openColors, setOpenColors] = useState<boolean>(false);
     const [openSizes, setOpenSizes] = useState<boolean>(false);
     const [openSubCategories, setOpenSubCategories] = useState<boolean>(false);
@@ -87,6 +88,24 @@ const SidebarList = ({ toggleAdminSidebar }: SidebarListPropType) => {
                 <SideBarDropdownListItem
                     dropdownNavigationLink="/dashboard/admin/categories/addCategory"
                     name="Add Category"
+                />
+            </SideBarListItem>
+            <SideBarListItem
+                open={openBrands}
+                setOpen={setOpenBrands}
+                icon={<BiCategory className="h-[19px] w-[19px]" />}
+                toggleAdminSidebar={toggleAdminSidebar}
+                dropdownMainMenuName="Brands"
+                tooltipName="Brands"
+                isDropdownList
+            >
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/brands"
+                    name="All Brands"
+                />
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/brands/addBrand"
+                    name="Add Brand"
                 />
             </SideBarListItem>
             <SideBarListItem

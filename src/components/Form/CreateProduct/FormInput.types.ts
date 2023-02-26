@@ -7,6 +7,8 @@ export interface IFormInput {
     productCategory:string;
     brand:string;
     color:string;
+    size:string;
+    subCategory:string;
     description:string;
     productImg:string;
 }
