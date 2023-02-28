@@ -83,7 +83,7 @@ const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:an
         },
         {
             header: () => "Brand",
-            accessorKey: "brand",
+            accessorKey: "brand?.name",
         },
         {
             header: () => "Quantity",

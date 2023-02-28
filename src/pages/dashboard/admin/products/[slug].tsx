@@ -7,7 +7,12 @@ import { getListOfCategory, subCategoryOnCategory } from "@/api/category";
 import { ICategories } from "types/category.type";
 import toast from "react-hot-toast";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
-import UpdateProduct from './../../../../components/Form/UpdateProduct/UpdateProduct';
+import UpdateProductForm from "@/components/Form/UpdateProduct/UpdateProduct";
+import { GetServerSideProps } from "next";
+import { getListOfColor } from "@/api/color";
+import { getListOfSizes } from "@/api/size";
+import { getListOfBrands } from "@/api/brand";
+
 
 
 const initialValues = {
@@ -21,6 +26,7 @@ const initialValues = {
     colors: [],
     colorsData: [],
     sizesData: [],
+    brandData: [],
     sizes: [],
     brand: "",
     brands: [],
@@ -29,8 +35,10 @@ const initialValues = {
     subCategory: [],
 };
 
-const UpdateProduct = () => {
-    const [values, setValues] = useState(initialValues);
+const UpdateProduct = ({colorsData,
+    sizesData,
+    brandsData}:any) => {
+    const [values, setValues] = useState({...initialValues, brandData:brandsData, colorsData: colorsData, sizesData: sizesData});
     const [selectedCategory, setSelectedCategory] = useState();
     const [categories, setCategories] = useState([]);
     const [subCategories, setSubCategories] = useState([]);
@@ -61,7 +69,7 @@ const UpdateProduct = () => {
                 );
                 let array: any[] = [];
                 res.data.subCategory.map((d: any) => {
-                    return array.push(d._id);
+                    return array.push({label:d.name, value: d._id});
                 });
                 setArraySubCategories((prev: any[]) => array);
             })
@@ -95,7 +103,14 @@ const UpdateProduct = () => {
         setSelectedCategory(event.target.value);
         subCategoryOnCategory(user!.token, event.target.value)
             .then((res) => {
-                setSubCategories(res.data);
+                const modifySubCategories = res.data.length && res.data.map(s=> {
+                    return {
+                        label: s.name,
+                        value: s._id
+                    }
+                }) 
+                console.log(modifySubCategories);
+                setSubCategories(modifySubCategories);
             })
             .catch((error) => {
                 console.log(error);
@@ -132,7 +147,7 @@ const UpdateProduct = () => {
                     <h2 className="text-center font-semibold text-primary text-2xl">
                         Update Product
                     </h2>
-                    <UpdateProduct
+                    <UpdateProductForm
                         values={values}
                         setValues={setValues}
                         categories={categories}
@@ -141,6 +156,7 @@ const UpdateProduct = () => {
                         setArraySubCategories={setArraySubCategories}
                         selectedCategory={selectedCategory}
                         loading={loading}
+                        setLoading={setLoading}
                         handleSubmitProduct={handleSubmitProduct}
                         handleChange={handleChange}
                         handleCategoryChange={handleCategoryChange}
@@ -152,3 +168,26 @@ const UpdateProduct = () => {
 };
 
 export default UpdateProduct;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+    const { data: colorsData } = await getListOfColor();
+    const { data: sizesData } = await getListOfSizes();
+    const { data: brandsData } = await getListOfBrands();
+    return {
+        props: {
+            colorsData:colorsData && colorsData.map(c=> {
+                return {
+                    label:c.name,
+                    value:c._id
+                }
+            }),
+            sizesData: sizesData && sizesData.map(s=> {
+                return {
+                    label:s.name,
+                    value:s._id
+                }
+            }),
+            brandsData,
+        },
+    };
+};

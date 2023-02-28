@@ -72,6 +72,21 @@ const FormGroup = ({
                         className="input input-bordered input-success w-full text-primary"
                     />
                 )
+            ) : isDefaultValue ? (
+                <input
+                    {...register(
+                        inputName,
+                        !isRequirePattern
+                            ? {
+                                  required: `${required}`,
+                              }
+                            : requirePattern
+                    )}
+                    defaultValue={defaultValue}
+                    type={inputType}
+                    placeholder={placeholder}
+                    className="input input-bordered input-success w-full text-primary"
+                />
             ) : (
                 <input
                     {...register(
