@@ -26,7 +26,7 @@ const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:an
     const router = useRouter();
 
     const handleRemoveProduct = (slug:string) => {
-        console.log(slug)
+        console.log(slug, user)
         if (user && user.token) {
             setLoading(true);
             deleteProduct(user.token, slug)

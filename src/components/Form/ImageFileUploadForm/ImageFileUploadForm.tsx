@@ -116,6 +116,7 @@ const ImageFileUploadForm = ({
                         onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                             handleFileChange(e),
                     })}
+                    files={values.images}
                     className="file-input file-input-bordered file-input-success w-full max-w-xs"
                 />
                 {errorField && (

@@ -10,7 +10,7 @@ type FormGroupType = {
     required?: string;
     isReadOnly?: boolean;
     isDefaultValue?: boolean;
-    defaultValue?: string;
+    defaultValue?: string | number;
     isRequirePattern?: boolean;
     requirePattern?: any;
     isTextArea?: boolean;

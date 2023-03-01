@@ -1,12 +1,11 @@
-
 import { DefaultValues, useForm } from "react-hook-form";
 import { ISubCategories } from "types/sub-category.type";
 import FormGroup from "../FormGroup";
 import ImageFileUploadForm from "../ImageFileUploadForm/ImageFileUploadForm";
 import MultiSelect from "../MultiSelect";
 import SelectInput from "../SelectInput";
-import React,{useState,useEffect} from "react";
-import Select  from 'react-select';
+import React, { useState } from "react";
+import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { IFormInput } from "../CreateProduct/FormInput.types";
 const animatedComponents = makeAnimated();
@@ -18,7 +17,6 @@ const customStyles = {
     }),
 };
 
-
 const UpdateProductForm = ({
     handleSubmitProduct,
     handleChange,
@@ -27,23 +25,25 @@ const UpdateProductForm = ({
     setValues,
     values,
     loading,
-    categories,
+    // categories,
     subCategories,
     selectedCategory,
     arraySubCategories,
-    setLoading
-}:any) => {
-    const [value, setValue] = useState(values.colors.map(c=> {
-        return {
-            label:c.name,
-            value:c._id
-        }
-    }));
-    
-      const onChange = (newValue) => {
+    setLoading,
+}: any) => {
+    const [value, setValue] = useState(
+        values.colors.map((c) => {
+            return {
+                label: c.name,
+                value: c._id,
+            };
+        })
+    );
+
+    const onChange = (newValue) => {
         setValue(newValue);
-      };
-    
+    };
+
     const {
         title,
         description,
@@ -59,29 +59,25 @@ const UpdateProductForm = ({
         category,
         quantity,
         brandData,
-        colorsData
+        colorsData,
+        categories,
     } = values;
-    console.log(value, "value", values)
-    
-const {
-    handleSubmit,
-    register,
-    control,
-    formState: { errors },
-    reset,
-} = useForm<IFormInput>({
-    defaultValues: {
-      description: description,
-      productName: title,
-    }
-  });
+    console.log(value, "value", values, "selectedCategory", selectedCategory);
 
-  useEffect(()=> {
-reset(values)
-  }, [])
+    const {
+        handleSubmit,
+        register,
+        control,
+        formState: { errors },
+        reset,
+    } = useForm<IFormInput>();
+
+
     return (
         <form
-            onSubmit={handleSubmit((data) => handleSubmitProduct(data, reset, setValue))}
+            onSubmit={handleSubmit((data) =>
+                handleSubmitProduct(data, reset, setValue)
+            )}
             className="mt-5"
         >
             <div className="grid grid-cols-2">
@@ -95,33 +91,42 @@ reset(values)
             </div>
             <div className="grid gap-6 mb-6 grid-cols-2">
                 <div>
-                    <FormGroup
-                        register={register}
-                       
-                        inputName={"productName"}
-                        labelName={"Product Name"}
-                        errorField={errors.productName}
-                        inputType={"text"}
-                        placeholder={"Enter Your Product Name"}
-                        required="Product Title Is Required!"
-                    />
+                    {title && (
+                        <FormGroup
+                            register={register}
+                            isDefaultValue
+                            defaultValue={title}
+                            inputName={"productName"}
+                            labelName={"Product Name"}
+                            errorField={errors.productName}
+                            inputType={"text"}
+                            placeholder={"Enter Your Product Name"}
+                            required="Product Title Is Required!"
+                        />
+                    )}
                 </div>
 
                 <div>
-                    <FormGroup
-                        register={register}
-                        inputName={"price"}
-                        labelName={"Price"}
-                        isDefaultValue
-                        defaultValue={price}
-                        errorField={errors.price}
-                        inputType={"number"}
-                        placeholder={"Enter Your Product Price"}
-                        required="Product Price Is Required!"
-                    />
+                    {
+                        price && (
+                            <FormGroup
+                            register={register}
+                            inputName={"price"}
+                            labelName={"Price"}
+                            isDefaultValue
+                            defaultValue={price}
+                            errorField={errors.price}
+                            inputType={"number"}
+                            placeholder={"Enter Your Product Price"}
+                            required="Product Price Is Required!"
+                        />
+                        )
+                    }
+                   
                 </div>
                 <div>
-                    <FormGroup
+                    {discount && (
+                        <FormGroup
                         register={register}
                         inputName={"discount"}
                         labelName={"Discount"}
@@ -132,9 +137,13 @@ reset(values)
                         placeholder={"Enter Your Product Discount"}
                         required="Product Price Discount Is Required!"
                     />
+                    )}
+                    
                 </div>
                 <div>
-                    <FormGroup
+                    {
+                       quantity && (
+<FormGroup
                         register={register}
                         inputName={"quantity"}
                         labelName={"Quantity"}
@@ -145,36 +154,46 @@ reset(values)
                         placeholder={"Enter Your Product Quantity"}
                         required="Product Price Quantity Is Required!"
                     />
+                       ) 
+                    }
+                    
                 </div>
             </div>
             <div className="mb-6">
-                <SelectInput
-                 register={register}
+                {(selectedCategory || category._id) && (
+                    <SelectInput
+                    register={register}
                     dataArray={categories}
                     labelName={"Product Category"}
                     inputName={"productCategory"}
                     isDefaultValue
-                    defaultValue={selectedCategory ? selectedCategory : category._id}
+                    defaultValue={
+                        selectedCategory ? selectedCategory : category._id
+                    }
                     errorField={errors.productCategory}
                     required={{
                         required: "Product Category Is Required!",
                         onChange: (e: any) => handleCategoryChange(e),
                     }}
                 />
+                )}
+                
             </div>
             <div className="mb-6">
-                <SelectInput
-                    dataArray={brandData}
-                    labelName={"Brand"}
-                    inputName={"brand"}
-                    register={register}
-                    isDefaultValue
-                    defaultValue={brand._id}
-                    errorField={errors.brand}
-                    required={{
-                        required: "Product Brand Is Required!",
-                    }}
-                />
+                {brand._id && (
+                    <SelectInput
+                        dataArray={brandData}
+                        labelName={"Brand"}
+                        inputName={"brand"}
+                        register={register}
+                        isDefaultValue
+                        defaultValue={brand._id}
+                        errorField={errors.brand}
+                        required={{
+                            required: "Product Brand Is Required!",
+                        }}
+                    />
+                )}
             </div>
             {/* <div className="mb-6">
                 <MultiSelect
@@ -219,16 +238,18 @@ reset(values)
             </div>
 
             <div>
-                <FormGroup
-                    register={register}
-                    inputName={"description"}
-                    labelName={"Description"}
-                    isDefaultValue
-                    defaultValue={description}
-                    errorField={errors?.description}
-                    placeholder={"Provide Product Description Here!"}
-                    required="Product Product Description Is Required!"
-                />
+                {description && (
+                    <FormGroup
+                        register={register}
+                        inputName={"description"}
+                        labelName={"Description"}
+                        isDefaultValue
+                        defaultValue={description}
+                        errorField={errors?.description}
+                        placeholder={"Provide Product Description Here!"}
+                        required="Product Product Description Is Required!"
+                    />
+                )}
             </div>
             <button
                 disabled={loading}
@@ -304,7 +325,7 @@ reset(values)
         //         closeMenuOnSelect={false}
         //         components={animatedComponents}
         //         isMulti
-               
+
         //         options={colorsData}
         //         value={value}
         //         onChange={onChange}
@@ -330,7 +351,7 @@ reset(values)
         //         closeMenuOnSelect={false}
         //         components={animatedComponents}
         //         isMulti
-                
+
         //         value={sizes && sizes.map(s=> {
         //             return {
         //                 label:s.name,
@@ -338,7 +359,7 @@ reset(values)
         //             }
         //         })}
         //         options={sizesData}
-                
+
         //         onChange={(value)=> console.log(value)}
         //         classNamePrefix="react-select"
         //         placeholder={"placeholder"}
@@ -397,7 +418,7 @@ reset(values)
         //         closeMenuOnSelect={false}
         //         components={animatedComponents}
         //         isMulti
-                
+
         //         options={subCategories}
         //         value={arraySubCategories}
         //         onChange={(value) => setArraySubCategories(value)}

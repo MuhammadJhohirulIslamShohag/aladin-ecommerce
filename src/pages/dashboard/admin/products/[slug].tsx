@@ -14,7 +14,6 @@ import { getListOfSizes } from "@/api/size";
 import { getListOfBrands } from "@/api/brand";
 
 
-
 const initialValues = {
     title: "",
     description: "",
@@ -35,12 +34,12 @@ const initialValues = {
     subCategory: [],
 };
 
-const UpdateProduct = ({colorsData,
+const UpdateProduct = ({categories, colorsData,
     sizesData,
     brandsData}:any) => {
-    const [values, setValues] = useState({...initialValues, brandData:brandsData, colorsData: colorsData, sizesData: sizesData});
+    const [values, setValues] = useState({...initialValues,categories: categories, brandData:brandsData, colorsData: colorsData, sizesData: sizesData});
     const [selectedCategory, setSelectedCategory] = useState();
-    const [categories, setCategories] = useState([]);
+    // const [categories, setCategories] = useState([]);
     const [subCategories, setSubCategories] = useState([]);
     const [arraySubCategories, setArraySubCategories] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -55,7 +54,7 @@ const UpdateProduct = ({colorsData,
 
     useEffect(() => {
         loadingProduct();
-        loadingCategory();
+        // loadingCategory();
     }, [slug]);
 
     const loadingProduct = () => {
@@ -67,26 +66,26 @@ const UpdateProduct = ({colorsData,
                         setSubCategories(res.data);
                     }
                 );
-                let array: any[] = [];
+                let array: {label:string; value:string;}[] = [];
                 res.data.subCategory.map((d: any) => {
                     return array.push({label:d.name, value: d._id});
                 });
-                setArraySubCategories((prev: any[]) => array);
+                setArraySubCategories((prev) => array);
             })
             .catch((error) => {
                 console.log(error);
             });
     };
 
-    const loadingCategory = () => {
-        getListOfCategory()
-            .then((res) => {
-                setCategories(res.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
+    // const loadingCategory = () => {
+    //     getListOfCategory()
+    //         .then((res) => {
+    //             setCategories(res.data);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         });
+    // };
 
     const handleChange = (event: any) => {
         setValues({
@@ -150,7 +149,7 @@ const UpdateProduct = ({colorsData,
                     <UpdateProductForm
                         values={values}
                         setValues={setValues}
-                        categories={categories}
+                        // categories={categories}
                         subCategories={subCategories}
                         arraySubCategories={arraySubCategories}
                         setArraySubCategories={setArraySubCategories}
@@ -170,11 +169,13 @@ const UpdateProduct = ({colorsData,
 export default UpdateProduct;
 
 export const getServerSideProps: GetServerSideProps = async () => {
+    const { data } = await getListOfCategory();
     const { data: colorsData } = await getListOfColor();
     const { data: sizesData } = await getListOfSizes();
     const { data: brandsData } = await getListOfBrands();
     return {
         props: {
+            categories: data,
             colorsData:colorsData && colorsData.map(c=> {
                 return {
                     label:c.name,
