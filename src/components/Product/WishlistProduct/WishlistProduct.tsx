@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import {  BsFillHeartFill } from "react-icons/bs";
+import React from "react";
+import { BsFillHeartFill } from "react-icons/bs";
 import Image from "next/image";
 import Link from "next/link";
 import _ from "lodash";
@@ -10,6 +10,7 @@ const WishlistProduct = ({
     product,
     handleRemovedToWishList,
     handleAddCart,
+    isUserWishList = false,
 }: any) => {
     const { _id, slug, title, images, description } = product;
 
@@ -28,13 +29,15 @@ const WishlistProduct = ({
                     </span>
                 </div>
                 <ul className="transition duration-300 ease-in-out invisible flex absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 group-hover:visible">
-                    <li
-                        className={`py-3 flex items-center px-3 rounded-lg ml-2 border-2 border-success hover:bg-primary hover:border-primary hover:text-white  text-white bg-success transition ease-in-out delay-15 cursor-pointer tooltip tooltip-primary`}
-                        data-tip={"Add To Cart"}
-                        onClick={() => handleAddCart(product)}
-                    >
-                        <FaShoppingCart />
-                    </li>
+                    {isUserWishList && (
+                        <li
+                            className={`py-3 flex items-center px-3 rounded-lg ml-2 border-2 border-success hover:bg-primary hover:border-primary hover:text-white  text-white bg-success transition ease-in-out delay-15 cursor-pointer tooltip tooltip-primary`}
+                            data-tip={"Add To Cart"}
+                            onClick={() => handleAddCart(product)}
+                        >
+                            <FaShoppingCart />
+                        </li>
+                    )}
                     <li
                         className={`py-3 flex items-center px-3 rounded-lg ml-2 border-2 border-success hover:bg-primary hover:border-primary hover:text-white  text-white bg-success transition ease-in-out delay-15 cursor-pointer tooltip tooltip-primary`}
                         data-tip={"Removed From WishList"}
