@@ -1,4 +1,4 @@
-import { Auth, GoogleAuthProvider, UserCredential } from "firebase/auth";
+import { Auth, GoogleAuthProvider, User, UserCredential } from "firebase/auth";
 import { StoreDataType, StoreAction } from "../states/storeReducer/storeReducer.type";
 
 export type ActionConfigType = {
@@ -11,6 +11,7 @@ export type StoreContextType = {
     state: StoreDataType;
     dispatch: React.Dispatch<StoreAction>;
     auth: Auth;
+    firebaseUser:User,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     loading: boolean;
     sendForSignInLinkToEmail: (email: string, actionCodeSettings: ActionConfigType) => Promise<void>;

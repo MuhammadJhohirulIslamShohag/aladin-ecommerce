@@ -105,15 +105,18 @@ const FileUpload = ({
                 setLoadingForFirebase(false);
             });
     };
+    console.log(values, "file value")
     return (
         <>
             <div className="mb-3 relative">
-                {values.image (
-                    <div className="overflow-hidden h-48 relative mb-2">
+                {values?.image && (
+                    <div className="overflow-hidden h-32 relative mb-2">
                         <Image
-                            className="h-full w-full rounded-sm"
+                            className="h-full w-[75%] rounded-sm"
                             src={values?.image.url}
                             alt={values?.username}
+                            width={100}
+                            height={100}
                         />
                     </div>
                 )}

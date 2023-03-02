@@ -1,6 +1,7 @@
 import UserSideBar from '@/components/Dashboard/User/UserSideBar/UserSideBar';
 import Footer from '@/components/Footer/Footer';
-import Navbar from '@/components/Navbar/Navbar';
+import NavbarMiddle from '@/components/Navbar/NavbarMiddle/NavbarMiddle';
+import NavbarTop from '@/components/Navbar/NavbarTop/NavbarTop';
 import React from 'react';
 
 
@@ -8,15 +9,16 @@ const UserDashboard = ({ children }: React.PropsWithChildren<{}>) => {
     return (
         <>
            <header>
-				<Navbar/>			
+		   	<NavbarTop />
+            <NavbarMiddle />		
 			</header>
             <main>
-				<section className='container'>
+				<section className='container mt-8'>
 					<div className='grid grid-cols-12'>
-						<div >
+						<div className="col-span-3">
 							<UserSideBar/>
 						</div>
-						<div>
+						<div className="col-span-8">
 							{children}
 						</div>
 					</div>

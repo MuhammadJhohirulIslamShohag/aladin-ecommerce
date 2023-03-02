@@ -38,9 +38,11 @@ export const useStoreContext = () => {
 const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(storeReducer, initialState);
     const [loading, setLoading] = useState(true);
+    const [firebaseUser, setFirebaseUser] = useState<any>(null);
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
+                setFirebaseUser(currentUser)
                 const idTokenResult = await currentUser.getIdTokenResult();
                 //  to add data from window local storage to the initial state
                 if (typeof window !== "undefined") {
@@ -69,6 +71,7 @@ const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
                     }
                 }
             } else {
+                setFirebaseUser(null)
                 dispatch({
                     type: StoreActionType.LOGOUT_USER,
                     payload: null,
@@ -130,6 +133,7 @@ const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
     const values = {
         state,
         dispatch,
+        firebaseUser,
         auth,
         setLoading,
         loading,

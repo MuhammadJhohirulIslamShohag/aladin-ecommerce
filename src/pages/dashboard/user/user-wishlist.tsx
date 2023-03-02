@@ -3,7 +3,7 @@ import { getWishLists, removeWishList } from "@/api/user";
 import WishlistProduct from "@/components/Product/WishlistProduct/WishlistProduct";
 import SectionTitle from "@/components/SectionTitle/SectionTitle";
 import Skeleton from "@/components/Skeleton/Skeleton";
-import MainLayout from "@/layouts/MainLayout/MainLayout";
+import UserDashboard from "@/layouts/DashboardLayout/UserDashboard";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -13,6 +13,7 @@ const UserWishlist = () => {
     const [loading, setLoading] = useState(false);
     const { state } = useStoreContext();
     const { user } = state;
+    console.log(user)
 
     useEffect(() => {
         loadingWishList();
@@ -43,7 +44,7 @@ const UserWishlist = () => {
     };
 
     return (
-        <MainLayout>
+        <UserDashboard>
             <div className="container mt-10">
                 <SectionTitle title="Wish List" />
                 {loading ? (
@@ -72,7 +73,7 @@ const UserWishlist = () => {
                     </div>
                 )}
             </div>
-        </MainLayout>
+        </UserDashboard>
     );
 };
 
