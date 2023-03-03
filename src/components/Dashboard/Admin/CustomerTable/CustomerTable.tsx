@@ -11,7 +11,6 @@ import { CustomerColumn } from "./CustomerColumn";
 import TablePagination from "@/components/TablePagination/TablePagination";
 
 const CustomerTable = ({ data }: { data: ICustomers[] }) => {
-    console.log(data, "data");
     const columns = React.useMemo<ColumnDef<ICustomers>[]>(
         () => CustomerColumn,
         []

@@ -7,22 +7,20 @@ import UserDashboard from "@/layouts/DashboardLayout/UserDashboard";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { currentUser } from "@/api/auth";
 import toast from "react-hot-toast";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import FormGroup from "@/components/Form/FormGroup";
 import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
+import { IProfile } from "./profile.types";
 
-type FormValues = { 
+type FormValues = {
     newPassword: string;
 };
 
 const Profile = () => {
-    const [loading, setLoading] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-    const [loadingForUpdateProfile, setLoadingForUpdateProfile] =
-        useState(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
     const [loadingForUpdateProfileImg, setLoadingForUpdateProfileImg] =
-        useState(false);
-    const [values, setValues] = useState({
+        useState<boolean>(false);
+    const [values, setValues] = useState<IProfile>({
         username: "",
         fullName: "",
         image: {
@@ -34,7 +32,7 @@ const Profile = () => {
     });
     const { state, updateThePassword } = useStoreContext();
     const { user } = state;
-   
+
     const {
         handleSubmit,
         register,
@@ -45,30 +43,30 @@ const Profile = () => {
     });
 
     useEffect(() => {
-        console.log(user, "user");
         loadingCurrentUser();
     }, []);
 
     const loadingCurrentUser = () => {
-        if(user && user!.token){
-            currentUser(user.token).then((res) => {
-                const data = res.data;
-                console.log(data);
-                setValues({
-                    ...values,
-                    username: data.username,
-                    fullName: data.fullName,
-                    image: {
-                        url: data.image?.url,
-                        public_id: data.image?.public_id,
-                    },
-                    email: data.email,
-                    about: data?.about,
+        if (user && user!.token) {
+            currentUser(user.token)
+                .then((res) => {
+                    const data = res.data;
+                    console.log(data);
+                    setValues({
+                        ...values,
+                        username: data.username,
+                        fullName: data.fullName,
+                        image: {
+                            url: data.image?.url,
+                            public_id: data.image?.public_id,
+                        },
+                        email: data.email,
+                        about: data?.about,
+                    });
+                })
+                .catch((error) => {
+                    console.log(error.message);
                 });
-            })
-            .catch((error) => {
-                console.log(error.message);
-            });
         }
     };
 
@@ -80,7 +78,6 @@ const Profile = () => {
     // update password
     const handlePasswordSubmit: SubmitHandler<FormValues> = (data) => {
         const { newPassword } = data;
-        setLoading(true);
         updateThePassword(newPassword!)!
             .then(() => {
                 toast.success("Password Is Updated!");
@@ -90,8 +87,8 @@ const Profile = () => {
                 toast.error(
                     `Something wrong! for password updating like ${error.message}`
                 );
-                setLoading(false);
-            }).finally(()=>{
+            })
+            .finally(() => {
                 reset();
             });
     };
@@ -124,21 +121,19 @@ const Profile = () => {
             </button>
         </form>
     );
-    console.log(showModal,isDirty, "profile value")
     return (
         <UserDashboard>
-            <h2>My Profile</h2>
+            <h2 className="text-black text-md font-semibold mb-0">My Profile</h2>
             <div className="grid grid-cols-8">
                 <div className="col-span-2">
-                   {values.image?.url && (
-                     <FileUpload
-                     user={user}
-                     values={values}
-                     setValues={setValues}
-                     setLoading={setLoadingForUpdateProfileImg}
-                     loading={loadingForUpdateProfileImg}
-                 />
-                   )}
+                    {values.image?.url && (
+                        <FileUpload
+                            values={values}
+                            setValues={setValues}
+                            setLoading={setLoadingForUpdateProfileImg}
+                            loading={loadingForUpdateProfileImg}
+                        />
+                    )}
                 </div>
                 <div className="col-span-6 m-auto p-4">
                     <div className="relative flex justify-end items-center">
@@ -150,19 +145,21 @@ const Profile = () => {
                             <BiEdit />
                         </span>
                         {showModal && (
-                <ProfileEditModal
-                closeModal={handleShowModal}
-                values={values}
-                loadingCurrentUser={loadingCurrentUser}
-                title="Profile Information Update"
-            />
-            )}
+                            <ProfileEditModal
+                                closeModal={handleShowModal}
+                                values={values}
+                                loadingCurrentUser={loadingCurrentUser}
+                                title="Profile Information Update"
+                            />
+                        )}
                     </div>
 
                     <div>
                         <ul>
                             <li>
-                                <p className="text-black text-md font-semibold mb-0">Full name:</p>
+                                <p className="text-black text-md font-semibold mb-0">
+                                    Full name:
+                                </p>
                                 <span className="text-black mt-1 inline-block">
                                     {values?.fullName}
                                 </span>
@@ -176,7 +173,9 @@ const Profile = () => {
                                 </span>
                             </li>
                             <li className="mt-2">
-                                <p className="text-black mb-0 text-md font-semibold">About</p>
+                                <p className="text-black mb-0 text-md font-semibold">
+                                    About
+                                </p>
                                 <span className="text-black mt-1 inline-block">
                                     {values?.about}
                                 </span>
@@ -187,14 +186,20 @@ const Profile = () => {
             </div>
             <div className="mt-5">
                 <div className="">
-                    {isSubmitted ? <h2 className="text-black text-md font-semibold text-center mt-4 mb-3">Loading</h2> : <h4 className="text-black text-md font-semibold text-center mt-4 mb-3">Update Password</h4>}
+                    {isSubmitted ? (
+                        <h2 className="text-black text-md font-semibold text-center mt-4 mb-3">
+                            Loading
+                        </h2>
+                    ) : (
+                        <h4 className="text-black text-md font-semibold text-center mt-4 mb-3">
+                            Update Password
+                        </h4>
+                    )}
                     {updatePasswordForm()}
                 </div>
             </div>
-  
-            
         </UserDashboard>
     );
 };
 
-export default dynamic(() => Promise.resolve(Profile), {ssr:false});
+export default dynamic(() => Promise.resolve(Profile), { ssr: false });

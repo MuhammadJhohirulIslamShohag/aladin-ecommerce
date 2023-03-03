@@ -57,13 +57,15 @@ const WishlistProduct = ({
                         </Link>
                     </label>
                 </ul>
-                <Image
-                    className="h-full w-full"
-                    src={`${images && images.length && images[0].url}`}
-                    alt={title}
-                    width="0"
-                    height="0"
-                />
+                {images && images.length && images[0]?.url && (
+                    <Image
+                        className="h-full w-full"
+                        src={`${images && images.length && images[0].url}`}
+                        alt={title}
+                        width="0"
+                        height="0"
+                    />
+                )}
             </div>
             <div className="p-5">
                 <h5 className="my-2 text-xl font-semibold tracking-tight text-primary">

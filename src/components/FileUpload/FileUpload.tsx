@@ -2,18 +2,24 @@ import React from "react";
 import Resizer from "react-image-file-resizer";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
+import { AiOutlineUser } from "react-icons/ai";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import { deletingImageFile, uploadingImageFile } from "@/api/cloudinary";
+import { uploadingImageFile, deletingImageFile } from "@/api/cloudinary";
+import { createOrUpdateUser } from "@/api/auth";
+import { FileUploadPropsType } from "./FileUpload.types";
 
 const FileUpload = ({
-    user,
     values,
     setValues,
     setLoading,
     loading,
-}: any) => {
-    const { userProfileUpdate, setLoading: setLoadingForFirebase } =
-        useStoreContext();
+}: FileUploadPropsType) => {
+    const {
+        userProfileUpdate,
+        state,
+        setLoading: setLoadingForFirebase,
+    } = useStoreContext();
+    const { user } = state;
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
@@ -31,32 +37,26 @@ const FileUpload = ({
                 100,
                 0,
                 (uri) => {
-                    uploadingImageFile(user.token, uri)
+                    uploadingImageFile(user!.token, uri)
                         .then((res) => {
-                                setValues({
-                                    ...values,
-                                    image: {
-                                        url: res.data?.url,
-                                        public_id: res.data?.public_id,
-                                    },
-                                });
-                                const newProfileObject = {
-                                    ...values,
-                                    image: {
-                                        url: res.data?.url,
-                                        public_id: res.data?.public_id,
-                                    },
-                                };
-
-                                // profileUpdate({
-                                //     variables: {
-                                //         input: newProfileObject,
-                                //     },
-                                // });
-                                updateTheProfileToFirebase(
-                                    values.fullName,
-                                    res?.data?.url
-                                );
+                            setValues({
+                                ...values,
+                                image: {
+                                    url: res.data?.url,
+                                    public_id: res.data?.public_id,
+                                },
+                            });
+                            imageUpdateToDatabase({
+                                image: {
+                                    url: res.data?.url,
+                                    public_id: res.data?.public_id,
+                                },
+                                email: user!.email,
+                            });
+                            updateTheProfileToFirebase(
+                                values?.fullName!,
+                                res?.data?.url
+                            );
                             setLoading(false);
                         })
                         .catch((error) => {
@@ -68,13 +68,31 @@ const FileUpload = ({
             );
         }
     };
+
+    const imageUpdateToDatabase = (imageObject: {
+        image: {
+            public_id: string;
+            url: string;
+        };
+        email: string;
+    }) => {
+        if (user) {
+            createOrUpdateUser(user!.token, imageObject!)
+                .then((res) => {
+                    toast.success("Profile Image Update Successfully!");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    };
     const handleImageRemove = (public_id: string) => {
         if (user) {
             deletingImageFile(user.token, public_id)
                 .then((res) => {
                     setValues({
                         ...values,
-                        img: {
+                        image: {
                             url: "",
                             public_id: "",
                         },
@@ -105,20 +123,29 @@ const FileUpload = ({
                 setLoadingForFirebase(false);
             });
     };
-    console.log(values, "file value")
     return (
         <>
             <div className="mb-3 relative">
-                {values?.image && (
+                {values?.image?.url ? (
                     <div className="overflow-hidden h-32 relative mb-2">
+                        <span
+                            onClick={() =>
+                                handleImageRemove(values?.image?.public_id!)
+                            }
+                            className="absolute left-[70%] cursor-pointer top-0 text-rose-500"
+                        >
+                            X
+                        </span>
                         <Image
                             className="h-full w-[75%] rounded-sm"
                             src={values?.image.url}
-                            alt={values?.username}
+                            alt={values?.username!}
                             width={100}
                             height={100}
                         />
                     </div>
+                ) : (
+                    <AiOutlineUser className="h-full w-[75%] rounded-sm" />
                 )}
             </div>
             <div className="mb-3">
@@ -131,10 +158,7 @@ const FileUpload = ({
                         onChange={handleFileChange}
                     />
 
-                    {loading
-                        ? "Uploading "
-                        :"Profile Upload"
-                    }
+                    {loading ? "Uploading " : "Profile Upload"}
                 </label>
             </div>
         </>

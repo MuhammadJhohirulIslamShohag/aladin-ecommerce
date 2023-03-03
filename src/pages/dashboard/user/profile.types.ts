@@ -1,5 +1,5 @@
-export interface ICurrentUser {
-    username?: string;
+export interface IProfile{
+        username?: string;
         fullName?: string;
         image?: {
             public_id: string;

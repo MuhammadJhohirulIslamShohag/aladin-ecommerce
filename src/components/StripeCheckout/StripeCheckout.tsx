@@ -84,7 +84,7 @@ const StripeCheckout = () => {
                 // create order
                 createOrder(payload, user!.token)
                     .then((res) => {
-                        console.log(res.data);
+                       
                     })
                     .catch((error) => {
                         console.log(error);

@@ -11,7 +11,6 @@ import { IOrder } from "types/order.types";
 import { OrdersColumn } from "./OrdersColumn";
 
 const OrdersTable = ({ data }: { data: IOrder[] }) => {
-    console.log(data, "data");
 
     const columns = React.useMemo<ColumnDef<IOrder>[]>(() => OrdersColumn, []);
     const table = useReactTable({

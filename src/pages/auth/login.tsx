@@ -53,15 +53,15 @@ const Login = () => {
             .then(async (result) => {
                 const user = result?.user;
                 const currentUser = {
-                    fullName: user?.displayName,
-                    email: user?.email,
+                    fullName: user?.displayName!,
+                    email: user?.email!,
                     image: {
-                        url: user?.photoURL,
-                        public_id: `${Date.now()}`,
+                        url: user?.photoURL!,
+                        public_id: `${Date.now()}`!,
                     },
                 };
                 const idTokenResult = await user.getIdTokenResult();
-                createOrUpdateUser(idTokenResult.token, currentUser)
+                createOrUpdateUser(idTokenResult.token, currentUser!)
                     .then((res) => {
                         const userObject = {
                             fullName: res.data.fullName,
@@ -121,17 +121,17 @@ const Login = () => {
             .then(async (result) => {
                 const user = result.user;
                 const currentUser = {
-                    fullName: user?.displayName,
-                    email: user?.email,
+                    fullName: user?.displayName!,
+                    email: user?.email!,
                     image: {
-                        url: user?.photoURL,
-                        public_id: `${Date.now()}`,
+                        url: user?.photoURL!,
+                        public_id: `${Date.now()}`!,
                     },
                 };
                 const idTokenResult = await user.getIdTokenResult();
-                createOrUpdateUser(idTokenResult.token, currentUser)
+                createOrUpdateUser(idTokenResult.token, currentUser!)
                     .then((res) => {
-                        console.log(res.data);
+                     
                         dispatch({
                             type: StoreActionType.LOGGED_IN_USER,
                             payload: {

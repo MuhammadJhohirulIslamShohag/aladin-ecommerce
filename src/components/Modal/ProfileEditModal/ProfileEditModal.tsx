@@ -5,59 +5,97 @@ import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { IProfile } from "@/pages/dashboard/user/profile.types";
 
 type ProfileEditModalPropType = {
     title: string;
     closeModal: () => void;
-    values: any;
-    loadingCurrentUser: any;
+    values: IProfile;
+    loadingCurrentUser: () => void;
+    isAddressProfile?: boolean;
 };
 type FormProfileValues = {
-    fullName: string;
-    email: string;
+    username?: string;
+    fullName?: string;
+    email?: string;
+    address?: string;
+    city?: string;
+    postalCode?: string;
+    country?: string;
 };
 
 const ProfileEditModal = (props: ProfileEditModalPropType) => {
-    const[loading, setLoading] = useState(false);
-    const { closeModal, values, title, loadingCurrentUser } = props;
+    const {
+        closeModal,
+        values,
+        title,
+        loadingCurrentUser,
+        isAddressProfile = false,
+    } = props;
     const { state, dispatch, userProfileUpdate } = useStoreContext();
     const { user } = state;
     const {
         handleSubmit,
         register,
         reset,
-        formState: { errors, isDirty, isLoading },
+        formState: { errors, isSubmitted },
     } = useForm<FormProfileValues>({
         mode: "onChange",
     });
 
     const handleEditSubmit: SubmitHandler<FormProfileValues> = (data) => {
-        const userObject = {
-            fullName: data.fullName,
-            email: data.email,
-        };
-        createOrUpdateUser(user!.token, userObject)
-            .then((res) => {
-                // Clear email from storage.
-                window.localStorage.removeItem("emailForSignIn");
-                toast.success("Registered Successfully!");
-                reset();
-                dispatch({
-                    type: StoreActionType.LOGGED_IN_USER,
-                    payload: {
-                        fullName: res.data.fullName,
-                        email: res.data.email,
-                        token: user!.token,
-                        image: res.data.image.url,
-                        _id: res.data._id,
-                    },
+        let userObject:any = null;
+        if (!isAddressProfile) {
+            userObject = {
+                fullName: data.fullName!,
+                email: data.email!,
+            };
+        } else {
+            userObject = {
+                address:{
+                    email: user!.email,
+                username: data.username!,
+                address: data.address!,
+                city: data.city!,
+                postalCode: data.postalCode!,
+                country: data.country!,
+                }
+            };
+        }
+        if (userObject || userObject.address) {
+            createOrUpdateUser(user!.token, userObject!)
+                .then((res) => {
+                    if (!isAddressProfile) {
+                        toast.success("Profile Update Successfully!");
+                    } else {
+                        toast.success("Address Update Successfully!");
+                    }
+                    reset();
+                    dispatch({
+                        type: StoreActionType.LOGGED_IN_USER,
+                        payload: {
+                            fullName: res.data.fullName,
+                            email: res.data.email,
+                            token: user!.token,
+                            image: res.data.image.url,
+                            _id: res.data._id,
+                        },
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                .finally(() => {
+                    reset();
                 });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        loadingCurrentUser();
-        updateTheProfileToFirebase(values.fullName, values.image?.url);
+            loadingCurrentUser();
+            if (!isAddressProfile) {
+                updateTheProfileToFirebase(
+                    values.fullName!,
+                    values?.image?.url!
+                );
+            }
+        }
     };
 
     // update the profile
@@ -70,96 +108,147 @@ const ProfileEditModal = (props: ProfileEditModalPropType) => {
             photoURL: photoImage,
         };
         userProfileUpdate(profile)
-            .then((result) => {
-                setLoading(false);
-            })
+            .then((result) => {})
             .catch((error) => {
                 toast.error(error);
             })
-            .finally(() => {
-                setLoading(false);
-            });
+            .finally(() => {});
     };
 
     return (
         <>
-        <div className={`fixed z-50 flex justify-center items-center w-full p-4 overflow-x-hidden overflow-y-auto inset-0 h-modal h-full`}>
-    <div className="relative w-full h-full max-w-2xl md:h-auto">
-       
-        <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-          
-            <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                    Terms of Service
-                </h3>
-                <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal">
-                    <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    <span className="sr-only">Close modal</span>
-                </button>
-            </div>
-          
-            <div className="p-6 space-y-6">
-                <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.
-                </p>
-                <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
-                </p>
-            </div>
-           
-            <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                <button data-modal-hide="defaultModal" type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I accept</button>
-                <button data-modal-hide="defaultModal" type="button" className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
-            </div>
-        </div>
-    </div>
-</div>
-            {/* <input
-                type="checkbox"
-                id="my-profile-update-modal"
-                className="modal-toggle"
-            />
-            <div className="modal">
-                <div className="modal-box relative">
-                    <label
-                        onClick={closeModal}
-                        htmlFor="my-modal"
-                        className="btn btn-sm btn-success hover:btn-primary text-white btn-circle absolute right-2 top-2"
-                    >
-                        ✕
-                    </label>
-                    <h3 className="text-lg font-bold text-success text-center">
-                        {title}
-                    </h3>
-                    <form onSubmit={handleSubmit(handleEditSubmit)}>
-                        <FormGroup
-                            register={register}
-                            inputName={"fullName"}
-                            labelName={"FullName"}
-                            errorField={errors.fullName}
-                            inputType={"text"}
-                            placeholder={"Enter Your FullName"}
-                            required="Please Enter Your FullName"
-                        />
-                        <FormGroup
-                            register={register}
-                            inputName={"email"}
-                            labelName={"Email"}
-                            errorField={errors.email}
-                            inputType={"text"}
-                            placeholder={"Enter Your Email"}
-                            required="Please Enter Your Email"
-                        />
-                        <button
-                            type="submit"
-                            className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
-                            disabled={isLoading}
-                        >
-                            {isLoading ? "Loading" : "Register"}
-                        </button>
-                    </form>
+            <div
+                className={`fixed z-50 flex justify-center items-center w-full p-4 overflow-x-hidden overflow-y-auto inset-0 h-modal h-full`}
+            >
+                <div className="relative w-full h-full max-w-2xl md:h-auto">
+                    <div className="relative bg-white rounded-lg drop-shadow-2xl">
+                        <div className="flex items-start justify-between p-4 border-b rounded-t ">
+                            <h3 className="text-xl font-semibold text-gray-900">
+                                {title}
+                            </h3>
+                            <button
+                                type="button"
+                                onClick={closeModal}
+                                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                            >
+                                <svg
+                                    aria-hidden="true"
+                                    className="w-5 h-5"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clipRule="evenodd"
+                                    ></path>
+                                </svg>
+                                <span className="sr-only">Close modal</span>
+                            </button>
+                        </div>
+
+                        <div className="p-6 space-y-6">
+                            <form onSubmit={handleSubmit(handleEditSubmit)}>
+                                {!isAddressProfile ? (
+                                    <>
+                                        <FormGroup
+                                            register={register}
+                                            inputName={"fullName"}
+                                            labelName={"FullName"}
+                                            errorField={errors.fullName}
+                                            isDefaultValue
+                                            defaultValue={values.fullName}
+                                            inputType={"text"}
+                                            placeholder={"Enter Your FullName"}
+                                            required="Please Enter Your FullName"
+                                        />
+                                        <FormGroup
+                                            register={register}
+                                            inputName={"email"}
+                                            labelName={"Email"}
+                                            isDefaultValue
+                                            defaultValue={values.email}
+                                            errorField={errors.email}
+                                            inputType={"text"}
+                                            placeholder={"Enter Your Email"}
+                                            required="Please Enter Your Email"
+                                        />
+                                    </>
+                                ) : (
+                                    <>
+                                        <FormGroup
+                                            register={register}
+                                            inputName={"username"}
+                                            labelName={"Username"}
+                                            errorField={errors.username}
+                                            isDefaultValue
+                                            defaultValue={values.username}
+                                            inputType={"text"}
+                                            placeholder={"Enter Your Username"}
+                                            required="Please Enter Your Username"
+                                        />
+                                        <FormGroup
+                                            register={register}
+                                            inputName={"address"}
+                                            labelName={"Address"}
+                                            errorField={errors.address}
+                                            isDefaultValue
+                                            defaultValue={values.address}
+                                            inputType={"text"}
+                                            placeholder={"Enter Your Address"}
+                                            required="Please Enter Your Address"
+                                        />
+                                        <FormGroup
+                                            register={register}
+                                            inputName={"country"}
+                                            labelName={"Country"}
+                                            isDefaultValue
+                                            defaultValue={values.country}
+                                            errorField={errors.country}
+                                            inputType={"text"}
+                                            placeholder={"Enter Your Country"}
+                                            required="Please Enter Your Country"
+                                        />
+                                        <FormGroup
+                                            register={register}
+                                            inputName={"city"}
+                                            labelName={"City"}
+                                            isDefaultValue
+                                            defaultValue={values.city}
+                                            errorField={errors.city}
+                                            inputType={"text"}
+                                            placeholder={"Enter Your City"}
+                                            required="Please Enter Your City"
+                                        />
+                                        <FormGroup
+                                            register={register}
+                                            inputName={"postalCode"}
+                                            labelName={"Postal Code"}
+                                            isDefaultValue
+                                            defaultValue={values.postalCode}
+                                            errorField={errors.postalCode}
+                                            inputType={"text"}
+                                            placeholder={
+                                                "Enter Your Postal Code"
+                                            }
+                                            required="Please Enter Your Postal Code"
+                                        />
+                                    </>
+                                )}
+
+                                <button
+                                    type="submit"
+                                    className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
+                                    disabled={isSubmitted}
+                                >
+                                    {isSubmitted ? "Loading" : "Register"}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div> */}
+            </div>
         </>
     );
 };
