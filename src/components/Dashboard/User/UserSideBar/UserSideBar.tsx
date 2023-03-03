@@ -38,7 +38,7 @@ const UserSideBar = () => {
                         <AiOutlineHeart className="flex-shrink-0 w-6 h-6 text-gray-500 group-focus-within:text-white transition duration-75 group-hover:text-white" />
                     </SideBarItem>
                     <SideBarItem
-                        link="/dashboard/user/order-history"
+                        link="/dashboard/user/history"
                         name="Order History"
                     >
                         <AiOutlineHeart className="flex-shrink-0 w-6 h-6 text-gray-500 group-focus-within:text-white transition duration-75 group-hover:text-white" />

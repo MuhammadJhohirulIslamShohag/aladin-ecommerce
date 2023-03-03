@@ -53,7 +53,7 @@ const NavbarTop: React.FC = (): JSX.Element => {
                                     } absolute menu menu-compact right-24 md:right-9 z-10 sm:right-9 dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52`}
                                 >
                                     <DropdownListItem
-                                        link="/profile"
+                                        link="/dashboard/user/profile"
                                         className="text-primary hover:text-success"
                                     >
                                         Profile
@@ -64,6 +64,7 @@ const NavbarTop: React.FC = (): JSX.Element => {
                                     >
                                         Dashboard
                                     </DropdownListItem>
+                                   
                                     <DropdownListItem
                                         link="/wish-list"
                                         className="text-primary hover:text-success"

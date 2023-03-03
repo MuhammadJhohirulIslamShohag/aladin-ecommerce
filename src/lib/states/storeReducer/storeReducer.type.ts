@@ -8,7 +8,7 @@ export enum StoreActionType {
     ADD_COUPON = "ADD_COUPON",
 }
 
-interface UserType {
+export interface UserType {
     email: string;
     fullName: string;
     role: string;

@@ -208,7 +208,7 @@ const Login = () => {
                     <label className="label cursor-pointer -mt-3">
                         <span
                             className="cursor-pointer text-primary font-medium text-sm sm:text-sm hover:text-success transition-all"
-                            onClick={() => router.push("/forgot-password")}
+                            onClick={() => router.push("/auth/forgot-password")}
                         >
                             Forget Password?
                         </span>
@@ -226,7 +226,7 @@ const Login = () => {
                     If You Do Not Have Account?{" "}
                     <label
                         className="mr-2 text-success cursor-pointer"
-                        onClick={() => router.push("/register")}
+                        onClick={() => router.push("/auth/register")}
                     >
                         Register Now
                     </label>

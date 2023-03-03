@@ -84,7 +84,7 @@ const ForgotPassword = () => {
                     If You Right Know Remember Your Account Password?{" "}
                     <label
                         className="text-success cursor-pointer"
-                        onClick={() => router.push("/login")}
+                        onClick={() => router.push("/auth/login")}
                     >
                         Back Login
                     </label>
