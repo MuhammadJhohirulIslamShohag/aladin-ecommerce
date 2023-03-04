@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
-import { AiFillSetting } from "react-icons/ai";
+import { AiFillDashboard } from "react-icons/ai";
 import { MdLogout } from "react-icons/md";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { useRouter } from "next/router";
@@ -11,7 +11,7 @@ import Notifications from "./Notifications/Notifications";
 
 const DashboardNavbar = () => {
     const [showNotification, setShowNotification] = useState(false);
-    const { state, logOut, dispatch } = useStoreContext();
+    const { state, logOut, dispatch, firebaseUser } = useStoreContext();
     const { user } = state;
     const router = useRouter();
 
@@ -104,10 +104,14 @@ const DashboardNavbar = () => {
                             className="btn btn-ghost btn-circle avatar"
                         >
                             <div className="w-10 rounded-full">
-                                {user !== null && (
+                                {firebaseUser !== null && (
                                     <Image
-                                        src={"/doc"}
-                                        alt={user?.fullName}
+                                        src={
+                                            firebaseUser?.photoURL
+                                                ? firebaseUser?.photoURL
+                                                : "/doc"
+                                        }
+                                        alt={"admin profile logo"}
                                         width={100}
                                         height={100}
                                     />
@@ -118,7 +122,7 @@ const DashboardNavbar = () => {
                             tabIndex={0}
                             className="mt-3 pb-2 shadow menu menu-compact dropdown-content bg-gray-800 rounded divide-y divide-gray-100"
                         >
-                            <div className="py-3 px-4 w-60 text-sm text-gray-900 dark:text-white">
+                            <div className="py-3 px-4 mw-60 text-sm text-gray-900 dark:text-white">
                                 <div>{user?.fullName}</div>
                                 <div className="font-medium truncate">
                                     {user && user?.email}
@@ -127,20 +131,20 @@ const DashboardNavbar = () => {
                             <ul className="text-sm text-gray-700 dark:text-gray-200">
                                 <li>
                                     <Link
-                                        href="/dashboard/profile"
+                                        href="/dashboard/admin"
                                         className="flex  py-2 px-4 hover:bg-gray-600 text-white"
                                     >
-                                        <FaUser />
-                                        Profile
+                                        <AiFillDashboard />
+                                        Dashboard
                                     </Link>
                                 </li>
                                 <li>
                                     <Link
-                                        href="/dashboard/accountSetting"
-                                        className="flex py-2 px-4 hover:bg-gray-600 text-white"
+                                        href="/dashboard/admin/setting/profile"
+                                        className="flex  py-2 px-4 hover:bg-gray-600 text-white"
                                     >
-                                        <AiFillSetting />
-                                        Setting
+                                        <FaUser />
+                                        Profile
                                     </Link>
                                 </li>
                             </ul>

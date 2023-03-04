@@ -86,23 +86,23 @@ const FileUpload = ({
                 });
         }
     };
-    const handleImageRemove = (public_id: string) => {
-        if (user) {
-            deletingImageFile(user.token, public_id)
-                .then((res) => {
-                    setValues({
-                        ...values,
-                        image: {
-                            url: "",
-                            public_id: "",
-                        },
-                    });
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }
-    };
+    // const handleImageRemove = (public_id: string) => {
+    //     if (user) {
+    //         deletingImageFile(user.token, public_id)
+    //             .then((res) => {
+    //                 setValues({
+    //                     ...values,
+    //                     image: {
+    //                         url: "",
+    //                         public_id: "",
+    //                     },
+    //                 });
+    //             })
+    //             .catch((error) => {
+    //                 console.log(error);
+    //             });
+    //     }
+    // };
 
     const updateTheProfileToFirebase = (
         fullName: string,
@@ -128,14 +128,14 @@ const FileUpload = ({
             <div className="mb-3 relative">
                 {values?.image?.url ? (
                     <div className="overflow-hidden h-32 relative mb-2">
-                        <span
+                        {/* <span
                             onClick={() =>
                                 handleImageRemove(values?.image?.public_id!)
                             }
                             className="absolute left-[70%] cursor-pointer top-0 text-rose-500"
                         >
                             X
-                        </span>
+                        </span> */}
                         <Image
                             className="h-full w-[75%] rounded-sm"
                             src={values?.image.url}

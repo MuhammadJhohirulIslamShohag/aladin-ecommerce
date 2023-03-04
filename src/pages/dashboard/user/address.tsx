@@ -1,10 +1,11 @@
 import UserDashboard from "@/layouts/DashboardLayout/UserDashboard";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import React, { useState, useEffect,useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { currentUser } from "@/api/auth";
 import { BiEdit } from "react-icons/bi";
 import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
 import { IProfile } from "./profile.types";
+import { UserType } from "@/lib/states/storeReducer/storeReducer.type";
 
 const Address = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -19,7 +20,13 @@ const Address = () => {
     const { state } = useStoreContext();
     const { user } = state;
 
-    const loadingCurrentUser = useCallback(() => {
+    useEffect(() => {
+        if (user) {
+            loadingCurrentUser(user);
+        }
+    }, [user]);
+
+    const loadingCurrentUser = (user: UserType) => {
         if (user && user!.token) {
             currentUser(user.token)
                 .then((res) => {
@@ -37,13 +44,7 @@ const Address = () => {
                     console.log(error.message);
                 });
         }
-    },[]);
-
-    useEffect(() => {
-        loadingCurrentUser();
-    }, [loadingCurrentUser]);
-
-    
+    };
     // show model for update profile
     const handleShowModal = () => {
         setShowModal((prev) => !prev);

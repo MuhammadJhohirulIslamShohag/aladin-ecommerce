@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaShoppingBag, FaUsers, FaHeart, FaUser } from "react-icons/fa";
+import { FaShoppingBag, FaUsers, FaHeart } from "react-icons/fa";
 import { AiFillSetting, AiFillDashboard } from "react-icons/ai";
 import { RiCoupon4Line } from "react-icons/ri";
 import { BiCategory } from "react-icons/bi";
@@ -21,6 +21,7 @@ const SidebarList = ({ toggleAdminSidebar }: SidebarListPropType) => {
     const [openSizes, setOpenSizes] = useState<boolean>(false);
     const [openSubCategories, setOpenSubCategories] = useState<boolean>(false);
     const [openAllUsers, setOpenAllUsers] = useState<boolean>(false);
+    const [openSetting, setOpenSetting] = useState<boolean>(false);
 
     const { dispatch, logOut } = useStoreContext();
 
@@ -246,28 +247,22 @@ const SidebarList = ({ toggleAdminSidebar }: SidebarListPropType) => {
             </SideBarListItem>
 
             <SideBarListItem
-                navigationLink="/dashboard/profile"
-                tooltipName="Profile"
+                open={openSetting}
+                setOpen={setOpenSetting}
+                icon={<AiFillSetting className="h-[19px] w-[19px]" />}
                 toggleAdminSidebar={toggleAdminSidebar}
+                dropdownMainMenuName="Profile Settings"
+                tooltipName="Profile Settings"
+                isDropdownList
             >
-                <FaUser className="h-[19px] w-[19px]" />
-                {!toggleAdminSidebar && (
-                    <span className="flex-1 ml-3 whitespace-nowrap">
-                        Profile
-                    </span>
-                )}
-            </SideBarListItem>
-            <SideBarListItem
-                navigationLink="/dashboard/accountSetting"
-                tooltipName="Account Setting"
-                toggleAdminSidebar={toggleAdminSidebar}
-            >
-                <AiFillSetting className="h-[19px] w-[19px]" />
-                {!toggleAdminSidebar && (
-                    <span className="flex-1 ml-3 whitespace-nowrap">
-                        Account Setting
-                    </span>
-                )}
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/setting/profile"
+                    name="Profile"
+                />
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/setting/address"
+                    name="Address"
+                />
             </SideBarListItem>
             <SideBarListItem
                 tooltipName="LogOut"

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createOrUpdateUser } from "@/api/auth";
 import FormGroup from "@/components/Form/FormGroup";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
+import { StoreActionType, UserType } from "@/lib/states/storeReducer/storeReducer.type";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { IProfile } from "@/pages/dashboard/user/profile.types";
@@ -11,7 +11,7 @@ type ProfileEditModalPropType = {
     title: string;
     closeModal: () => void;
     values: IProfile;
-    loadingCurrentUser: () => void;
+    loadingCurrentUser: (user: UserType) => void;
     isAddressProfile?: boolean;
 };
 type FormProfileValues = {
@@ -44,7 +44,7 @@ const ProfileEditModal = (props: ProfileEditModalPropType) => {
     });
 
     const handleEditSubmit: SubmitHandler<FormProfileValues> = (data) => {
-        let userObject:any = null;
+        let userObject: any = null;
         if (!isAddressProfile) {
             userObject = {
                 fullName: data.fullName!,
@@ -52,14 +52,14 @@ const ProfileEditModal = (props: ProfileEditModalPropType) => {
             };
         } else {
             userObject = {
-                address:{
+                address: {
                     email: user!.email,
-                username: data.username!,
-                address: data.address!,
-                city: data.city!,
-                postalCode: data.postalCode!,
-                country: data.country!,
-                }
+                    username: data.username!,
+                    address: data.address!,
+                    city: data.city!,
+                    postalCode: data.postalCode!,
+                    country: data.country!,
+                },
             };
         }
         if (userObject || userObject.address) {
@@ -88,7 +88,7 @@ const ProfileEditModal = (props: ProfileEditModalPropType) => {
                 .finally(() => {
                     reset();
                 });
-            loadingCurrentUser();
+            loadingCurrentUser(user!);
             if (!isAddressProfile) {
                 updateTheProfileToFirebase(
                     values.fullName!,

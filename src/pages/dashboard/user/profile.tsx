@@ -123,7 +123,7 @@ const Profile = () => {
     );
     return (
         <UserDashboard>
-            <h2 className="text-black text-md font-semibold mb-0">My Profile</h2>
+            <h2 className="text-black text-md font-semibold mb-4">My Profile</h2>
             <div className="grid grid-cols-8">
                 <div className="col-span-2">
                     {values.image?.url && (
