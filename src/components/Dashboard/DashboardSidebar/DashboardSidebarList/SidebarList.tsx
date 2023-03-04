@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaShoppingBag, FaUsers, FaHeart, FaUser } from "react-icons/fa";
 import { AiFillSetting, AiFillDashboard } from "react-icons/ai";
+import { RiCoupon4Line } from "react-icons/ri";
 import { BiCategory } from "react-icons/bi";
 import { MdOutlineProductionQuantityLimits, MdLogout } from "react-icons/md";
 import SideBarListItem from "./SideBarListItem/SideBarListItem";
@@ -163,6 +164,18 @@ const SidebarList = ({ toggleAdminSidebar }: SidebarListPropType) => {
                 />
             </SideBarListItem>
 
+            <SideBarListItem
+                navigationLink="/dashboard/admin/coupons"
+                tooltipName="Coupons"
+                toggleAdminSidebar={toggleAdminSidebar}
+            >
+                <RiCoupon4Line className="h-[19px] w-[19px]" />
+                {!toggleAdminSidebar && (
+                    <span className="flex-1 ml-3 whitespace-nowrap">
+                        Coupons
+                    </span>
+                )}
+            </SideBarListItem>
             <SideBarListItem
                 navigationLink="/dashboard/buyer/wishlist"
                 tooltipName="My WishList"

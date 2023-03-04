@@ -5,18 +5,25 @@ import { toast } from "react-hot-toast";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { creatingCoupon, getListOfCoupons, removingCoupon } from "@/api/coupon";
 import { UserType } from "@/lib/states/storeReducer/storeReducer.type";
+import CouponForm from "@/components/Form/CouponForm/CouponForm";
+import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
+import { ICoupon } from "types/coupon.types";
 
+type CouponValuesType = {
+    couponName: string;
+    discount: string;
+};
 const initialCouponValues = {
     couponName: "",
     discount: "",
 };
 const CreateCoupon = () => {
-    const [couponValues, setCouponValues] = useState(initialCouponValues);
+    const [couponValues, setCouponValues] =
+        useState<CouponValuesType>(initialCouponValues);
     const [expireDate, setExpireDate] = useState(new Date());
-    const [coupons, setCoupons] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [coupons, setCoupons] = useState<ICoupon[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    // redux
     const { state } = useStoreContext();
     const { user } = state;
 
@@ -70,6 +77,11 @@ const CreateCoupon = () => {
                 })
                 .catch((error) => {
                     console.log(error);
+                    if (error.response.status === 400) {
+                        toast.error(
+                            `${error.response.data}, Duplicate Coupon Name!`
+                        );
+                    }
                     setLoading(false);
                 });
         }
@@ -91,78 +103,89 @@ const CreateCoupon = () => {
     };
 
     return (
-        <div className="container-fluid">
-            <Row gutter={16}>
-                <Col span={4}>
-                    <AdminNavigation />
-                </Col>
-                <Col span={20}>
-                    <h4>Coupon</h4>
-                    <Row>
-                        <Col span={16}>
-                            <CouponForm
-                                couponValues={couponValues}
-                                expireDate={expireDate}
-                                setExpireDate={setExpireDate}
-                                loading={loading}
-                                handleCouponChange={handleCouponChange}
-                                handleCouponSubmit={handleCouponSubmit}
-                            />
-                        </Col>
-                    </Row>
-                    <hr />
-                    <h5>
-                        List of {coupons.length}{" "}
-                        {coupons.length > 1 ? "Coupons" : "Coupon"}
-                    </h5>
-                    <hr />
-                    <table className="table align-middle">
-                        <thead className="table-secondary text-center">
-                            <tr>
-                                <th scope="col">Coupon-Name</th>
-                                <th scope="col">Expire Date</th>
-                                <th scope="col">Discount</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {coupons && coupons.length > 0 ? (
-                                coupons.map((coupon) => (
-                                    <tr key={coupon._id}>
-                                        <td className="text-center">
-                                            {coupon.name}
-                                        </td>
-                                        <td className="text-center">
-                                            {new Date(
-                                                coupon.expiry
-                                            ).toLocaleDateString()}
-                                        </td>
-                                        <td className="text-center">
-                                            {coupon.discount}
-                                        </td>
-                                        <td className="text-center">
-                                            {" "}
-                                            <AiOutlineClear
-                                                className="text-danger"
-                                                onClick={() =>
-                                                    removeCoupon(coupon._id)
-                                                }
-                                            />
-                                        </td>
+        <DashboardLayout>
+            <div className="container py-10">
+                <div className="bg-secondary p-6 rounded-lg w-3/4">
+                    <h2 className="text-center font-semibold text-primary text-2xl">
+                        Create Coupon
+                    </h2>
+
+                    {/* Coupon Form */}
+                    <div>
+                        <CouponForm
+                            couponValues={couponValues}
+                            expireDate={expireDate}
+                            setExpireDate={setExpireDate}
+                            loading={loading}
+                            handleCouponChange={handleCouponChange}
+                            handleCouponSubmit={handleCouponSubmit}
+                        />
+                    </div>
+
+                    {/* List Of Coupons */}
+                    <div className="mt-8">
+                        <hr />
+                        <h5 className="mb-5 text-center font-semibold text-primary text-2xl">
+                            List of {coupons.length}{" "}
+                            {coupons.length > 1 ? "Coupons" : "Coupon"}
+                        </h5>
+                        <div>
+                            <table className="table w-full align-middle">
+                                <thead className="table-secondary text-center">
+                                    <tr>
+                                        <th scope="col">Coupon-Name</th>
+                                        <th scope="col">Expire Date</th>
+                                        <th scope="col">Discount</th>
+                                        <th scope="col">Action</th>
                                     </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td className="text-center" colSpan="4">
-                                        <h5>No Coupon</h5>
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </Col>
-            </Row>
-        </div>
+                                </thead>
+                                <tbody className="text-black">
+                                    {coupons && coupons.length > 0 ? (
+                                        coupons.map((coupon: ICoupon) => (
+                                            <tr key={coupon._id}>
+                                                <td className="text-center">
+                                                    {coupon.name}
+                                                </td>
+                                                <td className="text-center">
+                                                    {new Date(
+                                                        coupon.expiry
+                                                    ).toLocaleDateString()}
+                                                </td>
+                                                <td className="text-center">
+                                                    {coupon.discount}
+                                                </td>
+                                                <td className="text-center">
+                                                    {" "}
+                                                    <span>
+                                                        <AiOutlineClear
+                                                            className="text-rose-300 cursor-pointer hover:text-rose-600 inline-block"
+                                                            onClick={() =>
+                                                                removeCoupon(
+                                                                    coupon._id
+                                                                )
+                                                            }
+                                                        />
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td
+                                                className="text-center"
+                                                colSpan={4}
+                                            >
+                                                <h5>No Coupon</h5>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </DashboardLayout>
     );
 };
 

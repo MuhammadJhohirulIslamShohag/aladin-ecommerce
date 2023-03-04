@@ -5,7 +5,7 @@ export const creatingCoupon = async (
     token:string,
     couponName:string,
     discount:string,
-    expireDate:any
+    expireDate:Date
 ) => {
     return await axios.post(
         `${process.env.NEXT_PUBLIC_server_api}/coupon`,
