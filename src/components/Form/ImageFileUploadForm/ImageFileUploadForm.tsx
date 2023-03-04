@@ -9,15 +9,17 @@ type ImageFileUploadFormPropType = {
     values: any;
     setValues: any;
     setLoading: any;
-    errorField:any;
+    errorField: any;
     register: any;
+    isUpdateImage?: boolean;
 };
 const ImageFileUploadForm = ({
     values,
     setValues,
     setLoading,
     register,
-    errorField
+    errorField,
+    isUpdateImage = false,
 }: ImageFileUploadFormPropType) => {
     const { state } = useStoreContext();
     const { user } = state;
@@ -107,21 +109,37 @@ const ImageFileUploadForm = ({
                         ))}
                 </div>
                 <div>
-                <input
-                    type="file"
-                    multiple
-                    accept="images/*"
-                    {...register("productImg", {
-                        required: "Product Image Is Required!",
-                        onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                            handleFileChange(e),
-                    })}
-                    files={values.images}
-                    className="file-input file-input-bordered file-input-success w-full max-w-xs"
-                />
-                {errorField && (
-                    <p className="text-red-600">{errorField?.message}</p>
-                )}
+                    {!isUpdateImage && (
+                        <input
+                            type="file"
+                            multiple
+                            accept="images/*"
+                            {...register("productImg", {
+                                required: "Product Image Is Required!",
+                                onChange: (
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => handleFileChange(e),
+                            })}
+                            files={values.images}
+                            className="file-input file-input-bordered file-input-success w-full max-w-xs"
+                        />
+                    )}
+                    {!isUpdateImage && errorField && (
+                        <p className="text-red-600">{errorField?.message}</p>
+                    )}
+
+                    {isUpdateImage && (
+                        <input
+                            type="file"
+                            multiple
+                            accept="images/*"
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFileChange(e)}
+                            className="file-input file-input-bordered file-input-success w-full max-w-xs"
+                        />
+                    )}
+                     {isUpdateImage && errorField && (
+                        <p className="text-red-600">{errorField}</p>
+                    )}
                 </div>
             </div>
         </Fragment>

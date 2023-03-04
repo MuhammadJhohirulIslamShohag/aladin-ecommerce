@@ -12,7 +12,16 @@ import { GetServerSideProps } from "next";
 import { getListOfColor } from "@/api/color";
 import { getListOfSizes } from "@/api/size";
 import { getListOfBrands } from "@/api/brand";
+import { IColor } from "types/color.types";
+import { ISize } from "types/size.types";
+import { ISubCategories } from "types/sub-category.type";
+import dynamic from "next/dynamic";
+import { IFormInput } from "@/components/Form/CreateProduct/FormInput.types";
 
+type CustomReactSelectValue = {
+    label: string;
+    value: string;
+};
 
 const initialValues = {
     title: "",
@@ -34,15 +43,34 @@ const initialValues = {
     subCategory: [],
 };
 
-const UpdateProduct = ({categories, colorsData,
+const UpdateProduct = ({
+    categories,
+    colorsData,
     sizesData,
-    brandsData}:any) => {
-    const [values, setValues] = useState({...initialValues,categories: categories, brandData:brandsData, colorsData: colorsData, sizesData: sizesData});
-    const [selectedCategory, setSelectedCategory] = useState();
-    // const [categories, setCategories] = useState([]);
-    const [subCategories, setSubCategories] = useState([]);
-    const [arraySubCategories, setArraySubCategories] = useState([]);
-    const [loading, setLoading] = useState(false);
+    brandsData,
+}: any) => {
+    const [values, setValues] = useState<any>({
+        ...initialValues,
+        categories: categories,
+        brandData: brandsData,
+        colorsData: colorsData,
+        sizesData: sizesData,
+    });
+    const [selectedCategory, setSelectedCategory] = useState<any>();
+    const [subCategories, setSubCategories] = useState<
+        CustomReactSelectValue[]
+    >([]);
+    const [arraySubCategories, setArraySubCategories] = useState<any[]>([]);
+    const [multiSelectSubCategories, setMultiSelectSubCategories] = useState<
+        readonly CustomReactSelectValue[]
+    >([]);
+    const [multiSelectSizes, setMultiSelectSizes] = useState<
+        readonly CustomReactSelectValue[]
+    >([]);
+    const [multiSelectColors, setMultiSelectColors] = useState<
+        readonly CustomReactSelectValue[]
+    >([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const {
         state: { user },
@@ -54,7 +82,6 @@ const UpdateProduct = ({categories, colorsData,
 
     useEffect(() => {
         loadingProduct();
-        // loadingCategory();
     }, [slug]);
 
     const loadingProduct = () => {
@@ -63,35 +90,32 @@ const UpdateProduct = ({categories, colorsData,
                 setValues({ ...values, ...res.data });
                 subCategoryOnCategory(user!.token, res.data.category._id).then(
                     (res) => {
-                        setSubCategories(res.data);
+                        let modifyArraySC: CustomReactSelectValue[] = [];
+                        res.data.map((d: ISubCategories) => {
+                            return modifyArraySC.push({
+                                label: d.name,
+                                value: d._id,
+                            });
+                        });
+                        setSubCategories(modifyArraySC);
                     }
                 );
-                let array: {label:string; value:string;}[] = [];
-                res.data.subCategory.map((d: any) => {
-                    return array.push({label:d.name, value: d._id});
-                });
-                setArraySubCategories((prev) => array);
+                // customize sub categories for react multi select
+                let subCategoriesArray = customizeForReactSelect(
+                    res.data.subCategory
+                );
+                setArraySubCategories((prev) => subCategoriesArray);
+                setMultiSelectSubCategories(subCategoriesArray);
+                // customize sizes for react multi select
+                let sizesArray = customizeForReactSelect(res.data?.sizes);
+                setMultiSelectSizes(sizesArray);
+                // customize colors for react multi select
+                let colorsArray = customizeForReactSelect(res.data?.colors);
+                setMultiSelectColors(colorsArray);
             })
             .catch((error) => {
                 console.log(error);
             });
-    };
-
-    // const loadingCategory = () => {
-    //     getListOfCategory()
-    //         .then((res) => {
-    //             setCategories(res.data);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    // };
-
-    const handleChange = (event: any) => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value,
-        });
     };
 
     const handleCategoryChange = (event: any) => {
@@ -102,13 +126,7 @@ const UpdateProduct = ({categories, colorsData,
         setSelectedCategory(event.target.value);
         subCategoryOnCategory(user!.token, event.target.value)
             .then((res) => {
-                const modifySubCategories = res.data.length && res.data.map(s=> {
-                    return {
-                        label: s.name,
-                        value: s._id
-                    }
-                }) 
-                console.log(modifySubCategories);
+                const modifySubCategories = customizeForReactSelect(res.data);
                 setSubCategories(modifySubCategories);
             })
             .catch((error) => {
@@ -121,12 +139,51 @@ const UpdateProduct = ({categories, colorsData,
         setArraySubCategories([]);
     };
 
-    const handleSubmitProduct = (event: any) => {
-        event.preventDefault();
-        values.category = selectedCategory ? selectedCategory : values.category;
-        values.subCategory = arraySubCategories;
+    const customizeForReactSelect = (data: any[]) => {
+        let modifyArray: CustomReactSelectValue[] = [];
+        data.map((d: any) => {
+            return modifyArray.push({ label: d.name, value: d._id });
+        });
+        return modifyArray;
+    };
+
+    const handleSubmitProduct = (data: IFormInput) => {
+        let updateSubCategory;
+        let updateColors;
+        let updateSizes;
+        if (
+            Array.isArray(multiSelectSubCategories) &&
+            Array.isArray(multiSelectSizes) &&
+            Array.isArray(multiSelectColors)
+        ) {
+            updateSubCategory = multiSelectSubCategories.map(
+                (sc: { value: string; label: string }) => sc.value
+            );
+            updateSizes = multiSelectSizes.map(
+                (c: { value: string; label: string }) => c.value
+            );
+            updateColors = multiSelectColors.map(
+                (s: { value: string; label: string }) => s.value
+            );
+        }
+        const updatedValues = {
+            ...values,
+            category: selectedCategory
+                ? selectedCategory
+                : data.productCategory,
+            subCategory: updateSubCategory,
+            title: data.productName,
+            description: data.description,
+            price: data.price,
+            quantity: data.quantity,
+            colors: updateColors,
+            sizes: updateSizes,
+            brand: data.brand,
+            shipping: data.shipping,
+            discount: data.discount,
+        };
         setLoading(true);
-        updateProduct(user!.token, slug, values)
+        updateProduct(user!.token, slug, updatedValues)
             .then((res) => {
                 toast.success(`${res.data.title} Product Is Updated!`);
                 setLoading(false);
@@ -149,7 +206,6 @@ const UpdateProduct = ({categories, colorsData,
                     <UpdateProductForm
                         values={values}
                         setValues={setValues}
-                        // categories={categories}
                         subCategories={subCategories}
                         arraySubCategories={arraySubCategories}
                         setArraySubCategories={setArraySubCategories}
@@ -157,8 +213,15 @@ const UpdateProduct = ({categories, colorsData,
                         loading={loading}
                         setLoading={setLoading}
                         handleSubmitProduct={handleSubmitProduct}
-                        handleChange={handleChange}
                         handleCategoryChange={handleCategoryChange}
+                        multiSelectSubCategories={multiSelectSubCategories}
+                        setMultiSelectSubCategories={
+                            setMultiSelectSubCategories
+                        }
+                        multiSelectSizes={multiSelectSizes}
+                        setMultiSelectSizes={setMultiSelectSizes}
+                        multiSelectColors={multiSelectColors}
+                        setMultiSelectColors={setMultiSelectColors}
                     />
                 </div>
             </div>
@@ -166,7 +229,7 @@ const UpdateProduct = ({categories, colorsData,
     );
 };
 
-export default UpdateProduct;
+export default dynamic(() => Promise.resolve(UpdateProduct), { ssr: false });
 
 export const getServerSideProps: GetServerSideProps = async () => {
     const { data } = await getListOfCategory();
@@ -176,19 +239,78 @@ export const getServerSideProps: GetServerSideProps = async () => {
     return {
         props: {
             categories: data,
-            colorsData:colorsData && colorsData.map(c=> {
-                return {
-                    label:c.name,
-                    value:c._id
-                }
-            }),
-            sizesData: sizesData && sizesData.map(s=> {
-                return {
-                    label:s.name,
-                    value:s._id
-                }
-            }),
+            colorsData:
+                colorsData &&
+                colorsData.map((c: IColor) => {
+                    return {
+                        label: c.name,
+                        value: c._id,
+                    };
+                }),
+            sizesData:
+                sizesData &&
+                sizesData.map((s: ISize) => {
+                    return {
+                        label: s.name,
+                        value: s._id,
+                    };
+                }),
             brandsData,
         },
     };
 };
+
+{
+    /*
+    
+    // validation
+        // if (multiSelectSubCategories.length < 1) {
+        //     setMultiSelectErrors({
+        //         ...multiSelectErrors,
+        //         multiSubCategoriesError: "Sub Categories Is Required!",
+        //     });
+        //     return;
+        // }else{
+        //     setMultiSelectErrors((prev) => ({...prev, multiSubCategoriesError:""})); 
+        // }
+        // if (multiSelectSizes.length < 1) {
+        //     console.log("si")
+        //     setMultiSelectErrors({
+        //         ...multiSelectErrors,
+        //         multiSizesError: "Size Is Required!",
+        //     });
+        //     console.log(multiSelectErrors, "si");
+        //     return;
+        // }else{
+        //     console.log("s")
+        //     setMultiSelectErrors((prev) =>  ({...prev, multiSizesError:""})); 
+        //     console.log(multiSelectErrors, "s");
+        // }
+        // if (multiSelectColors.length < 1) {
+        //     setMultiSelectErrors({
+        //         ...multiSelectErrors,
+        //         multiColorsError: "Colors Is Required!",
+        //     });
+        //     return;
+        // }else{
+        //     setMultiSelectErrors({
+        //         ...multiSelectErrors,
+        //         multiColorsError: "",
+        //     }); 
+        // }
+        // if (values.images < 1) {
+        //     setMultiSelectErrors({
+        //         ...multiSelectErrors,
+        //         imagesError: "Image Is Required!",
+        //     });
+        //     return;
+        // }else{
+        //     setMultiSelectErrors({
+        //         ...multiSelectErrors,
+        //         imagesError: "",
+        //     }); 
+        // }
+        // setLoading(true);
+    
+    */
+}
