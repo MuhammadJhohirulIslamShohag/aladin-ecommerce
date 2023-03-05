@@ -19,12 +19,13 @@ const CountDown = ({ date }: { date: Date }) => {
             updateRemainingTime(timeInMs);
         }, 1000);
 
-        return clearInterval(interval);
+        return () => clearInterval(interval);
     }, [timeInMs]);
 
     const updateRemainingTime = (timeInMs: number) => {
-        setRemainingTime(calcTimeDifferent(timeInMs!));
+        setRemainingTime(calcTimeDifferent(timeInMs));
     };
+   
     return (
         <div className="flex items-center gap-2">
             <span className="bg-black text-white p-1 rounded-md text-3xl">

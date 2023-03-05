@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 export const calcTimeDifferent = (timeInMs: number) => {
     const timeStampDayjs = dayjs(timeInMs);
     const nowDayjs = dayjs();
-
     if (timeStampDayjs.isBefore(nowDayjs)) {
         return {
             seconds: "00",
