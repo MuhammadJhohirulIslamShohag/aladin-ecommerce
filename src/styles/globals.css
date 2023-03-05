@@ -17,6 +17,37 @@
 .react-select__placeholder {
     color: black !important;
 }  
+
+/* swiper for surprising_sales */
+.surprising_sales .swiper-button-prev,.surprising_sales .swiper-button-next {
+    right: 0 !important;
+    border: 2px solid #36D399 !important;
+    width: 43px !important;
+    height: 29px !important;
+    background-color: #36D399 !important;
+    transition: all .4s !important;
+}
+.surprising_sales .swiper-button-prev:hover,.surprising_sales .swiper-button-next:hover {
+    background-color: transparent !important;
+}
+
+.surprising_sales .swiper-button-next, .surprising_sales .swiper-button-prev {
+    position: absolute;
+    bottom: 0 !important;
+    margin-top: 150px !important;
+}
+.surprising_sales .swiper-button-next:after, .surprising_sales .swiper-button-prev:after {
+    font-size: 15px !important;
+    color: white !important;
+    font-weight: bolder !important;
+    transition: all .4s !important;
+}
+.surprising_sales .swiper-button-next:hover:after, .surprising_sales .swiper-button-prev:hover:after {
+    color: black !important;
+}
+.surprising_sales .swiper-button-prev {
+    left: 93% !important;
+}
 .swiper-button-next,
 .swiper-button-prev {
     color: #000 !important;

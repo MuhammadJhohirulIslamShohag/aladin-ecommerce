@@ -13,6 +13,7 @@ import { getAllSubCategories } from "@/api/sub-categories";
 import Categories from "@/components/Home/Categories/Categories";
 import { ICategories } from "types/category.type";
 import { ISubCategories } from "types/sub-category.type";
+import FlashDeals from "@/components/Home/FlashDeals/FlashDeals/FlashDeals";
 
 type HomePropType = {
     products: IProduct[];
@@ -44,6 +45,7 @@ export default function Home({
             <MainLayout>
                 <Banner />
                 <Services />
+                <FlashDeals/>
                 <Categories categories={categories} />
                 <SubCategories subCategories={subCategories} />
                 <NewArrivals products={products} />

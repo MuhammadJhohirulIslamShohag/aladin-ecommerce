@@ -11,6 +11,7 @@ import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import { useRouter } from "next/router";
 import FormGroup from "@/components/Form/FormGroup";
 
+
 type FormValues = {
     email: string;
     password: string;
@@ -34,7 +35,8 @@ const Login = () => {
     } = useForm<FormValues>();
     const googleProvider = new GoogleAuthProvider();
     const router = useRouter();
-    const { redirect } = router.query;
+    const { redirect }   = router.query;
+    const url = `${redirect}`;
 
     useEffect(() => {
         if (user) {
@@ -141,11 +143,9 @@ const Login = () => {
                                 image: res.data.image.url,
                                 _id: res.data._id,
                             },
-                        });
-                        if(typeof redirect === "string"){
-                            console.log(redirect)
-                            router.push(redirect || "/");
-                        }
+                        });  
+                        router.push(url || "/");
+                       
                     })
                     .catch((error) => {
                         console.log(error);
