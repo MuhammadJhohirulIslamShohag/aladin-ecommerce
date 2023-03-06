@@ -6,11 +6,12 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import Image from "next/image";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import toast from "react-hot-toast";
-const colorArray = ["Green", "Black", "Red", "White"];
+import { IColor } from 'types/color.types';
+import { ISize } from 'types/size.types';
 
 const CartTable = ({ product }: any) => {
     const [countNumber, setCountNumber] = useState(product.count);
-    const { images, title, shipping, color, brand, price, quantity } = product;
+    const { images, title, shipping, colors,color,sizes, size, brand, price, quantity } = product;
     const { dispatch } = useStoreContext();
 
 
@@ -48,6 +49,33 @@ const CartTable = ({ product }: any) => {
             });
         }
     };
+
+    const handleSizeChange = (e:React.ChangeEvent<HTMLSelectElement>) => {
+        let carts = [];
+        if (typeof window !== "undefined") {
+            // checking already carts to the window localStorage
+            let cartsFromLocalStorage: string | null =
+                window.localStorage.getItem("carts");
+            if (cartsFromLocalStorage !== null) {
+                carts = JSON.parse(cartsFromLocalStorage);
+            }
+            // updating cart size
+            for (let i = 0; i < carts.length; i++) {
+                if (carts[i]._id === product._id) {
+                    carts[i].size = e.target.value;
+                }
+            }
+            // set local storage updated object
+            window.localStorage.setItem("carts", JSON.stringify(carts));
+
+            // store data into store context
+            dispatch({
+                type: StoreActionType.ADD_TO_CART,
+                payload: carts,
+            });
+        }
+    };
+
     const handleNumberChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setCountNumber(e.target.value);
     };
@@ -104,7 +132,7 @@ const CartTable = ({ product }: any) => {
             payload: carts,
         });
     };
-
+console.log(product)
     return (
         <tr className="bg-white border-b">
             <td>
@@ -130,24 +158,41 @@ const CartTable = ({ product }: any) => {
             </td>
             <td className="text-center">{title} </td>
             <td className="text-center">${price} </td>
-            <td className="text-center">{brand} </td>
+            <td className="text-center">{brand?.name} </td>
             <td>
                 <select
                     onChange={handleColorChange}
-                    name="color"
+                    name="colors"
                     className="form-select"
                 >
-                    {color ? (
-                        <option value={color}>{color}</option>
-                    ) : (
-                        <option>Select Color</option>
-                    )}
-                    {colorArray &&
-                        colorArray
-                            .filter((c) => c !== color)
-                            .map((color) => (
-                                <option key={color} value={color}>
-                                    {color}
+                    <option value={color}>
+                        {color}
+                    </option>
+                    {colors &&
+                        colors
+                        .filter((s:IColor) => s.name !== color)
+                            .map((c:IColor) => (
+                                <option key={c._id} value={c.name}>
+                                    {c.name}
+                                </option>
+                            ))}
+                </select>
+            </td>
+            <td>
+                <select
+                    onChange={handleSizeChange}
+                    name="sizes"
+                    className="form-select"
+                >
+                    <option value={size}>
+                        {size}
+                    </option>
+                    {sizes &&
+                        sizes
+                        .filter((s:ISize) => s.name !== size)
+                            .map((s:ISize) => (
+                                <option key={s._id} value={s.name}>
+                                    {s.name}
                                 </option>
                             ))}
                 </select>

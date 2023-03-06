@@ -18,9 +18,7 @@ const ProductDescription = ({ product }: any) => {
     return (
         <Tab.Panel>
             <ProductDescriptionItem name="Product Name" value={title}/>
-            <ProductDescriptionItem name="Brand" value={brand}/>
-            <ProductDescriptionItem name="Category" value={category?.name}/>
-            <ProductDescriptionItem name="Sub-Category" value={subCategory}/>
+            <ProductDescriptionItem name="Brand" value={brand?.name}/>
             <ProductDescriptionItem name="Sold" value={sold}/>
             <ProductDescriptionItem name="Quantity" value={quantity}/>
             <ProductDescriptionItem name="Shipping" value={shipping}/>

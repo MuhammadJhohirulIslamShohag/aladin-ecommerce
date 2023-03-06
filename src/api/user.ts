@@ -1,6 +1,7 @@
 import axios from "axios";
+import { CartType } from "types/cart.types";
 
-export const saveOrder = (carts:any, token:string) => {
+export const saveOrder = (carts:CartType[], token:string) => {
     return axios.post(
         `${process.env.NEXT_PUBLIC_server_api}/user/cart`,
         {

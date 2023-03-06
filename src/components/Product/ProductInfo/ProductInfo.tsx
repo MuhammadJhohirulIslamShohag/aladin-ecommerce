@@ -4,6 +4,8 @@ import { BsHandbagFill, BsFillHeartFill } from "react-icons/bs";
 import { RadioGroup } from "@headlessui/react";
 import ProductDescriptionItem from "./../ProductDescription/ProductDescriptionItem";
 import { AvgRating } from "./../../../lib/utils/avgRating";
+import { ProductInfoPropsType } from "./ProductInfo.types";
+import { IColor } from 'types/color.types';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
@@ -11,8 +13,6 @@ function classNames(...classes: string[]) {
 
 const ProductInfo = ({
     product,
-    colorArray,
-    sizeArray,
     selectedColor,
     setSelectedColor,
     selectedSize,
@@ -20,9 +20,9 @@ const ProductInfo = ({
     handleAddCart,
     handleAddToWishList,
     heartFillIcon,
-    isAddToCart
-}: any) => {
-    const { title, price, category, shipping, brand, _id } = product;
+    isAddToCart,
+}: ProductInfoPropsType) => {
+    const { title, price, category, shipping, brand, _id, subCategory} = product;
     return (
         <>
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
@@ -47,12 +47,17 @@ const ProductInfo = ({
                     <ProductDescriptionItem
                         isBorderClassName={true}
                         name="Brand"
-                        value={brand}
+                        value={brand?.name}
                     />
                     <ProductDescriptionItem
                         isBorderClassName={true}
                         name="Category"
                         value={category?.name}
+                    />
+                    <ProductDescriptionItem
+                        isBorderClassName={true}
+                        name="Sub Category"
+                        value={subCategory}
                     />
                     <ProductDescriptionItem
                         isBorderClassName={true}
@@ -74,10 +79,10 @@ const ProductInfo = ({
                             className="mt-4"
                         >
                             <div className="flex items-center space-x-3">
-                                {colorArray.map((color: string) => (
+                                {product?.colors.map((color: IColor) => (
                                     <RadioGroup.Option
-                                        key={color}
-                                        value={color}
+                                        key={color._id}
+                                        value={color.name}
                                         className={({ active, checked }) =>
                                             classNames(
                                                 active && checked
@@ -92,11 +97,11 @@ const ProductInfo = ({
                                     >
                                         <span
                                             className={`${
-                                                color === "Rose"
+                                                color.name === "Red"
                                                     ? "bg-red-600"
-                                                    : color === "Green"
+                                                    : color.name === "Green"
                                                     ? `bg-success`
-                                                    : `bg-${color.toLowerCase()}`
+                                                    : `bg-${color.name.toLowerCase()}`
                                             } h-8 w-8 border border-black border-opacity-10 rounded-full`}
                                         />
                                     </RadioGroup.Option>
@@ -119,16 +124,12 @@ const ProductInfo = ({
                             className="mt-4"
                         >
                             <div className="grid grid-cols-4 gap-4 sm:grid-cols-4 md:grid-cols-4">
-                                {sizeArray.map((size: any) => (
+                                {product?.sizes.map((size: any) => (
                                     <RadioGroup.Option
-                                        key={size.name}
-                                        value={size}
-                                        disabled={!size.inStock}
+                                        key={size._id}
+                                        value={size.name}
                                         className={({ active }) =>
-                                            classNames(
-                                                size.inStock
-                                                    ? "bg-white shadow-sm text-gray-900 cursor-pointer"
-                                                    : "bg-gray-50 text-gray-200 cursor-not-allowed",
+                                            classNames("bg-white shadow-sm text-gray-900 cursor-pointer",
                                                 active
                                                     ? "ring-2 ring-green-500"
                                                     : "",
@@ -141,7 +142,7 @@ const ProductInfo = ({
                                                 <RadioGroup.Label as="span">
                                                     {size.name}
                                                 </RadioGroup.Label>
-                                                {size.inStock ? (
+                                              
                                                     <span
                                                         className={classNames(
                                                             active
@@ -154,27 +155,7 @@ const ProductInfo = ({
                                                         )}
                                                         aria-hidden="true"
                                                     />
-                                                ) : (
-                                                    <span
-                                                        aria-hidden="true"
-                                                        className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                                                    >
-                                                        <svg
-                                                            className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
-                                                            viewBox="0 0 100 100"
-                                                            preserveAspectRatio="none"
-                                                            stroke="currentColor"
-                                                        >
-                                                            <line
-                                                                x1={0}
-                                                                y1={100}
-                                                                x2={100}
-                                                                y2={0}
-                                                                vectorEffect="non-scaling-stroke"
-                                                            />
-                                                        </svg>
-                                                    </span>
-                                                )}
+                                               
                                             </>
                                         )}
                                     </RadioGroup.Option>
@@ -190,14 +171,15 @@ const ProductInfo = ({
                             handleClick={handleAddCart}
                         >
                             <BsHandbagFill className="mr-1" />
-                            {isAddToCart?.length > 0 ? "Added To Cart" : "Add To Cart"}
+                            {isAddToCart?.length > 0
+                                ? "Added To Cart"
+                                : "Add To Cart"}
                         </CustomButton>
                         {heartFillIcon ? (
                             <CustomButton
                                 buttonType="button"
                                 className="mt-10 sm:mt-0 w-full"
                                 handleClick={handleAddToWishList}
-                                
                             >
                                 <BsFillHeartFill className="mr-1" />
                                 Removed To Wishlist

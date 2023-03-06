@@ -39,6 +39,9 @@ const Cart = () => {
                         Color
                     </th>
                     <th scope="col" className="px-6 py-3">
+                        Size
+                    </th>
+                    <th scope="col" className="px-6 py-3">
                         Count
                     </th>
                     <th scope="col" className="px-6 py-3">

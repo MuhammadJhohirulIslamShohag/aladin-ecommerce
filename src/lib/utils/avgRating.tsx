@@ -4,13 +4,17 @@ import { BsFillStarFill } from "react-icons/bs";
 export const AvgRating = ({ product, isTotalReviewRating = false }: any) => {
     let avgRating: number | undefined;
     let length:number | undefined;
-    if (product && product.ratings) {
+    if (product && product.ratings.length) {
+       
         let total: number[] = [];
         product.ratings.forEach((rating: any) => total.push(rating.star));
         const highest = product.ratings.length * 5;
         const totalReducer = total.reduce((acc, cur) => acc + cur, 0);
         avgRating = (totalReducer * 5) / highest;
         length = product.ratings.length;
+    }else{
+        avgRating = 0;
+        length = 0
     }
 
     return (

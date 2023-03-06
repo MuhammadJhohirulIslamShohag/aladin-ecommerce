@@ -26,17 +26,6 @@ type ProductDetailsPropType = {
     relatedProducts: IProduct[];
 };
 
-const colorArray = ["Green", "White", "Black", "Rose"];
-const sizeArray = [
-    { name: "XXS", inStock: false },
-    { name: "XS", inStock: true },
-    { name: "S", inStock: true },
-    { name: "M", inStock: true },
-    { name: "L", inStock: true },
-    { name: "XL", inStock: true },
-    { name: "2XL", inStock: true },
-    { name: "3XL", inStock: true },
-];
 const ProductDetails = ({
     product,
     relatedProducts,
@@ -65,6 +54,24 @@ const ProductDetails = ({
         }
     }, [user, _id]);
 
+    useEffect(() => {
+        if(carts.length){
+            for (let i = 0; i < carts.length; i++) {
+                if (carts[i]._id === _id) {
+                    if(carts[i].color){
+                        setSelectedColor(carts[i]?.color); 
+                    }
+                    if(carts[i].size){
+                        setSelectedSize(carts[i]?.size); 
+                    }
+                }
+            }
+        }else{
+            setSelectedColor("");
+            setSelectedSize("");   
+        }
+    }, [_id, carts])
+
     const isAddToCart = carts.filter((cart: any) => cart._id === _id);
     const objProduct = {
         ...product,
@@ -72,7 +79,12 @@ const ProductDetails = ({
     const handleAddCart = () => {
         if (isAddToCart?.length <= 0) {
             let carts = [];
-
+            if(selectedColor === ""){
+               return toast.error("Select The Color")
+            }
+            if(selectedSize === ""){
+               return toast.error("Select The Size")
+            }
             if (typeof window !== "undefined") {
                 if (window.localStorage.getItem("carts")) {
                     // checking already carts to the window localStorage
@@ -87,6 +99,8 @@ const ProductDetails = ({
             carts.push({
                 ...objProduct,
                 count: 1,
+                color:selectedColor,
+                size:selectedSize,
             });
 
             // remove duplicates value
@@ -104,6 +118,7 @@ const ProductDetails = ({
             toast.error("Product Already Added To The Cart");
         }
     };
+    console.log(selectedColor, selectedSize,carts)
 
     const handleAddToWishList = () => {
         if (user && user.token) {
@@ -165,8 +180,6 @@ const ProductDetails = ({
                     <div className="mx-auto max-w-7xl relative">
                         <ProductInfo
                             product={product}
-                            colorArray={colorArray}
-                            sizeArray={sizeArray}
                             selectedColor={selectedColor}
                             setSelectedColor={setSelectedColor}
                             selectedSize={selectedSize}

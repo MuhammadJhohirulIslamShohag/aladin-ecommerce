@@ -1,26 +1,17 @@
+import { ISize } from "types/size.types";
+import { IColor } from "types/color.types";
+import { ICategories } from "types/category.type";
+import { ISubCategories } from "types/sub-category.type";
+import { IBrand } from 'types/brand.types';
+
 export interface IProduct {
     _id: string;
     title: string;
     slug: string;
     description: string;
     price: number;
-    category: {
-        createdAt: Date;
-        name: string;
-        slug: string;
-        updatedAt: Date;
-        __v: number;
-        _id: string;
-    };
-    subCategory: {
-        createdAt: Date;
-        name: string;
-        slug: string;
-        parent: string;
-        updatedAt: Date;
-        __v: number;
-        _id: string;
-    }[];
+    category: ICategories;
+    subCategory: ISubCategories[];
     quantity: number;
     sold: number;
     images: {
@@ -28,8 +19,9 @@ export interface IProduct {
         url: string;
     }[];
     shipping: string;
-    color: string;
-    brand: string;
+    colors: IColor[];
+    sizes: ISize[];
+    brand: IBrand;
     ratings: {
         postedBy: string;
         star: number;

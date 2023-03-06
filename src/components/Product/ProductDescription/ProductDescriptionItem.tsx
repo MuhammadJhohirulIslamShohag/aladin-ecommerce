@@ -3,7 +3,7 @@ import React from "react";
 
 type ProductDescriptionItemPropsType = {
     name: string;
-    value?: string;
+    value?: string | any[];
     description?: string;
     isBorderClassName?:boolean;
 };
@@ -20,6 +20,7 @@ const ProductDescriptionItem = ({
                     <span className="text-md tracking-tight text-gray-500">
                         {name}
                     </span>
+                    <div>
                     {isArray(value) ? (
                         value?.map((v) => (
                             <span
@@ -34,6 +35,7 @@ const ProductDescriptionItem = ({
                             {value}
                         </span>
                     )}
+                    </div>
                 </div>
             ) : (
                 <div className="mt-3 p-2">

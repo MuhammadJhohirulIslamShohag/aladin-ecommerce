@@ -1,3 +1,5 @@
+import { CartType } from "types/cart.types";
+
 export enum StoreActionType {
     LOGGED_IN_USER = "LOGGED_IN_USER",
     LOGOUT_USER = "LOGOUT_USER",
@@ -15,13 +17,6 @@ export interface UserType {
     token: string;
     image: string;
     _id: string;
-}
-interface CartType {
-    slug: string;
-    title: string;
-    images: string;
-    description: string;
-    quantity: number | string;
 }
 
 export type StoreDataType = {

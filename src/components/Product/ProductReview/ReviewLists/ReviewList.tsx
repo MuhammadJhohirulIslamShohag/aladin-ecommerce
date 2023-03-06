@@ -8,7 +8,7 @@ const ReviewList = ({ ratings }: any) => {
     return (
         <div className="grid grid-cols-10 mb-5">
             <div>
-                {postedBy.image && postedBy && postedBy.image.url ? (
+                {postedBy?.image && postedBy && postedBy.image.url ? (
                     <Image
                         className="w-10 h-10 rounded-full"
                         src={postedBy.image.url}
@@ -20,7 +20,7 @@ const ReviewList = ({ ratings }: any) => {
                     <Image
                         className="w-10 h-10 rounded-full"
                         src={"/docs/images/people/profile-picture-5.jpg"}
-                        alt={postedBy.name}
+                        alt={postedBy?.name}
                         width={40}
                         height={40}
                     />
@@ -28,7 +28,7 @@ const ReviewList = ({ ratings }: any) => {
             </div>
             <div className="col-span-6 border-b-2">
                 <p className="font-bold text-primary capitalize">
-                    {postedBy.name}
+                    {postedBy?.name}
                 </p>
                 <ul className="flex mb-2">
                     {Array.from(Array(5).keys()).map((rating: number) => (
