@@ -54,6 +54,7 @@ const AddSubCategory = () => {
                 toast.success(`${res.data.name} Sub-Category Created!`);
                 setLoading(false);
                 router.push("/dashboard/admin/subCategories");
+                setValues({ images: [] });
             })
             .catch((error) => {
                 if (error.response.status === 400) {

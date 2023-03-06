@@ -4,8 +4,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import CustomButton from "../../UI/CustomButton/CustomButton";
 import { Swiper, SwiperSlide } from "swiper/react";
-// import BannerImg from "/static/images/banner/laptop.jpg";
-// import BannerImg1 from "/static/images/banner/laptop1Banner.jpg";
 
 const Banner = () => {
     return (
@@ -24,7 +22,7 @@ const Banner = () => {
                 <SwiperSlide>
                     <div
                         style={{
-                            backgroundImage: `url(/static/images/banner/laptop.jpg)`,
+                            backgroundImage: `url(../../../../../banner/laptop.jpg)`,
                         }}
                         className="bg-contain md:bg-cover sm:bg-cover z-20 bg-no-repeat bg-left md:bg-center w-full h-[444px] sm:h-[380px] flex items-center justify-center"
                     >
@@ -46,7 +44,7 @@ const Banner = () => {
                 <SwiperSlide>
                     <div
                         style={{
-                            backgroundImage: `url(/static/images/banner/laptop1Banner.jpg)`,
+                            backgroundImage: `url(../../../../../banner/laptop1Banner.jpg)`,
                         }}
                         className="bg-contain md:bg-cover sm:bg-cover z-20 bg-no-repeat bg-left md:bg-center w-full h-[444px] sm:h-[380px] flex items-center justify-center"
                     >

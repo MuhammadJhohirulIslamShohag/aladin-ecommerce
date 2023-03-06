@@ -4,11 +4,11 @@ import CategoryRow from "./CategoryRow";
 
 type CategoryTablePropType = {
     categories: ICategories[];
-    handleRemoveCategory: (slug:string) => void;
-    handleEditCategory: (slug:string) => void 
-}
-const CategoryTable = (props:CategoryTablePropType) => {
-    const {categories,handleRemoveCategory, handleEditCategory} = props;
+    handleRemoveCategory: (slug: string) => void;
+    handleEditCategory: (slug: string) => void;
+};
+const CategoryTable = (props: CategoryTablePropType) => {
+    const { categories, handleRemoveCategory, handleEditCategory } = props;
     return (
         <div className="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl shadow-md  rounded-2xl bg-clip-border ">
             <div className="px-4 py-3">
@@ -25,6 +25,9 @@ const CategoryTable = (props:CategoryTablePropType) => {
                         <tr>
                             <th scope="col" className="px-6 py-3">
                                 Name
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Images
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 Action

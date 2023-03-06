@@ -40,6 +40,7 @@ const AddCategory = () => {
                 setLoading(false);
                 toast.success(`${res.data.name} Category Created!`);
                 reset();
+                setValues({ images: [], name: "" });
                 router.push("/dashboard/admin/categories");
             })
             .catch((error) => {

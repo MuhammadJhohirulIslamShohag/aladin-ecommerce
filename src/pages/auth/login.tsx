@@ -11,7 +11,6 @@ import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import { useRouter } from "next/router";
 import FormGroup from "@/components/Form/FormGroup";
 
-
 type FormValues = {
     email: string;
     password: string;
@@ -35,14 +34,13 @@ const Login = () => {
     } = useForm<FormValues>();
     const googleProvider = new GoogleAuthProvider();
     const router = useRouter();
-    const { redirect }   = router.query;
-    const url = `${redirect}`;
+    const { redirect } = router.query;
 
     useEffect(() => {
         if (user) {
             router.push("/");
         }
-    }, []);
+    }, [user]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -82,7 +80,7 @@ const Login = () => {
                         );
                         reset();
                         setLoadingLogin(false);
-                        if(typeof redirect === "string"){
+                        if (typeof redirect === "string") {
                             router.push(redirect || "/");
                         }
                         Swal.fire({
@@ -133,7 +131,6 @@ const Login = () => {
                 const idTokenResult = await user.getIdTokenResult();
                 createOrUpdateUser(idTokenResult.token, currentUser!)
                     .then((res) => {
-                     
                         dispatch({
                             type: StoreActionType.LOGGED_IN_USER,
                             payload: {
@@ -143,9 +140,14 @@ const Login = () => {
                                 image: res.data.image.url,
                                 _id: res.data._id,
                             },
-                        });  
-                        router.push(url || "/");
-                       
+                        });
+                        if (
+                            typeof redirect === "string" ||
+                            typeof redirect === "undefined"
+                        ) {
+                            router.push(redirect || "/");
+                        }
+                        console.log(redirect, "url");
                     })
                     .catch((error) => {
                         console.log(error);
