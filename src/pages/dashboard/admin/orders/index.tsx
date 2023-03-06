@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { getOrders } from "@/api/admin";
-import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import OrdersTable from "@/components/Dashboard/Admin/OrdersTable/OrdersTable";
+import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
+import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import { useEffect, useState } from "react";
 import { IOrder } from "types/order.types";
 
 const Orders = () => {
@@ -30,7 +30,7 @@ const Orders = () => {
     };
     return (
         <DashboardLayout>
-            <div className="px-20 mt-5">
+            <div>
                 <OrdersTable data={orders} />
             </div>
         </DashboardLayout>

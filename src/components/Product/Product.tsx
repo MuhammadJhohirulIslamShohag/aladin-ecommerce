@@ -42,9 +42,6 @@ const Product = ({ product }: any) => {
 
     const isAddToCart = carts.filter((cart:any) => cart._id === _id);
 
-    // const offerProductPercentage = Math.round(
-    //     ((originalPrice - price) / originalPrice) * 100
-    // );
 
     return (
         <div className="rounded-lg shadow-md group cursor-pointer">
@@ -52,8 +49,7 @@ const Product = ({ product }: any) => {
                 <div className="absolute top-3 rounded-full left-3 w-14 h-14 bg-success flex justify-center items-center flex-col">
                     <span className="text-white -mb-2">Off</span>
                     <span className="flex justify-center items-center text-white">
-                        {/* {offerProductPercentage}% */}
-                        50%
+                        {product?.discount ? product?.discount : "0"}%
                     </span>
                 </div>
                 <ul className="transition duration-300 ease-in-out invisible flex absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 group-hover:visible">

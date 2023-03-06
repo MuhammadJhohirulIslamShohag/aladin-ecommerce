@@ -1,6 +1,7 @@
 import React from "react";
 import { MdFlashOn } from "react-icons/md";
 import FlashDeal from "./../FlashDeal/FlashDeal";
+import { IProduct } from "types/product.type";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import CountDown from "@/components/CountDown/CountDown";
@@ -9,7 +10,10 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation, Autoplay} from "swiper";
 
-const FlashDeals = () => {
+type FlashDealsPropsType = {
+    products:IProduct[]
+};
+const FlashDeals = ({products}:FlashDealsPropsType) => {
     return (
         <div>
             <div className="p-2 flex sm:flex-col items-center justify-between text-white font-black text-2xl uppercase bg-green-300 mb-10 px-10">
@@ -49,30 +53,11 @@ const FlashDeals = () => {
                     className="surprising_sales h-[560px]"
                 >
                     <div className="flex flex-wrap pl-1 md:justify-center sm:justify-center">
-                        <SwiperSlide>
-                            <FlashDeal />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <FlashDeal />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <FlashDeal />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <FlashDeal />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <FlashDeal />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <FlashDeal />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <FlashDeal />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <FlashDeal />
-                        </SwiperSlide>
+                    {products?.map((product: IProduct) => (
+                            <SwiperSlide key={product._id}>
+                                 <FlashDeal product={product}/>
+                            </SwiperSlide>
+                        ))}
                     </div>
                 </Swiper>
             </div>

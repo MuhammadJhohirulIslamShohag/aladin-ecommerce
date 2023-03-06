@@ -18,6 +18,7 @@ import FlashDeals from "@/components/Home/FlashDeals/FlashDeals/FlashDeals";
 type HomePropType = {
     products: IProduct[];
     bestSellerProducts: IProduct[];
+    flashDealsProducts: IProduct[];
     subCategories: ISubCategories[];
     categories:ICategories[]
 };
@@ -26,7 +27,8 @@ export default function Home({
     products,
     bestSellerProducts,
     subCategories,
-    categories
+    categories,
+    flashDealsProducts
 }: HomePropType) {
     return (
         <>
@@ -47,7 +49,7 @@ export default function Home({
                 <Services />
                 <Categories categories={categories} />
                 <SubCategories subCategories={subCategories} />
-                <FlashDeals/>
+                <FlashDeals products={flashDealsProducts}/>
                 <NewArrivals products={products} />
                 <BestSellers products={bestSellerProducts} />
             </MainLayout>
@@ -61,12 +63,17 @@ export const getServerSideProps: GetServerSideProps = async () => {
         "sold",
         "desc"
     );
+    const { data: flashDealsProductData } = await getProductsBySort(
+        "discount",
+        "desc"
+    );
     const { data: categoriesData } = await getListOfCategory();
     const { data: subCategoriesData } = await getAllSubCategories();
     return {
         props: {
             products: data,
             bestSellerProducts: bestSellerProductData,
+            flashDealsProducts: flashDealsProductData,
             subCategories: subCategoriesData,
             categories: categoriesData,
         },

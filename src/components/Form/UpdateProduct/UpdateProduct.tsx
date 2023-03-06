@@ -142,7 +142,7 @@ const UpdateProductForm = ({
                 </div>
             </div>
             <div className="mb-6">
-                {(selectedCategory || category._id) && (
+                {(selectedCategory || category?._id) && (
                     <SelectInput
                         register={register}
                         dataArray={categories}

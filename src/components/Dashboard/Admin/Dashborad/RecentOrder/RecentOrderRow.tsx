@@ -8,7 +8,7 @@ const RecentOrderRow = (props: any) => {
     
     return (
         <tr className="bg-white border-b hover:bg-gray-50 ">
-            <td className="w-32 p-4">{orderedBy.name}</td>
+            <td className="w-32 p-4">{orderedBy?.name}</td>
             <td className="px-6 py-4 font-semibold text-gray-900 ">
                 ${paymentIntents.amount / 100}
             </td>

@@ -26,7 +26,6 @@ const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:an
     const router = useRouter();
 
     const handleRemoveProduct = (slug:string) => {
-        console.log(slug, user)
         if (user && user.token) {
             setLoading(true);
             deleteProduct(user.token, slug)
@@ -44,7 +43,7 @@ const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:an
     const ProductColumn = [
         {
             header: () => "Image",
-            cell: (info: any) => (
+            cell: (info:any) => (
                 <span>
                     {info.getValue() ? (
                         <>
@@ -58,7 +57,7 @@ const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:an
                                             height={100}
                                             src={img.url && img.url}
                                             alt="Product image"
-                                            className="w-18 h-16 p-1 rounded-full ring-2 ring-green-300"
+                                            className="w-18 h-16 p-1 inline-block rounded-full ring-2 ring-green-300"
                                         />
                                     ))}
                         </>
@@ -79,15 +78,94 @@ const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:an
         },
         {
             header: () => "Category",
-            accessorKey: "category.name",
+            cell: (info:any) => (
+                <span>
+                    {info.getValue() && info.getValue().name }
+                </span>
+            ),
+            accessorKey: "category",
+        },
+        {
+            header: () => "Sub Category",
+            cell: (info:any) => (
+               <span>
+               {info?.getValue().length > 0 &&
+                                info
+                                    .getValue()
+                                    .map((sc: any) => (
+                                       <span key={sc._id}>{sc.name}</span> 
+                                    ))}
+               </span>
+
+                            
+                      
+                
+            ),
+            accessorKey: "subCategory",
+        },
+        {
+            header: () => "Color",
+            cell: (info:any) => (
+               <span>
+               {info?.getValue().length > 0 &&
+                                info
+                                    .getValue()
+                                    .map((sc: any) => (
+                                       <span key={sc._id}>{sc.name}</span>{" "} 
+                                    ))}
+               </span>
+
+                            
+                      
+                
+            ),
+            accessorKey: "colors",
+        },
+        {
+            header: () => "Size",
+            cell: (info:any) => (
+               <span>
+               {info.getValue().length > 0 &&
+                                info
+                                    .getValue()
+                                    .map((sc: any) => (
+                                       <span key={sc._id}>{sc.name}</span> 
+                                    ))}
+               </span>
+
+                            
+                      
+                
+            ),
+            accessorKey: "sizes",
         },
         {
             header: () => "Brand",
-            accessorKey: "brand?.name",
+            cell: (info:any) => {
+                return (
+                    <span>
+                        {info.getValue() && info.getValue()?.name }
+                    </span>
+                )
+            },
+            accessorKey: "brand",
         },
         {
             header: () => "Quantity",
             accessorKey: "quantity",
+        },
+        {
+            header: () => "Sold",
+            accessorKey: "sold",
+        },
+        {
+            header: () => "Discount",
+            cell: (info:any) => (
+                <span>
+                    {info.getValue() && info.getValue() }%
+                </span>
+            ),
+            accessorKey: "discount",
         },
         {
             header: () => "Shipping",
@@ -118,7 +196,7 @@ const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:an
         () => ProductColumn,
         []
     );
-
+console.log(data, "products")
 
 
     const table = useReactTable({

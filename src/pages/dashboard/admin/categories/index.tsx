@@ -96,10 +96,10 @@ const AllCategory = () => {
                 });
         }
     };
-    console.log(values, "upd v")
+
     return (
         <DashboardLayout>
-            <div className="px-20 mt-5">
+            <div>
                 <CategoryTable
                     categories={categories}
                     handleRemoveCategory={handleRemoveCategory}

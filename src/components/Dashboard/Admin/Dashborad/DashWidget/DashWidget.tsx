@@ -12,7 +12,7 @@ const DashWidget = (props: DashWidgetTypes) => {
             for (let order of orders) {
                 if (order.products.length) {
                     for (let product of order.products) {
-                        totalAmount += product.count * product.product.price;
+                        totalAmount += product?.count * product.product?.price;
                     }
                 }
             }

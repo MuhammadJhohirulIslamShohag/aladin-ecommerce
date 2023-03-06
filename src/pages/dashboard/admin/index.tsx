@@ -63,7 +63,7 @@ export default function Dashboard({ products }: DashboardPropType) {
             {fetching ? (
                 <Loader />
             ) : (
-                <div className="container h-screen py-10">
+                <div>
                     {/* Dash Widget Card */}
                     <section>
                         <div className="grid grid-cols-4 gap-3">

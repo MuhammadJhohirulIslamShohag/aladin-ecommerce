@@ -66,7 +66,7 @@ const AddSubCategory = () => {
 
     return (
         <DashboardLayout>
-            <div className="container py-10">
+           
                 <div className="bg-secondary p-6 rounded-lg w-3/4">
                     <h2 className="text-center font-semibold text-primary text-2xl">
                         Add New Sub Category
@@ -130,7 +130,7 @@ const AddSubCategory = () => {
                         </button>
                     </form>
                 </div>
-            </div>
+            
         </DashboardLayout>
     );
 };

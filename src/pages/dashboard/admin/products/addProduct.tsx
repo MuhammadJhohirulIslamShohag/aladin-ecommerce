@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
+import { getListOfBrands } from "@/api/brand";
 import { getListOfCategory, subCategoryOnCategory } from "@/api/category";
+import { getListOfColor } from "@/api/color";
+import { createProduct } from "@/api/products";
+import { getListOfSizes } from "@/api/size";
+import CreateProductForm from "@/components/Form/CreateProduct/CreateProductForm";
+import { IFormInput } from "@/components/Form/CreateProduct/FormInput.types";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
+import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import { GetServerSideProps } from "next";
+import { useState } from "react";
+import { UseFormReset, UseFormSetValue } from "react-hook-form";
+import toast from "react-hot-toast";
+import { IBrand } from "types/brand.types";
 import { ICategories } from "types/category.type";
 import { IColor } from "types/color.types";
 import { ISize } from "types/size.types";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import { createProduct } from "@/api/products";
-import toast from "react-hot-toast";
-import CreateProductForm from "@/components/Form/CreateProduct/CreateProductForm";
-import { getListOfColor } from "@/api/color";
-import { getListOfSizes } from "@/api/size";
-import { GetServerSideProps } from "next";
-import { IBrand } from "types/brand.types";
-import { getListOfBrands } from "@/api/brand";
-import { UseFormReset, UseFormSetValue } from "react-hook-form";
-import { IFormInput } from "@/components/Form/CreateProduct/FormInput.types";
 
 type a = {
     title: string;
@@ -30,11 +30,11 @@ type a = {
     sizes: any[];
     brand: string;
     brands: any[];
-    category: string,
-    categories: any[],
-    subCategory: any[],
-}
-const initialValues:a = {
+    category: string;
+    categories: any[];
+    subCategory: any[];
+};
+const initialValues: a = {
     title: "",
     description: "",
     images: [],
@@ -104,12 +104,20 @@ const AddProduct = ({
         }
     };
 
-    const handleAddProduct = (data: IFormInput, reset: UseFormReset<IFormInput>, setValue:UseFormSetValue<IFormInput>) => {
+    const handleAddProduct = (
+        data: IFormInput,
+        reset: UseFormReset<IFormInput>,
+        setValue: UseFormSetValue<IFormInput>
+    ) => {
         // setLoading(true);
         let updateSubCategory;
         let updateColors;
         let updateSizes;
-        if(Array.isArray(data.subCategory) && Array.isArray(data.colors) && Array.isArray(data.sizes)){
+        if (
+            Array.isArray(data.subCategory) &&
+            Array.isArray(data.colors) &&
+            Array.isArray(data.sizes)
+        ) {
             updateSubCategory = data.subCategory.map(
                 (sc: { value: string; label: string }) => sc.value
             );
@@ -144,7 +152,7 @@ const AddProduct = ({
                 colorRef.clearValue();
                 // window.location.reload();
                 reset();
-                setValues({...values, images:[]})
+                setValues({ ...values, images: [] });
             })
             .catch((error: any) => {
                 if (error.response.status === 400) {
@@ -153,10 +161,10 @@ const AddProduct = ({
                 setLoading(false);
             });
     };
-   
+
     return (
         <DashboardLayout>
-            <div className="container py-10">
+            <div>
                 <div className="bg-secondary p-6 rounded-lg">
                     <h2 className="text-center font-semibold text-primary text-2xl">
                         Add New Product

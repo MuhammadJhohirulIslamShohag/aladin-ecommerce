@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { allUsers } from "@/api/admin";
 import CustomerTable from "@/components/Dashboard/Admin/CustomerTable/CustomerTable";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
+import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import { useEffect, useState } from "react";
 
 const Customers = () => {
     const [fetching, setFetching] = useState(true);
@@ -29,7 +29,7 @@ const Customers = () => {
     };
     return (
         <DashboardLayout>
-            <div className="px-20 mt-5">
+            <div>
                 <CustomerTable data={users} />
             </div>
         </DashboardLayout>

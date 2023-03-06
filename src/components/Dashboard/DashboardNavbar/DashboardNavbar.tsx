@@ -9,7 +9,14 @@ import Link from "next/link";
 import Image from "next/image";
 import Notifications from "./Notifications/Notifications";
 
-const DashboardNavbar = () => {
+type DashboardNavbarPropsType = {
+    openSideBar: boolean;
+    setOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const DashboardNavbar = ({
+    openSideBar,
+    setOpenSideBar,
+}: DashboardNavbarPropsType) => {
     const [showNotification, setShowNotification] = useState(false);
     const { state, logOut, dispatch, firebaseUser } = useStoreContext();
     const { user } = state;
@@ -29,12 +36,31 @@ const DashboardNavbar = () => {
             });
     };
     return (
-        <div className="navbar bg-gray-800">
+        <nav className="navbar bg-white fixed top-0 z-50 w-full border-b border-gray-200">
             <div className="container flex justify-between sm:justify-none">
-                <div className="w-1/4 sm:w-2/3">
+                <div className="w-1/4 sm:w-2/3 flex">
+                    <button
+                        onClick={() => setOpenSideBar(!openSideBar)}
+                        type="button"
+                        className="items-center text-sm text-green-500 rounded-lg hidden md:inline-flex  sm:inline-flex  hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-gray-200 mr-2 "
+                    >
+                        <span className="sr-only">Open sidebar</span>
+                        <svg
+                            className="w-6 h-6"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                clipRule="evenodd"
+                                fillRule="evenodd"
+                                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
+                            ></path>
+                        </svg>
+                    </button>
                     <Link
-                        href="/dashboard"
-                        className="text-white font-bold text-3xl sm:text-xl"
+                        href="/dashboard/admin"
+                        className="text-green-400 font-bold text-3xl sm:text-xl"
                     >
                         Aladin
                     </Link>
@@ -62,7 +88,7 @@ const DashboardNavbar = () => {
                         <input
                             type="search"
                             id="default-search"
-                            className="block w-full h-10 pl-10 pr-4 text-sm text-primary border border-white rounded-lg bg-white focus:ring-primary focus:border-primary"
+                            className="block w-full h-10 pl-10 pr-4 text-sm text-green-400 border border-green-400 rounded-lg bg-white focus:outline-offset-4 focus:outline-1 focus:outline-green-400 focus:ring-green-300"
                             placeholder="Search Anything"
                             required
                         />
@@ -78,7 +104,7 @@ const DashboardNavbar = () => {
                         <button className="btn btn-ghost btn-circle">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="h-7 w-7 text-white"
+                                className="h-7 w-7 text-gray-600"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -120,30 +146,30 @@ const DashboardNavbar = () => {
                         </label>
                         <ul
                             tabIndex={0}
-                            className="mt-3 pb-2 shadow menu menu-compact dropdown-content bg-gray-800 rounded divide-y divide-gray-100"
+                            className="mt-2 pb-2 shadow menu menu-compact dropdown-content bg-white drop-shadow-2xl rounded divide-y divide-gray-100"
                         >
-                            <div className="py-3 px-4 mw-60 text-sm text-gray-900 dark:text-white">
+                            <div className="py-3 px-4 mw-60 text-sm text-gray-600">
                                 <div>{user?.fullName}</div>
                                 <div className="font-medium truncate">
                                     {user && user?.email}
                                 </div>
                             </div>
-                            <ul className="text-sm text-gray-700 dark:text-gray-200">
+                            <ul className="text-sm text-gray-700">
                                 <li>
                                     <Link
                                         href="/dashboard/admin"
-                                        className="flex  py-2 px-4 hover:bg-gray-600 text-white"
+                                        className="flex  py-2 px-4 hover:bg-gray-100 text-gray-600  transition duration-75"
                                     >
-                                        <AiFillDashboard />
+                                        <AiFillDashboard className="text-green-400" />
                                         Dashboard
                                     </Link>
                                 </li>
                                 <li>
                                     <Link
                                         href="/dashboard/admin/setting/profile"
-                                        className="flex  py-2 px-4 hover:bg-gray-600 text-white"
+                                        className="flex  py-2 px-4 hover:bg-gray-100 text-gray-600 transition duration-75"
                                     >
-                                        <FaUser />
+                                        <FaUser className="text-green-400" />
                                         Profile
                                     </Link>
                                 </li>
@@ -151,9 +177,9 @@ const DashboardNavbar = () => {
                             <div>
                                 <label
                                     onClick={handleLogOut}
-                                    className="flex items-center justify-center py-2 px-4 hover:bg-gray-600 cursor-pointer text-white"
+                                    className="flex items-center justify-center py-2 px-4 hover:bg-gray-100 cursor-pointer text-gray-600 transition duration-75"
                                 >
-                                    <MdLogout className="mr-1" />
+                                    <MdLogout className="mr-1 text-green-400" />
                                     Sign out
                                 </label>
                             </div>
@@ -161,7 +187,7 @@ const DashboardNavbar = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </nav>
     );
 };
 

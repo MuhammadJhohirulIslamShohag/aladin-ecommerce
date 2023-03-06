@@ -1,22 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { getProduct, updateProduct } from "@/api/products";
-import { useRouter } from "next/router";
-import { IProduct } from "types/product.type";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import { getListOfCategory, subCategoryOnCategory } from "@/api/category";
-import { ICategories } from "types/category.type";
-import toast from "react-hot-toast";
-import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
-import UpdateProductForm from "@/components/Form/UpdateProduct/UpdateProduct";
-import { GetServerSideProps } from "next";
-import { getListOfColor } from "@/api/color";
-import { getListOfSizes } from "@/api/size";
 import { getListOfBrands } from "@/api/brand";
+import { getListOfCategory, subCategoryOnCategory } from "@/api/category";
+import { getListOfColor } from "@/api/color";
+import { getProduct, updateProduct } from "@/api/products";
+import { getListOfSizes } from "@/api/size";
+import { IFormInput } from "@/components/Form/CreateProduct/FormInput.types";
+import UpdateProductForm from "@/components/Form/UpdateProduct/UpdateProduct";
+import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
+import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import { GetServerSideProps } from "next";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { IColor } from "types/color.types";
 import { ISize } from "types/size.types";
 import { ISubCategories } from "types/sub-category.type";
-import dynamic from "next/dynamic";
-import { IFormInput } from "@/components/Form/CreateProduct/FormInput.types";
 
 type CustomReactSelectValue = {
     label: string;
@@ -198,7 +196,7 @@ const UpdateProduct = ({
     };
     return (
         <DashboardLayout>
-            <div className="container py-10">
+            <div>
                 <div className="bg-secondary p-6 rounded-lg">
                     <h2 className="text-center font-semibold text-primary text-2xl">
                         Update Product

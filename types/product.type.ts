@@ -10,6 +10,7 @@ export interface IProduct {
     slug: string;
     description: string;
     price: number;
+    discount:number;
     category: ICategories;
     subCategory: ISubCategories[];
     quantity: number;

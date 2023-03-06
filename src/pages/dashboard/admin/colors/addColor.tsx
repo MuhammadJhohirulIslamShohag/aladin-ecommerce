@@ -1,11 +1,11 @@
+import { createColor } from "@/api/color";
 import FormGroup from "@/components/Form/FormGroup";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import React, { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import toast from "react-hot-toast";
 import { useRouter } from "next/router";
-import { createColor } from "@/api/color";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 interface IFormInputs {
     color: string;
@@ -41,7 +41,7 @@ const AddColor = () => {
     };
     return (
         <DashboardLayout>
-            <div className="container py-10">
+            <div>
                 <div className="bg-secondary p-6 rounded-lg w-3/4">
                     <h2 className="text-center font-semibold text-primary text-2xl">
                         Add New Color

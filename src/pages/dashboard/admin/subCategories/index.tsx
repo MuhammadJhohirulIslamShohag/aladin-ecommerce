@@ -118,7 +118,7 @@ const AllSubCategory = () => {
 
     return (
         <DashboardLayout>
-            <div className="px-20 mt-5">
+            <div>
                 <SubCategoryTable
                     subCategories={subCategories}
                     handleRemoveSubCategory={handleRemoveSubCategory}

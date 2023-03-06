@@ -91,7 +91,7 @@ const AllColors = () => {
     };
     return (
         <DashboardLayout>
-            <div className="px-20 mt-5">
+            <div>
                 <CustomTable
                     arrayData={colors}
                     handleRemoveData={handleRemoveColor}
