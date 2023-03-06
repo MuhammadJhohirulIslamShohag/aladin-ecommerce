@@ -153,9 +153,7 @@ const AddProduct = ({
                 setLoading(false);
             });
     };
-    console.log(subCategoryRef,
-        colorRef,
-        sizeRef,);
+   
     return (
         <DashboardLayout>
             <div className="container py-10">

@@ -1,3 +1,4 @@
+import ImageFileUploadForm from "@/components/Form/ImageFileUploadForm/ImageFileUploadForm";
 import React from "react";
 
 type CustomModalPropType = {
@@ -8,6 +9,10 @@ type CustomModalPropType = {
     updateValue: string;
     setUpdateValue: React.Dispatch<React.SetStateAction<string>>;
     children?: React.ReactNode;
+    values?: any;
+    setValues?: any;
+    setLoading?: any;
+    isUpdateImages?: boolean;
 };
 const CustomModal = (props: CustomModalPropType) => {
     const {
@@ -18,6 +23,10 @@ const CustomModal = (props: CustomModalPropType) => {
         title,
         labelName,
         children,
+        values,
+        setValues,
+        setLoading,
+        isUpdateImages = false,
     } = props;
     return (
         <>
@@ -39,6 +48,18 @@ const CustomModal = (props: CustomModalPropType) => {
                         {title}
                     </h3>
                     <form onSubmit={handleEditSubmit}>
+                        {isUpdateImages && (
+                            <div className="grid grid-cols-2">
+                                <ImageFileUploadForm
+                                    values={values}
+                                    setValues={setValues}
+                                    setLoading={setLoading}
+                                    errorField={""}
+                                    isUpdateImage
+                                />
+                            </div>
+                        )}
+
                         <label
                             htmlFor="message"
                             className="block mb-2 text-sm font-medium text-primary"

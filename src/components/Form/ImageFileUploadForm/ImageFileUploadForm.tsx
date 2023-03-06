@@ -10,7 +10,7 @@ type ImageFileUploadFormPropType = {
     setValues: any;
     setLoading: any;
     errorField: any;
-    register: any;
+    register?: any;
     isUpdateImage?: boolean;
 };
 const ImageFileUploadForm = ({
@@ -51,6 +51,8 @@ const ImageFileUploadForm = ({
                             .catch((error) => {
                                 setLoading(false);
                                 console.log(error);
+                            }).finally(()=>{
+                                setLoading(false);
                             });
                     },
                     "base64"

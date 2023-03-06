@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Select, { createFilter } from 'react-select';
 import {
     getAllSubCategories,
-    createSubCategory,
     deleteSubCategory,
     updateSubCategory,
     getSubCategory,
@@ -18,6 +16,7 @@ import CustomModal from "@/components/Modal/CustomModal/CustomModal";
 import { ICategories } from "types/category.type";
 
 const AllSubCategory = () => {
+    const [values, setValues] = useState({ images: [] });
     const [loading, setLoading] = useState<boolean>(false);
     const [updateSubCategoryName, setUpdateSubCategoryName] =
         useState<string>("");
@@ -27,7 +26,7 @@ const AllSubCategory = () => {
     const [subCategories, setSubCategories] = useState<ISubCategories[]>([]);
     const [categories, setCategories] = useState<ICategories[]>([]);
     const [keyword, setKeyword] = useState<string>("");
-  
+
     const { state } = useStoreContext();
     const { user } = state;
 
@@ -54,7 +53,6 @@ const AllSubCategory = () => {
     const searched = (keyword: any) => (c: any) =>
         c.name.toLowerCase().includes(keyword);
 
-
     // handle update category
     const closeModal = () => {
         setOpenModal(false);
@@ -67,6 +65,7 @@ const AllSubCategory = () => {
                 setUpdateSubCategoryName(res.data.subCategory.name);
                 setParentCategory(res.data.subCategory.parent);
                 setSubCategorySlug(res.data.subCategory.slug);
+                setValues({ images: res.data.subCategory.images });
             })
             .catch((error) => console.log(error.message));
     };
@@ -75,12 +74,12 @@ const AllSubCategory = () => {
     ) => {
         event.preventDefault();
         setLoading(true);
-        updateSubCategory(
-            user!.token,
-            updateSubCategoryName,
-            parentCategory,
-            subCategorySlug
-        )
+        const updateSubCategoryObj = {
+            name: updateSubCategoryName,
+            parent: parentCategory,
+            images: values.images,
+        };
+        updateSubCategory(user!.token, updateSubCategoryObj, subCategorySlug)
             .then((res) => {
                 toast.success(`${res.data.name} Sub-Category Updated!`);
                 setLoading(false);
@@ -129,6 +128,10 @@ const AllSubCategory = () => {
             {/*Show Update Category Modal */}
             {openModal && (
                 <CustomModal
+                    isUpdateImages
+                    values={values}
+                    setValues={setValues}
+                    setLoading={setLoading}
                     closeModal={closeModal}
                     handleEditSubmit={handleUpdateSubmit}
                     setUpdateValue={setUpdateSubCategoryName}
@@ -137,7 +140,9 @@ const AllSubCategory = () => {
                     labelName={" Sub-Category Name"}
                 >
                     <div className="mb-3 mt-2">
-                        <label className="block mb-1.5 text-sm font-medium text-primary">Parent Category</label>
+                        <label className="block mb-1.5 text-sm font-medium text-primary">
+                            Parent Category
+                        </label>
                         <select
                             className=" rounded-lg border border-success focus:ring-green-500 focus:border-green-500 focus:outline focus:outline-offset-2 focus:outline-green-600 w-3/4 p-2 text-gray-700 font-semibold mt-1"
                             onChange={(e) => setParentCategory(e.target.value)}
@@ -156,7 +161,6 @@ const AllSubCategory = () => {
                                     </option>
                                 ))}
                         </select>
-                        
                     </div>
                 </CustomModal>
             )}

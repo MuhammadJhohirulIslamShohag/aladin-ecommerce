@@ -1,11 +1,9 @@
 import axios from "axios";
 
-export const createCategory = async (token: string, categoryName: string) => {
+export const createCategory = async (token: string, categoryObj: any) => {
     return await axios.post(
         `${process.env.NEXT_PUBLIC_server_api}/category`,
-        {
-            categoryName,
-        },
+        categoryObj,
         {
             headers: {
                 token,
@@ -21,14 +19,12 @@ export const getSingleCategory = async (slug: string) =>
 
 export const updateCategory = async (
     token: string,
-    updateCategoryName: string,
+    updateCategoryObj: any,
     slug: string
 ) => {
     return await axios.put(
         `${process.env.NEXT_PUBLIC_server_api}/categories/${slug}`,
-        {
-            updateCategoryName,
-        },
+        updateCategoryObj,
         {
             headers: {
                 token,

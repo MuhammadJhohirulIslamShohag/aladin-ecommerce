@@ -6,20 +6,30 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import Image from "next/image";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import toast from "react-hot-toast";
-import { IColor } from 'types/color.types';
-import { ISize } from 'types/size.types';
+import { IColor } from "types/color.types";
+import { ISize } from "types/size.types";
 
 const CartTable = ({ product }: any) => {
     const [countNumber, setCountNumber] = useState(product.count);
-    const { images, title, shipping, colors,color,sizes, size, brand, price, quantity } = product;
+    const {
+        images,
+        title,
+        shipping,
+        colors,
+        color,
+        sizes,
+        size,
+        brand,
+        price,
+        quantity,
+    } = product;
     const { dispatch } = useStoreContext();
-
 
     useEffect(() => {
         handleQuantityChange();
     }, [countNumber]);
 
-    const handleColorChange = (e:React.ChangeEvent<HTMLSelectElement>) => {
+    const handleColorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         let carts = [];
         if (typeof window !== "undefined") {
             // checking already carts to the window localStorage
@@ -50,7 +60,7 @@ const CartTable = ({ product }: any) => {
         }
     };
 
-    const handleSizeChange = (e:React.ChangeEvent<HTMLSelectElement>) => {
+    const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         let carts = [];
         if (typeof window !== "undefined") {
             // checking already carts to the window localStorage
@@ -76,7 +86,7 @@ const CartTable = ({ product }: any) => {
         }
     };
 
-    const handleNumberChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCountNumber(e.target.value);
     };
 
@@ -132,7 +142,7 @@ const CartTable = ({ product }: any) => {
             payload: carts,
         });
     };
-console.log(product)
+
     return (
         <tr className="bg-white border-b">
             <td>
@@ -165,13 +175,11 @@ console.log(product)
                     name="colors"
                     className="form-select"
                 >
-                    <option value={color}>
-                        {color}
-                    </option>
+                    <option value={color}>{color}</option>
                     {colors &&
                         colors
-                        .filter((s:IColor) => s.name !== color)
-                            .map((c:IColor) => (
+                            .filter((s: IColor) => s.name !== color)
+                            .map((c: IColor) => (
                                 <option key={c._id} value={c.name}>
                                     {c.name}
                                 </option>
@@ -184,13 +192,11 @@ console.log(product)
                     name="sizes"
                     className="form-select"
                 >
-                    <option value={size}>
-                        {size}
-                    </option>
+                    <option value={size}>{size}</option>
                     {sizes &&
                         sizes
-                        .filter((s:ISize) => s.name !== size)
-                            .map((s:ISize) => (
+                            .filter((s: ISize) => s.name !== size)
+                            .map((s: ISize) => (
                                 <option key={s._id} value={s.name}>
                                     {s.name}
                                 </option>
@@ -214,10 +220,11 @@ console.log(product)
                     <FaRegCheckCircle className="text-red-600 inline-block" />
                 )}
             </td>
-            <td className="text-center cursor-pointer" onClick={removeCartHandler}>
-                <AiOutlineCloseCircle
-                    className="text-red-600 inline-block"
-                />
+            <td
+                className="text-center cursor-pointer"
+                onClick={removeCartHandler}
+            >
+                <AiOutlineCloseCircle className="text-red-600 inline-block" />
             </td>
         </tr>
     );

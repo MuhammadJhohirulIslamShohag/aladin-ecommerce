@@ -2,12 +2,11 @@ import axios from "axios";
 
 export const createSubCategory = async (
     token: string,
-    subCategoryName: string,
-    parent: string
+    subCategoryObject: any
 ) => {
     return await axios.post(
         `${process.env.NEXT_PUBLIC_server_api}/sub-category`,
-        { subCategoryName, parent },
+        subCategoryObject,
         {
             headers: {
                 token,
@@ -25,13 +24,12 @@ export const getSubCategory = async (slug: string) =>
 
 export const updateSubCategory = async (
     token: string,
-    updateSubCategoryName: string,
-    parent: string,
+    updateSubCategoryObj: any,
     slug: string
 ) => {
     return await axios.put(
         `${process.env.NEXT_PUBLIC_server_api}/sub-categories/${slug}`,
-        { updateSubCategoryName, parent },
+        updateSubCategoryObj,
         {
             headers: {
                 token,

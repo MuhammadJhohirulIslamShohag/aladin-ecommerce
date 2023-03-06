@@ -8,12 +8,18 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import { ICategories } from "types/category.type";
 import { useRouter } from "next/router";
+import ImageFileUploadForm from "@/components/Form/ImageFileUploadForm/ImageFileUploadForm";
 
 interface IFormInputs {
     subCategory: string;
     parentCategory: any;
+    productImg: string;
 }
+const initialValues = {
+    images: [],
+};
 const AddSubCategory = () => {
+    const [values, setValues] = useState(initialValues);
     const [loading, setLoading] = useState<boolean>(false);
     const [categories, setCategories] = useState<ICategories[]>([]);
     const { state } = useStoreContext();
@@ -38,8 +44,12 @@ const AddSubCategory = () => {
     };
     const handleCreateSubCSubmit: SubmitHandler<IFormInputs> = async (data) => {
         setLoading(true);
-        const { subCategory, parentCategory } = data;
-        createSubCategory(user!.token, subCategory, parentCategory)
+        const subCategoryObject = {
+            images: values.images,
+            name: data.subCategory,
+            parent: data.parentCategory,
+        };
+        createSubCategory(user!.token, subCategoryObject)
             .then((res) => {
                 toast.success(`${res.data.name} Sub-Category Created!`);
                 setLoading(false);
@@ -52,6 +62,7 @@ const AddSubCategory = () => {
                 setLoading(false);
             });
     };
+
     return (
         <DashboardLayout>
             <div className="container py-10">
@@ -60,6 +71,15 @@ const AddSubCategory = () => {
                         Add New Sub Category
                     </h2>
                     <form onSubmit={handleSubmit(handleCreateSubCSubmit)}>
+                        <div className="grid grid-cols-2">
+                            <ImageFileUploadForm
+                                values={values}
+                                setValues={setValues}
+                                setLoading={setLoading}
+                                errorField={errors.productImg}
+                                register={register}
+                            />
+                        </div>
                         <FormGroup
                             register={register}
                             inputName={"subCategory"}

@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { ICategories } from "types/category.type";
 
 const AllCategory = () => {
+    const [values, setValues] = useState({ images: [] });
     const [updateCategoryName, setUpdateCategoryName] = useState<string>("");
     const [categorySlug, setCategorySlug] = useState<string>("");
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -37,6 +38,7 @@ const AllCategory = () => {
         getListOfCategory()
             .then((res) => {
                 setCategories(res.data);
+               
             })
             .catch((error) => console.log(error.message));
 
@@ -44,13 +46,14 @@ const AllCategory = () => {
     const closeModal = () => {
         setOpenModal(false);
         setUpdateCategoryName("");
-    }
+    };
     const handleEditCategory = (slug: string) => {
         setOpenModal(true);
         getSingleCategory(slug)
             .then((res) => {
                 setUpdateCategoryName(res.data.category.name);
                 setCategorySlug(res.data.category.slug);
+                setValues({ ...values, images:res.data.category.images});
             })
             .catch((error) => console.log(error.message));
     };
@@ -60,7 +63,11 @@ const AllCategory = () => {
     ) => {
         event.preventDefault();
         setLoading(true);
-        updateCategory(user!.token, updateCategoryName, categorySlug)
+        const updateCategoryObj = {
+            name: updateCategoryName,
+            images: values.images
+        }
+        updateCategory(user!.token, updateCategoryObj, categorySlug)
             .then((res) => {
                 toast.success(`${res.data.name} Category Updated!`);
                 setLoading(false);
@@ -81,7 +88,6 @@ const AllCategory = () => {
                 .then((res) => {
                     toast.success(`${res.data.name} is deleted!`);
                     handleShowCategory();
-                   
                 })
                 .catch((error) => {
                     if (error.response.status === 400) {
@@ -90,6 +96,7 @@ const AllCategory = () => {
                 });
         }
     };
+    console.log(values, "upd v")
     return (
         <DashboardLayout>
             <div className="px-20 mt-5">
@@ -100,8 +107,12 @@ const AllCategory = () => {
                 />
             </div>
             {/*Show Update Category Modal */}
-            {       openModal && (
+            {openModal && (
                 <CustomModal
+                isUpdateImages
+                    values={values}
+                    setValues={setValues}
+                    setLoading={setLoading}
                     closeModal={closeModal}
                     handleEditSubmit={handleUpdateSubmit}
                     setUpdateValue={setUpdateCategoryName}

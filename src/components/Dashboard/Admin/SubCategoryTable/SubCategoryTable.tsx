@@ -37,8 +37,8 @@ const SubCategoryTable = (props: SubCategoryTablePropType) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {subCategories.length &&
-                            subCategories.map((subCategory) => (
+                        {subCategories?.length &&
+                            subCategories?.map((subCategory) => (
                                 <SubCategoryRow
                                     key={subCategory._id}
                                     subCategory={subCategory}

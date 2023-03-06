@@ -6,11 +6,18 @@ import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import ImageFileUploadForm from "@/components/Form/ImageFileUploadForm/ImageFileUploadForm";
 
 interface IFormInputs {
     category: string;
+    productImg: string;
 }
+const initialValues = {
+    name: "",
+    images: [],
+};
 const AddCategory = () => {
+    const [values, setValues] = useState(initialValues);
     const [loading, setLoading] = useState(false);
     const { state } = useStoreContext();
     const { user } = state;
@@ -24,7 +31,11 @@ const AddCategory = () => {
 
     const handleCategorySubmit: SubmitHandler<IFormInputs> = async (data) => {
         setLoading(true);
-        createCategory(user!.token, data.category)
+        const updatedValues = {
+            ...values,
+            name: data.category,
+        };
+        createCategory(user!.token, updatedValues)
             .then((res) => {
                 setLoading(false);
                 toast.success(`${res.data.name} Category Created!`);
@@ -39,6 +50,7 @@ const AddCategory = () => {
                 setLoading(false);
             });
     };
+
     return (
         <DashboardLayout>
             <div className="container py-10">
@@ -47,6 +59,15 @@ const AddCategory = () => {
                         Add New Category
                     </h2>
                     <form onSubmit={handleSubmit(handleCategorySubmit)}>
+                        <div className="grid grid-cols-2">
+                            <ImageFileUploadForm
+                                values={values}
+                                setValues={setValues}
+                                setLoading={setLoading}
+                                errorField={errors.productImg}
+                                register={register}
+                            />
+                        </div>
                         <FormGroup
                             register={register}
                             inputName={"category"}

@@ -27,25 +27,25 @@ const CountDown = ({ date }: { date: Date }) => {
     };
    
     return (
-        <div className="flex items-center gap-2">
-            <span className="bg-black text-white p-1 rounded-md text-3xl">
+        <div className="flex items-center gap-2 sm:mt-2">
+            <span className="bg-black text-white p-1 rounded-md text-3xl sm:text-xl">
                 {remainingTime?.hours.slice(0, 1)}
             </span>
-            <span className="bg-black text-white p-1 rounded-md text-3xl">
+            <span className="bg-black text-white p-1 rounded-md text-3xl sm:text-xl">
                 {remainingTime?.hours.slice(1, 2)}
             </span>
             <b className="text-xl">:</b>
-            <span className="bg-black text-white p-1 rounded-md text-3xl">
+            <span className="bg-black text-white p-1 rounded-md text-3xl sm:text-xl">
                 {remainingTime?.minutes.slice(0, 1)}
             </span>
-            <span className="bg-black text-white p-1 rounded-md text-3xl">
+            <span className="bg-black text-white p-1 rounded-md text-3xl sm:text-xl">
                 {remainingTime?.minutes.slice(1, 2)}
             </span>
             <b className="text-xl">:</b>
-            <span className="bg-black text-white p-1 rounded-md text-3xl">
+            <span className="bg-black text-white p-1 rounded-md text-3xl sm:text-xl">
                 {remainingTime?.seconds.slice(0, 1)}
             </span>
-            <span className="bg-black text-white p-1 rounded-md text-3xl">
+            <span className="bg-black text-white p-1 rounded-md text-3xl sm:text-xl">
                 {remainingTime?.seconds.slice(1, 2)}
             </span>
         </div>

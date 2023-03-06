@@ -1,12 +1,11 @@
 import React from "react";
-import { DefaultValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { ISubCategories } from "types/sub-category.type";
 import FormGroup from "../FormGroup";
 import ImageFileUploadForm from "../ImageFileUploadForm/ImageFileUploadForm";
 import MultiSelect from "../MultiSelect";
 import SelectInput from "../SelectInput";
 import { IFormInput } from "./FormInput.types";
-
 
 type CreateProductFormType = {
     handleAddProduct: any;
@@ -17,9 +16,9 @@ type CreateProductFormType = {
     subCategories: ISubCategories[];
     isShow: boolean;
     loading: boolean;
-    setSubCategoryRef:any;
-    setColorRef:any;
-    setSizeRef:any;
+    setSubCategoryRef: any;
+    setColorRef: any;
+    setSizeRef: any;
 };
 
 const CreateProductForm = (props: CreateProductFormType) => {
@@ -37,9 +36,16 @@ const CreateProductForm = (props: CreateProductFormType) => {
         setSizeRef,
     } = props;
 
-    const { sizes, colors, brands, categories, subCategory, sizesData,   colorsData } =
-        values;
-        
+    const {
+        sizes,
+        colors,
+        brands,
+        categories,
+        subCategory,
+        sizesData,
+        colorsData,
+    } = values;
+
     const {
         handleSubmit,
         register,
@@ -50,7 +56,9 @@ const CreateProductForm = (props: CreateProductFormType) => {
     } = useForm<IFormInput>();
     return (
         <form
-            onSubmit={handleSubmit((data) => handleAddProduct(data, reset, setValue))}
+            onSubmit={handleSubmit((data) =>
+                handleAddProduct(data, reset, setValue)
+            )}
             className="mt-5"
         >
             <div className="grid grid-cols-2">

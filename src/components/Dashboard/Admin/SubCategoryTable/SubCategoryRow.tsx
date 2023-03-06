@@ -17,7 +17,7 @@ const SubCategoryRow = (props: SubCategoryRowPropType) => {
         <tr className="bg-white border-b hover:bg-gray-50 ">
             <td className="px-6 py-4 font-semibold text-gray-900 ">{name}</td>
             <td className="px-6 py-4 font-semibold text-gray-900 ">
-                {parent.name}
+                {parent?.name}
             </td>
             <th
                 scope="col"
