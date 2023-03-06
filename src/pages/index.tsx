@@ -45,9 +45,9 @@ export default function Home({
             <MainLayout>
                 <Banner />
                 <Services />
-                <FlashDeals/>
                 <Categories categories={categories} />
                 <SubCategories subCategories={subCategories} />
+                <FlashDeals/>
                 <NewArrivals products={products} />
                 <BestSellers products={bestSellerProducts} />
             </MainLayout>

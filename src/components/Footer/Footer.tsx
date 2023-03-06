@@ -78,12 +78,9 @@ const Footer = () => {
                     </div>
                 </footer>
                 <footer className="footer px-10 py-4 border-t bg-secondary text-primary border-base-300 flex justify-around sm:block cursor-pointer">
-                    <Image
-                        src={"/static/images/footer/payment.png"}
+                    <img
+                        src={"../../../../footer/2.png"}
                         alt=""
-                        width="0"
-                        height="0"
-                        sizes="100vw"
                         className="w-auto h-auto"
                     />
                     <div className="flex sm:mt-2 sm:justify-center">

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { MdFlashOn } from "react-icons/md";
 import FlashDeal from "./../FlashDeal/FlashDeal";
 // Import Swiper React components
@@ -25,7 +25,7 @@ const FlashDeals = () => {
                     spaceBetween={15}
                     navigation={true}
                     autoplay={{
-                        delay: 2500,
+                        delay: 3000,
                         disableOnInteraction: false,
                     }}
                     modules={[Navigation, Autoplay]}

@@ -10,7 +10,7 @@ const Categories = ({ categories }: { categories: ICategories[] }) => {
     }, [categories]);
 
     return (
-        <div className="grid grid-cols-4 gap-4 px-1 sm:grid-cols-1 md:grid-cols-2">
+        <div className="grid grid-cols-4 gap-4 px-3 sm:grid-cols-1 md:grid-cols-2">
             {categoriesData?.length > 0 ? (
                 <>
                     {categoriesData?.slice(0, 4).map((category: any) => (
