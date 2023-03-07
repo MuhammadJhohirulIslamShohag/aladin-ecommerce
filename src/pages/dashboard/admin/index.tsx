@@ -109,7 +109,7 @@ export default function Dashboard({ products, productSummary }: DashboardPropTyp
                     </section>
 
                     {/* Recent Users And Line Chart */}
-                    <section className="mt-10">
+                    <section className="mt-10 sm:mt-5">
                         <div className="grid grid-cols-12 space-x-3 sm:grid-cols-1 md:grid-cols-1 sm:space-x-0 sm:space-y-4 md:space-y-4">
                             <div className="col-span-6">
                                 <LineChart data= {productSummary} />
@@ -131,7 +131,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     return {
         props: {
             products: data,
-            productSummary: productSummaryData
+            productSummary: productSummaryData.data
         },
     };
 };

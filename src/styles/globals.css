@@ -101,6 +101,10 @@
     background-color: #43c24f !important;
 }
 
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
 /* Start Small Devices */
 @media only screen and (max-width: 767px) {
     .swiper-button-prev {
@@ -109,6 +113,10 @@
     .swiper-button-next,
     .swiper-rtl .swiper-button-prev {
         right: 10px !important;
+    }
+    canvas {
+        width: 100% !important;
+        height: 280px !important;
     }
 } /* End Small Devices */
 
