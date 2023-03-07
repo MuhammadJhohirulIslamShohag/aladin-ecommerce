@@ -110,7 +110,7 @@ const CreateCoupon = () => {
                     </h2>
 
                     {/* Coupon Form */}
-                    <div>
+                    <div className="sm:mt-2 md:mt-2">
                         <CouponForm
                             couponValues={couponValues}
                             expireDate={expireDate}
@@ -124,38 +124,61 @@ const CreateCoupon = () => {
                     {/* List Of Coupons */}
                     <div className="mt-8">
                         <hr />
-                        <h5 className="mb-5 text-center font-semibold text-primary text-2xl">
+                        <h5 className="mb-5 mt-2 text-center font-semibold text-primary text-2xl">
                             List of {coupons.length}{" "}
                             {coupons.length > 1 ? "Coupons" : "Coupon"}
                         </h5>
-                        <div>
-                            <table className="table w-full align-middle">
-                                <thead className="table-secondary text-center">
+                        <div className="relative overflow-x-auto sm:rounded-lg scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100">
+                            <table className="w-full text-sm text-left text-gray-500">
+                                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                     <tr>
-                                        <th scope="col">Coupon-Name</th>
-                                        <th scope="col">Expire Date</th>
-                                        <th scope="col">Discount</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col" className="px-6 py-3">
+                                            Coupon-Name
+                                        </th>
+                                        <th scope="col" className="px-6 py-3">
+                                            Expire Date
+                                        </th>
+                                        <th scope="col" className="px-6 py-3">
+                                            Discount
+                                        </th>
+                                        <th scope="col" className="px-6 py-3">
+                                            Action
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-black">
                                     {coupons && coupons.length > 0 ? (
                                         coupons.map((coupon: ICoupon) => (
-                                            <tr key={coupon._id}>
-                                                <td className="text-center">
+                                            <tr
+                                                key={coupon._id}
+                                                className="bg-white border-b hover:bg-gray-50 "
+                                            >
+                                                <td
+                                                    scope="row"
+                                                    className="px-6 py-4 font-semibold text-gray-900 "
+                                                >
                                                     {coupon.name}
                                                 </td>
-                                                <td className="text-center">
+                                                <td
+                                                    scope="row"
+                                                    className="px-6 py-4 font-semibold text-gray-900 "
+                                                >
                                                     {new Date(
                                                         coupon.expiry
                                                     ).toLocaleDateString()}
                                                 </td>
-                                                <td className="text-center">
+                                                <td
+                                                    scope="row"
+                                                    className="px-6 py-4 font-semibold text-gray-900 "
+                                                >
                                                     {coupon.discount}
                                                 </td>
-                                                <td className="text-center">
+                                                <td
+                                                    scope="row"
+                                                    className="px-6 py-3 h-full justify-start"
+                                                >
                                                     {" "}
-                                                    <span>
+                                                    <span className=" flex items-center justify-start space-x-3 h-full">
                                                         <AiOutlineClear
                                                             className="text-rose-300 cursor-pointer hover:text-rose-600 inline-block"
                                                             onClick={() =>

@@ -56,7 +56,7 @@ const CouponForm = ({
                     Expire Date:
                 </label>
                 <DatePicker
-                className="input input-bordered input-success w-1/4 text-primary"
+                className="input input-bordered input-success w-1/4 sm:w-1/2 text-primary"
                     selected={expireDate}
                     onChange={(date: Date) => setExpireDate(date)}
                     id="expireDate"

@@ -22,7 +22,7 @@ const SubCategoryTable = (props: SubCategoryTablePropType) => {
                 </div>
             </div>
             <div className="relative overflow-x-auto sm:rounded-lg scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100">
-                <table className="w-full text-sm text-left text-gray-500 ">
+                <table className="w-full text-sm text-left text-gray-500">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
                             <th scope="col" className="px-6 py-3">
