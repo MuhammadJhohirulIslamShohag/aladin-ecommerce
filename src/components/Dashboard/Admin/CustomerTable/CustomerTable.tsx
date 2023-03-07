@@ -1,14 +1,14 @@
-import React from "react";
+import TablePagination from "@/components/TablePagination/TablePagination";
 import {
-    useReactTable,
-    getPaginationRowModel,
     ColumnDef,
     flexRender,
     getCoreRowModel,
+    getPaginationRowModel,
+    useReactTable,
 } from "@tanstack/react-table";
+import React from "react";
 import { ICustomers } from "types/customers.type";
 import { CustomerColumn } from "./CustomerColumn";
-import TablePagination from "@/components/TablePagination/TablePagination";
 
 const CustomerTable = ({ data }: { data: ICustomers[] }) => {
     const columns = React.useMemo<ColumnDef<ICustomers>[]>(
@@ -46,7 +46,7 @@ const CustomerTable = ({ data }: { data: ICustomers[] }) => {
                     </select>
                 </div>
             </div>
-            <div className="relative overflow-x-auto sm:rounded-lg">
+            <div className="relative overflow-x-auto sm:rounded-lg scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100">
                 <table className="w-full text-sm text-left text-gray-500 ">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -57,6 +57,7 @@ const CustomerTable = ({ data }: { data: ICustomers[] }) => {
                                             key={header.id}
                                             colSpan={header.colSpan}
                                             className="px-6 py-3"
+                                            scope="col"
                                         >
                                             {header.isPlaceholder ? null : (
                                                 <div>
@@ -85,6 +86,7 @@ const CustomerTable = ({ data }: { data: ICustomers[] }) => {
                                             <td
                                                 className="px-6 py-4 font-semibold text-gray-900 "
                                                 key={cell.id}
+                                                scope="row"
                                             >
                                                 {flexRender(
                                                     cell.column.columnDef.cell,

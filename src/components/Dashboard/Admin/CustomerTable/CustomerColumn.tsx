@@ -1,5 +1,5 @@
-import { FaUserGraduate } from "react-icons/fa";
 import Image from "next/image";
+import { FaUserGraduate } from "react-icons/fa";
 
 export const CustomerColumn = [
     {
@@ -9,12 +9,12 @@ export const CustomerColumn = [
     {
         header: () => "Profile",
         cell: (info: any) => (
-            <span>
-                {info.getValue() ? (
+            <span className="min-w-max flex">
+                {info.getValue()?.url ? (
                     <Image
                         width={100}
                         height={100}
-                        src={info.getValue()}
+                        src={info.getValue().url}
                         alt="Apple Watch"
                         className="w-10 h-10 p-1 rounded-full ring-2 ring-green-300"
                     />
@@ -23,26 +23,52 @@ export const CustomerColumn = [
                 )}
             </span>
         ),
-        accessorKey: "image.url",
+        accessorKey: "image",
     },
     {
         header: () => "Name",
+        cell: (info: any) => (
+            <span className="min-w-max flex">
+                {info.getValue() && info.getValue()}
+            </span>
+        ),
         accessorKey: "name",
     },
     {
         header: () => "Email",
+        cell: (info: any) => (
+            <span className="min-w-max flex">
+                {info.getValue() && info.getValue()}
+            </span>
+        ),
         accessorKey: "email",
     },
     {
         header: () => "Country",
         cell: (info: any) => (
-            <span>
-                {info.getValue() ? (
-                   `${info.getValue()}`
-                ) : "null"}
+            <span className="min-w-max flex">
+                {info.getValue() ? `${info.getValue()?.country}` : "null"}
             </span>
         ),
-        accessorKey: "address.country",
+        accessorKey: "address",
+    },
+    {
+        header: () => "City",
+        cell: (info: any) => (
+            <span className="min-w-max flex">
+                {info.getValue() ? `${info.getValue()?.city}` : "null"}
+            </span>
+        ),
+        accessorKey: "address",
+    },
+    {
+        header: () => "Postal Code",
+        cell: (info: any) => (
+            <span className="min-w-max flex">
+                {info.getValue() ? `${info.getValue()?.postalCode}` : "null"}
+            </span>
+        ),
+        accessorKey: "address",
     },
     {
         header: () => "Role",

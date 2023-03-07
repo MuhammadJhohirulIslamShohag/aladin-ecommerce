@@ -1,19 +1,19 @@
-import { FaUserGraduate } from "react-icons/fa";
-import { SiProducthunt } from "react-icons/si";
-import { MdOutlineVerified } from "react-icons/md";
-import { VscUnverified } from "react-icons/vsc";
 import Image from "next/image";
+import { FaUserGraduate } from "react-icons/fa";
+import { MdOutlineVerified } from "react-icons/md";
+import { SiProducthunt } from "react-icons/si";
+import { VscUnverified } from "react-icons/vsc";
 
 export const OrdersColumn = [
     {
         header: () => "Profile",
         cell: (info: any) => (
-            <span>
-                {info.getValue() ? (
+            <span className="min-w-max flex">
+                {info.getValue()?.image?.url ? (
                     <Image
                         width={100}
                         height={100}
-                        src={info.getValue()}
+                        src={info.getValue()?.image?.url}
                         alt="Apple Watch"
                         className="w-10 h-10 p-1 rounded-full ring-2 ring-green-300"
                     />
@@ -22,11 +22,16 @@ export const OrdersColumn = [
                 )}
             </span>
         ),
-        accessorKey: "orderedBy.image.url",
+        accessorKey: "orderedBy",
     },
     {
         header: () => "User Name",
-        accessorKey: "orderedBy.fullName",
+        cell: (info: any) => (
+            <span className="min-w-max flex">
+                {info.getValue() && info.getValue()?.fullName}
+            </span>
+        ),
+        accessorKey: "orderedBy",
     },
     {
         header: () => "Shipping Address",
@@ -34,19 +39,21 @@ export const OrdersColumn = [
             <div>
                 {info.getValue() && (
                     <>
-                        <h2>Address: {info.getValue().address}</h2>
-                        <h2>City: {info.getValue().city}</h2>
-                        <h2>PostalCode:{info.getValue().postalCode}</h2>
+                        <h2>Address: {info.getValue().address?.address}</h2>
+                        <h2>City: {info.getValue().address?.city}</h2>
+                        <h2>
+                            PostalCode:{info.getValue().address?.postalCode}
+                        </h2>
                     </>
                 )}
             </div>
         ),
-        accessorKey: "orderedBy.address",
+        accessorKey: "orderedBy",
     },
     {
         header: () => "Products",
         cell: (info: any) => (
-            <span>
+            <span className="min-w-max flex">
                 {info.getValue() ? (
                     <div className="flex">
                         {info.getValue().length > 0 &&
@@ -77,33 +84,37 @@ export const OrdersColumn = [
     },
     {
         header: () => "Total",
-        cell: (info: any) => `$${info.getValue() / 100}`,
-        accessorKey: "paymentIntents.amount",
+        cell: (info: any) => (
+            <span className="min-w-max flex">
+                {`$${info.getValue()?.amount / 100}`}
+            </span>
+        ),
+        accessorKey: "paymentIntents",
     },
     {
         header: () => "Payment",
         cell: (info: any) => (
             <span
-                className={`text-lg ${
-                    info.getValue() === "succeeded"
+                className={`text-lg min-w-max flex ${
+                    info.getValue()?.status === "succeeded"
                         ? "text-green-500"
                         : "text-red-500"
                 }`}
             >
-                {info.getValue() === "succeeded" ? (
+                {info.getValue()?.status === "succeeded" ? (
                     <MdOutlineVerified />
                 ) : (
                     <VscUnverified />
                 )}
             </span>
         ),
-        accessorKey: "paymentIntents.status",
+        accessorKey: "paymentIntents",
     },
     {
         header: () => "Status",
         cell: (info: any) => (
             <span
-                className={`bg-gradient-to-br ${
+                className={`min-w-max flex bg-gradient-to-br ${
                     info.getValue() === "Not Processed"
                         ? "from-red-500"
                         : info.getValue() === "Processing"
