@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FaUserGraduate } from "react-icons/fa";
+import { FaUserGraduate, FaProductHunt } from "react-icons/fa";
 import { MdOutlineVerified } from "react-icons/md";
 import { SiProducthunt } from "react-icons/si";
 import { VscUnverified } from "react-icons/vsc";
@@ -7,13 +7,14 @@ import { VscUnverified } from "react-icons/vsc";
 export const OrdersColumn = [
     {
         header: () => "Profile",
+        id: "profile",
         cell: (info: any) => (
             <span className="min-w-max flex">
-                {info.getValue()?.image?.url ? (
+                {info.getValue()?.image && info.getValue()?.image?.url ? (
                     <Image
                         width={100}
                         height={100}
-                        src={info.getValue()?.image?.url}
+                        src={info.getValue().image.url}
                         alt="Apple Watch"
                         className="w-10 h-10 p-1 rounded-full ring-2 ring-green-300"
                     />
@@ -26,25 +27,39 @@ export const OrdersColumn = [
     },
     {
         header: () => "User Name",
+        id: "userName",
         cell: (info: any) => (
             <span className="min-w-max flex">
-                {info.getValue() && info.getValue()?.fullName}
+                {info.getValue() ? info.getValue()?.fullName : "Null"}
+            </span>
+        ),
+        accessorKey: "orderedBy",
+    },
+    {
+        header: () => "User Email",
+        id: "userEmail",
+        cell: (info: any) => (
+            <span className="min-w-max flex">
+                {info.getValue() ? info.getValue()?.email : "Null"}
             </span>
         ),
         accessorKey: "orderedBy",
     },
     {
         header: () => "Shipping Address",
+        id: "shippingAddress",
         cell: (info: any) => (
             <div>
-                {info.getValue() && (
+                {info.getValue() ? (
                     <>
-                        <h2>Address: {info.getValue().address?.address}</h2>
-                        <h2>City: {info.getValue().address?.city}</h2>
+                        <h2>Address: {info.getValue()?.address?.address}</h2>
+                        <h2>City: {info.getValue()?.address?.city}</h2>
                         <h2>
-                            PostalCode:{info.getValue().address?.postalCode}
+                            PostalCode:{info.getValue()?.address?.postalCode}
                         </h2>
                     </>
+                ) : (
+                    "Null"
                 )}
             </div>
         ),
@@ -56,21 +71,24 @@ export const OrdersColumn = [
             <span className="min-w-max flex">
                 {info.getValue() ? (
                     <div className="flex">
-                        {info.getValue().length > 0 &&
+                        {info.getValue()?.length > 0 &&
                             info.getValue().map((product: any) => (
                                 <div key={product._id} className="relative">
-                                    <Image
-                                        width={100}
-                                        height={100}
-                                        src={
-                                            product.product &&
-                                            product.product?.images[0]?.url
-                                        }
-                                        alt="Product image"
-                                        className="w-16 h-12 p-1 rounded-full ring-2 ring-green-300"
-                                    />
+                                    {product?.product &&
+                                    product.product?.images[0]?.url ? (
+                                        <Image
+                                            width={100}
+                                            height={100}
+                                            src={product.product.images[0].url}
+                                            alt="Product image"
+                                            className="w-16 h-12 p-1 rounded-full ring-2 ring-green-300"
+                                        />
+                                    ) : (
+                                        <FaProductHunt className="w-10 h-10 p-1 rounded-full ring-2 ring-green-300" />
+                                    )}
+
                                     <span className="absolute px-2  bg-red-400 rounded-lg top-0 left-0 text-white flex items-center justify-center">
-                                        {product.count}
+                                        {product?.count}
                                     </span>
                                 </div>
                             ))}
@@ -84,6 +102,7 @@ export const OrdersColumn = [
     },
     {
         header: () => "Total",
+        id: "total",
         cell: (info: any) => (
             <span className="min-w-max flex">
                 {`$${info.getValue()?.amount / 100}`}
@@ -93,6 +112,7 @@ export const OrdersColumn = [
     },
     {
         header: () => "Payment",
+        id: "Payment",
         cell: (info: any) => (
             <span
                 className={`text-lg min-w-max flex ${

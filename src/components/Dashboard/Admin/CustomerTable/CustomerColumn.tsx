@@ -4,6 +4,11 @@ import { FaUserGraduate } from "react-icons/fa";
 export const CustomerColumn = [
     {
         header: () => "Username",
+        cell: (info: any) => (
+            <span className="min-w-max flex">
+                {info.getValue() && info.getValue()}
+            </span>
+        ),
         accessorKey: "username",
     },
     {
@@ -45,27 +50,30 @@ export const CustomerColumn = [
     },
     {
         header: () => "Country",
+        id: "country",
         cell: (info: any) => (
             <span className="min-w-max flex">
-                {info.getValue() ? `${info.getValue()?.country}` : "null"}
+                {info.getValue() ? `${info.getValue()?.country}` : "Null"}
             </span>
         ),
         accessorKey: "address",
     },
     {
         header: () => "City",
+        id: "city",
         cell: (info: any) => (
             <span className="min-w-max flex">
-                {info.getValue() ? `${info.getValue()?.city}` : "null"}
+                {info.getValue() ? `${info.getValue()?.city}` : "Null"}
             </span>
         ),
         accessorKey: "address",
     },
     {
         header: () => "Postal Code",
+        id: "postalCode",
         cell: (info: any) => (
             <span className="min-w-max flex">
-                {info.getValue() ? `${info.getValue()?.postalCode}` : "null"}
+                {info.getValue() ? `${info.getValue()?.postalCode}` : "Null"}
             </span>
         ),
         accessorKey: "address",

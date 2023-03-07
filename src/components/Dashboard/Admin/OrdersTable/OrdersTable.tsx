@@ -11,7 +11,6 @@ import { IOrder } from "types/order.types";
 import { OrdersColumn } from "./OrdersColumn";
 
 const OrdersTable = ({ data }: { data: IOrder[] }) => {
-
     const columns = React.useMemo<ColumnDef<IOrder>[]>(() => OrdersColumn, []);
     const table = useReactTable({
         data,
@@ -19,6 +18,7 @@ const OrdersTable = ({ data }: { data: IOrder[] }) => {
         getPaginationRowModel: getPaginationRowModel(),
         getCoreRowModel: getCoreRowModel(),
     });
+    console.log(data, "td");
     return (
         <div className="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl shadow-md bg-clip-border">
             <div className="flex justify-between px-4 py-3">
@@ -43,7 +43,7 @@ const OrdersTable = ({ data }: { data: IOrder[] }) => {
                     </select>
                 </div>
             </div>
-            <div className="relative overflow-x-auto sm:rounded-lg">
+            <div className="relative overflow-x-auto sm:rounded-lg scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100">
                 <table className="w-full text-sm text-left text-gray-500 ">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -54,6 +54,7 @@ const OrdersTable = ({ data }: { data: IOrder[] }) => {
                                             key={header.id}
                                             colSpan={header.colSpan}
                                             className="px-6 py-3"
+                                            scope="col"
                                         >
                                             {header.isPlaceholder ? null : (
                                                 <div>
@@ -82,6 +83,7 @@ const OrdersTable = ({ data }: { data: IOrder[] }) => {
                                             <td
                                                 className="px-6 py-4 font-semibold text-gray-900 "
                                                 key={cell.id}
+                                                scope="row"
                                             >
                                                 {flexRender(
                                                     cell.column.columnDef.cell,

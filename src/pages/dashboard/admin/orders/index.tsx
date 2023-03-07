@@ -8,7 +8,7 @@ import { IOrder } from "types/order.types";
 
 const Orders = () => {
     const [fetching, setFetching] = useState(true);
-    const [orders, setOrders] = useState<IOrder[]>([]);
+    const [orders, setOrders] = useState([]);
     const { state } = useStoreContext();
     const { user } = state;
     useEffect(() => {
