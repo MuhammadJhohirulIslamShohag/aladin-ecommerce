@@ -66,71 +66,69 @@ const AddSubCategory = () => {
 
     return (
         <DashboardLayout>
-           
-                <div className="bg-secondary p-6 rounded-lg w-3/4">
-                    <h2 className="text-center font-semibold text-primary text-2xl">
-                        Add New Sub Category
-                    </h2>
-                    <form onSubmit={handleSubmit(handleCreateSubCSubmit)}>
-                        <div className="grid grid-cols-2">
-                            <ImageFileUploadForm
-                                values={values}
-                                setValues={setValues}
-                                setLoading={setLoading}
-                                errorField={errors.productImg}
-                                register={register}
-                            />
-                        </div>
-                        <FormGroup
+            <div className="bg-secondary p-6 rounded-lg w-3/4 sm:w-full md:w-full">
+                <h2 className="text-center font-semibold text-primary text-2xl sm:text-lg md:text-xl">
+                    Add New Sub Category
+                </h2>
+                <form onSubmit={handleSubmit(handleCreateSubCSubmit)}>
+                    <div className="grid grid-cols-2">
+                        <ImageFileUploadForm
+                            values={values}
+                            setValues={setValues}
+                            setLoading={setLoading}
+                            errorField={errors.productImg}
                             register={register}
-                            inputName={"subCategory"}
-                            labelName={"Sub Category"}
-                            errorField={errors.subCategory}
-                            inputType={"text"}
-                            placeholder={"Enter Your Sub Category"}
-                            required="Please Enter Sub Category"
                         />
-                        <div className="mb-3">
-                            <label
-                                htmlFor="parentCategory"
-                                className="block mb-2 text-sm font-medium text-primary"
-                            >
-                                Add Category
-                            </label>
-                            <select
-                                className=" rounded-lg border border-success focus:ring-green-500 focus:border-green-500 focus:outline focus:outline-offset-2 focus:outline-green-600 w-3/4 p-2 text-gray-700 font-semibold mt-1"
-                                {...register("parentCategory", {
-                                    required: "Select Any Category",
-                                })}
-                            >
-                                {categories &&
-                                    categories.length > 0 &&
-                                    categories.map((category) => (
-                                        <option
-                                            key={category._id}
-                                            value={category._id}
-                                        >
-                                            {category.name}
-                                        </option>
-                                    ))}
-                            </select>
-                            {errors.parentCategory && (
-                                <p className="text-red-600">
-                                    <>{errors?.parentCategory}</>
-                                </p>
-                            )}
-                        </div>
-
-                        <button
-                            disabled={loading}
-                            type="submit"
-                            className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
+                    </div>
+                    <FormGroup
+                        register={register}
+                        inputName={"subCategory"}
+                        labelName={"Sub Category"}
+                        errorField={errors.subCategory}
+                        inputType={"text"}
+                        placeholder={"Enter Your Sub Category"}
+                        required="Please Enter Sub Category"
+                    />
+                    <div className="mb-3">
+                        <label
+                            htmlFor="parentCategory"
+                            className="block mb-2 text-sm font-medium text-primary"
                         >
-                            {loading ? "Loading" : "Submit"}
-                        </button>
-                    </form>
-                </div>
-            
+                            Add Category
+                        </label>
+                        <select
+                            className=" rounded-lg border border-success focus:ring-green-500 focus:border-green-500 focus:outline focus:outline-offset-2 focus:outline-green-600 w-3/4 p-2 text-gray-700 font-semibold mt-1"
+                            {...register("parentCategory", {
+                                required: "Select Any Category",
+                            })}
+                        >
+                            {categories &&
+                                categories.length > 0 &&
+                                categories.map((category) => (
+                                    <option
+                                        key={category._id}
+                                        value={category._id}
+                                    >
+                                        {category.name}
+                                    </option>
+                                ))}
+                        </select>
+                        {errors.parentCategory && (
+                            <p className="text-red-600">
+                                <>{errors?.parentCategory}</>
+                            </p>
+                        )}
+                    </div>
+
+                    <button
+                        disabled={loading}
+                        type="submit"
+                        className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
+                    >
+                        {loading ? "Loading" : "Submit"}
+                    </button>
+                </form>
+            </div>
         </DashboardLayout>
     );
 };

@@ -55,11 +55,14 @@ const AddCategory = () => {
     return (
         <DashboardLayout>
             <div>
-                <div className="bg-secondary p-6 rounded-lg w-3/4">
+                <div className="bg-secondary p-6 rounded-lg w-3/4 sm:w-full md:w-full">
                     <h2 className="text-center font-semibold text-primary text-2xl">
                         Add New Category
                     </h2>
-                    <form onSubmit={handleSubmit(handleCategorySubmit)}>
+                    <form
+                        className="sm:-mt-2 md:-mt-2"
+                        onSubmit={handleSubmit(handleCategorySubmit)}
+                    >
                         <div className="grid grid-cols-2">
                             <ImageFileUploadForm
                                 values={values}

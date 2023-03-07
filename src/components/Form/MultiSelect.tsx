@@ -9,8 +9,14 @@ const customStyles = {
     option: (provided: any, state: any) => ({
         ...provided,
         borderBottom: "1px solid transparent",
-        color: state.isSelected ? "#fff" : "black",
+        color: state.isSelected ? "#fff" : "text-gray-700",
     }),
+    placeholder: (defaultStyles:any) => {
+        return {
+            ...defaultStyles,
+            color: '#9ca3af',
+        }
+    }
 };
 
 interface IOptionData {
@@ -72,7 +78,7 @@ const MultiSelect = ({
                     render={({ field: { onChange, value, ref, ...rest } }) => (
                         <Select
                             {...rest}
-                            className="react-select-container bg-white border border-green-300 text-sm rounded-md block  text-black font-semibold"
+                            className="react-select-container bg-white border border-green-300 text-sm rounded-md block  text-gray-700 font-semibold"
                             closeMenuOnSelect={false}
                             components={animatedComponents}
                             isMulti
@@ -117,7 +123,7 @@ const MultiSelect = ({
                     render={({ field: { onChange, value, ...rest } }) => (
                         <Select
                             {...rest}
-                            className="react-select-container bg-white border border-green-300 text-sm rounded-md block  text-black font-semibold"
+                            className="react-select-container bg-white border border-green-300 text-sm rounded-md block  text-gray-700 font-semibold"
                             closeMenuOnSelect={false}
                             components={animatedComponents}
                             isMulti
@@ -125,7 +131,7 @@ const MultiSelect = ({
                             options={dataArray}
                             onChange={onChangeHandler}
                             classNamePrefix="react-select"
-                            placeholder={placeholder}
+                            placeholder={<div className="select-placeholder-text">{placeholder}</div>}
                             theme={(theme: any) => ({
                                 ...theme,
                                 borderRadius: 0,
@@ -142,10 +148,10 @@ const MultiSelect = ({
                 />
             )}
             {(!isUpdateImage && errorFields) && (
-                <p className="text-red-600">{errorFields?.message}</p>
+                <p className="text-red-600 sm:text-sm md:text-sm">{errorFields?.message}</p>
             )}
             {(isUpdateImage && errorFields) && (
-                <p className="text-red-600">{errorFields}</p>
+                <p className="text-red-600 sm:text-sm md:text-sm">{errorFields}</p>
             )}
         </>
     );

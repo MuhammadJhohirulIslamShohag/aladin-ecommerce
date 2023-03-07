@@ -42,11 +42,14 @@ const AddBrand = () => {
     return (
         <DashboardLayout>
             <div>
-                <div className="bg-secondary p-6 rounded-lg w-3/4">
-                    <h2 className="text-center font-semibold text-primary text-2xl">
+                <div className="bg-secondary p-6 rounded-lg w-3/4 sm:w-full md:w-full">
+                    <h2 className="text-center font-semibold text-primary text-2xl sm:text-lg md:text-xl">
                         Add New Brand
                     </h2>
-                    <form onSubmit={handleSubmit(handleBrandSubmit)}>
+                    <form
+                        className="md:mt-2 sm:mt-2"
+                        onSubmit={handleSubmit(handleBrandSubmit)}
+                    >
                         <FormGroup
                             register={register}
                             inputName={"brand"}

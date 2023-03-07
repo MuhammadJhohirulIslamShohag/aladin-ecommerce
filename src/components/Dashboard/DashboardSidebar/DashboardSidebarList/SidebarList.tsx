@@ -10,7 +10,6 @@ import { useRouter } from "next/router";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 
-
 const SidebarList = () => {
     const [openProduct, setOpenProduct] = useState<boolean>(false);
     const [openCategories, setOpenCategories] = useState<boolean>(false);
@@ -41,11 +40,9 @@ const SidebarList = () => {
 
     return (
         <ul className="space-y-2 px-3">
-            <SideBarListItem
-                navigationLink="/dashboard/admin"
-            >
+            <SideBarListItem navigationLink="/dashboard/admin">
                 <AiFillDashboard className="h-[19px] w-[19px] text-green-400" />
-               <span className="ml-3">Dashboard</span>
+                <span className="ml-3">Dashboard</span>
             </SideBarListItem>
 
             <SideBarListItem
@@ -70,7 +67,9 @@ const SidebarList = () => {
             <SideBarListItem
                 open={openCategories}
                 setOpen={setOpenCategories}
-                icon={<BiCategory className="h-[19px] w-[19px] text-green-400" />}
+                icon={
+                    <BiCategory className="h-[19px] w-[19px] text-green-400" />
+                }
                 dropdownMainMenuName="Categories"
                 isDropdownList
             >
@@ -86,7 +85,9 @@ const SidebarList = () => {
             <SideBarListItem
                 open={openBrands}
                 setOpen={setOpenBrands}
-                icon={<BiCategory className="h-[19px] w-[19px] text-green-400" />}
+                icon={
+                    <BiCategory className="h-[19px] w-[19px] text-green-400" />
+                }
                 dropdownMainMenuName="Brands"
                 isDropdownList
             >
@@ -102,7 +103,9 @@ const SidebarList = () => {
             <SideBarListItem
                 open={openColors}
                 setOpen={setOpenColors}
-                icon={<BiCategory className="h-[19px] w-[19px] text-green-400" />}
+                icon={
+                    <BiCategory className="h-[19px] w-[19px] text-green-400" />
+                }
                 dropdownMainMenuName="Colors"
                 isDropdownList
             >
@@ -118,7 +121,9 @@ const SidebarList = () => {
             <SideBarListItem
                 open={openSizes}
                 setOpen={setOpenSizes}
-                icon={<BiCategory className="h-[19px] w-[19px] text-green-400" />}
+                icon={
+                    <BiCategory className="h-[19px] w-[19px] text-green-400" />
+                }
                 dropdownMainMenuName="Sizes"
                 isDropdownList
             >
@@ -134,7 +139,9 @@ const SidebarList = () => {
             <SideBarListItem
                 open={openSubCategories}
                 setOpen={setOpenSubCategories}
-                icon={<BiCategory className="h-[19px] w-[19px] text-green-400" />}
+                icon={
+                    <BiCategory className="h-[19px] w-[19px] text-green-400" />
+                }
                 dropdownMainMenuName="SubCategories"
                 isDropdownList
             >
@@ -148,75 +155,27 @@ const SidebarList = () => {
                 />
             </SideBarListItem>
 
-            <SideBarListItem
-                navigationLink="/dashboard/admin/coupons"
-             
-               
-            >
+            <SideBarListItem navigationLink="/dashboard/admin/coupons">
                 <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
-              
-                    <span className="flex-1 ml-3 whitespace-nowrap">
-                        Coupons
-                    </span>
-               
-            </SideBarListItem>
-            <SideBarListItem
-                navigationLink="/dashboard/buyer/wishlist"
-                tooltipName="My WishList"
-               
-            >
-                <FaHeart className="h-[19px] w-[19px] text-green-400" />
-               
-                    <span className="flex-1 ml-3 whitespace-nowrap">
-                        My WishList
-                    </span>
-               
-            </SideBarListItem>
-            <SideBarListItem
-                navigationLink="/dashboard/admin/customers"
-              
-               
-            >
-                <FaShoppingBag className="h-[19px] w-[19px] text-green-400" />
-                
-                    <span className="flex-1 ml-3 whitespace-nowrap">
-                        Customers
-                    </span>
-              
-            </SideBarListItem>
-            <SideBarListItem
-                navigationLink="/dashboard/admin/orders"
-              
-               
-            >
-                <FaShoppingBag className="h-[19px] w-[19px] text-green-400" />
-               
-                    <span className="flex-1 ml-3 whitespace-nowrap">
-                        Orders
-                    </span>
-                
-            </SideBarListItem>
 
-            <SideBarListItem
-                navigationLink="/dashboard/seller/myBuyers"
-               
-               
-            >
-                <FaUsers className="h-[19px] w-[19px] text-green-400" />
-               
-                    <span className="flex-1 ml-3 whitespace-nowrap">
-                        My Buyers
-                    </span>
-               
+                <span className="flex-1 ml-3 whitespace-nowrap">Coupons</span>
+            </SideBarListItem>
+            <SideBarListItem navigationLink="/dashboard/admin/customers">
+                <FaShoppingBag className="h-[19px] w-[19px] text-green-400" />
+
+                <span className="flex-1 ml-3 whitespace-nowrap">Customers</span>
+            </SideBarListItem>
+            <SideBarListItem navigationLink="/dashboard/admin/orders">
+                <FaShoppingBag className="h-[19px] w-[19px] text-green-400" />
+
+                <span className="flex-1 ml-3 whitespace-nowrap">Orders</span>
             </SideBarListItem>
 
             <SideBarListItem
                 open={openAllUsers}
                 setOpen={setOpenAllUsers}
                 icon={<FaUsers className="h-[19px] w-[19px] text-green-400" />}
-               
                 dropdownMainMenuName="All Users"
-               
                 isDropdownList
             >
                 <SideBarDropdownListItem
@@ -232,10 +191,10 @@ const SidebarList = () => {
             <SideBarListItem
                 open={openSetting}
                 setOpen={setOpenSetting}
-                icon={<AiFillSetting className="h-[19px] w-[19px] text-green-400" />}
-               
+                icon={
+                    <AiFillSetting className="h-[19px] w-[19px] text-green-400" />
+                }
                 dropdownMainMenuName="Profile Settings"
-               
                 isDropdownList
             >
                 <SideBarDropdownListItem
@@ -247,18 +206,15 @@ const SidebarList = () => {
                     name="Address"
                 />
             </SideBarListItem>
-            <SideBarListItem
-                isLabel
-            >
+            <SideBarListItem isLabel>
                 <MdLogout className="h-[19px] w-[19px] text-green-400" />
-              
-                    <span
-                        onClick={handleLogOut}
-                        className="flex-1 ml-3 cursor-pointer whitespace-nowrap"
-                    >
-                        LogOut
-                    </span>
-              
+
+                <span
+                    onClick={handleLogOut}
+                    className="flex-1 ml-3 cursor-pointer whitespace-nowrap"
+                >
+                    LogOut
+                </span>
             </SideBarListItem>
         </ul>
     );

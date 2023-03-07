@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
@@ -15,6 +17,9 @@ module.exports = {
             lg: { min: "992px", max: "1200px" },
         },
         extend: {
+            colors: {
+             ...colors
+         }
         },
     },
     daisyui: {

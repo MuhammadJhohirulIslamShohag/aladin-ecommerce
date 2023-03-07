@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState, Fragment } from "react";
 import {
     useReactTable,
     ColumnDef,
@@ -18,14 +18,20 @@ import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import toast from "react-hot-toast";
 import { deleteProduct } from "@/api/products";
 
-const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:any }) => {
+const ProductsTable = ({
+    data,
+    refreshData,
+}: {
+    data: IProduct[];
+    refreshData: any;
+}) => {
     const [loading, setLoading] = useState(false);
     const {
         state: { user },
     } = useStoreContext();
     const router = useRouter();
 
-    const handleRemoveProduct = (slug:string) => {
+    const handleRemoveProduct = (slug: string) => {
         if (user && user.token) {
             setLoading(true);
             deleteProduct(user.token, slug)
@@ -43,8 +49,8 @@ const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:an
     const ProductColumn = [
         {
             header: () => "Image",
-            cell: (info:any) => (
-                <span>
+            cell: (info: any) => (
+                <span className="min-w-max flex">
                     {info.getValue() ? (
                         <>
                             {info.getValue().length > 0 &&
@@ -57,7 +63,7 @@ const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:an
                                             height={100}
                                             src={img.url && img.url}
                                             alt="Product image"
-                                            className="w-18 h-16 p-1 inline-block rounded-full ring-2 ring-green-300"
+                                            className="w-10 h-10 p-1 inline-block rounded-full ring-2 ring-green-300"
                                         />
                                     ))}
                         </>
@@ -70,6 +76,9 @@ const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:an
         },
         {
             header: () => "Product",
+            cell: (info: any) => (
+                <span className="min-w-max flex">{info.getValue() && info.getValue()}</span>
+            ),
             accessorKey: "title",
         },
         {
@@ -78,76 +87,68 @@ const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:an
         },
         {
             header: () => "Category",
-            cell: (info:any) => (
-                <span>
-                    {info.getValue() && info.getValue().name }
-                </span>
+            cell: (info: any) => (
+                <span className="min-w-max flex">{info.getValue() && info.getValue().name}</span>
             ),
             accessorKey: "category",
         },
         {
             header: () => "Sub Category",
-            cell: (info:any) => (
-               <span>
-               {info?.getValue().length > 0 &&
-                                info
-                                    .getValue()
-                                    .map((sc: any) => (
-                                       <span key={sc._id}>{sc.name}</span> 
-                                    ))}
-               </span>
-
-                            
-                      
-                
+            cell: (info: any) => (
+                <>
+                    {info.getValue()?.length > 0 &&
+                        info
+                            .getValue()
+                            .map((sc: any) => (
+                                <span className="min-w-max flex" key={sc._id}>{sc.name}</span>
+                            ))}
+                </>
             ),
             accessorKey: "subCategory",
         },
         {
             header: () => "Color",
-            cell: (info:any) => (
-               <span>
-               {info?.getValue().length > 0 &&
-                                info
-                                    .getValue()
-                                    .map((sc: any) => (
-                                       <span key={sc._id}>{sc.name}</span>{" "} 
-                                    ))}
-               </span>
-
-                            
-                      
-                
+            cell: (info: any) => (
+                <span className="min-w-max flex">
+                    {info.getValue()?.length > 0 &&
+                        info
+                            .getValue()
+                            .map((sc: any) => (
+                                <span
+                                key={sc._id}
+                                  className={`h-8 w-8 ${
+                                    sc.name === "Red"
+                                        ? "bg-red-600"
+                                        : sc.name === "Green"
+                                        ? `bg-success`
+                                        : sc.name === "Orange" ? `bg-warning` : `bg-${sc.name.toLowerCase()}-600`
+                                } border border-black border-opacity-10 rounded-full`}
+                                        ></span>
+                                // <Fragment  key={sc._id}> </Fragment>
+                            ))}
+                </span>
             ),
             accessorKey: "colors",
         },
         {
             header: () => "Size",
-            cell: (info:any) => (
-               <span>
-               {info.getValue().length > 0 &&
-                                info
-                                    .getValue()
-                                    .map((sc: any) => (
-                                       <span key={sc._id}>{sc.name}</span> 
-                                    ))}
-               </span>
-
-                            
-                      
-                
+            cell: (info: any) => (
+                <span className="min-w-max flex">
+                    {info.getValue()?.length > 0 &&
+                        info
+                            .getValue()
+                            .map((sc: any) => (
+                                <Fragment key={sc._id}>{sc.name}, </Fragment>
+                            ))}
+                </span>
             ),
             accessorKey: "sizes",
         },
         {
             header: () => "Brand",
-            cell: (info:any) => {
-                return (
-                    <span>
-                        {info.getValue() && info.getValue()?.name }
-                    </span>
-                )
-            },
+            cell: (info: any) => (
+                <span className="min-w-max flex">{info.getValue() && info.getValue().name}</span>
+            ),
             accessorKey: "brand",
         },
         {
@@ -160,10 +161,8 @@ const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:an
         },
         {
             header: () => "Discount",
-            cell: (info:any) => (
-                <span>
-                    {info.getValue() && info.getValue() }%
-                </span>
+            cell: (info: any) => (
+                <span>{info.getValue() && info.getValue()}%</span>
             ),
             accessorKey: "discount",
         },
@@ -183,7 +182,9 @@ const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:an
                         </h2>
                         <label
                             htmlFor="my-custom-modal"
-                            onClick={() => router.push(`/dashboard/admin/products/${slug}`)}
+                            onClick={() =>
+                                router.push(`/dashboard/admin/products/${slug}`)
+                            }
                         >
                             <AiOutlineEdit className="text-green-400 text-lg  hover:text-green-700 transition-all cursor-pointer" />
                         </label>
@@ -196,8 +197,7 @@ const ProductsTable = ({ data, refreshData }: { data: IProduct[], refreshData:an
         () => ProductColumn,
         []
     );
-console.log(data, "products")
-
+    console.log(data, "products");
 
     const table = useReactTable({
         data,
@@ -216,7 +216,7 @@ console.log(data, "products")
                     View All
                 </div>
             </div>
-            <div className="relative overflow-x-auto sm:rounded-lg">
+            <div className="relative overflow-x-auto sm:rounded-lg scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100">
                 <table className="w-full text-sm text-left text-gray-500 ">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -227,6 +227,7 @@ console.log(data, "products")
                                             key={header.id}
                                             colSpan={header.colSpan}
                                             className="px-6 py-3"
+                                            scope="col"
                                         >
                                             {header.isPlaceholder ? null : (
                                                 <div>
@@ -255,6 +256,7 @@ console.log(data, "products")
                                             <td
                                                 className="px-6 py-4 font-semibold text-gray-900 "
                                                 key={cell.id}
+                                                scope="row"
                                             >
                                                 {flexRender(
                                                     cell.column.columnDef.cell,

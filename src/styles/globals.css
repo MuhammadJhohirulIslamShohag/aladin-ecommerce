@@ -112,4 +112,6 @@
     }
 } /* End Small Devices */
 
-
+.select-placeholder-text {
+    color: #d1d5db !important;
+}

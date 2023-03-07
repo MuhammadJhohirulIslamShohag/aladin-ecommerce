@@ -127,7 +127,7 @@ const ImageFileUploadForm = ({
                         />
                     )}
                     {!isUpdateImage && errorField && (
-                        <p className="text-red-600">{errorField?.message}</p>
+                        <p className="text-red-600 sm:text-sm md:text-sm">{errorField?.message}</p>
                     )}
 
                     {isUpdateImage && (
@@ -140,7 +140,7 @@ const ImageFileUploadForm = ({
                         />
                     )}
                      {isUpdateImage && errorField && (
-                        <p className="text-red-600">{errorField}</p>
+                        <p className="text-red-600 sm:text-sm md:text-sm">{errorField}</p>
                     )}
                 </div>
             </div>

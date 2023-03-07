@@ -142,7 +142,6 @@ const AddProduct = ({
             discount: data.discount,
             category: data.productCategory,
         };
-        console.log(updatedValues, "up", data, "data");
         createProduct(user!.token, updatedValues)
             .then((res) => {
                 setLoading(false);

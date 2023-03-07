@@ -89,15 +89,15 @@ export default function Dashboard({ products }: DashboardPropType) {
                             />
                         </div>
                     </section>
-                    
-                     {/* Recent Order And Product Table */}
+
+                    {/* Recent Order And Product Table */}
                     <section className="mt-10">
                         <div className="grid grid-cols-12 space-x-3">
                             <div className="col-span-8">
-                                <RecentOrder  orders={orders}/>
+                                <RecentOrder orders={orders} />
                             </div>
                             <div className="col-span-4">
-                                <RecentProduct products={products}/>
+                                <RecentProduct products={products} />
                             </div>
                         </div>
                     </section>
@@ -106,10 +106,10 @@ export default function Dashboard({ products }: DashboardPropType) {
                     <section className="mt-10">
                         <div className="grid grid-cols-12 space-x-3">
                             <div className="col-span-6">
-                                <Geography/>
+                                <Geography />
                             </div>
                             <div className="col-span-6">
-                               <RecentUsers users={users}/>
+                                <RecentUsers users={users} />
                             </div>
                         </div>
                     </section>

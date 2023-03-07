@@ -59,7 +59,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
             onSubmit={handleSubmit((data) =>
                 handleAddProduct(data, reset, setValue)
             )}
-            className="mt-5"
+            className="mt-5 md:mt-0 sm:mt-0"
         >
             <div className="grid grid-cols-2">
                 <ImageFileUploadForm
@@ -70,7 +70,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                     register={register}
                 />
             </div>
-            <div className="grid gap-6 mb-6 grid-cols-2">
+            <div className="grid gap-6 mb-6 grid-cols-2 sm:grid-cols-1 md:grid-cols-1 sm:mb-2 md:mb-0 sm:gap-3">
                 <div>
                     <FormGroup
                         register={register}
@@ -117,7 +117,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                     />
                 </div>
             </div>
-            <div className="mb-6">
+            <div className="mb-6 sm:mb-3 md:mb-3">
                 <SelectInput
                     dataArray={categories}
                     labelName={"Product Category"}
@@ -131,7 +131,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                 />
             </div>
             {isShow && (
-                <div className="mb-6">
+                <div className="mb-6 sm:mb-3 md:mb-3">
                     <MultiSelect
                         dataArray={subCategories}
                         valueData={subCategory}
@@ -145,7 +145,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                     />
                 </div>
             )}
-            <div className="mb-6">
+            <div className="mb-6 sm:mb-3 md:mb-3">
                 <SelectInput
                     dataArray={brands}
                     labelName={"Brand"}
@@ -157,7 +157,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                     }}
                 />
             </div>
-            <div className="mb-6">
+            <div className="mb-6 sm:mb-3 md:mb-3">
                 <MultiSelect
                     dataArray={colorsData}
                     valueData={colors}
@@ -170,7 +170,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                     setValueRef={setColorRef}
                 />
             </div>
-            <div className="mb-6">
+            <div className="mb-6 sm:mb-3 md:mb-3">
                 <MultiSelect
                     dataArray={sizesData}
                     valueData={sizes}
@@ -184,7 +184,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                 />
             </div>
 
-            <div className="mb-6">
+            <div className="mb-6 sm:mb-3 md:mb-3">
                 <SelectInput
                     dataArray={["Yes", "No"]}
                     labelName={"Shipping"}

@@ -54,7 +54,7 @@ const FormGroup = ({
                         readOnly
                         defaultValue={defaultValue}
                         placeholder={placeholder}
-                        className="input input-bordered input-success w-full text-primary"
+                        className="input input-bordered input-success w-full text-gray-700"
                     />
                 ) : (
                     <input
@@ -69,7 +69,7 @@ const FormGroup = ({
                         type={inputType}
                         readOnly
                         placeholder={placeholder}
-                        className="input input-bordered input-success w-full text-primary"
+                        className="input input-bordered input-success w-full text-gray-700"
                     />
                 )
             ) : isDefaultValue ? (
@@ -85,7 +85,7 @@ const FormGroup = ({
                     defaultValue={defaultValue}
                     type={inputType}
                     placeholder={placeholder}
-                    className="input input-bordered input-success w-full text-primary"
+                    className="input input-bordered input-success w-full text-gray-700"
                 />
             ) : (
                 <input
@@ -99,7 +99,7 @@ const FormGroup = ({
                     )}
                     type={inputType}
                     placeholder={placeholder}
-                    className="input input-bordered input-success w-full text-primary"
+                    className="input input-bordered input-success w-full text-gray-700"
                 />
             )}
             {isTextArea && (
@@ -112,7 +112,7 @@ const FormGroup = ({
                 ></textarea>
             )}
             {errorField && (
-                <p className="text-red-600">{errorField?.message}</p>
+                <p className="text-red-600 sm:text-sm md:text-sm">{errorField?.message}</p>
             )}
         </div>
     );
