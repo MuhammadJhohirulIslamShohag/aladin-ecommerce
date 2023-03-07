@@ -26,16 +26,16 @@ const options = {
     plugins: {
         legend: {
             position: "top" as const,
-            display:false
+            display: false,
         },
         title: {
             display: true,
             text: "Project Summary",
             color: "#000",
-            font:{
-                size: 16
-            }
-        },  
+            font: {
+                size: 16,
+            },
+        },
     },
     scales: {
         x: {
@@ -65,7 +65,7 @@ type LineChartPropType = {
 };
 const LineChart = ({ data }: LineChartPropType) => {
     return (
-        <div style={{width: "100%"}}>
+        <div style={{ width: "100%" }}>
             <Line
                 options={options}
                 data={{
@@ -73,11 +73,7 @@ const LineChart = ({ data }: LineChartPropType) => {
                     datasets: [
                         {
                             label: "",
-                            data: [
-                                data.users,
-                                data.orders,
-                                data.products
-                            ],
+                            data: [data.users, data.orders, data.products],
                             borderColor: "#9ca3af",
                             backgroundColor: "transparent",
                         },
