@@ -12,7 +12,11 @@ const DashWidget = (props: DashWidgetTypes) => {
             for (let order of orders) {
                 if (order.products.length) {
                     for (let product of order.products) {
-                        totalAmount += product?.count * product.product?.price;
+                        console.log(product, "product");
+                        if (product?.count && product.product?.price) {
+                            totalAmount +=
+                                product?.count * product.product?.price;
+                        }
                     }
                 }
             }
@@ -21,7 +25,7 @@ const DashWidget = (props: DashWidgetTypes) => {
     };
     return (
         <div className="bg-white shadow-lg transition-all border-2 hover:border-green-400 shadow-gray-200 rounded-2xl p-4 cursor-pointer">
-            <div className="flex items-center">
+            <div className="flex items-center md:justify-evenly sm:justify-evenly">
                 <div className="inline-flex flex-shrink-0 justify-center items-center w-12 h-12 text-white bg-gradient-to-br from-green-500 to-voilet-500 rounded-lg">
                     {icon}
                 </div>

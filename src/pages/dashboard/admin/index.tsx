@@ -66,7 +66,7 @@ export default function Dashboard({ products }: DashboardPropType) {
                 <div>
                     {/* Dash Widget Card */}
                     <section>
-                        <div className="grid grid-cols-4 gap-3">
+                        <div className="grid grid-cols-4 gap-3 sm:grid-cols-1 md:grid-cols-3">
                             <DashWidget
                                 icon={<AiOutlineUserAdd />}
                                 title={"Users"}
@@ -92,7 +92,7 @@ export default function Dashboard({ products }: DashboardPropType) {
 
                     {/* Recent Order And Product Table */}
                     <section className="mt-10">
-                        <div className="grid grid-cols-12 space-x-3">
+                        <div className="grid grid-cols-12 space-x-3 sm:grid-cols-1 md:grid-cols-1 sm:space-x-0 md:space-y-4 sm:space-y-4">
                             <div className="col-span-8">
                                 <RecentOrder orders={orders} />
                             </div>
@@ -104,7 +104,7 @@ export default function Dashboard({ products }: DashboardPropType) {
 
                     {/* Recent Users And Geography */}
                     <section className="mt-10">
-                        <div className="grid grid-cols-12 space-x-3">
+                        <div className="grid grid-cols-12 space-x-3 sm:grid-cols-1 md:grid-cols-1 sm:space-x-0 sm:space-y-4 md:space-y-4">
                             <div className="col-span-6">
                                 <Geography />
                             </div>

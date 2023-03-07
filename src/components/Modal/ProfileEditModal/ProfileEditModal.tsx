@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { createOrUpdateUser } from "@/api/auth";
 import FormGroup from "@/components/Form/FormGroup";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import { StoreActionType, UserType } from "@/lib/states/storeReducer/storeReducer.type";
+import {
+    StoreActionType,
+    UserType,
+} from "@/lib/states/storeReducer/storeReducer.type";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { IProfile } from "@/pages/dashboard/user/profile.types";
@@ -123,7 +126,7 @@ const ProfileEditModal = (props: ProfileEditModalPropType) => {
                 <div className="relative w-full h-full max-w-2xl md:h-auto">
                     <div className="relative bg-white rounded-lg drop-shadow-2xl">
                         <div className="flex items-start justify-between p-4 border-b rounded-t ">
-                            <h3 className="text-xl font-semibold text-gray-900">
+                            <h3 className="text-xl sm:text-lg font-semibold text-gray-900">
                                 {title}
                             </h3>
                             <button
@@ -242,7 +245,7 @@ const ProfileEditModal = (props: ProfileEditModalPropType) => {
                                     className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
                                     disabled={isSubmitted}
                                 >
-                                    {isSubmitted ? "Loading" : "Register"}
+                                    {isSubmitted ? "Loading" : "Submit"}
                                 </button>
                             </form>
                         </div>

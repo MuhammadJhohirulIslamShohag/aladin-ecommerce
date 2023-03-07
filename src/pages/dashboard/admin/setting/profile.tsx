@@ -54,7 +54,6 @@ const AdminProfile = () => {
             currentUser(user.token)
                 .then((res) => {
                     const data = res.data;
-                    console.log(data);
                     setValues({
                         ...values,
                         username: data.username,
@@ -126,13 +125,13 @@ const AdminProfile = () => {
     );
     return (
         <DashboardLayout>
-            <div className="grid grid-cols-10 py-10 pl-10">
+            <div className="grid grid-cols-10 py-10 pl-10 sm:grid-cols-none sm:pl-0 md:grid-cols-2 sm:pt-3">
                 <div className="col-span-6">
                     <h2 className="text-black text-md font-semibold mb-4">
                         My Profile
                     </h2>
-                    <div className="grid grid-cols-8">
-                        <div className="col-span-2">
+                    <div className="grid grid-cols-8 sm:grid-cols-1">
+                        <div className="col-span-2 sm:flex sm:flex-col sm:items-center">
                             {values.image?.url && (
                                 <FileUpload
                                     values={values}
@@ -175,7 +174,7 @@ const AdminProfile = () => {
                                         <p className="text-black mb-0 text-md font-semibold">
                                             Email address:
                                         </p>
-                                        <span className="text-black mt-1 inline-block">
+                                        <span className="text-black mt-1 inline-block sm:break-all">
                                             {values?.email}
                                         </span>
                                     </li>

@@ -10,7 +10,8 @@ const RecentProductRow = (props: any) => {
                     width={100}
                     height={100}
                     src={images.length && images[0]?.url}
-                    alt="Apple Watch"
+                    alt={title}
+                    priority
                     className="w-18 h-16 p-1 rounded-full ring-2 ring-green-300"
                 />
             </td>

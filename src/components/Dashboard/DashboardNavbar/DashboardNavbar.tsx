@@ -146,11 +146,13 @@ const DashboardNavbar = ({
                         </label>
                         <ul
                             tabIndex={0}
-                            className="mt-2 pb-2 shadow menu menu-compact dropdown-content bg-white drop-shadow-2xl rounded divide-y divide-gray-100"
+                            className="mt-2 pb-2 shadow menu menu-compact dropdown-content bg-white drop-shadow-2xl rounded divide-y divide-gray-100 w-72"
                         >
-                            <div className="py-3 px-4 mw-60 text-sm text-gray-600">
-                                <div>{user?.fullName}</div>
-                                <div className="font-medium truncate">
+                            <div className="py-3 w-72 px-4 text-sm text-gray-600 ">
+                                <div className="break-all">
+                                    {user?.fullName}
+                                </div>
+                                <div className="font-medium truncate break-words">
                                     {user && user?.email}
                                 </div>
                             </div>

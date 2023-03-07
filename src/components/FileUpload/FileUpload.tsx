@@ -137,11 +137,12 @@ const FileUpload = ({
                             X
                         </span> */}
                         <Image
-                            className="h-full w-[75%] rounded-sm"
+                            className="h-full w-[75%] rounded-sm sm:w-full"
                             src={values?.image.url}
                             alt={values?.username!}
                             width={100}
                             height={100}
+                            priority
                         />
                     </div>
                 ) : (

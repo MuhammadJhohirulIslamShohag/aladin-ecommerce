@@ -51,7 +51,7 @@ const AdminAddress = () => {
     };
     return (
         <DashboardLayout>
-            <div className="grid grid-cols-10 py-10 pl-10">
+            <div className="grid grid-cols-10 py-10 pl-10 sm:grid-cols-1 sm:pl-0 sm:pt-3">
                 <div className="col-span-6">
                     <h2 className="text-black text-md font-semibold mb-0 text-center">
                         My Address
