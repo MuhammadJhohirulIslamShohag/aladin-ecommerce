@@ -16,6 +16,12 @@ export const getOrders = async (token: string) =>
         },
     });
 
+// product summary
+export const productSummary = async () =>
+    await axios.get(
+        `${process.env.NEXT_PUBLIC_server_api}/admin/product-summary`
+    );
+
 // updating order status by the admin
 export const updateOrderStatus = async (
     token: string,

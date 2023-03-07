@@ -10,17 +10,23 @@ import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import DashWidget from "@/components/Dashboard/Admin/Dashborad/DashWidget/DashWidget";
 import { GetServerSideProps } from "next";
 import { getProductsBySort } from "@/api/products";
-import { allUsers, getOrders } from "@/api/admin";
+import { allUsers, getOrders, productSummary } from "@/api/admin";
 import { IProduct } from "types/product.type";
 import RecentOrder from "@/components/Dashboard/Admin/Dashborad/RecentOrder/RecentOrders";
 import RecentProduct from "@/components/Dashboard/Admin/Dashborad/RecentProduct/RecentProducts";
 import RecentUsers from "@/components/Dashboard/Admin/Dashborad/RecentUsers/RecentUsers";
-import Geography from "@/components/Dashboard/Admin/Dashborad/Geography/Geography";
+import LineChart from "@/components/Dashboard/Admin/Dashborad/LineChart/LineChart";
 
 type DashboardPropType = {
     products: IProduct[];
+    productSummary: {
+        users:number;
+        orders:number;
+        products:number;
+        totalEarnings:number;
+    }
 };
-export default function Dashboard({ products }: DashboardPropType) {
+export default function Dashboard({ products, productSummary }: DashboardPropType) {
     const [fetching, setFetching] = useState(true);
     const [users, setUsers] = useState([]);
     const [orders, setOrders] = useState<any[]>([]);
@@ -70,22 +76,22 @@ export default function Dashboard({ products }: DashboardPropType) {
                             <DashWidget
                                 icon={<AiOutlineUserAdd />}
                                 title={"Users"}
-                                account={users.length && users.length}
+                                account={productSummary?.users}
                             />
                             <DashWidget
                                 icon={<SlHandbag />}
                                 title={"Orders"}
-                                account={orders.length && orders.length}
+                                account={productSummary?.orders}
                             />
                             <DashWidget
                                 icon={<MdOutlineProductionQuantityLimits />}
                                 title={"Products"}
-                                account={products?.length && products.length}
+                                account={productSummary?.products}
                             />
                             <DashWidget
                                 icon={<GiTakeMyMoney />}
                                 title={"Total Earnings"}
-                                orders={orders}
+                                account={productSummary?.totalEarnings}
                             />
                         </div>
                     </section>
@@ -102,11 +108,11 @@ export default function Dashboard({ products }: DashboardPropType) {
                         </div>
                     </section>
 
-                    {/* Recent Users And Geography */}
+                    {/* Recent Users And Line Chart */}
                     <section className="mt-10">
                         <div className="grid grid-cols-12 space-x-3 sm:grid-cols-1 md:grid-cols-1 sm:space-x-0 sm:space-y-4 md:space-y-4">
                             <div className="col-span-6">
-                                <Geography />
+                                <LineChart data= {productSummary} />
                             </div>
                             <div className="col-span-6">
                                 <RecentUsers users={users} />
@@ -121,9 +127,11 @@ export default function Dashboard({ products }: DashboardPropType) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
     const { data } = await getProductsBySort("createdAt", "desc");
+    const productSummaryData  = await productSummary();
     return {
         props: {
             products: data,
+            productSummary: productSummaryData
         },
     };
 };
