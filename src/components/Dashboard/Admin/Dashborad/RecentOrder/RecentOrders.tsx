@@ -1,6 +1,6 @@
-import React from "react";
-import { RecentOrderType } from "./RecentOrders.types";
+import Link from "next/link";
 import RecentOrderRow from "./RecentOrderRow";
+import { RecentOrderType } from "./RecentOrders.types";
 
 const RecentOrder = (props: RecentOrderType) => {
     const { orders } = props;
@@ -13,7 +13,7 @@ const RecentOrder = (props: RecentOrderType) => {
                     </h6>
                 </div>
                 <div className="text-gray-500 text-sm font-bold hover:text-green-500 transition-all cursor-pointer">
-                    View All
+                    <Link href="/dashboard/admin/orders">View All</Link>
                 </div>
             </div>
             <div className="relative overflow-x-auto sm:rounded-lg">

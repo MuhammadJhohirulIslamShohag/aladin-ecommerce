@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import RecentProductRow from "./RecentProductRow";
 import { RecentProductType } from "./RecentProducts.types";
@@ -13,7 +14,7 @@ const RecentProduct = (props: RecentProductType) => {
                     </h6>
                 </div>
                 <div className="text-gray-500 text-sm font-bold hover:text-green-500 transition-all cursor-pointer">
-                    View All
+                    <Link href="/dashboard/admin/products">View All</Link>
                 </div>
             </div>
             <div className="relative overflow-x-auto sm:rounded-lg">
@@ -33,12 +34,14 @@ const RecentProduct = (props: RecentProductType) => {
                     </thead>
                     <tbody>
                         {products.length &&
-                            products.slice(0,4).map((product) => (
-                                <RecentProductRow
-                                    key={product._id}
-                                    product={product}
-                                />
-                            ))}
+                            products
+                                .slice(0, 4)
+                                .map((product) => (
+                                    <RecentProductRow
+                                        key={product._id}
+                                        product={product}
+                                    />
+                                ))}
                     </tbody>
                 </table>
             </div>
