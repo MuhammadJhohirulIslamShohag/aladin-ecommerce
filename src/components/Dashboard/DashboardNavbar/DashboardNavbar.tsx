@@ -148,11 +148,11 @@ const DashboardNavbar = ({
                             tabIndex={0}
                             className="mt-2 pb-2 shadow menu menu-compact dropdown-content bg-white drop-shadow-2xl rounded divide-y divide-gray-100 w-72"
                         >
-                            <div className="py-3 w-72 px-4 text-sm text-gray-600 ">
-                                <div className="break-all">
+                            <div className="py-3 w-72 px-4   ">
+                                <div className="break-all text-md text-black font-semibold">
                                     {user?.fullName}
                                 </div>
-                                <div className="font-medium truncate break-words">
+                                <div className="font-medium text-sm break-all text-gray-500">
                                     {user && user?.email}
                                 </div>
                             </div>
@@ -162,7 +162,7 @@ const DashboardNavbar = ({
                                         href="/dashboard/admin"
                                         className="flex  py-2 px-4 hover:bg-gray-100 text-gray-600  transition duration-75"
                                     >
-                                        <AiFillDashboard className="text-green-400" />
+                                        <AiFillDashboard className="text-green-300" />
                                         Dashboard
                                     </Link>
                                 </li>
@@ -171,7 +171,7 @@ const DashboardNavbar = ({
                                         href="/dashboard/admin/setting/profile"
                                         className="flex  py-2 px-4 hover:bg-gray-100 text-gray-600 transition duration-75"
                                     >
-                                        <FaUser className="text-green-400" />
+                                        <FaUser className="text-green-300" />
                                         Profile
                                     </Link>
                                 </li>
@@ -181,7 +181,7 @@ const DashboardNavbar = ({
                                     onClick={handleLogOut}
                                     className="flex items-center justify-center py-2 px-4 hover:bg-gray-100 cursor-pointer text-gray-600 transition duration-75"
                                 >
-                                    <MdLogout className="mr-1 text-green-400" />
+                                    <MdLogout className="mr-1 text-green-300" />
                                     Sign out
                                 </label>
                             </div>
