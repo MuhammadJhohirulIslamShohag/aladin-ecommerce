@@ -13,27 +13,29 @@ import RangeSlider from "@/components/UI/RangeSlider/RangeSlider";
 import Skeleton from "@/components/Skeleton/Skeleton";
 import FilterMobileMenu from "@/components/FilterMenu/FilterMobileMenu/FilterMobileMenu";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
+import { IProduct } from "types/product.type";
+import { ICategories } from 'types/category.type';
 
 const brandArray = ["Apple", "Life-Digital", "Samsung", "ASUS", "Lenovo", "HP"];
 const colorArray = ["Green", "Black", "Red", "White"];
 const shippingArray = ["No", "Yes"];
 
 const Shop = () => {
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState<IProduct[]>([]);
     const [openSortingMenu, setOpenSortingMenu] = useState<boolean>(false);
     const [openFilterMobileMenu, setOpenFilterMobileMenu] =
         useState<boolean>(false);
     const [gridColumn, setGridColumn] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
     const [price, setPrice] = useState<number[]>([0, 0]);
-    const [ok, setOk] = useState(false);
+    const [ok, setOk] = useState<boolean>(false);
     const [categories, setCategories] = useState([]);
     const [categoriesId, setCategoriesId] = useState<string[]>([]);
-    const [subCategories, setSubCategories] = useState([]);
+    const [subCategories, setSubCategories] = useState<ICategories[]>([]);
     const [subCategoryId, setSubCategoryId] = useState<string[]>([]);
-    const [brand, setBrand] = useState("");
-    const [color, setColor] = useState("");
-    const [shipping, setShipping] = useState("");
+    const [brand, setBrand] = useState<string>("");
+    const [color, setColor] = useState<string>("");
+    const [shipping, setShipping] = useState<string>("");
     const { state, dispatch } = useStoreContext();
     const { text } = state;
 

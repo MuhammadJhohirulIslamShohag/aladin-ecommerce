@@ -88,8 +88,8 @@ const Product = ({ product }: { product: IProduct }) => {
                     className="h-full w-full"
                     src={`${images && images.length && images[0].url}`}
                     alt={title}
-                    width="0"
-                    height="0"
+                    width={100}
+                    height={100}
                 />
             </div>
             <div className="p-5">
