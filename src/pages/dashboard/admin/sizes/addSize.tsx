@@ -6,13 +6,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { createSize } from "@/api/size";
-import useCheckAdmin from "@/hooks/useCheckAdmin";
 
 interface IFormInputs {
     size: string;
 }
 const AddSize = () => {
-    useCheckAdmin();
     const [loading, setLoading] = useState(false);
     const { state } = useStoreContext();
     const { user } = state;

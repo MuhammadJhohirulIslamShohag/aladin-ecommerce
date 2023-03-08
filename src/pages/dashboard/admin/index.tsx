@@ -32,7 +32,6 @@ export default function Dashboard({
     productSummary,
 }: DashboardPropType) {
     useCheckAdmin();
-    const [fetching, setFetching] = useState(true);
     const [users, setUsers] = useState([]);
     const [orders, setOrders] = useState<any[]>([]);
     const { state } = useStoreContext();
@@ -41,13 +40,11 @@ export default function Dashboard({
     useEffect(() => {
         loadingAllUsers();
         loadingOrders();
-        setFetching(false);
     }, [user]);
 
     // loading all users
     const loadingAllUsers = async () => {
         try {
-            setFetching(true);
             if (user !== null && user.token) {
                 const data = await allUsers(user.token);
                 setUsers(data.data);
@@ -59,7 +56,6 @@ export default function Dashboard({
     // loading all orders
     const loadingOrders = async () => {
         try {
-            setFetching(true);
             if (user !== null && user.token) {
                 const data = await getOrders(user.token);
                 setOrders(data.data);
@@ -71,9 +67,7 @@ export default function Dashboard({
 
     return (
         <DashboardLayout>
-            {fetching ? (
-                <Loader />
-            ) : (
+           
                 <div>
                     {/* Dash Widget Card */}
                     <section>
@@ -125,7 +119,7 @@ export default function Dashboard({
                         </div>
                     </section>
                 </div>
-            )}
+          
         </DashboardLayout>
     );
 }

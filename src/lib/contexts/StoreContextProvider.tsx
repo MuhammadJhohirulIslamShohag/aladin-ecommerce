@@ -51,7 +51,7 @@ const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
                             type: StoreActionType.LOGGED_IN_USER,
                             payload: {
                                 email: res.data.email,
-                                name: res.data.fullName,
+                                fullName: res.data.fullName,
                                 role: res.data.role,
                                 token: idTokenResult.token,
                                 _id: res.data._id,

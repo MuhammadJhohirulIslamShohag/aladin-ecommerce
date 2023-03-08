@@ -12,20 +12,14 @@ const WishlistProduct = ({
     handleAddCart,
     isUserWishList = false,
 }: any) => {
-    const { _id, slug, title, images, description } = product;
-
-    // const offerProductPercentage = Math.round(
-    //     ((originalPrice - price) / originalPrice) * 100
-    // );
-    console.log(product);
+    const { _id, slug, title, images, description, price, discount } = product;
     return (
         <div className="rounded-lg shadow-md group cursor-pointer">
             <div className="h-72 relative">
                 <div className="absolute top-3 rounded-full left-3 w-14 h-14 bg-success flex justify-center items-center flex-col">
                     <span className="text-white -mb-2">Off</span>
                     <span className="flex justify-center items-center text-white">
-                        {/* {offerProductPercentage}% */}
-                        50%
+                    {discount ? discount : "0"}%
                     </span>
                 </div>
                 <ul className="transition duration-300 ease-in-out invisible flex absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 group-hover:visible">
@@ -59,11 +53,11 @@ const WishlistProduct = ({
                 </ul>
                 {images && images.length && images[0]?.url && (
                     <Image
-                        className="h-full w-full"
+                        className="h-full w-full object-contain"
                         src={`${images && images.length && images[0].url}`}
                         alt={title}
-                        width="0"
-                        height="0"
+                        width={100}
+                        height={100}
                     />
                 )}
             </div>
@@ -77,6 +71,18 @@ const WishlistProduct = ({
                         ? `${description.slice(0, 90)} ...`
                         : description}
                 </p>
+                <div className="flex items-center gap-2 top-2 mb-1">
+                <span className="font-bold text-gray-700">
+                    USD{" "}
+                    {(price - ((price * discount) / 100)).toFixed(2)}{" "}
+                    $
+                </span>
+                <span className="font-bold line-through text-sm text-gray-600">
+                    - USD{" "}
+                    {(price).toFixed(2)}{" "}
+                    $
+                </span>
+            </div>
             </div>
         </div>
     );

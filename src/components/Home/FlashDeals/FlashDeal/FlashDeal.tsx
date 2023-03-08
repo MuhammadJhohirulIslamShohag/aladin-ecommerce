@@ -12,7 +12,7 @@ const FlashDeal = ({ product }: { product: IProduct }) => {
                     <Link href={`products/${product?.slug}`}>
                         <Image
                             src={product?.images[0]?.url}
-                            className="h-full w-full object-cover"
+                            className="h-full w-full object-contain"
                             alt="surprising sales product"
                             width={100}
                             height={420}
@@ -30,18 +30,12 @@ const FlashDeal = ({ product }: { product: IProduct }) => {
             <div className="flex items-center gap-2 top-2 mb-1">
                 <span className="font-bold text-black">
                     USD{" "}
-                    {(
-                        (product.price - product.price) /
-                        product.discount
-                    ).toFixed(2)}{" "}
+                    {(product.price - ((product.price * product.discount) / 100)).toFixed(2)}{" "}
                     $
                 </span>
                 <span className="font-bold line-through text-sm text-gray-600">
                     - USD{" "}
-                    {(
-                        product.price -
-                        (product.price - product.price) / product.discount
-                    ).toFixed(2)}{" "}
+                    {(product.price).toFixed(2)}{" "}
                     $
                 </span>
             </div>

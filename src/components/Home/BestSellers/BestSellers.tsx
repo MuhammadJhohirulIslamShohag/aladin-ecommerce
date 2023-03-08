@@ -39,7 +39,7 @@ const BestSellers = ({ products }: PropsType) => {
                         onBeforeInit={(swiper) => {
                             swiperRef.current = swiper;
                         }}
-                        className="h-[444px] sm:h-[455px]"
+                        className="h-[480px] sm:h-[508px]"
                         breakpoints={{
                             640: {
                                 slidesPerView: 1,

@@ -102,6 +102,18 @@ const Product = ({ product }: { product: IProduct }) => {
                         ? `${description.slice(0, 90)} ...`
                         : description}
                 </p>
+                <div className="flex items-center gap-2 top-2 mb-1">
+                <span className="font-bold text-gray-700">
+                    USD{" "}
+                    {(price - ((price * discount) / 100)).toFixed(2)}{" "}
+                    $
+                </span>
+                <span className="font-bold line-through text-sm text-gray-600">
+                    - USD{" "}
+                    {(price).toFixed(2)}{" "}
+                    $
+                </span>
+            </div>
             </div>
         </div>
     );
