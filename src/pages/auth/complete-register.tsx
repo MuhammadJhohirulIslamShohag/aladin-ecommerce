@@ -60,8 +60,8 @@ const CompleteRegister = () => {
                         if (user) {
                             await updatePassword(user, password);
                             const currentUser = {
-                                fullName: fullName || user?.displayName,
-                                email: email || user?.email,
+                                fullName: fullName || user?.displayName!,
+                                email: email || user?.email!,
                                 image: {
                                     url: productImgUrl || user?.photoURL,
                                     public_id: `${Date.now()}`,

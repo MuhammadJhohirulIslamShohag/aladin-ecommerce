@@ -14,7 +14,10 @@ import Skeleton from "@/components/Skeleton/Skeleton";
 import FilterMobileMenu from "@/components/FilterMenu/FilterMobileMenu/FilterMobileMenu";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { IProduct } from "types/product.type";
+import { ISubCategories } from "types/sub-category.type";
 import { ICategories } from 'types/category.type';
+
+
 
 const brandArray = ["Apple", "Life-Digital", "Samsung", "ASUS", "Lenovo", "HP"];
 const colorArray = ["Green", "Black", "Red", "White"];
@@ -29,9 +32,9 @@ const Shop = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [price, setPrice] = useState<number[]>([0, 0]);
     const [ok, setOk] = useState<boolean>(false);
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState<ICategories[]>([]);
     const [categoriesId, setCategoriesId] = useState<string[]>([]);
-    const [subCategories, setSubCategories] = useState<ICategories[]>([]);
+    const [subCategories, setSubCategories] = useState<ISubCategories[]>([]);
     const [subCategoryId, setSubCategoryId] = useState<string[]>([]);
     const [brand, setBrand] = useState<string>("");
     const [color, setColor] = useState<string>("");
@@ -154,7 +157,7 @@ const Shop = () => {
 
     // 4. fetching or filtering products based on categories
     const showCategories = () =>
-        categories.map((category: any) => (
+        categories.map((category: ICategories) => (
             <div key={category?._id} className="pt-6" id="filter-section-0">
                 <div className="space-y-4">
                     <div className="flex items-center">
@@ -242,7 +245,7 @@ const Shop = () => {
     const checkboxSubCategories = () =>
         subCategories &&
         subCategories.length > 0 &&
-        subCategories.map((subCategory: any) => (
+        subCategories.map((subCategory: ISubCategories) => (
             <div key={subCategory._id} className="pt-6">
                 <div className="space-y-4">
                     <div className="flex items-center">

@@ -158,8 +158,10 @@ const ProductDetails = ({
         try {
             event.preventDefault();
             setComment("");
-        } catch (error: any) {
-            toast.error(error.message);
+        } catch (error) {
+            if (error instanceof Error) {
+                toast.error(error.message);
+            }
         }
     };
 

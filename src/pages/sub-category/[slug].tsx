@@ -56,7 +56,7 @@ const ProductBySubCategory = ({
                     <div className="grid  mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
                         {productsData &&
                             productsData.length &&
-                            productsData.map((product: any) => (
+                            productsData.map((product: IProduct) => (
                                 <Product key={product._id} product={product} />
                             ))}
                     </div>

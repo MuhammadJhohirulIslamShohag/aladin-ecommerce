@@ -5,7 +5,6 @@ import { useEffect } from "react";
 const useCheckAdmin = () => {
     const { state } = useStoreContext();
     const { user } = state;
-    console.log(user, "check out user");
 
     const router = useRouter();
 

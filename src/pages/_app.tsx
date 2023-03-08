@@ -21,6 +21,7 @@ type AppPropsWithLayout = AppProps & {
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter();
+    
     useEffect(() => {
         const start = () => {
             setLoading(true);
