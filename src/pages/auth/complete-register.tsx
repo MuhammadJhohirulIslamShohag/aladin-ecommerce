@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import axios from "axios";
 import { updatePassword } from "firebase/auth";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import FormGroup from "@/components/Form/FormGroup";
