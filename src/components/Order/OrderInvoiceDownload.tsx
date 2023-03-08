@@ -1,14 +1,6 @@
 import React from "react";
 import { Document, Page, Text, StyleSheet, View } from "@react-pdf/renderer";
-import {
-    Table,
-    TableHeader,
-    TableCell,
-    TableBody,
-    DataTableCell,
-} from "@david.kucsai/react-pdf-table";
 import { IOrder } from "types/order.types";
-import { IProduct } from "types/product.type";
 
 const OrderInvoiceDownload = ({ order }: { order: IOrder }) => {
     return (
@@ -42,46 +34,15 @@ const OrderInvoiceDownload = ({ order }: { order: IOrder }) => {
                                         {product.count}
                                     </Text>
                                     <Text style={[styles.cell]}>
-                                        {product.product.brand}
+                                        <>{product.product.brand}</>
                                     </Text>
                                     <Text style={[styles.cell]}>
-                                        {product.product.color}
+                                        <>{product.color}</>
                                     </Text>
                                 </View>
                             ))}
                     </>
                 </View>
-                {/* <Table data={order.products}>
-                    <TableHeader>
-                        <TableCell style={styles.tableCell}>Title</TableCell>
-                        <TableCell style={styles.tableCell}>Price</TableCell>
-                        <TableCell style={styles.tableCell}>Quantity</TableCell>
-                        <TableCell style={styles.tableCell}>Brand</TableCell>
-                        <TableCell style={styles.tableCell}>Color</TableCell>
-                    </TableHeader>
-                    <TableBody>
-                        <DataTableCell
-                            style={styles.tableBodyCell}
-                            getContent={(r) => r.product.title}
-                        />
-                        <DataTableCell
-                            getContent={(r) => `$${r.product.price}`}
-                            style={styles.tableBodyCell}
-                        />
-                        <DataTableCell
-                            getContent={(r) => r.count}
-                            style={styles.tableBodyCell}
-                        />
-                        <DataTableCell
-                            getContent={(r) => r.product.brand}
-                            style={styles.tableBodyCell}
-                        />
-                        <DataTableCell
-                            getContent={(r) => r.product.color}
-                            style={styles.tableBodyCell}
-                        />
-                    </TableBody>
-                </Table> */}
 
                 <Text style={styles.text}>
                     <Text>
