@@ -12,12 +12,14 @@ import FormGroup from "@/components/Form/FormGroup";
 import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
 import { IProfile } from "../../user/profile.types";
 import { UserType } from "@/lib/states/storeReducer/storeReducer.type";
+import useCheckAdmin from "@/hooks/useCheckAdmin";
 
 type FormValues = {
     newPassword: string;
 };
 
 const AdminProfile = () => {
+    useCheckAdmin();
     const [showModal, setShowModal] = useState<boolean>(false);
     const [loadingForUpdateProfileImg, setLoadingForUpdateProfileImg] =
         useState<boolean>(false);

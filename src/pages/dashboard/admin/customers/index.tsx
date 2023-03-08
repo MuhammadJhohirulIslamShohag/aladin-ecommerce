@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { allUsers } from "@/api/admin";
 import CustomerTable from "@/components/Dashboard/Admin/CustomerTable/CustomerTable";
+import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { useEffect, useState } from "react";
 
 const Customers = () => {
+    useCheckAdmin();
     const [fetching, setFetching] = useState(true);
     const [users, setUsers] = useState([]);
     const { state } = useStoreContext();

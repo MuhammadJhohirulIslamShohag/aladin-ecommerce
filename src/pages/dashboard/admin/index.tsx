@@ -16,17 +16,22 @@ import RecentOrder from "@/components/Dashboard/Admin/Dashborad/RecentOrder/Rece
 import RecentProduct from "@/components/Dashboard/Admin/Dashborad/RecentProduct/RecentProducts";
 import RecentUsers from "@/components/Dashboard/Admin/Dashborad/RecentUsers/RecentUsers";
 import LineChart from "@/components/Dashboard/Admin/Dashborad/LineChart/LineChart";
+import useCheckAdmin from "@/hooks/useCheckAdmin";
 
 type DashboardPropType = {
     products: IProduct[];
     productSummary: {
-        users:number;
-        orders:number;
-        products:number;
-        totalEarnings:number;
-    }
+        users: number;
+        orders: number;
+        products: number;
+        totalEarnings: number;
+    };
 };
-export default function Dashboard({ products, productSummary }: DashboardPropType) {
+export default function Dashboard({
+    products,
+    productSummary,
+}: DashboardPropType) {
+    useCheckAdmin();
     const [fetching, setFetching] = useState(true);
     const [users, setUsers] = useState([]);
     const [orders, setOrders] = useState<any[]>([]);
@@ -112,7 +117,7 @@ export default function Dashboard({ products, productSummary }: DashboardPropTyp
                     <section className="mt-10 sm:mt-5">
                         <div className="grid grid-cols-12 space-x-3 sm:grid-cols-1 md:grid-cols-1 sm:space-x-0 sm:space-y-4 md:space-y-4">
                             <div className="col-span-6">
-                                <LineChart data= {productSummary} />
+                                <LineChart data={productSummary} />
                             </div>
                             <div className="col-span-6">
                                 <RecentUsers users={users} />
@@ -127,11 +132,11 @@ export default function Dashboard({ products, productSummary }: DashboardPropTyp
 
 export const getServerSideProps: GetServerSideProps = async () => {
     const { data } = await getProductsBySort("createdAt", "desc");
-    const productSummaryData  = await productSummary();
+    const productSummaryData = await productSummary();
     return {
         props: {
             products: data,
-            productSummary: productSummaryData.data
+            productSummary: productSummaryData.data,
         },
     };
 };

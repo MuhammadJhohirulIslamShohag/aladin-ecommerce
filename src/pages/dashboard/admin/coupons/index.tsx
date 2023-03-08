@@ -1,5 +1,6 @@
 import { creatingCoupon, getListOfCoupons, removingCoupon } from "@/api/coupon";
 import CouponForm from "@/components/Form/CouponForm/CouponForm";
+import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { UserType } from "@/lib/states/storeReducer/storeReducer.type";
@@ -17,6 +18,7 @@ const initialCouponValues = {
     discount: "",
 };
 const CreateCoupon = () => {
+    useCheckAdmin();
     const [couponValues, setCouponValues] =
         useState<CouponValuesType>(initialCouponValues);
     const [expireDate, setExpireDate] = useState(new Date());

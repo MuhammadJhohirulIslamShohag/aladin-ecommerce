@@ -7,6 +7,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import ImageFileUploadForm from "@/components/Form/ImageFileUploadForm/ImageFileUploadForm";
+import useCheckAdmin from "@/hooks/useCheckAdmin";
 
 interface IFormInputs {
     category: string;
@@ -17,6 +18,7 @@ const initialValues = {
     images: [],
 };
 const AddCategory = () => {
+    useCheckAdmin();
     const [values, setValues] = useState(initialValues);
     const [loading, setLoading] = useState(false);
     const { state } = useStoreContext();

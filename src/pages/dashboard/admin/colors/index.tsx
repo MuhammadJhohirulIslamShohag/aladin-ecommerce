@@ -6,6 +6,7 @@ import {
 } from "@/api/color";
 import CustomModal from "@/components/Modal/CustomModal/CustomModal";
 import CustomTable from "@/components/Table/CustomTable/CustomTable";
+import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import dynamic from "next/dynamic";
@@ -14,6 +15,7 @@ import toast from "react-hot-toast";
 import { IColor } from "types/color.types";
 
 const AllColors = () => {
+    useCheckAdmin();
     const [updateColorName, setUpdateColorName] = useState<string>("");
     const [colorSlug, setColorSlug] = useState<string>("");
     const [openModal, setOpenModal] = useState<boolean>(false);

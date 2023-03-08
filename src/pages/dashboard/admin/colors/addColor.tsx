@@ -1,5 +1,6 @@
 import { createColor } from "@/api/color";
 import FormGroup from "@/components/Form/FormGroup";
+import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { useRouter } from "next/router";
@@ -11,6 +12,7 @@ interface IFormInputs {
     color: string;
 }
 const AddColor = () => {
+    useCheckAdmin();
     const [loading, setLoading] = useState(false);
     const { state } = useStoreContext();
     const { user } = state;

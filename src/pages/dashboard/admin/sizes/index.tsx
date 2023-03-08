@@ -12,8 +12,10 @@ import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import dynamic from "next/dynamic";
 import toast from "react-hot-toast";
 import { ISize } from "types/size.types";
+import useCheckAdmin from "@/hooks/useCheckAdmin";
 
 const AllSizes = () => {
+    useCheckAdmin();
     const [updateSizeName, setUpdateSizeName] = useState<string>("");
     const [sizeSlug, setSizeSlug] = useState<string>("");
     const [openModal, setOpenModal] = useState<boolean>(false);

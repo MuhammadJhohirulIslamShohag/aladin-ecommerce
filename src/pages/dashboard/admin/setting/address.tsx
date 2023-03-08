@@ -6,8 +6,10 @@ import { BiEdit } from "react-icons/bi";
 import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
 import { IProfile } from "../../user/profile.types";
 import { UserType } from "@/lib/states/storeReducer/storeReducer.type";
+import useCheckAdmin from "@/hooks/useCheckAdmin";
 
 const AdminAddress = () => {
+    useCheckAdmin();
     const [showModal, setShowModal] = useState<boolean>(false);
     const [values, setValues] = useState<IProfile>({
         username: "",

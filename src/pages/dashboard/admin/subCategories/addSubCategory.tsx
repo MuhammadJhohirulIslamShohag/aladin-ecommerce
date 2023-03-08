@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { ICategories } from "types/category.type";
 import { useRouter } from "next/router";
 import ImageFileUploadForm from "@/components/Form/ImageFileUploadForm/ImageFileUploadForm";
+import useCheckAdmin from "@/hooks/useCheckAdmin";
 
 interface IFormInputs {
     subCategory: string;
@@ -19,6 +20,7 @@ const initialValues = {
     images: [],
 };
 const AddSubCategory = () => {
+    useCheckAdmin();
     const [values, setValues] = useState(initialValues);
     const [loading, setLoading] = useState<boolean>(false);
     const [categories, setCategories] = useState<ICategories[]>([]);

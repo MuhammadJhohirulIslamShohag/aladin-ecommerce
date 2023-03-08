@@ -14,8 +14,10 @@ import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 import CustomModal from "@/components/Modal/CustomModal/CustomModal";
 import { ICategories } from "types/category.type";
+import useCheckAdmin from "@/hooks/useCheckAdmin";
 
 const AllSubCategory = () => {
+    useCheckAdmin();
     const [values, setValues] = useState({ images: [] });
     const [loading, setLoading] = useState<boolean>(false);
     const [updateSubCategoryName, setUpdateSubCategoryName] =
