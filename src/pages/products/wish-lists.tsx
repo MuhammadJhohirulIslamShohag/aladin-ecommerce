@@ -5,23 +5,28 @@ import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import toast from "react-hot-toast";
 import SectionTitle from "./../../components/SectionTitle/SectionTitle";
 import Skeleton from "@/components/Skeleton/Skeleton";
-import Product from "@/components/Product/Product";
-import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
+import {
+    StoreActionType,
+    UserType,
+} from "@/lib/states/storeReducer/storeReducer.type";
 import WishlistProduct from "@/components/Product/WishlistProduct/WishlistProduct";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
+import { IProduct } from "types/product.type";
 
 const WishLists = () => {
     const [wishLists, setWishList] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
     const { state, dispatch } = useStoreContext();
     const { user } = state;
 
     useEffect(() => {
-        loadingWishList(user);
+        if (user) {
+            loadingWishList(user);
+        }
     }, [user]);
 
     // loading all wishlist
-    const loadingWishList = (user: any) => {
+    const loadingWishList = (user: UserType) => {
         if (user && user.token) {
             setLoading(true);
             getWishLists(user.token)
@@ -44,7 +49,7 @@ const WishLists = () => {
         }
     };
 
-    const handleAddCart = (product: any) => {
+    const handleAddCart = (product: IProduct) => {
         // create cart array
         let carts = [];
         //checking available window or not
@@ -59,6 +64,7 @@ const WishLists = () => {
         // added cart
         carts.push({
             ...product,
+            price: product?.price - product?.price / product?.discount / 100,
             count: 1,
         });
         // remove duplicates
@@ -71,8 +77,8 @@ const WishLists = () => {
             type: StoreActionType.ADD_TO_CART,
             payload: uniqueCarts,
         });
-        if (user && user.token) {
-            removeWishList(user.token, product._id).then((res) => {
+        if (user && user?.token) {
+            removeWishList(user?.token, product?._id).then((res) => {
                 loadingWishList(user);
             });
         }

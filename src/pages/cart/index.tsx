@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import Link from "next/link";
 import CartTable from "@/components/Carts/CartTable/CartTable";
@@ -7,6 +7,7 @@ import { saveOrder } from "@/api/user";
 import { useRouter } from "next/router";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
+import { CartType } from "types/cart.types";
 
 const Cart = () => {
     const { state, dispatch } = useStoreContext();
@@ -20,52 +21,54 @@ const Cart = () => {
 
     /* show table */
     const showCartItems = () => (
-        <table className="table align-middle w-full text-sm text-gray-500">
-            <thead className="table-primary text-center text-xs text-white uppercase">
-                <tr>
-                    <th scope="col" className="px-6 py-3">
-                        Image
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Name
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Price
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Brand
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Color
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Size
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Count
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Shipping
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Remove
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {carts &&
-                    carts.length &&
-                    carts.map((cart: any) => (
-                        <CartTable key={cart._id} product={cart} />
-                    ))}
-            </tbody>
-        </table>
+        <div className="relative overflow-x-auto sm:rounded-lg scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100">
+            <table className="w-full text-sm text-left text-gray-500 ">
+                <thead className="text-xs uppercase bg-gray-50 text-gray-900 ">
+                    <tr>
+                        <th scope="col" className="px-6 py-3">
+                            Image
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Name
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Price
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Brand
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Color
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Size
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Count
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Shipping
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Remove
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {carts &&
+                        carts.length &&
+                        carts.map((cart: CartType) => (
+                            <CartTable key={cart._id} product={cart} />
+                        ))}
+                </tbody>
+            </table>
+        </div>
     );
 
     const getTotalPrice = () => {
         const totalPrice =
             carts &&
-            carts.reduce((acc, cur: any, i) => {
+            carts.reduce((acc, cur: CartType) => {
                 return acc + cur.price * cur.count;
             }, 0);
         return totalPrice;
@@ -125,7 +128,6 @@ const Cart = () => {
                 });
         }
     };
-
     return (
         <MainLayout>
             <div className="container mt-10">
@@ -136,7 +138,7 @@ const Cart = () => {
                             {carts && carts.length > 1 ? "Products" : "Product"}
                         </h4>
 
-                         {/* Show Cart Table*/}
+                        {/* Show Cart Table*/}
                         {!carts.length ? (
                             <h5 className="text-xl mb-5 font-semibold text-left text-primary bg-white">
                                 No Cart Yet{" "}
@@ -160,7 +162,7 @@ const Cart = () => {
                             </h4>
                             <hr className="mb-2" />
                             {carts &&
-                                carts.map((product: any) => (
+                                carts.map((product: CartType) => (
                                     <p
                                         className="text-md font-normal text-primary"
                                         key={product._id}
@@ -223,4 +225,4 @@ const Cart = () => {
     );
 };
 
-export default dynamic(() => Promise.resolve(Cart), {ssr: false});
+export default dynamic(() => Promise.resolve(Cart), { ssr: false });

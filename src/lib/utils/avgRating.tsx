@@ -1,6 +1,14 @@
 import { BsFillStarFill } from "react-icons/bs";
+import { IProduct } from "types/product.type";
 
-export const AvgRating = ({ product, isTotalReviewRating = false }: any) => {
+type AvgRatingPropType = {
+    product: IProduct;
+    isTotalReviewRating?: boolean;
+};
+export const AvgRating = ({
+    product,
+    isTotalReviewRating = false,
+}: AvgRatingPropType) => {
     let avgRating: number | undefined;
     let length: number | undefined;
     if (product && product.ratings.length) {
@@ -22,7 +30,7 @@ export const AvgRating = ({ product, isTotalReviewRating = false }: any) => {
                     <h3 className="sr-only">Reviews</h3>
                     <div className="flex items-center">
                         <div className="flex items-center mr-3">
-                            {avgRating &&
+                            {avgRating ? (
                                 [0, 1, 2, 3, 4].map((rating: number) => (
                                     <BsFillStarFill
                                         key={rating}
@@ -33,12 +41,15 @@ export const AvgRating = ({ product, isTotalReviewRating = false }: any) => {
                                         }
              h-4 w-4 flex-shrink-0`}
                                     />
-                                ))}
+                                ))
+                            ) : (
+                                <span className="text-rose-600 text-sm">
+                                    No Review Yet
+                                </span>
+                            )}
                         </div>
                         <span className="text-rose-600 text-sm">
-                            {length === 0
-                                ? "No Review Yet"
-                                : length === 1
+                            {length === 1
                                 ? `${length} Review`
                                 : `${length} reviews`}{" "}
                         </span>

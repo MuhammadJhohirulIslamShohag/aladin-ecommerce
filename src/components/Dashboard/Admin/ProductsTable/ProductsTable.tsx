@@ -197,7 +197,6 @@ const ProductsTable = ({
         () => ProductColumn,
         []
     );
-    console.log(data, "products");
 
     const table = useReactTable({
         data,

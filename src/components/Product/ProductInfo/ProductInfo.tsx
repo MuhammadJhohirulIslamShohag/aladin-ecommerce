@@ -5,7 +5,7 @@ import { RadioGroup } from "@headlessui/react";
 import ProductDescriptionItem from "./../ProductDescription/ProductDescriptionItem";
 import { AvgRating } from "./../../../lib/utils/avgRating";
 import { ProductInfoPropsType } from "./ProductInfo.types";
-import { IColor } from 'types/color.types';
+import { IColor } from "types/color.types";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
@@ -22,11 +22,12 @@ const ProductInfo = ({
     heartFillIcon,
     isAddToCart,
 }: ProductInfoPropsType) => {
-    const { title, price, category, shipping, brand, _id, subCategory} = product;
+    const { title, price, category, discount, shipping, brand, subCategory } =
+        product;
     return (
         <>
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+                <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl break-all">
                     {title}
                 </h1>
             </div>
@@ -35,11 +36,11 @@ const ProductInfo = ({
             {/* Options */}
             <div className="mt-4">
                 <div>
-                    <span className="text-3xl tracking-tight text-gray-900">
-                        {price}
+                    <span className="text-3xl tracking-tight text-black font-semibold">
+                        ${price - (price * discount) / 100}
                     </span>
-                    <span className="text-3xl ml-4 line-through tracking-tight text-gray-900">
-                        {price}
+                    <span className="text-2xl ml-4 line-through tracking-tight text-rose-500">
+                        ${price}
                     </span>
                 </div>
 
@@ -101,7 +102,9 @@ const ProductInfo = ({
                                                     ? "bg-red-600"
                                                     : color.name === "Green"
                                                     ? `bg-success`
-                                                    : `bg-${color.name.toLowerCase()}`
+                                                    : color.name === "Orange"
+                                                    ? `bg-warning`
+                                                    : `bg-${color.name.toLowerCase()}-600`
                                             } h-8 w-8 border border-black border-opacity-10 rounded-full`}
                                         />
                                     </RadioGroup.Option>
@@ -123,17 +126,18 @@ const ProductInfo = ({
                             onChange={(v: string) => setSelectedSize(v)}
                             className="mt-4"
                         >
-                            <div className="grid grid-cols-4 gap-4 sm:grid-cols-4 md:grid-cols-4">
+                            <div className="grid grid-cols-4 gap-4 sm:grid-cols-2 md:grid-cols-3">
                                 {product?.sizes.map((size: any) => (
                                     <RadioGroup.Option
                                         key={size._id}
                                         value={size.name}
                                         className={({ active }) =>
-                                            classNames("bg-white shadow-sm text-gray-900 cursor-pointer",
+                                            classNames(
+                                                "bg-white shadow-sm text-gray-900 cursor-pointer",
                                                 active
                                                     ? "ring-2 ring-green-500"
                                                     : "",
-                                                "group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6"
+                                                "group relative border rounded-md py-3 sm:py-2  px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1"
                                             )
                                         }
                                     >
@@ -142,20 +146,19 @@ const ProductInfo = ({
                                                 <RadioGroup.Label as="span">
                                                     {size.name}
                                                 </RadioGroup.Label>
-                                              
-                                                    <span
-                                                        className={classNames(
-                                                            active
-                                                                ? "border"
-                                                                : "border-2",
-                                                            checked
-                                                                ? "border-green-500"
-                                                                : "border-transparent",
-                                                            "pointer-events-none absolute -inset-px rounded-md"
-                                                        )}
-                                                        aria-hidden="true"
-                                                    />
-                                               
+
+                                                <span
+                                                    className={classNames(
+                                                        active
+                                                            ? "border"
+                                                            : "border-2",
+                                                        checked
+                                                            ? "border-green-500"
+                                                            : "border-transparent",
+                                                        "pointer-events-none absolute -inset-px rounded-md"
+                                                    )}
+                                                    aria-hidden="true"
+                                                />
                                             </>
                                         )}
                                     </RadioGroup.Option>
@@ -178,7 +181,7 @@ const ProductInfo = ({
                         {heartFillIcon ? (
                             <CustomButton
                                 buttonType="button"
-                                className="mt-10 sm:mt-0 w-full"
+                                className="mt-10 sm:mt-0 w-full md:text-[12px]"
                                 handleClick={handleAddToWishList}
                             >
                                 <BsFillHeartFill className="mr-1" />
@@ -187,7 +190,7 @@ const ProductInfo = ({
                         ) : (
                             <CustomButton
                                 buttonType="button"
-                                className="mt-10 sm:mt-0 w-full"
+                                className="mt-10 sm:mt-0 w-full md:text-[12px]"
                                 handleClick={handleAddToWishList}
                             >
                                 <BsFillHeartFill className="mr-1" />

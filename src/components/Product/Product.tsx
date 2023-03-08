@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import _ from "lodash";
@@ -6,11 +6,15 @@ import { FaShoppingCart } from "react-icons/fa";
 import { MdPageview } from "react-icons/md";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
+import { IProduct } from "types/product.type";
 
-const Product = ({ product }: any) => {
+const Product = ({ product }: { product: IProduct }) => {
     // const [isAddToCart, setIsAddToCart] = useState(false);
-    const { _id, slug, title, images, description, quantity } = product;
-    const { dispatch, state:{carts} } = useStoreContext();
+    const { _id, slug, title, images, description, price, discount } = product;
+    const {
+        dispatch,
+        state: { carts },
+    } = useStoreContext();
     const handleAddCart = () => {
         // create cart array
         let carts = [];
@@ -26,6 +30,7 @@ const Product = ({ product }: any) => {
         // added cart
         carts.push({
             ...product,
+            price: price - (price * discount) / 100,
             count: 1,
         });
         // remove duplicates
@@ -40,8 +45,7 @@ const Product = ({ product }: any) => {
         });
     };
 
-    const isAddToCart = carts.filter((cart:any) => cart._id === _id);
-
+    const isAddToCart = carts.filter((cart: any) => cart._id === _id);
 
     return (
         <div className="rounded-lg shadow-md group cursor-pointer">
@@ -55,7 +59,9 @@ const Product = ({ product }: any) => {
                 <ul className="transition duration-300 ease-in-out invisible flex absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 group-hover:visible">
                     <li
                         className={`py-3 flex items-center px-3 rounded-lg ml-2 border-2 border-success hover:bg-primary hover:border-primary hover:text-white  text-white ${
-                            isAddToCart?.length > 0 ? "bg-primary" : "bg-success"
+                            isAddToCart?.length > 0
+                                ? "bg-primary"
+                                : "bg-success"
                         } bg-success transition ease-in-out delay-15 cursor-pointer tooltip tooltip-primary`}
                         data-tip={
                             isAddToCart?.length > 0
@@ -73,7 +79,7 @@ const Product = ({ product }: any) => {
                                 className={`py-3 flex items-center px-3 rounded-lg ml-2 border-2 border-success hover:bg-primary hover:border-primary hover:text-white  text-white bg-success transition ease-in-out delay-15 cursor-pointer tooltip tooltip-primary`}
                                 data-tip={"Details Product"}
                             >
-                                 <MdPageview fill="#fff"/>
+                                <MdPageview fill="#fff" />
                             </li>
                         </Link>
                     </label>

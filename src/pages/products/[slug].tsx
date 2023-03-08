@@ -14,6 +14,7 @@ import MainLayout from "@/layouts/MainLayout/MainLayout";
 import RatingModal from "@/components/Modal/RatingModal/RatingModal";
 import SectionTitle from "@/components/SectionTitle/SectionTitle";
 import Product from "@/components/Product/Product";
+import { CartType } from "types/cart.types";
 
 type ProductDetailsParamsType = {
     params: {
@@ -55,35 +56,35 @@ const ProductDetails = ({
     }, [user, _id]);
 
     useEffect(() => {
-        if(carts.length){
+        if (carts.length) {
             for (let i = 0; i < carts.length; i++) {
                 if (carts[i]._id === _id) {
-                    if(carts[i].color){
-                        setSelectedColor(carts[i]?.color); 
+                    if (carts[i].color) {
+                        setSelectedColor(carts[i]?.color);
                     }
-                    if(carts[i].size){
-                        setSelectedSize(carts[i]?.size); 
+                    if (carts[i].size) {
+                        setSelectedSize(carts[i]?.size);
                     }
                 }
             }
-        }else{
+        } else {
             setSelectedColor("");
-            setSelectedSize("");   
+            setSelectedSize("");
         }
-    }, [_id, carts])
+    }, [_id, carts]);
 
-    const isAddToCart = carts.filter((cart: any) => cart._id === _id);
+    const isAddToCart = carts.filter((cart: CartType) => cart._id === _id);
     const objProduct = {
         ...product,
     };
     const handleAddCart = () => {
         if (isAddToCart?.length <= 0) {
             let carts = [];
-            if(selectedColor === ""){
-               return toast.error("Select The Color")
+            if (selectedColor === "") {
+                return toast.error("Select The Color");
             }
-            if(selectedSize === ""){
-               return toast.error("Select The Size")
+            if (selectedSize === "") {
+                return toast.error("Select The Size");
             }
             if (typeof window !== "undefined") {
                 if (window.localStorage.getItem("carts")) {
@@ -99,8 +100,11 @@ const ProductDetails = ({
             carts.push({
                 ...objProduct,
                 count: 1,
-                color:selectedColor,
-                size:selectedSize,
+                price:
+                    objProduct.price -
+                    (objProduct.price * objProduct.discount) / 100,
+                color: selectedColor,
+                size: selectedSize,
             });
 
             // remove duplicates value
@@ -118,7 +122,6 @@ const ProductDetails = ({
             toast.error("Product Already Added To The Cart");
         }
     };
-    console.log(selectedColor, selectedSize,carts)
 
     const handleAddToWishList = () => {
         if (user && user.token) {
@@ -162,8 +165,8 @@ const ProductDetails = ({
 
     return (
         <MainLayout>
-            <div className="bg-white container mt-10">
-                <div className="grid grid-cols-2 sm:grid-cols-1 pt-6">
+            <div className="bg-white container mt-10 md:mt-5 sm:mt-5">
+                <div className="grid grid-cols-2 sm:grid-cols-1 md:gap-4 pt-6">
                     {/* Image gallery */}
                     <div className="z-10">
                         {product &&
@@ -177,7 +180,7 @@ const ProductDetails = ({
                     </div>
 
                     {/* Product info */}
-                    <div className="mx-auto max-w-7xl relative">
+                    <div className="mx-auto max-w-7xl relative mt-6">
                         <ProductInfo
                             product={product}
                             selectedColor={selectedColor}
@@ -205,19 +208,21 @@ const ProductDetails = ({
                     <SectionTitle title="Related Products" />
                     <div>
                         {relatedProducts && relatedProducts.length < 1 ? (
-                            <p className="text-center text-xl text-primary">
+                            <p className="text-center text-md mt-3 text-primary">
                                 No Product Found By The {product.title}
                             </p>
                         ) : (
                             <div className="grid  mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
                                 {relatedProducts &&
                                     relatedProducts.length &&
-                                    relatedProducts.slice(0,3).map((product: IProduct) => (
-                                        <Product
-                                            key={product._id}
-                                            product={product}
-                                        />
-                                    ))}
+                                    relatedProducts
+                                        .slice(0, 3)
+                                        .map((product: IProduct) => (
+                                            <Product
+                                                key={product._id}
+                                                product={product}
+                                            />
+                                        ))}
                             </div>
                         )}
                     </div>

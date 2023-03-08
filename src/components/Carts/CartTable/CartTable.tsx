@@ -8,9 +8,10 @@ import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import toast from "react-hot-toast";
 import { IColor } from "types/color.types";
 import { ISize } from "types/size.types";
+import { CartType } from "types/cart.types";
 
-const CartTable = ({ product }: any) => {
-    const [countNumber, setCountNumber] = useState(product.count);
+const CartTable = ({ product }: { product: CartType }) => {
+    const [countNumber, setCountNumber] = useState<number>(product.count);
     const {
         images,
         title,
@@ -87,11 +88,11 @@ const CartTable = ({ product }: any) => {
     };
 
     const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCountNumber(e.target.value);
+        setCountNumber(parseInt(e.target.value!));
     };
 
     const handleQuantityChange = () => {
-        let count = parseInt(countNumber) < 1 ? 1 : parseInt(countNumber);
+        let count = countNumber < 1 ? 1 : countNumber;
 
         // checking available product
         if (count > quantity) {
@@ -108,7 +109,7 @@ const CartTable = ({ product }: any) => {
             }
             for (let i = 0; i < carts.length; i++) {
                 if (carts[i]._id === product._id) {
-                    carts[i].count = parseInt(countNumber);
+                    carts[i].count = countNumber;
                 }
             }
             // changing count value store local storage
@@ -145,8 +146,11 @@ const CartTable = ({ product }: any) => {
 
     return (
         <tr className="bg-white border-b">
-            <td>
-                <div style={{ width: "100px", height: "auto" }}>
+            <td className="px-6 py-4 font-semibold text-gray-900 ">
+                <div
+                    className="min-w-max flex"
+                    style={{ width: "100px", height: "auto" }}
+                >
                     {product && images && images.length ? (
                         <Image
                             src={images[0].url}
@@ -166,16 +170,29 @@ const CartTable = ({ product }: any) => {
                     )}
                 </div>
             </td>
-            <td className="text-center">{title} </td>
-            <td className="text-center">${price} </td>
-            <td className="text-center">{brand?.name} </td>
-            <td>
+            <td className="text-center px-6 py-4 font-semibold text-gray-900 ">
+                <span className="min-w-max flex">{title}</span>
+            </td>
+            <td className="text-center px-6 py-4 font-semibold text-gray-900 ">
+                ${price}
+            </td>
+            <td className="text-center px-6 py-4 font-semibold text-gray-900 ">
+                <span className="min-w-max flex">{brand?.name} </span>
+            </td>
+            <td className="text-center px-6 py-4 font-semibold text-gray-900 ">
                 <select
                     onChange={handleColorChange}
                     name="colors"
                     className="form-select"
                 >
-                    <option value={color}>{color}</option>
+                    <>
+                        {color ? (
+                            <option value={color}>{color}</option>
+                        ) : (
+                            <option value="">Select the Color</option>
+                        )}
+                    </>
+
                     {colors &&
                         colors
                             .filter((s: IColor) => s.name !== color)
@@ -186,13 +203,19 @@ const CartTable = ({ product }: any) => {
                             ))}
                 </select>
             </td>
-            <td>
+            <td className="text-center px-6 py-4 font-semibold text-gray-900 ">
                 <select
                     onChange={handleSizeChange}
                     name="sizes"
                     className="form-select"
                 >
-                    <option value={size}>{size}</option>
+                    <>
+                        {size ? (
+                            <option value={size}>{size}</option>
+                        ) : (
+                            <option value="">Select the Size</option>
+                        )}
+                    </>
                     {sizes &&
                         sizes
                             .filter((s: ISize) => s.name !== size)
@@ -203,7 +226,7 @@ const CartTable = ({ product }: any) => {
                             ))}
                 </select>
             </td>
-            <td className="text-center">
+            <td className="text-center px-6 py-4 font-semibold text-gray-900 ">
                 <input
                     type="number"
                     min="1"
@@ -213,7 +236,7 @@ const CartTable = ({ product }: any) => {
                     onChange={handleNumberChange}
                 />
             </td>
-            <td className="text-center">
+            <td className="text-center px-6 py-4 font-semibold text-gray-900 ">
                 {shipping === "Yes" ? (
                     <FaRegCheckCircle className="text-green-700 inline-block" />
                 ) : (

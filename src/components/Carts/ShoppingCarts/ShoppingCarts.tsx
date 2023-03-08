@@ -45,7 +45,7 @@ const ShoppingCarts = ({ openShoppingCart, setOpenShoppingCart }: any) => {
         <Transition.Root show={openShoppingCart} as={Fragment}>
             <Dialog
                 as="div"
-                className="relative z-10"
+                className="relative z-50"
                 onClose={setOpenShoppingCart}
             >
                 <Transition.Child
@@ -171,7 +171,7 @@ const ShoppingCarts = ({ openShoppingCart, setOpenShoppingCart }: any) => {
                                                 <div className="mt-6">
                                                     <Link
                                                         href="/cart"
-                                                        className="flex transition-all items-center justify-center rounded-md border border-primary bg-primary px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-transparent hover:text-primary"
+                                                        className="flex transition-all items-center justify-center rounded-md border border-primary bg-primary px-6 py-3 sm:py-2 text-base font-medium text-white shadow-sm hover:bg-transparent hover:text-primary"
                                                     >
                                                         Checkout
                                                     </Link>
