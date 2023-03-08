@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import ShippingAddressForm from "@/components/Form/ShippingAddressForm";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
+import useCheckUser from "@/hooks/useCheckUser";
 
 type AddressType = {
     fullName?: string;
@@ -31,6 +32,7 @@ const initialAddressValue = {
     postalCode: "",
 };
 const Checkout = () => {
+    useCheckUser()
     const [products, setProducts] = useState([]);
     const [cartTotal, setCartTotal] = useState<number>(0);
     const [addressValues, setAddressValues] =

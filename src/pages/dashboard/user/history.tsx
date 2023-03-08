@@ -8,9 +8,11 @@ import OrderPaymentInfo from "@/components/Order/OrderPaymentInfo";
 import OrderCartInTable from "@/components/Order/OrderCartInTable";
 import { UserType } from "@/lib/states/storeReducer/storeReducer.type";
 import { IOrder } from 'types/order.types';
+import useCheckUser from "@/hooks/useCheckUser";
 
 
 const History = () => {
+    useCheckUser()
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
     const { state } = useStoreContext();

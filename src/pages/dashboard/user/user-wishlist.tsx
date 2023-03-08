@@ -4,18 +4,18 @@ import { getWishLists, removeWishList } from "@/api/user";
 import WishlistProduct from "@/components/Product/WishlistProduct/WishlistProduct";
 import SectionTitle from "@/components/SectionTitle/SectionTitle";
 import Skeleton from "@/components/Skeleton/Skeleton";
-import useCheckAdmin from "@/hooks/useCheckAdmin";
 import UserDashboard from "@/layouts/DashboardLayout/UserDashboard";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import toast from "react-hot-toast";
 import { IProduct } from "types/product.type";
+import useCheckUser from "@/hooks/useCheckUser";
 
 interface WishListProductType {
     product: IProduct[];
     isWishList: boolean;
 }
 const UserWishlist = () => {
-    useCheckAdmin();
+    useCheckUser();
     const [wishLists, setWishList] = useState([] as WishListProductType[]);
     const [loading, setLoading] = useState<boolean>(false);
     const { state } = useStoreContext();

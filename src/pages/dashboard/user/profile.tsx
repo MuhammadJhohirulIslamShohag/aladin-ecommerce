@@ -11,12 +11,14 @@ import dynamic from "next/dynamic";
 import FormGroup from "@/components/Form/FormGroup";
 import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
 import { IProfile } from "./profile.types";
+import useCheckUser from "@/hooks/useCheckUser";
 
 type FormValues = {
     newPassword: string;
 };
 
 const Profile = () => {
+    useCheckUser()
     const [showModal, setShowModal] = useState<boolean>(false);
     const [loadingForUpdateProfileImg, setLoadingForUpdateProfileImg] =
         useState<boolean>(false);

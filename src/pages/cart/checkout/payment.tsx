@@ -3,9 +3,11 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import StripeCheckout from "@/components/StripeCheckout/StripeCheckout";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
+import useCheckUser from "@/hooks/useCheckUser";
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_stripe_key!);
 
 const Payment = () => {
+    useCheckUser()
     return (
         <MainLayout>
             <div className="container text-center">
