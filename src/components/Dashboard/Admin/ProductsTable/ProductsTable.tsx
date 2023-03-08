@@ -7,8 +7,6 @@ import {
 } from "@tanstack/react-table";
 import TablePagination from "@/components/TablePagination/TablePagination";
 import { IProduct } from "types/product.type";
-// import { ProductColumn } from "./ProductColumn";
-// test
 import { SiProducthunt } from "react-icons/si";
 import Image from "next/image";
 import { AiOutlineEdit } from "react-icons/ai";
