@@ -6,7 +6,6 @@ import { toast } from "react-hot-toast";
 import { GoogleAuthProvider } from "firebase/auth";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import { createOrUpdateUser } from "@/api/auth";
 import FormGroup from "@/components/Form/FormGroup";
@@ -66,7 +65,6 @@ const Register = () => {
                 );
                 setLoading(false);
             });
-        console.log(actionCodeSettings, "down");
     };
 
     const handleSignUpWithProvider = (
@@ -84,11 +82,11 @@ const Register = () => {
             .then(async (result) => {
                 const user = result.user;
                 const currentUser = {
-                    fullName: user?.displayName,
-                    email: user?.email,
+                    fullName: user?.displayName!,
+                    email: user?.email!,
                     image: {
-                        url: user?.photoURL,
-                        public_id: `${Date.now()}`,
+                        url: user?.photoURL!,
+                        public_id: `${Date.now()}`!,
                     },
                 };
                 const idTokenResult = await user.getIdTokenResult();
