@@ -27,6 +27,7 @@ import {
 } from "../states/storeReducer/storeReducer";
 import firebaseApp from "../config/firebase/firebase.config";
 import { StoreActionType } from "../states/storeReducer/storeReducer.type";
+import { currentUser } from "@/api/auth";
 
 const StoreContext = createContext<StoreContextType | null>(null);
 const auth = getAuth(firebaseApp);
@@ -40,38 +41,28 @@ const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [loading, setLoading] = useState(true);
     const [firebaseUser, setFirebaseUser] = useState<any>(null);
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-            if (currentUser) {
-                setFirebaseUser(currentUser)
-                const idTokenResult = await currentUser.getIdTokenResult();
-                //  to add data from window local storage to the initial state
-                if (typeof window !== "undefined") {
-                    if (window.localStorage.getItem("accountInfo")) {
-                        // checking already carts to the window localStorage
-                        let accountInfoFromLocalStorage: string | null =
-                            window.localStorage.getItem("accountInfo");
-                        if (accountInfoFromLocalStorage !== null) {
-                            dispatch({
-                                type: StoreActionType.LOGGED_IN_USER,
-                                payload: JSON.parse(
-                                    accountInfoFromLocalStorage
-                                ),
-                            });
-                        }
-                    } else {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                setFirebaseUser(user);
+                const idTokenResult = await user.getIdTokenResult();
+                currentUser(idTokenResult.token)
+                    .then((res) => {
                         dispatch({
                             type: StoreActionType.LOGGED_IN_USER,
                             payload: {
-                                ...state.user,
+                                email: res.data.email,
+                                name: res.data.fullName,
+                                role: res.data.role,
                                 token: idTokenResult.token,
-                                fullName: currentUser.displayName,
-                                email: currentUser.email,
+                                _id: res.data._id,
                             },
                         });
-                    }
-                }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
             } else {
-                setFirebaseUser(null)
+                setFirebaseUser(null);
                 dispatch({
                     type: StoreActionType.LOGOUT_USER,
                     payload: null,
@@ -83,7 +74,7 @@ const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
             unsubscribe();
         };
     }, []);
-
+console.log(state, "sate")
     const sendForSignInLinkToEmail = (
         email: string,
         actionCodeSettings: ActionConfigType
