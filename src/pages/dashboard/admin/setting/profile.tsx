@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { BiEdit } from "react-icons/bi";
-import FileUpload from "@/components/FileUpload/FileUpload";
-import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { currentUser } from "@/api/auth";
-import toast from "react-hot-toast";
-import dynamic from "next/dynamic";
+import FileUpload from "@/components/FileUpload/FileUpload";
 import FormGroup from "@/components/Form/FormGroup";
 import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
-import { IProfile } from "../../user/profile.types";
-import { UserType } from "@/lib/states/storeReducer/storeReducer.type";
 import useCheckAdmin from "@/hooks/useCheckAdmin";
+import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
+import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import { UserType } from "@/lib/states/storeReducer/storeReducer.type";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { BiEdit } from "react-icons/bi";
+import { IProfile } from "../../../../../types/profile.types";
 
 type FormValues = {
     newPassword: string;

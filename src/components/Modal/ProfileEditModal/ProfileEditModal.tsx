@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { createOrUpdateUser } from "@/api/auth";
 import FormGroup from "@/components/Form/FormGroup";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
@@ -8,7 +7,7 @@ import {
 } from "@/lib/states/storeReducer/storeReducer.type";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { IProfile } from "@/pages/dashboard/user/profile.types";
+import { IProfile } from "types/profile.types";
 
 type ProfileEditModalPropType = {
     title: string;

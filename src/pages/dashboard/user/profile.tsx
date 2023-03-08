@@ -1,24 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { BiEdit } from "react-icons/bi";
-import FileUpload from "@/components/FileUpload/FileUpload";
-import UserDashboard from "@/layouts/DashboardLayout/UserDashboard";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { currentUser } from "@/api/auth";
-import toast from "react-hot-toast";
-import dynamic from "next/dynamic";
+import FileUpload from "@/components/FileUpload/FileUpload";
 import FormGroup from "@/components/Form/FormGroup";
 import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
-import { IProfile } from "./profile.types";
 import useCheckUser from "@/hooks/useCheckUser";
+import UserDashboard from "@/layouts/DashboardLayout/UserDashboard";
+import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { BiEdit } from "react-icons/bi";
+import { IProfile } from "../../../../types/profile.types";
 
 type FormValues = {
     newPassword: string;
 };
 
 const Profile = () => {
-    useCheckUser()
+    useCheckUser();
     const [showModal, setShowModal] = useState<boolean>(false);
     const [loadingForUpdateProfileImg, setLoadingForUpdateProfileImg] =
         useState<boolean>(false);

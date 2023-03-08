@@ -1,15 +1,15 @@
+import { currentUser } from "@/api/auth";
+import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
+import useCheckUser from "@/hooks/useCheckUser";
 import UserDashboard from "@/layouts/DashboardLayout/UserDashboard";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import React, { useState, useEffect } from "react";
-import { currentUser } from "@/api/auth";
-import { BiEdit } from "react-icons/bi";
-import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
-import { IProfile } from "./profile.types";
 import { UserType } from "@/lib/states/storeReducer/storeReducer.type";
-import useCheckUser from "@/hooks/useCheckUser";
+import { useEffect, useState } from "react";
+import { BiEdit } from "react-icons/bi";
+import { IProfile } from "../../../../types/profile.types";
 
 const Address = () => {
-    useCheckUser()
+    useCheckUser();
     const [showModal, setShowModal] = useState<boolean>(false);
     const [values, setValues] = useState<IProfile>({
         username: "",

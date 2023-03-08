@@ -1,4 +1,4 @@
-import { IProfile } from "@/pages/dashboard/user/profile.types";
+import { IProfile } from "types/profile.types";
 
 export type FileUploadPropsType = {
     values: IProfile;

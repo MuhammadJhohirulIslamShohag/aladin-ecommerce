@@ -1,12 +1,12 @@
+import { currentUser } from "@/api/auth";
+import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
+import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import React, { useState, useEffect } from "react";
-import { currentUser } from "@/api/auth";
-import { BiEdit } from "react-icons/bi";
-import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
-import { IProfile } from "../../user/profile.types";
 import { UserType } from "@/lib/states/storeReducer/storeReducer.type";
-import useCheckAdmin from "@/hooks/useCheckAdmin";
+import { useEffect, useState } from "react";
+import { BiEdit } from "react-icons/bi";
+import { IProfile } from "../../../../../types/profile.types";
 
 const AdminAddress = () => {
     useCheckAdmin();
