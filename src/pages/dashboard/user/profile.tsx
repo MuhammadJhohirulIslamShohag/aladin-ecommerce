@@ -51,7 +51,6 @@ const Profile = () => {
             currentUser(user.token)
                 .then((res) => {
                     const data = res.data;
-                    console.log(data);
                     setValues({
                         ...values,
                         username: data.username,
@@ -123,9 +122,11 @@ const Profile = () => {
     );
     return (
         <UserDashboard>
-            <h2 className="text-black text-md font-semibold mb-4">My Profile</h2>
-            <div className="grid grid-cols-8">
-                <div className="col-span-2">
+            <h2 className="text-black text-md font-semibold mb-4">
+                My Profile
+            </h2>
+            <div className="grid grid-cols-8 md:grid-cols-1 sm:grid-cols-1 ">
+                <div className="col-span-2 md:flex md:flex-col md:items-center sm:flex sm:flex-col sm:items-center">
                     {values.image?.url && (
                         <FileUpload
                             values={values}
@@ -135,7 +136,7 @@ const Profile = () => {
                         />
                     )}
                 </div>
-                <div className="col-span-6 m-auto p-4">
+                <div className="col-span-6 m-auto p-4 md:m-0 sm:m-0">
                     <div className="relative flex justify-end items-center">
                         <span
                             className="text-green-500 text-md hover:text-black transition-all cursor-pointer"
@@ -168,7 +169,7 @@ const Profile = () => {
                                 <p className="text-black mb-0 text-md font-semibold">
                                     Email address:
                                 </p>
-                                <span className="text-black mt-1 inline-block">
+                                <span className="text-black mt-1 inline-block break-all">
                                     {values?.email}
                                 </span>
                             </li>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 type SideBarItemPropType = {
     link: string;
@@ -7,16 +8,16 @@ type SideBarItemPropType = {
 };
 const SideBarItem = (props: SideBarItemPropType) => {
     const { link, name, children } = props;
+    const router = useRouter();
     return (
-        <li className="group transition-all text-white">
+        <li className={router.pathname == link ? "bg-gray-100 rounded-lg" : ""}>
             <Link
                 href={link}
-                className={`flex items-center p-2 text-base font-normal text-gray-500 rounded-lg focus:text-white focus:bg-gray-700 hover:text-white hover:bg-gray-700`}
+                className={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100`}
             >
                 {children}
                 <span className="ml-3">{name}</span>
             </Link>
-           
         </li>
     );
 };
