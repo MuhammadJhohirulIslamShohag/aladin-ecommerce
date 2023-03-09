@@ -2,7 +2,8 @@ import { ISize } from "types/size.types";
 import { IColor } from "types/color.types";
 import { ICategories } from "types/category.type";
 import { ISubCategories } from "types/sub-category.type";
-import { IBrand } from 'types/brand.types';
+import { IBrand } from "types/brand.types";
+import { ICurrentUser } from "types/user.type";
 
 export interface IProduct {
     _id: string;
@@ -10,7 +11,7 @@ export interface IProduct {
     slug: string;
     description: string;
     price: number;
-    discount:number;
+    discount: number;
     category: ICategories;
     subCategory: ISubCategories[];
     quantity: number;
@@ -24,8 +25,9 @@ export interface IProduct {
     sizes: ISize[];
     brand: IBrand;
     ratings: {
-        postedBy: string;
+        postedBy: ICurrentUser;
         star: number;
+        comment: string;
         _id: string;
     }[];
     updatedAt: Date;

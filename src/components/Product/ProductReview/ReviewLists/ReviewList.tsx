@@ -1,10 +1,11 @@
 import Image from "next/image";
 import moment from "moment";
+import { FaUserGraduate } from "react-icons/fa";
 import React from "react";
 import { BsFillStarFill } from "react-icons/bs";
 
 const ReviewList = ({ ratings }: any) => {
-    const { star, postedBy } = ratings;
+    const { star, postedBy, comment, reviewedAt } = ratings;
     return (
         <div className="grid grid-cols-10 mb-5">
             <div>
@@ -17,13 +18,7 @@ const ReviewList = ({ ratings }: any) => {
                         height={40}
                     />
                 ) : (
-                    <Image
-                        className="w-10 h-10 rounded-full"
-                        src={"/docs/images/people/profile-picture-5.jpg"}
-                        alt={postedBy?.name}
-                        width={40}
-                        height={40}
-                    />
+                    <FaUserGraduate className="w-10 h-10 text-gray-900 p-1 rounded-full ring-2 ring-green-300" />
                 )}
             </div>
             <div className="col-span-6 border-b-2">
@@ -39,21 +34,15 @@ const ReviewList = ({ ratings }: any) => {
                                         ? "text-orange-400"
                                         : "text-gray-200"
                                 }
-                        h-4 w-4 flex-shrink-0`}
+                        h-3.5 w-3.5 flex-shrink-0`}
                             />
                         </li>
                     ))}
-                    <span className="ml-1 text-blue-400 relative -top-1">
-                        {/* {postedBy?.createdAt && moment(postedBy?.createdAt).fromNow()} */}
+                    <span className="ml-1 text-gray-400 text-sm relative -top-1">
+                        {reviewedAt && moment(reviewedAt).fromNow()}
                     </span>
                 </ul>
-                <p className="mb-2 font-light text-primary">
-                    This is my third Invicta Pro Diver. They are just fantastic
-                    value for money. This one arrived yesterday and the first
-                    thing I did was set the time, popped on an identical strap
-                    from another Invicta and went in the shower with it to test
-                    the waterproofing.... No problems.
-                </p>
+                <p className="mb-2 font-light text-primary">{comment}</p>
             </div>
         </div>
     );

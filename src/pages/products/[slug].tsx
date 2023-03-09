@@ -7,7 +7,7 @@ import { IProduct } from "../../../types/product.type";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import CardZoomCarousel from "@/components/Card/CardZoomCarousel";
 import { useRouter } from "next/router";
-import { getProduct, relatedProducts } from "@/api/products";
+import { getProduct, productRating, relatedProducts } from "@/api/products";
 import ProductDetailsTab from "../../components/Product/ProductDetailsTab";
 import ProductInfo from "@/components/Product/ProductInfo/ProductInfo";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
@@ -42,8 +42,11 @@ const ProductDetails = ({
         state: { user, carts },
         dispatch,
     } = useStoreContext();
-
     const router = useRouter();
+
+    const refreshData = () => {
+        router.replace(router.asPath);
+    };
 
     useEffect(() => {
         if (user && user.token) {
@@ -72,6 +75,18 @@ const ProductDetails = ({
             setSelectedSize("");
         }
     }, [_id, carts]);
+
+    useEffect(() => {
+        if (user) {
+            const existingUserRatingObject = product.ratings.find(
+                (rating) => rating.postedBy._id === user._id
+            );
+            if (existingUserRatingObject) {
+                setStar(existingUserRatingObject.star);
+                setComment(existingUserRatingObject.comment);
+            }
+        }
+    }, [product, user]);
 
     const isAddToCart = carts.filter((cart: CartType) => cart._id === _id);
     const objProduct = {
@@ -144,6 +159,7 @@ const ProductDetails = ({
     const handleReviewShowModal = () => {
         if (user && user?.email) {
             setShowReviewModal((prev) => !prev);
+
             return;
         }
         return router.push(`/auth/login?redirect=products/${slug}`);
@@ -157,6 +173,19 @@ const ProductDetails = ({
     ) => {
         try {
             event.preventDefault();
+            const reviewObject = {
+                comment: comment,
+                star: star,
+            };
+            if (user && user.token) {
+                productRating(user.token, _id, reviewObject)
+                    .then((res) => {
+                        refreshData();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
             setComment("");
         } catch (error) {
             if (error instanceof Error) {
@@ -164,7 +193,7 @@ const ProductDetails = ({
             }
         }
     };
-
+    console.log(star, user, product);
     return (
         <MainLayout>
             <div className="bg-white container mt-10 md:mt-5 sm:mt-5">
@@ -240,6 +269,7 @@ const ProductDetails = ({
                     showReviewModal={showReviewModal}
                     handleClickRating={handleClickRating}
                     setComment={setComment}
+                    comment={comment}
                     star={star}
                 />
             )}

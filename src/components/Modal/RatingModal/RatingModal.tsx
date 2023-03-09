@@ -1,7 +1,6 @@
 import React from "react";
 import StarRatings from "react-star-ratings";
 
-
 const RatingModal = ({
     productName,
     showReviewModal,
@@ -9,7 +8,8 @@ const RatingModal = ({
     setShowReviewModal,
     handleClickRating,
     setComment,
-    star
+    comment,
+    star,
 }: any) => {
     return (
         <>
@@ -38,6 +38,7 @@ const RatingModal = ({
                             rows={4}
                             className="block p-2.5 w-full text-sm text-primary bg-gray-50 rounded-lg border border-success focus:ring-green-500 focus:border-green-500 focus:outline focus:outline-offset-2 focus:outline-green-600"
                             name="comment"
+                            value={comment}
                             onChange={(e) => setComment(e.target.value)}
                             placeholder="Leave a comment here"
                         ></textarea>
@@ -50,13 +51,13 @@ const RatingModal = ({
                             starDimension="30px"
                             name={productName}
                         />
-                       <div  className="mt-5">
-                       <input
-                            type="submit"
-                            value="Review Submit"
-                            className="btn btn-sm capitalize hover:bg-transparent hover:text-primary text-white btn-primary"
-                        />
-                       </div>
+                        <div className="mt-5">
+                            <input
+                                type="submit"
+                                value="Review Submit"
+                                className="btn btn-sm capitalize hover:bg-transparent hover:text-primary text-white btn-primary"
+                            />
+                        </div>
                     </form>
                 </div>
             </div>

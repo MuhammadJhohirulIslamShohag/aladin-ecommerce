@@ -69,12 +69,15 @@ export const deleteProduct = async (token: string, slug: any) => {
 // for ratings  product
 export const productRating = async (
     token: string,
-    productId: any,
-    star: any
+    productId: string,
+    reviewObject: {
+        star: number;
+        comment: string;
+    }
 ) => {
     return await axios.post(
         `${process.env.NEXT_PUBLIC_server_api}/products/ratings/${productId}`,
-        { star },
+        reviewObject,
         {
             headers: {
                 token,

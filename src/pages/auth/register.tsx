@@ -35,7 +35,7 @@ const Register = () => {
 
     useEffect(() => {
         if (user) {
-            router.push("/login");
+            router.push("/");
         }
     }, [user]);
 
@@ -98,7 +98,7 @@ const Register = () => {
                                 fullName: res.data.fullName,
                                 email: res.data.fullName.email,
                                 token: idTokenResult.token,
-                                image: res.data.image.url,
+                                image: res.data.image?.url,
                                 _id: res.data._id,
                             },
                         });
@@ -168,7 +168,7 @@ const Register = () => {
                     If You Have Account?{" "}
                     <label
                         className="mr-2 text-success cursor-pointer"
-                        onClick={() => router.push("/login")}
+                        onClick={() => router.push("/auth/login")}
                     >
                         Login Now
                     </label>
@@ -177,7 +177,7 @@ const Register = () => {
                         className="ml-2 text-success cursor-pointer"
                         onClick={() => router.push("/")}
                     >
-                       Back Home
+                        Back Home
                     </label>
                 </p>
             </div>
