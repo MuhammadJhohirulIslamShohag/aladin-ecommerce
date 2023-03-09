@@ -67,7 +67,8 @@ const Login = () => {
                             fullName: res.data.fullName,
                             email: res.data.email,
                             token: idTokenResult.token,
-                            image: res.data.image.url,
+                            role: res.data.role,
+                            image: res.data.image?.url,
                             _id: res.data._id,
                         };
                         dispatch({
@@ -137,7 +138,8 @@ const Login = () => {
                                 fullName: res.data.fullName,
                                 email: res.data.email,
                                 token: idTokenResult.token,
-                                image: res.data.image.url,
+                                image: res.data.image?.url,
+                                role: res.data.role,
                                 _id: res.data._id,
                             },
                         });

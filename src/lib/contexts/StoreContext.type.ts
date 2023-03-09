@@ -11,7 +11,7 @@ export type StoreContextType = {
     state: StoreDataType;
     dispatch: React.Dispatch<StoreAction>;
     auth: Auth;
-    firebaseUser:User,
+    firebaseUser:User | null,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     loading: boolean;
     sendForSignInLinkToEmail: (email: string, actionCodeSettings: ActionConfigType) => Promise<void>;

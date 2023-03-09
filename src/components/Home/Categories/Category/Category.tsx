@@ -23,14 +23,14 @@ const Category = ({ category }: { category: ICategories }) => {
                         images?.map((image) => (
                             <div
                                 key={image.public_id}
-                                className="border-2 border-green-400 relative"
+                                className="shadow-lg relative"
                             >
                                 <Image
                                     src={image.url}
                                     alt={name}
                                     width={100}
                                     height={100}
-                                    className="h-[160px] w-full bg-no-repeat bg-center after:content-[''] after:bg-black after:h-full after:opacity-40 after:absolute after:top-0 after:left-0 after:w-full"
+                                    className="h-[164px] w-full bg-no-repeat bg-center after:content-[''] after:bg-black after:h-full after:opacity-40 after:absolute after:top-0 after:left-0 after:w-full"
                                 />
                             </div>
                         ))}

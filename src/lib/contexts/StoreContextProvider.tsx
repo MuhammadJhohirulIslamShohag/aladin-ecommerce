@@ -38,8 +38,9 @@ export const useStoreContext = () => {
 
 const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(storeReducer, initialState);
-    const [loading, setLoading] = useState(true);
-    const [firebaseUser, setFirebaseUser] = useState<any>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -53,6 +54,7 @@ const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
                                 email: res.data.email,
                                 fullName: res.data.fullName,
                                 role: res.data.role,
+                                image: res.data.image.url,
                                 token: idTokenResult.token,
                                 _id: res.data._id,
                             },
@@ -74,7 +76,7 @@ const StoreContextProvider = ({ children }: { children: React.ReactNode }) => {
             unsubscribe();
         };
     }, []);
-console.log(state, "sate")
+
     const sendForSignInLinkToEmail = (
         email: string,
         actionCodeSettings: ActionConfigType

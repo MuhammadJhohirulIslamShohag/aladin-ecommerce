@@ -14,13 +14,17 @@ import Categories from "@/components/Home/Categories/Categories";
 import { ICategories } from "types/category.type";
 import { ISubCategories } from "types/sub-category.type";
 import FlashDeals from "@/components/Home/FlashDeals/FlashDeals/FlashDeals";
+import Blogs from "@/components/Home/Blogs/Blogs";
+import { getListOfBlogs } from "@/api/blog";
+import { IBlog } from "types/blog.types";
 
 type HomePropType = {
     products: IProduct[];
     bestSellerProducts: IProduct[];
     flashDealsProducts: IProduct[];
     subCategories: ISubCategories[];
-    categories:ICategories[]
+    categories: ICategories[];
+    blogs: IBlog[];
 };
 
 export default function Home({
@@ -28,7 +32,8 @@ export default function Home({
     bestSellerProducts,
     subCategories,
     categories,
-    flashDealsProducts
+    flashDealsProducts,
+    blogs,
 }: HomePropType) {
     return (
         <>
@@ -49,9 +54,10 @@ export default function Home({
                 <Services />
                 <Categories categories={categories} />
                 <SubCategories subCategories={subCategories} />
-                <FlashDeals products={flashDealsProducts}/>
+                <FlashDeals products={flashDealsProducts} />
                 <NewArrivals products={products} />
                 <BestSellers products={bestSellerProducts} />
+                <Blogs blogs={blogs} />
             </MainLayout>
         </>
     );
@@ -69,6 +75,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     );
     const { data: categoriesData } = await getListOfCategory();
     const { data: subCategoriesData } = await getAllSubCategories();
+    const { data: blogsData } = await getListOfBlogs();
     return {
         props: {
             products: data,
@@ -76,6 +83,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
             flashDealsProducts: flashDealsProductData,
             subCategories: subCategoriesData,
             categories: categoriesData,
+            blogs: blogsData,
         },
     };
 };

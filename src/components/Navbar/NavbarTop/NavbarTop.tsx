@@ -20,7 +20,6 @@ const NavbarTop: React.FC = (): JSX.Element => {
             })
             .catch((error) => console.log(error));
     };
-
     return (
         <>
             <div className="border-b-[1px] border-b-slate-700">
@@ -64,15 +63,16 @@ const NavbarTop: React.FC = (): JSX.Element => {
                                         toggleDropdownColor ? "hidden" : ""
                                     } absolute menu menu-compact right-24 md:right-9 z-10 sm:right-9 dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52`}
                                 >
-                                    {user && user.role === "admin" ? (
+                                    {user && user.role === "admin" && (
                                         <DropdownListItem
                                             link="/dashboard/admin"
                                             className="text-primary hover:text-success"
                                         >
-                                            Dashboard
+                                            Admin Dashboard
                                         </DropdownListItem>
-                                    ) : (
-                                        <>
+                                    )}
+                                    
+                                   
                                             <DropdownListItem
                                                 link="/dashboard/user/profile"
                                                 className="text-primary hover:text-success"
@@ -92,14 +92,13 @@ const NavbarTop: React.FC = (): JSX.Element => {
                                             >
                                                 Check Out
                                             </DropdownListItem>
-                                        </>
-                                    )}
+
                                     {user !== null && user.email ? (
                                         <li
                                             onClick={handleLogOut}
                                             className="text-primary hover:text-success"
                                         >
-                                            LogOut
+                                            <span>LogOut</span>
                                         </li>
                                     ) : (
                                         <DropdownListItem

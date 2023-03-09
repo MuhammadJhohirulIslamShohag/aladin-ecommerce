@@ -2,9 +2,9 @@ import React from "react";
 import { MdFlashOn } from "react-icons/md";
 import FlashDeal from "./../FlashDeal/FlashDeal";
 import { IProduct } from "types/product.type";
+import CountDown from "@/components/CountDown/CountDown";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import CountDown from "@/components/CountDown/CountDown";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
