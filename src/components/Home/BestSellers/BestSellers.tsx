@@ -20,7 +20,7 @@ const BestSellers = ({ products }: PropsType) => {
     }, [products]);
 
     return (
-        <div className="container pt-10 sm:py-8">
+        <div className="container pt-12 sm:py-8">
             <SectionTitle title="Best Sellers" />
             <div className="mt-8">
                 <Swiper

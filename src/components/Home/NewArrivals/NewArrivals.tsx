@@ -20,7 +20,7 @@ const NewArrivals = ({ products }: PropsType) => {
     }, [products]);
 
     return (
-        <div className="container pt-10 sm:py-8">
+        <div className="container pt-3 sm:py-8">
             <SectionTitle title="New Arrivals" />
             <div className="mt-8">
                 <Swiper
