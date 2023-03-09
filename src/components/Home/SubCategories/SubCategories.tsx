@@ -1,40 +1,40 @@
-import { useRef,useState, useEffect } from "react";
-import { Navigation } from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { useState, useEffect } from "react";
 import { ISubCategories } from "types/sub-category.type";
-import NavigationSliderButton from "../../NavigationSliderButton/NavigationSliderButton";
 import SectionTitle from "../../SectionTitle/SectionTitle";
 import SubCategoryCard from "./SubCategory/SubCategoryCard";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation, Autoplay } from "swiper";
 
+const SubCategories = ({
+    subCategories,
+}: {
+    subCategories: ISubCategories[];
+}) => {
+    const [subCategoriesData, setSubCategoriesData] = useState<
+        ISubCategories[]
+    >([]);
 
-const SubCategories = ({ subCategories }: {subCategories: ISubCategories[]}) => {
-    const [subCategoriesData, setSubCategoriesData] = useState<ISubCategories[]>([])
-    const swiperRef: any = useRef();
-
-    useEffect(()=> {
+    useEffect(() => {
         setSubCategoriesData(subCategories);
     }, [subCategories]);
 
     return (
         <section className="container py-14 sm:py-8">
             <SectionTitle title="Product By Sub Category " />
-
-            <NavigationSliderButton swiperRef={swiperRef} isMobile={false} />
-
-            <>
+            <div className="mt-10">
                 <Swiper
                     slidesPerView={1}
-                    loop={true}
-                    pagination={{
-                        clickable: true,
+                    navigation={true}
+                    autoplay={{
+                        delay: 3000,
+                        disableOnInteraction: false,
                     }}
-                    modules={[Navigation]}
-                    onBeforeInit={(swiper) => {
-                        swiperRef.current = swiper;
-                    }}
-                    className="sm:h-56"
+                    modules={[Navigation, Autoplay]}
+                    className="sm:h-64 h-[374px] md:h-[288px] sub_categories_swiper"
                     breakpoints={{
                         640: {
                             slidesPerView: 1,
@@ -55,12 +55,14 @@ const SubCategories = ({ subCategories }: {subCategories: ISubCategories[]}) => 
                 >
                     {subCategoriesData?.length > 0 ? (
                         <>
-                            {subCategoriesData?.map((subCategory: any) => (
+                            {subCategoriesData?.map((subCategory: ISubCategories) => (
                                 <SwiperSlide
                                     key={subCategory._id}
                                     style={{ height: "366px" }}
                                 >
-                                    <SubCategoryCard subCategory={subCategory} />
+                                    <SubCategoryCard
+                                        subCategory={subCategory}
+                                    />
                                 </SwiperSlide>
                             ))}
                         </>
@@ -70,9 +72,7 @@ const SubCategories = ({ subCategories }: {subCategories: ISubCategories[]}) => 
                         </h2>
                     )}
                 </Swiper>
-            </>
-
-            <NavigationSliderButton swiperRef={swiperRef} isMobile={true} />
+            </div>
         </section>
     );
 };

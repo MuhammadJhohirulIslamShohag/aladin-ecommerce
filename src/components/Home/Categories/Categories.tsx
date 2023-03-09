@@ -13,7 +13,7 @@ const Categories = ({ categories }: { categories: ICategories[] }) => {
         <div className="grid grid-cols-4 gap-4 px-3 sm:grid-cols-1 md:grid-cols-2">
             {categoriesData?.length > 0 ? (
                 <>
-                    {categoriesData?.slice(0, 4).map((category: any) => (
+                    {categoriesData?.slice(0, 4).map((category: ICategories) => (
                         <Category key={category._id} category={category} />
                     ))}
                 </>

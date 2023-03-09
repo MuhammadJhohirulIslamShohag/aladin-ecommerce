@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -8,14 +8,14 @@ import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper";
 import Blog from "@/components/Blog/Blog";
 import SectionTitle from "@/components/SectionTitle/SectionTitle";
-import { IBlog } from 'types/blog.types';
+import { IBlog } from "types/blog.types";
 
 const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
     const [blogsData, setBlogsData] = useState<IBlog[]>([]);
 
     useEffect(() => {
         setBlogsData(blogs);
-    }, [])
+    }, []);
 
     return (
         <div className="container py-10 sm:py-8">

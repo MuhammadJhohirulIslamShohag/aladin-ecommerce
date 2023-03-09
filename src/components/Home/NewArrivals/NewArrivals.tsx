@@ -1,71 +1,62 @@
-import React, { useRef, useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { IProduct } from "./../../../../types/product.type";
-import { Swiper } from "swiper/react";
-import { Navigation } from "swiper";
-import { SwiperSlide } from "swiper/react";
 import Product from "./../../Product/Product";
 import SectionTitle from "./../../SectionTitle/SectionTitle";
-import NavigationSliderButton from "@/components/NavigationSliderButton/NavigationSliderButton";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation, Autoplay } from "swiper";
 
 type PropsType = {
-    products:IProduct[]
+    products: IProduct[];
 };
 const NewArrivals = ({ products }: PropsType) => {
-    const [productData, setProductData] = useState<IProduct[]>([])
-    const swiperRef: any = useRef();
+    const [productData, setProductData] = useState<IProduct[]>([]);
 
-    useEffect(()=> {
+    useEffect(() => {
         setProductData(products);
     }, [products]);
 
     return (
-        <div className="container pt-20 sm:py-8">
+        <div className="container pt-10 sm:py-8">
             <SectionTitle title="New Arrivals" />
-            <>
-                <NavigationSliderButton
-                    swiperRef={swiperRef}
-                    isMobile={false}
-                />
-
-                <>
-                    <Swiper
-                        slidesPerView={1}
-                        loop={true}
-                        pagination={{
-                            clickable: true,
-                        }}
-                        modules={[Navigation]}
-                        onBeforeInit={(swiper) => {
-                           swiperRef.current = swiper
-                        }}
-                        className="h-[480px] sm:h-[508px]"
-                        breakpoints={{
-                            640: {
-                                slidesPerView: 1,
-                            },
-                            768: {
-                                slidesPerView: 2,
-                                spaceBetween: 15,
-                            },
-                            1024: {
-                                slidesPerView: 2,
-                                spaceBetween: 20,
-                            },
-                            1200: {
-                                slidesPerView: 3,
-                                spaceBetween: 25,
-                            },
-                        }}
-                    >
-                        {productData?.map((product: IProduct) => (
-                            <SwiperSlide key={product._id}>
-                                <Product product={product} />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </>
-                <NavigationSliderButton swiperRef={swiperRef} isMobile={true} />
-            </>
+            <div className="mt-8">
+                <Swiper
+                    slidesPerView={1}
+                    navigation={true}
+                    autoplay={{
+                        delay: 3000,
+                        disableOnInteraction: false,
+                    }}
+                    modules={[Navigation, Autoplay]}
+                    className="h-[515px] md:h-[545px] sm:h-[538px] new_arrivals_swiper"
+                    breakpoints={{
+                        640: {
+                            slidesPerView: 1,
+                        },
+                        768: {
+                            slidesPerView: 2,
+                            spaceBetween: 15,
+                        },
+                        1024: {
+                            slidesPerView: 2,
+                            spaceBetween: 20,
+                        },
+                        1200: {
+                            slidesPerView: 3,
+                            spaceBetween: 25,
+                        },
+                    }}
+                >
+                    {productData?.map((product: IProduct) => (
+                        <SwiperSlide key={product._id}>
+                            <Product product={product} />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
         </div>
     );
 };

@@ -8,20 +8,20 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation, Autoplay} from "swiper";
+import { Navigation, Autoplay } from "swiper";
 
 type FlashDealsPropsType = {
-    products:IProduct[]
+    products: IProduct[];
 };
-const FlashDeals = ({products}:FlashDealsPropsType) => {
+const FlashDeals = ({ products }: FlashDealsPropsType) => {
     return (
         <div>
-            <div className="p-2 flex sm:flex-col items-center justify-between text-white font-black text-2xl uppercase bg-green-300 mb-10 px-10">
+            <div className="p-6 flex sm:flex-col items-center justify-between text-white font-black text-2xl uppercase bg-green-300 mb-10 px-6">
                 <h2 className="text-black sm:text-lg">
                     Surprising Sells
-                    <MdFlashOn className="inline-block text-black"/>
+                    <MdFlashOn className="inline-block text-black" />
                 </h2>
-                <CountDown date={new Date(2023, 11, 30)}/>
+                <CountDown date={new Date(2023, 11, 30)} />
             </div>
             <div className="container">
                 <Swiper
@@ -42,20 +42,20 @@ const FlashDeals = ({products}:FlashDealsPropsType) => {
                             spaceBetween: 15,
                         },
                         1024: {
-                            slidesPerView: 4,
+                            slidesPerView: 3,
                             spaceBetween: 20,
                         },
                         1200: {
-                            slidesPerView: 5,
+                            slidesPerView: 4,
                             spaceBetween: 25,
                         },
                     }}
-                    className="surprising_sales h-[560px]"
+                    className="surprising_sales h-[505px] md:h-[478px] sm:h-[462px]"
                 >
                     <div className="flex flex-wrap pl-1 md:justify-center sm:justify-center">
-                    {products?.map((product: IProduct) => (
+                        {products?.map((product: IProduct) => (
                             <SwiperSlide key={product._id}>
-                                 <FlashDeal product={product}/>
+                                <FlashDeal product={product} />
                             </SwiperSlide>
                         ))}
                     </div>

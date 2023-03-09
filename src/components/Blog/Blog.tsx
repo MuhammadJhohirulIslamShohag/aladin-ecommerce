@@ -23,7 +23,9 @@ const Blog = ({ blog }: { blog: IBlog }) => {
                     </div>
                     <div className="flex items-center ml-3 md:ml-0 sm:ml-0 text-success">
                         <BiUserPlus />
-                        <span className="ml-1 text-sm">{blog?.publisherName}</span>
+                        <span className="ml-1 text-sm">
+                            {blog?.publisherName}
+                        </span>
                     </div>
                 </div>
                 <p className="text-primary">
