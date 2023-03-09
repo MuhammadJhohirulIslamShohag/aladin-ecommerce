@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { getWishLists, removeWishList } from "@/api/user";
 import _ from "lodash";
@@ -15,7 +16,7 @@ import { IProduct } from "types/product.type";
 import useCheckUser from "@/hooks/useCheckUser";
 
 const WishLists = () => {
-    useCheckUser()
+    useCheckUser();
     const [wishLists, setWishList] = useState([]);
     const [loading, setLoading] = useState<boolean>(false);
     const { state, dispatch } = useStoreContext();
@@ -87,36 +88,50 @@ const WishLists = () => {
     };
 
     return (
-        <MainLayout>
-            <div className="container mt-10">
-                <SectionTitle title="Wish List" />
-                {loading ? (
-                    <div className="grid mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-                        <Skeleton numbers={3} />
-                    </div>
-                ) : wishLists && wishLists.length < 1 ? (
-                    <p className="text-center text-xl text-primary">
-                        No Wish List Product Found
-                    </p>
-                ) : (
-                    <div className="grid  mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-                        {wishLists &&
-                            wishLists.length &&
-                            wishLists.map((product: any) => (
-                                <div key={product._id}>
-                                    <WishlistProduct
-                                        product={product.product}
-                                        handleRemovedToWishList={
-                                            handleRemovedToWishList
-                                        }
-                                        handleAddCart={handleAddCart}
-                                    />
-                                </div>
-                            ))}
-                    </div>
-                )}
-            </div>
-        </MainLayout>
+        <>
+            <Head>
+                <title>wish list</title>
+                <meta
+                    name="description"
+                    content={`Product by ${user?.fullName}`}
+                />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <MainLayout>
+                <div className="container mt-10">
+                    <SectionTitle title="Wish List" />
+                    {loading ? (
+                        <div className="grid mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+                            <Skeleton numbers={3} />
+                        </div>
+                    ) : wishLists && wishLists.length < 1 ? (
+                        <p className="text-center text-xl text-primary">
+                            No Wish List Product Found
+                        </p>
+                    ) : (
+                        <div className="grid  mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+                            {wishLists &&
+                                wishLists.length &&
+                                wishLists.map((product: any) => (
+                                    <div key={product._id}>
+                                        <WishlistProduct
+                                            product={product.product}
+                                            handleRemovedToWishList={
+                                                handleRemovedToWishList
+                                            }
+                                            handleAddCart={handleAddCart}
+                                        />
+                                    </div>
+                                ))}
+                        </div>
+                    )}
+                </div>
+            </MainLayout>
+        </>
     );
 };
 

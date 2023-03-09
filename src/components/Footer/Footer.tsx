@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { BsTwitter } from "react-icons/bs";
 
@@ -14,10 +13,10 @@ const Footer = () => {
                             href="/"
                             className="text-success italic font-bold text-4xl lg:text-3xl sm:text-3xl cursor-pointer"
                         >
-                            <span className="mb-2">BdSellerComputer</span>
+                            <span className="mb-2">Aladin</span>
                         </Link>
                         <p className="text-primary mt-2">
-                            BdSellerComputer Industries Ltd.
+                            Aladin Industries Ltd.
                             <br />
                             Providing reliable products since 2022
                         </p>
@@ -28,7 +27,10 @@ const Footer = () => {
                         </div>
                         <div className="mt-1">
                             <Link
-                                href="/blogs"
+                                href={{
+                                    pathname: "/",
+                                    hash: "blog",
+                                }}
                                 className="link block text-primary link-hover hover:text-success transition ease-in-out delay-15"
                             >
                                 Blogs

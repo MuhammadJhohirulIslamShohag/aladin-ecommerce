@@ -40,15 +40,10 @@ const NavbarMiddle = ({
                 <li>
                     <Link
                         className="text-primary hover:bg-transparent hover:text-success text-lg"
-                        href="/about"
-                    >
-                        About Us
-                    </Link>
-                </li>
-                <li>
-                    <Link
-                        className="text-primary hover:bg-transparent hover:text-success text-lg"
-                        href="/blogs"
+                        href={{
+                            pathname: "/",
+                            hash: "blog",
+                        }}
                     >
                         Blogs
                     </Link>

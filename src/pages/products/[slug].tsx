@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import Head from "next/head";
 import { useState, useEffect } from "react";
 import _ from "lodash";
 import { toast } from "react-hot-toast";
@@ -196,85 +197,102 @@ const ProductDetails = ({
     };
 
     return (
-        <MainLayout>
-            <div className="bg-white container mt-10 md:mt-5 sm:mt-5">
-                <div className="grid grid-cols-2 sm:grid-cols-1 md:gap-4 pt-6">
-                    {/* Image gallery */}
-                    <div className="z-10">
-                        {product &&
-                        title &&
-                        product.images &&
-                        product.images.length ? (
-                            <CardZoomCarousel images={images} title={title} />
-                        ) : (
-                            <h2>No Image On The Product</h2>
-                        )}
+        <>
+            <Head>
+                <title>{slug}</title>
+                <meta
+                    name="description"
+                    content={`Product is a ${title} which is may be best`}
+                />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <MainLayout>
+                <div className="bg-white container mt-10 md:mt-5 sm:mt-5">
+                    <div className="grid grid-cols-2 sm:grid-cols-1 md:gap-4 pt-6">
+                        {/* Image gallery */}
+                        <div className="z-10">
+                            {product &&
+                            title &&
+                            product.images &&
+                            product.images.length ? (
+                                <CardZoomCarousel
+                                    images={images}
+                                    title={title}
+                                />
+                            ) : (
+                                <h2>No Image On The Product</h2>
+                            )}
+                        </div>
+
+                        {/* Product info */}
+                        <div className="mx-auto max-w-7xl relative mt-6">
+                            <ProductInfo
+                                product={product}
+                                selectedColor={selectedColor}
+                                setSelectedColor={setSelectedColor}
+                                selectedSize={selectedSize}
+                                setSelectedSize={setSelectedSize}
+                                handleAddCart={handleAddCart}
+                                handleAddToWishList={handleAddToWishList}
+                                heartFillIcon={heartFillIcon}
+                                isAddToCart={isAddToCart}
+                            />
+                        </div>
                     </div>
 
-                    {/* Product info */}
-                    <div className="mx-auto max-w-7xl relative mt-6">
-                        <ProductInfo
+                    {/* Product Details Tab */}
+                    <div className="mt-10">
+                        <ProductDetailsTab
                             product={product}
-                            selectedColor={selectedColor}
-                            setSelectedColor={setSelectedColor}
-                            selectedSize={selectedSize}
-                            setSelectedSize={setSelectedSize}
-                            handleAddCart={handleAddCart}
-                            handleAddToWishList={handleAddToWishList}
-                            heartFillIcon={heartFillIcon}
-                            isAddToCart={isAddToCart}
+                            handleReviewShowModal={handleReviewShowModal}
                         />
                     </div>
+
+                    {/* Related Product */}
+                    <section className="mt-10">
+                        <SectionTitle title="Related Products" />
+                        <div>
+                            {relatedProducts && relatedProducts.length < 1 ? (
+                                <p className="text-center text-md mt-3 text-primary">
+                                    No Product Found By The {product.title}
+                                </p>
+                            ) : (
+                                <div className="grid  mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+                                    {relatedProducts &&
+                                        relatedProducts.length &&
+                                        relatedProducts
+                                            .slice(0, 3)
+                                            .map((product: IProduct) => (
+                                                <Product
+                                                    key={product._id}
+                                                    product={product}
+                                                />
+                                            ))}
+                                </div>
+                            )}
+                        </div>
+                    </section>
                 </div>
 
-                {/* Product Details Tab */}
-                <div className="mt-10">
-                    <ProductDetailsTab
-                        product={product}
-                        handleReviewShowModal={handleReviewShowModal}
+                {/*Show Rating Modal */}
+                {showReviewModal && (
+                    <RatingModal
+                        productName={title}
+                        handleReviewSubmit={handleReviewSubmit}
+                        setShowReviewModal={setShowReviewModal}
+                        showReviewModal={showReviewModal}
+                        handleClickRating={handleClickRating}
+                        setComment={setComment}
+                        comment={comment}
+                        star={star}
                     />
-                </div>
-
-                {/* Related Product */}
-                <section className="mt-10">
-                    <SectionTitle title="Related Products" />
-                    <div>
-                        {relatedProducts && relatedProducts.length < 1 ? (
-                            <p className="text-center text-md mt-3 text-primary">
-                                No Product Found By The {product.title}
-                            </p>
-                        ) : (
-                            <div className="grid  mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-                                {relatedProducts &&
-                                    relatedProducts.length &&
-                                    relatedProducts
-                                        .slice(0, 3)
-                                        .map((product: IProduct) => (
-                                            <Product
-                                                key={product._id}
-                                                product={product}
-                                            />
-                                        ))}
-                            </div>
-                        )}
-                    </div>
-                </section>
-            </div>
-
-            {/*Show Rating Modal */}
-            {showReviewModal && (
-                <RatingModal
-                    productName={title}
-                    handleReviewSubmit={handleReviewSubmit}
-                    setShowReviewModal={setShowReviewModal}
-                    showReviewModal={showReviewModal}
-                    handleClickRating={handleClickRating}
-                    setComment={setComment}
-                    comment={comment}
-                    star={star}
-                />
-            )}
-        </MainLayout>
+                )}
+            </MainLayout>
+        </>
     );
 };
 

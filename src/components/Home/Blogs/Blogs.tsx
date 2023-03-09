@@ -18,7 +18,7 @@ const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
     }, []);
 
     return (
-        <div className="container py-12 sm:py-8">
+        <div className="container py-12 sm:py-8" id="blog">
             <SectionTitle title="Popular Blogs" />
             <Swiper
                 slidesPerView={1}

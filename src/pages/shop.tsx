@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import { getFilterRelatedProducts, getProductsByCount } from "@/api/products";
 import { getListOfCategory } from "@/api/category";
@@ -15,9 +16,7 @@ import FilterMobileMenu from "@/components/FilterMenu/FilterMobileMenu/FilterMob
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { IProduct } from "types/product.type";
 import { ISubCategories } from "types/sub-category.type";
-import { ICategories } from 'types/category.type';
-
-
+import { ICategories } from "types/category.type";
 
 const brandArray = ["Apple", "Life-Digital", "Samsung", "ASUS", "Lenovo", "HP"];
 const colorArray = ["Green", "Black", "Red", "White"];
@@ -445,98 +444,112 @@ const Shop = () => {
         });
     };
     return (
-        <MainLayout>
-            {/* Filter Mobile Side Bar Menu */}
-            <FilterMobileMenu
-                checkboxColor={checkboxColor}
-                checkboxShipping={checkboxShipping}
-                checkboxBrands={checkboxBrands}
-                checkboxSubCategories={checkboxSubCategories}
-                starRatingFilter={starRatingFilter}
-                showCategories={showCategories}
-                showRange={showRange}
-                openFilterMobileMenu={openFilterMobileMenu}
-                setOpenFilterMobileMenu={setOpenFilterMobileMenu}
-            />
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
-                    <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-2xl">
-                        Filter Products
-                    </h1>
-                    {/* Filter Sorting Menu */}
-                    <SortingMenu
-                        handleSortingProducts={handleSortingProducts}
-                        openSortingMenu={openSortingMenu}
-                        setOpenSortingMenu={setOpenSortingMenu}
-                        setGridColumn={setGridColumn}
-                        gridColumn={gridColumn}
-                        openFilterMobileMenu={openFilterMobileMenu}
-                        setOpenFilterMobileMenu={setOpenFilterMobileMenu}
-                    />
-                </div>
-                <section
-                    aria-labelledby="products-heading"
-                    className="pt-6 pb-24"
-                >
-                    <h2 id="products-heading" className="sr-only">
-                        Products
-                    </h2>
-
-                    <div className="grid sm:grid-cols-1 md:grid-cols-1 gap-x-8 gap-y-10 grid-cols-4">
-                        {/* Filter Side Bar Menu */}
-                        <FilterMenu
+        <>
+            <Head>
+                <title>Aladin-Shopping</title>
+                <meta
+                    name="description"
+                    content="Aladin Industries Ltd. Providing reliable products since 2022"
+                />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <MainLayout>
+                {/* Filter Mobile Side Bar Menu */}
+                <FilterMobileMenu
+                    checkboxColor={checkboxColor}
+                    checkboxShipping={checkboxShipping}
+                    checkboxBrands={checkboxBrands}
+                    checkboxSubCategories={checkboxSubCategories}
+                    starRatingFilter={starRatingFilter}
+                    showCategories={showCategories}
+                    showRange={showRange}
+                    openFilterMobileMenu={openFilterMobileMenu}
+                    setOpenFilterMobileMenu={setOpenFilterMobileMenu}
+                />
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
+                        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-2xl">
+                            Filter Products
+                        </h1>
+                        {/* Filter Sorting Menu */}
+                        <SortingMenu
+                            handleSortingProducts={handleSortingProducts}
+                            openSortingMenu={openSortingMenu}
+                            setOpenSortingMenu={setOpenSortingMenu}
+                            setGridColumn={setGridColumn}
+                            gridColumn={gridColumn}
                             openFilterMobileMenu={openFilterMobileMenu}
-                            checkboxColor={checkboxColor}
-                            checkboxShipping={checkboxShipping}
-                            checkboxBrands={checkboxBrands}
-                            checkboxSubCategories={checkboxSubCategories}
-                            starRatingFilter={starRatingFilter}
-                            showCategories={showCategories}
-                            showRange={showRange}
+                            setOpenFilterMobileMenu={setOpenFilterMobileMenu}
                         />
+                    </div>
+                    <section
+                        aria-labelledby="products-heading"
+                        className="pt-6 pb-24"
+                    >
+                        <h2 id="products-heading" className="sr-only">
+                            Products
+                        </h2>
 
-                        {/* Filter Products */}
-                        <div className="col-span-3">
-                            <div className="sm:h-96 h-full">
-                                {loading ? (
-                                    <div
-                                        className={`grid gap-5 ${
-                                            gridColumn
-                                                ? `grid-cols-2 md:grid-cols-1 sm:grid-cols-1`
-                                                : `grid-cols-1`
-                                        }`}
-                                    >
-                                        <Skeleton numbers={2} />
-                                    </div>
-                                ) : products && products.length < 1 ? (
-                                    <p className="text-center text-xl text-primary">
-                                        No Product Found
-                                    </p>
-                                ) : (
-                                    <div
-                                        className={`grid gap-5 ${
-                                            gridColumn
-                                                ? `grid-cols-2 md:grid-cols-1 sm:grid-cols-1`
-                                                : `grid-cols-1`
-                                        }`}
-                                    >
-                                        {products &&
-                                            products.length &&
-                                            products.map((product: any) => (
-                                                <div key={product._id}>
-                                                    <Product
-                                                        product={product}
-                                                    />
-                                                </div>
-                                            ))}
-                                    </div>
-                                )}
+                        <div className="grid sm:grid-cols-1 md:grid-cols-1 gap-x-8 gap-y-10 grid-cols-4">
+                            {/* Filter Side Bar Menu */}
+                            <FilterMenu
+                                openFilterMobileMenu={openFilterMobileMenu}
+                                checkboxColor={checkboxColor}
+                                checkboxShipping={checkboxShipping}
+                                checkboxBrands={checkboxBrands}
+                                checkboxSubCategories={checkboxSubCategories}
+                                starRatingFilter={starRatingFilter}
+                                showCategories={showCategories}
+                                showRange={showRange}
+                            />
+
+                            {/* Filter Products */}
+                            <div className="col-span-3">
+                                <div className="sm:h-96 h-full">
+                                    {loading ? (
+                                        <div
+                                            className={`grid gap-5 ${
+                                                gridColumn
+                                                    ? `grid-cols-2 md:grid-cols-1 sm:grid-cols-1`
+                                                    : `grid-cols-1`
+                                            }`}
+                                        >
+                                            <Skeleton numbers={2} />
+                                        </div>
+                                    ) : products && products.length < 1 ? (
+                                        <p className="text-center text-xl text-primary">
+                                            No Product Found
+                                        </p>
+                                    ) : (
+                                        <div
+                                            className={`grid gap-5 ${
+                                                gridColumn
+                                                    ? `grid-cols-2 md:grid-cols-1 sm:grid-cols-1`
+                                                    : `grid-cols-1`
+                                            }`}
+                                        >
+                                            {products &&
+                                                products.length &&
+                                                products.map((product: any) => (
+                                                    <div key={product._id}>
+                                                        <Product
+                                                            product={product}
+                                                        />
+                                                    </div>
+                                                ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-            </div>
-        </MainLayout>
+                    </section>
+                </div>
+            </MainLayout>
+        </>
     );
 };
 

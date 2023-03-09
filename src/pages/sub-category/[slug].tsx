@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Product from "@/components/Product/Product";
 import { ISubCategories } from "types/sub-category.type";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
+import Head from "next/head";
 
 type ProductBySubCategoryParamsType = {
     params: {
@@ -35,34 +36,51 @@ const ProductBySubCategory = ({
     }, [products]);
 
     return (
-        <MainLayout>
-            <div className="container mt-10">
-                <SectionTitle
-                    title={`${
-                        productsData?.length > 1 ? "Products" : "Product"
-                    } By The Sub Category of "${subCategory.name}"`}
+        <>
+            <Head>
+                <title>{subCategory?.name}</title>
+                <meta
+                    name="description"
+                    content={`Product by ${subCategory?.name}`}
                 />
-                {loading ? (
-                    <div className="grid mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-                        <Skeleton numbers={3} />
-                    </div>
-                ) : productsData && productsData.length < 1 ? (
-                    <div className="h-80 flex item-center">
-                        <p className="text-center text-xl text-primary">
-                            No Product Found By The {subCategory.name}
-                        </p>
-                    </div>
-                ) : (
-                    <div className="grid  mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-                        {productsData &&
-                            productsData.length &&
-                            productsData.map((product: IProduct) => (
-                                <Product key={product._id} product={product} />
-                            ))}
-                    </div>
-                )}
-            </div>
-        </MainLayout>
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1"
+                />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <MainLayout>
+                <div className="container mt-10">
+                    <SectionTitle
+                        title={`${
+                            productsData?.length > 1 ? "Products" : "Product"
+                        } By The Sub Category of "${subCategory.name}"`}
+                    />
+                    {loading ? (
+                        <div className="grid mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+                            <Skeleton numbers={3} />
+                        </div>
+                    ) : productsData && productsData.length < 1 ? (
+                        <div className="h-80 flex item-center">
+                            <p className="text-center text-xl text-primary">
+                                No Product Found By The {subCategory.name}
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="grid  mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+                            {productsData &&
+                                productsData.length &&
+                                productsData.map((product: IProduct) => (
+                                    <Product
+                                        key={product._id}
+                                        product={product}
+                                    />
+                                ))}
+                        </div>
+                    )}
+                </div>
+            </MainLayout>
+        </>
     );
 };
 
