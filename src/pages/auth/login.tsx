@@ -82,7 +82,9 @@ const Login = () => {
                         reset();
                         setLoadingLogin(false);
                         if (typeof redirect === "string") {
-                            router.push(redirect || "/");
+                            router.push(`/${redirect}`);
+                        } else {
+                            router.push("/");
                         }
                         Swal.fire({
                             position: "top",
@@ -143,13 +145,11 @@ const Login = () => {
                                 _id: res.data._id,
                             },
                         });
-                        if (
-                            typeof redirect === "string" ||
-                            typeof redirect === "undefined"
-                        ) {
-                            router.push(redirect || "/");
+                        if (typeof redirect === "string") {
+                            router.push(`/${redirect}`);
+                        } else {
+                            router.push("/");
                         }
-                        console.log(redirect, "url");
                     })
                     .catch((error) => {
                         console.log(error);

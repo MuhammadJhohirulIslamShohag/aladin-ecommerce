@@ -83,7 +83,7 @@ const CompleteRegister = () => {
                                             fullName: res.data.fullName,
                                             email: res.data.email,
                                             token: idTokenResult.token,
-                                            image: res.data.image.url,
+                                            image: res.data.image?.url,
                                             _id: res.data._id,
                                         },
                                     });

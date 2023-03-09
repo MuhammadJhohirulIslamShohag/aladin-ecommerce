@@ -13,7 +13,7 @@ const ReviewList = ({ ratings }: any) => {
                     <Image
                         className="w-10 h-10 rounded-full"
                         src={postedBy.image.url}
-                        alt={postedBy.name}
+                        alt={postedBy?.fullName}
                         width={40}
                         height={40}
                     />

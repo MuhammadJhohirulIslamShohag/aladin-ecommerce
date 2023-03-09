@@ -32,7 +32,7 @@ const initialAddressValue = {
     postalCode: "",
 };
 const Checkout = () => {
-    useCheckUser()
+    useCheckUser();
     const [products, setProducts] = useState([]);
     const [cartTotal, setCartTotal] = useState<number>(0);
     const [addressValues, setAddressValues] =
@@ -134,7 +134,9 @@ const Checkout = () => {
                 });
         }
     };
-    const handleAddressValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleAddressValueChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
         setAddressValues({
             ...addressValues,
             [e.target.name]: e.target.value,
@@ -255,7 +257,7 @@ const Checkout = () => {
                     ...loading,
                     couponLoading: false,
                 });
-                 // store to the context
+                // store to the context
                 dispatch({
                     type: StoreActionType.ADD_COUPON,
                     payload: true,
@@ -264,7 +266,7 @@ const Checkout = () => {
             }
             if (res.data.error) {
                 setInValidCouponName(res.data.error);
-                setTotalPriceAfterDiscount(0)
+                setTotalPriceAfterDiscount(0);
                 setLoading({
                     ...loading,
                     couponLoading: false,
@@ -281,7 +283,6 @@ const Checkout = () => {
         if (user && user.token) {
             createOrderCashOnDelivery(isCashOnDelivery, isCouponed, user.token)
                 .then((res) => {
-                    console.log(res.data);
                     // reset carts from window local storage
                     if (typeof window !== "undefined") {
                         if (window.localStorage.getItem("carts")) {

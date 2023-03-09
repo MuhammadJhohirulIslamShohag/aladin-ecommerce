@@ -12,7 +12,7 @@ const ReviewProgressBar = ({
 }: ReviewProgressBarPropsType) => {
     return (
         <div className="grid grid-cols-5 gap-2">
-            <div className="w-full relative top-1 col-span-3 bg-gray-200  h-2 dark:bg-gray-700">
+            <div className="w-full relative top-1 col-span-3 bg-gray-300  h-2.5">
                 <div
                     className="bg-success h-2.5 sm:h-2 sm:w-2  dark:bg-success"
                     style={{ width: `${percentage}%` }}

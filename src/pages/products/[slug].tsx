@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import _ from "lodash";
 import { toast } from "react-hot-toast";
@@ -86,7 +87,7 @@ const ProductDetails = ({
                 setComment(existingUserRatingObject.comment);
             }
         }
-    }, [product, user]);
+    }, []);
 
     const isAddToCart = carts.filter((cart: CartType) => cart._id === _id);
     const objProduct = {
@@ -193,7 +194,7 @@ const ProductDetails = ({
             }
         }
     };
-    console.log(star, user, product);
+
     return (
         <MainLayout>
             <div className="bg-white container mt-10 md:mt-5 sm:mt-5">

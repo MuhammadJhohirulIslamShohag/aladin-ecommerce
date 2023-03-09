@@ -18,7 +18,6 @@ const OrdersTable = ({ data }: { data: IOrder[] }) => {
         getPaginationRowModel: getPaginationRowModel(),
         getCoreRowModel: getCoreRowModel(),
     });
-    console.log(data, "td");
     return (
         <div className="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl shadow-md bg-clip-border">
             <div className="flex justify-between px-4 py-3">

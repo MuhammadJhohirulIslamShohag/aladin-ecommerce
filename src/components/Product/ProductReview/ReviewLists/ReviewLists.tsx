@@ -1,7 +1,8 @@
-import React from "react";
-import SearchForm from "@/components/UI/SearchForm/SearchForm";
+import React, { useState } from "react";
 import ReviewList from "./ReviewList";
 import { IProduct } from "types/product.type";
+import LocalSearch from "@/components/Form/LocalSearch/LocalSearch";
+import { ICurrentUser } from "types/user.type";
 
 type ReviewListsPropType = {
     product: IProduct;
@@ -11,6 +12,20 @@ const ReviewLists = ({
     product,
     handleReviewShowModal,
 }: ReviewListsPropType) => {
+    const [keyword, setKeyword] = useState<string>("");
+
+    // search filter
+    // const filtering = categories.filter(category => category.name.toLowerCase().includes(keyword));
+    const searched =
+        (keyword: string) =>
+        (c: {
+            postedBy: ICurrentUser;
+            star: number;
+            comment: string;
+            _id: string;
+        }) =>
+            c.comment.toLowerCase().includes(keyword);
+
     return (
         <div className="p-10 sm:p-5">
             <div className="flex">
@@ -31,12 +46,13 @@ const ReviewLists = ({
             </div>
             <div className="flex items-center sm:flex-col space-x-4 mt-12 sm:mt-8">
                 <div className="flex-initial w-2/5 sm:w-full">
-                    <SearchForm
-                        className={"w-full"}
-                        placeholder={"Search Reviews"}
+                    <LocalSearch
+                        keyword={keyword}
+                        setKeyword={setKeyword}
+                        placeholder={"Search Review"}
                     />
                 </div>
-                <div className="flex-initial relative -top-4 sm:top-3 sm:w-full">
+                {/* <div className="flex-initial relative -top-4 sm:top-3 sm:w-full">
                     <label
                         htmlFor="ratings"
                         className="block mb-2 text-md font-medium text-gray-900 "
@@ -54,12 +70,18 @@ const ReviewLists = ({
                         <option value="2">Two starts</option>
                         <option value="1">One start</option>
                     </select>
-                </div>
+                </div> */}
             </div>
             <div className="mt-10">
-                {product.ratings.map((rating: any) => (
-                    <ReviewList key={rating._id} ratings={rating} />
-                ))}
+                {product.ratings.filter(searched(keyword)).length ? (
+                    product.ratings
+                        .filter(searched(keyword))
+                        .map((rating: any) => (
+                            <ReviewList key={rating._id} ratings={rating} />
+                        ))
+                ) : (
+                    <span className="text-gray-500 ml-4">No Review Found</span>
+                )}
             </div>
         </div>
     );
