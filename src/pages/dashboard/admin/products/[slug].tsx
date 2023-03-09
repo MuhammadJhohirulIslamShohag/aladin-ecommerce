@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { getListOfBrands } from "@/api/brand";
 import { getListOfCategory, subCategoryOnCategory } from "@/api/category";
 import { getListOfColor } from "@/api/color";

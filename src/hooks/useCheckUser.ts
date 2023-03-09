@@ -14,7 +14,7 @@ const useCheckUser = () => {
         } else if (user.role !== "user") {
             router.push("/");
         }
-    }, []);
+    }, [user, router]);
 };
 
 export default useCheckUser;

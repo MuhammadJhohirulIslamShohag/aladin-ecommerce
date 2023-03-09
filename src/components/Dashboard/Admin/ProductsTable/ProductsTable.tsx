@@ -1,4 +1,5 @@
-import React, { useState, Fragment } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, Fragment, useMemo } from "react";
 import {
     useReactTable,
     ColumnDef,
@@ -75,7 +76,9 @@ const ProductsTable = ({
         {
             header: () => "Product",
             cell: (info: any) => (
-                <span className="min-w-max flex">{info.getValue() && info.getValue()}</span>
+                <span className="min-w-max flex">
+                    {info.getValue() && info.getValue()}
+                </span>
             ),
             accessorKey: "title",
         },
@@ -86,7 +89,9 @@ const ProductsTable = ({
         {
             header: () => "Category",
             cell: (info: any) => (
-                <span className="min-w-max flex">{info.getValue() && info.getValue().name}</span>
+                <span className="min-w-max flex">
+                    {info.getValue() && info.getValue().name}
+                </span>
             ),
             accessorKey: "category",
         },
@@ -95,11 +100,11 @@ const ProductsTable = ({
             cell: (info: any) => (
                 <>
                     {info.getValue()?.length > 0 &&
-                        info
-                            .getValue()
-                            .map((sc: any) => (
-                                <span className="min-w-max flex" key={sc._id}>{sc.name}</span>
-                            ))}
+                        info.getValue().map((sc: any) => (
+                            <span className="min-w-max flex" key={sc._id}>
+                                {sc.name}
+                            </span>
+                        ))}
                 </>
             ),
             accessorKey: "subCategory",
@@ -109,21 +114,21 @@ const ProductsTable = ({
             cell: (info: any) => (
                 <span className="min-w-max flex">
                     {info.getValue()?.length > 0 &&
-                        info
-                            .getValue()
-                            .map((sc: any) => (
-                                <span
+                        info.getValue().map((sc: any) => (
+                            <span
                                 key={sc._id}
-                                  className={`h-8 w-8 ${
+                                className={`h-8 w-8 ${
                                     sc.name === "Red"
                                         ? "bg-red-600"
                                         : sc.name === "Green"
                                         ? `bg-success`
-                                        : sc.name === "Orange" ? `bg-warning` : `bg-${sc.name.toLowerCase()}-600`
+                                        : sc.name === "Orange"
+                                        ? `bg-warning`
+                                        : `bg-${sc.name.toLowerCase()}-600`
                                 } border border-black border-opacity-10 rounded-full`}
-                                        ></span>
-                                // <Fragment  key={sc._id}> </Fragment>
-                            ))}
+                            ></span>
+                            // <Fragment  key={sc._id}> </Fragment>
+                        ))}
                 </span>
             ),
             accessorKey: "colors",
@@ -145,7 +150,9 @@ const ProductsTable = ({
         {
             header: () => "Brand",
             cell: (info: any) => (
-                <span className="min-w-max flex">{info.getValue() && info.getValue().name}</span>
+                <span className="min-w-max flex">
+                    {info.getValue() && info.getValue().name}
+                </span>
             ),
             accessorKey: "brand",
         },
@@ -191,10 +198,7 @@ const ProductsTable = ({
             },
         },
     ];
-    const columns = React.useMemo<ColumnDef<IProduct>[]>(
-        () => ProductColumn,
-        []
-    );
+    const columns = useMemo<ColumnDef<IProduct>[]>(() => ProductColumn, []);
 
     const table = useReactTable({
         data,

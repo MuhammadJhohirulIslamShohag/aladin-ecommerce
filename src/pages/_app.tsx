@@ -37,7 +37,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             router.events.off("routeChangeComplete", end);
             router.events.off("routeChangeError", end);
         };
-    }, []);
+    }, [router]);
 
     const getLayout = Component.getLayout ?? ((page) => page);
 

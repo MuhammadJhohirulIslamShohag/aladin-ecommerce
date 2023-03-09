@@ -14,7 +14,7 @@ const useCheckAdmin = () => {
         } else if (user.role !== "admin") {
             router.push("/");
         }
-    }, []);
+    }, [user, router]);
 };
 
 export default useCheckAdmin;

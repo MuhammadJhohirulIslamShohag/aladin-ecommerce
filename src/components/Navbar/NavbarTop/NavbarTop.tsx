@@ -4,10 +4,22 @@ import { CgProfile } from "react-icons/cg";
 import { FaGift } from "react-icons/fa";
 import Typewriter from "typewriter-effect";
 import DropdownListItem from "../../UI/DropdownListItem/DropdownListItem";
+import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 
 const NavbarTop: React.FC = (): JSX.Element => {
     const [toggleDropdownColor, setToggleDropdownColor] =
         useState<boolean>(true);
+    const { state, logOut } = useStoreContext();
+    const { user } = state;
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                // Clear email from storage.
+                window.localStorage.removeItem("accountInfo");
+            })
+            .catch((error) => console.log(error));
+    };
 
     return (
         <>
@@ -52,37 +64,51 @@ const NavbarTop: React.FC = (): JSX.Element => {
                                         toggleDropdownColor ? "hidden" : ""
                                     } absolute menu menu-compact right-24 md:right-9 z-10 sm:right-9 dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52`}
                                 >
-                                    <DropdownListItem
-                                        link="/dashboard/user/profile"
-                                        className="text-primary hover:text-success"
-                                    >
-                                        Profile
-                                    </DropdownListItem>
-                                    <DropdownListItem
-                                        link="/dashboard/admin"
-                                        className="text-primary hover:text-success"
-                                    >
-                                        Dashboard
-                                    </DropdownListItem>
-                                   
-                                    <DropdownListItem
-                                        link="/wish-list"
-                                        className="text-primary hover:text-success"
-                                    >
-                                        WishList
-                                    </DropdownListItem>
-                                    <DropdownListItem
-                                        link="/check-out"
-                                        className="text-primary hover:text-success"
-                                    >
-                                        Check Out
-                                    </DropdownListItem>
-                                    <DropdownListItem
-                                        link="/login"
-                                        className="text-primary hover:text-success"
-                                    >
-                                        Login
-                                    </DropdownListItem>
+                                    {user && user.role === "admin" ? (
+                                        <DropdownListItem
+                                            link="/dashboard/admin"
+                                            className="text-primary hover:text-success"
+                                        >
+                                            Dashboard
+                                        </DropdownListItem>
+                                    ) : (
+                                        <>
+                                            <DropdownListItem
+                                                link="/dashboard/user/profile"
+                                                className="text-primary hover:text-success"
+                                            >
+                                                Profile
+                                            </DropdownListItem>
+
+                                            <DropdownListItem
+                                                link="/dashboard/user/user-wishlist"
+                                                className="text-primary hover:text-success"
+                                            >
+                                                WishList
+                                            </DropdownListItem>
+                                            <DropdownListItem
+                                                link="/cart/checkout"
+                                                className="text-primary hover:text-success"
+                                            >
+                                                Check Out
+                                            </DropdownListItem>
+                                        </>
+                                    )}
+                                    {user !== null && user.email ? (
+                                        <li
+                                            onClick={handleLogOut}
+                                            className="text-primary hover:text-success"
+                                        >
+                                            LogOut
+                                        </li>
+                                    ) : (
+                                        <DropdownListItem
+                                            link="/auth/login"
+                                            className="text-primary hover:text-success"
+                                        >
+                                            Login
+                                        </DropdownListItem>
+                                    )}
                                 </ul>
                             </li>
                         </ul>

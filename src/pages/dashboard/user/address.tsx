@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { currentUser } from "@/api/auth";
 import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
 import useCheckUser from "@/hooks/useCheckUser";
