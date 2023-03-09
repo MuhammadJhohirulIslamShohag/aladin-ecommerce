@@ -32,6 +32,7 @@ const SubCategories = ({
                     autoplay={{
                         delay: 3000,
                         disableOnInteraction: false,
+                        pauseOnMouseEnter: true,
                     }}
                     modules={[Navigation, Autoplay]}
                     className="sm:h-64 h-[374px] md:h-[288px] sub_categories_swiper"
@@ -55,16 +56,18 @@ const SubCategories = ({
                 >
                     {subCategoriesData?.length > 0 ? (
                         <>
-                            {subCategoriesData?.map((subCategory: ISubCategories) => (
-                                <SwiperSlide
-                                    key={subCategory._id}
-                                    style={{ height: "366px" }}
-                                >
-                                    <SubCategoryCard
-                                        subCategory={subCategory}
-                                    />
-                                </SwiperSlide>
-                            ))}
+                            {subCategoriesData?.map(
+                                (subCategory: ISubCategories) => (
+                                    <SwiperSlide
+                                        key={subCategory._id}
+                                        style={{ height: "366px" }}
+                                    >
+                                        <SubCategoryCard
+                                            subCategory={subCategory}
+                                        />
+                                    </SwiperSlide>
+                                )
+                            )}
                         </>
                     ) : (
                         <h2 className="text-center text-xl text-primary">

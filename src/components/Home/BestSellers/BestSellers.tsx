@@ -27,8 +27,9 @@ const BestSellers = ({ products }: PropsType) => {
                     slidesPerView={1}
                     navigation={true}
                     autoplay={{
-                        delay: 3000,
+                        delay: 3500,
                         disableOnInteraction: false,
+                        pauseOnMouseEnter:true
                     }}
                     modules={[Navigation, Autoplay]}
                     className="h-[515px] md:h-[545px] sm:h-[538px] new_arrivals_swiper"

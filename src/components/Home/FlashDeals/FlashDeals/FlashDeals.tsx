@@ -31,6 +31,7 @@ const FlashDeals = ({ products }: FlashDealsPropsType) => {
                     autoplay={{
                         delay: 3000,
                         disableOnInteraction: false,
+                        pauseOnMouseEnter:true
                     }}
                     modules={[Navigation, Autoplay]}
                     breakpoints={{

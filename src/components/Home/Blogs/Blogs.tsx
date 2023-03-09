@@ -26,6 +26,7 @@ const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
                 autoplay={{
                     delay: 4000,
                     disableOnInteraction: false,
+                    pauseOnMouseEnter:true
                 }}
                 modules={[Navigation, Autoplay]}
                 className="h-[610px] sm:h-[570px] blog_swiper"

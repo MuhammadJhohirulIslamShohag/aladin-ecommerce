@@ -29,6 +29,7 @@ const NewArrivals = ({ products }: PropsType) => {
                     autoplay={{
                         delay: 3000,
                         disableOnInteraction: false,
+                        pauseOnMouseEnter:true
                     }}
                     modules={[Navigation, Autoplay]}
                     className="h-[515px] md:h-[545px] sm:h-[538px] new_arrivals_swiper"
