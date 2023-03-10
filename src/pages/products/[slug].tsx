@@ -164,7 +164,7 @@ const ProductDetails = ({
 
             return;
         }
-        return router.push(`/auth/login?redirect=products/${slug}`);
+        return router.push(`/auth/login?redirect=/products/${slug}`);
     };
     const handleClickRating = (newRating: number) => {
         setStar(newRating);

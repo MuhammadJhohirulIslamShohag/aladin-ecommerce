@@ -147,7 +147,7 @@ const Login = () => {
                             },
                         });
                         if (typeof redirect === "string") {
-                            router.push(`/${redirect}`);
+                            router.push(redirect);
                         } else {
                             router.push("/");
                         }
