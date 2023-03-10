@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import ShippingAddressForm from "@/components/Form/ShippingAddressForm";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import useCheckUser from "@/hooks/useCheckUser";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 type AddressType = {
     fullName?: string;
@@ -322,127 +323,139 @@ const Checkout = () => {
         }
     };
     return (
-        <MainLayout>
-            <div className="container mt-10 px-40">
-                <div className="grid grid-cols-12 gap-16 sm:grid-cols-1 sm:gap-0 md:grid-cols-1 md:gap-0">
-                    <div className="col-span-7 sm:col-span-0 md:col-span-0">
-                        <h4 className="text-xl mb-5 font-semibold text-left text-green-500 bg-white">
-                            Delivery Address
-                        </h4>
-
-                        {/* Shipping Address Form*/}
-                        <ShippingAddressForm
-                            addressValues={addressValues}
-                            validationError={validationError}
-                            loading={loading.shippingAddressLoading}
-                            handleAddressValueChange={handleAddressValueChange}
-                            submitShippingAddressToDb={
-                                submitShippingAddressToDb
-                            }
-                        />
-                        <hr className="my-4" />
-
-                        {/* Coupon Form*/}
-                        <h4 className="text-green-400">Got Coupon?</h4>
-                        {inValidCouponName && (
-                            <div className="bg-success text-center">
-                                <h6 className="text-white p-2">
-                                    {inValidCouponName}
-                                </h6>
-                            </div>
-                        )}
-                        {couponForm()}
-                    </div>
-
-                    {/* Order Summary Card */}
-                    <div className="col-span-5 sm:col-span-0 md:col-span-0">
-                        <div className="bg-gray-100 p-5  rounded-lg mt-16 md:mt-5 sm:mt-5">
-                            <h4 className="text-xl font-semibold text-green-400 mb-3">
-                                Order Summary
+        <>
+            <HeadSeo
+                title="Checkout"
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <MainLayout>
+                <div className="container mt-10 px-40">
+                    <div className="grid grid-cols-12 gap-16 sm:grid-cols-1 sm:gap-0 md:grid-cols-1 md:gap-0">
+                        <div className="col-span-7 sm:col-span-0 md:col-span-0">
+                            <h4 className="text-xl mb-5 font-semibold text-left text-green-500 bg-white">
+                                Delivery Address
                             </h4>
-                            <h4 className="text-lg font-semibold text-primary">
-                                Product
-                            </h4>
-                            <hr className="mb-2" />
-                            {carts &&
-                                carts.map((product: any) => (
-                                    <p
-                                        className="text-md font-normal text-primary"
-                                        key={product._id}
-                                    >
-                                        {product.title} x {product.count} ={" "}
-                                        {`$${product.price * product.count}`}
-                                    </p>
-                                ))}
-                            <hr className="mt-2" />
-                            <p className="text-lg font-semibold text-primary">
-                                Total Price = {`$${cartTotal}`}
-                            </p>
-                            <hr />
-                            {totalPriceAfterDiscount > 0 && (
-                                <div className="bg-success mb-2">
-                                    <p className="text-lg font-semibold text-primary">
-                                        Total Price After Discount : $
-                                        {totalPriceAfterDiscount}
-                                    </p>
+
+                            {/* Shipping Address Form*/}
+                            <ShippingAddressForm
+                                addressValues={addressValues}
+                                validationError={validationError}
+                                loading={loading.shippingAddressLoading}
+                                handleAddressValueChange={
+                                    handleAddressValueChange
+                                }
+                                submitShippingAddressToDb={
+                                    submitShippingAddressToDb
+                                }
+                            />
+                            <hr className="my-4" />
+
+                            {/* Coupon Form*/}
+                            <h4 className="text-green-400">Got Coupon?</h4>
+                            {inValidCouponName && (
+                                <div className="bg-success text-center">
+                                    <h6 className="text-white p-2">
+                                        {inValidCouponName}
+                                    </h6>
                                 </div>
                             )}
+                            {couponForm()}
+                        </div>
 
-                            <hr />
+                        {/* Order Summary Card */}
+                        <div className="col-span-5 sm:col-span-0 md:col-span-0">
+                            <div className="bg-gray-100 p-5  rounded-lg mt-16 md:mt-5 sm:mt-5">
+                                <h4 className="text-xl font-semibold text-green-400 mb-3">
+                                    Order Summary
+                                </h4>
+                                <h4 className="text-lg font-semibold text-primary">
+                                    Product
+                                </h4>
+                                <hr className="mb-2" />
+                                {carts &&
+                                    carts.map((product: any) => (
+                                        <p
+                                            className="text-md font-normal text-primary"
+                                            key={product._id}
+                                        >
+                                            {product.title} x {product.count} ={" "}
+                                            {`$${
+                                                product.price * product.count
+                                            }`}
+                                        </p>
+                                    ))}
+                                <hr className="mt-2" />
+                                <p className="text-lg font-semibold text-primary">
+                                    Total Price = {`$${cartTotal}`}
+                                </p>
+                                <hr />
+                                {totalPriceAfterDiscount > 0 && (
+                                    <div className="bg-success mb-2">
+                                        <p className="text-lg font-semibold text-primary">
+                                            Total Price After Discount : $
+                                            {totalPriceAfterDiscount}
+                                        </p>
+                                    </div>
+                                )}
 
-                            {isCashOnDelivery ? (
+                                <hr />
+
+                                {isCashOnDelivery ? (
+                                    <button
+                                        className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                                        disabled={
+                                            !isAddressSave ||
+                                            products.length < 1 ||
+                                            loading.processingOrderLoading
+                                        }
+                                        onClick={handleCashOrderDelivery}
+                                    >
+                                        {loading.processingOrderLoading
+                                            ? "Processing..."
+                                            : "Place Order"}
+                                    </button>
+                                ) : (
+                                    <button
+                                        className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                                        disabled={
+                                            !isAddressSave ||
+                                            products.length < 1 ||
+                                            loading.processingOrderLoading
+                                        }
+                                        onClick={() => {
+                                            setLoading({
+                                                ...loading,
+                                                processingOrderLoading: true,
+                                            });
+                                            router.push(
+                                                "/cart/checkout/payment"
+                                            );
+                                        }}
+                                    >
+                                        {loading.processingOrderLoading
+                                            ? "Processing..."
+                                            : "Place Order"}
+                                    </button>
+                                )}
+
                                 <button
                                     className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
                                     disabled={
-                                        !isAddressSave ||
                                         products.length < 1 ||
-                                        loading.processingOrderLoading
+                                        loading.emptyingCartLoading
                                     }
-                                    onClick={handleCashOrderDelivery}
+                                    onClick={handleEmptyCart}
                                 >
-                                    {loading.processingOrderLoading
-                                        ? "Processing..."
-                                        : "Place Order"}
+                                    {loading && loading.emptyingCartLoading
+                                        ? "Removing..."
+                                        : "Empty Cart"}
                                 </button>
-                            ) : (
-                                <button
-                                    className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
-                                    disabled={
-                                        !isAddressSave ||
-                                        products.length < 1 ||
-                                        loading.processingOrderLoading
-                                    }
-                                    onClick={() => {
-                                        setLoading({
-                                            ...loading,
-                                            processingOrderLoading: true,
-                                        });
-                                        router.push("/cart/checkout/payment");
-                                    }}
-                                >
-                                    {loading.processingOrderLoading
-                                        ? "Processing..."
-                                        : "Place Order"}
-                                </button>
-                            )}
-
-                            <button
-                                className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
-                                disabled={
-                                    products.length < 1 ||
-                                    loading.emptyingCartLoading
-                                }
-                                onClick={handleEmptyCart}
-                            >
-                                {loading && loading.emptyingCartLoading
-                                    ? "Removing..."
-                                    : "Empty Cart"}
-                            </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </MainLayout>
+            </MainLayout>
+        </>
     );
 };
 

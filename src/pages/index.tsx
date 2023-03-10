@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { getListOfCategory } from "@/api/category";
 import { getProductsBySort } from "@/api/products";
 import Banner from "@/components/Home/Banner/Banner";
@@ -17,6 +16,7 @@ import FlashDeals from "@/components/Home/FlashDeals/FlashDeals/FlashDeals";
 import Blogs from "@/components/Home/Blogs/Blogs";
 import { getListOfBlogs } from "@/api/blog";
 import { IBlog } from "types/blog.types";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 type HomePropType = {
     products: IProduct[];
@@ -37,18 +37,10 @@ export default function Home({
 }: HomePropType) {
     return (
         <>
-            <Head>
-                <title>Aladin</title>
-                <meta
-                    name="description"
-                    content="Aladin Industries Ltd. Providing reliable products since 2022"
-                />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+            <HeadSeo
+                title="Aladin"
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
             <MainLayout>
                 <Banner />
                 <Services />

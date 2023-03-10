@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Head from "next/head";
 import { useState, useEffect } from "react";
 import _ from "lodash";
 import { toast } from "react-hot-toast";
@@ -17,6 +16,7 @@ import RatingModal from "@/components/Modal/RatingModal/RatingModal";
 import SectionTitle from "@/components/SectionTitle/SectionTitle";
 import Product from "@/components/Product/Product";
 import { CartType } from "types/cart.types";
+import HeadSeo  from "@/lib/seo/HeadSeo/HeadSeo";
 
 type ProductDetailsParamsType = {
     params: {
@@ -198,18 +198,7 @@ const ProductDetails = ({
 
     return (
         <>
-            <Head>
-                <title>{slug}</title>
-                <meta
-                    name="description"
-                    content={`Product is a ${title} which is may be best`}
-                />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+            <HeadSeo title={slug} content={`Product by ${title}`} />
             <MainLayout>
                 <div className="bg-white container mt-10 md:mt-5 sm:mt-5">
                     <div className="grid grid-cols-2 sm:grid-cols-1 md:gap-4 pt-6">

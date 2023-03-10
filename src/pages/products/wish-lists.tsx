@@ -1,4 +1,3 @@
-import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { getWishLists, removeWishList } from "@/api/user";
 import _ from "lodash";
@@ -14,6 +13,7 @@ import WishlistProduct from "@/components/Product/WishlistProduct/WishlistProduc
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { IProduct } from "types/product.type";
 import useCheckUser from "@/hooks/useCheckUser";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 const WishLists = () => {
     useCheckUser();
@@ -89,18 +89,10 @@ const WishLists = () => {
 
     return (
         <>
-            <Head>
-                <title>wish list</title>
-                <meta
-                    name="description"
-                    content={`Product by ${user?.fullName}`}
-                />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+            <HeadSeo
+                title={"wish list"}
+                content={`Product by ${user?.fullName}`}
+            />
             <MainLayout>
                 <div className="container mt-10">
                     <SectionTitle title="Wish List" />

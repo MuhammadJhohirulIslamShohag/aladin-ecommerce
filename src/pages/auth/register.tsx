@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import { createOrUpdateUser } from "@/api/auth";
 import FormGroup from "@/components/Form/FormGroup";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 type FormValues = {
     email: string;
@@ -145,43 +146,51 @@ const Register = () => {
         </form>
     );
     return (
-        <div className="container my-14 sm:my-8">
-            <div className="w-[560px] sm:w-[280px] m-auto p-8 sm:p-4 bg-secondary rounded-lg">
-                <h2 className="text-center font-medium text-primary text-2xl">
-                    Register Now!
-                </h2>
-                <div className="space-y-2 mt-4">
-                    <button
-                        onClick={(e) => handleSignUpWithProvider(e, "google")}
-                        className="btn btn-success bg-success text-primary hover:bg-transparent hover:text-primary border-2 btn-block"
-                    >
-                        <FaGoogle className="text-lg mr-1" />
-                        Connection With Google
-                    </button>
+        <>
+            <HeadSeo
+                title="Register"
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <div className="container my-14 sm:my-8">
+                <div className="w-[560px] sm:w-[280px] m-auto p-8 sm:p-4 bg-secondary rounded-lg">
+                    <h2 className="text-center font-medium text-primary text-2xl">
+                        Register Now!
+                    </h2>
+                    <div className="space-y-2 mt-4">
+                        <button
+                            onClick={(e) =>
+                                handleSignUpWithProvider(e, "google")
+                            }
+                            className="btn btn-success bg-success text-primary hover:bg-transparent hover:text-primary border-2 btn-block"
+                        >
+                            <FaGoogle className="text-lg mr-1" />
+                            Connection With Google
+                        </button>
+                    </div>
+                    <h2 className="text-center font-medium text-primary text-xl mt-3">
+                        Or
+                    </h2>
+                    {registerForm()}
+                    <hr className="my-4"></hr>
+                    <p className="text-primary">
+                        If You Have Account?{" "}
+                        <label
+                            className="mr-2 text-success cursor-pointer"
+                            onClick={() => router.push("/auth/login")}
+                        >
+                            Login Now
+                        </label>
+                        Or
+                        <label
+                            className="ml-2 text-success cursor-pointer"
+                            onClick={() => router.push("/")}
+                        >
+                            Back Home
+                        </label>
+                    </p>
                 </div>
-                <h2 className="text-center font-medium text-primary text-xl mt-3">
-                    Or
-                </h2>
-                {registerForm()}
-                <hr className="my-4"></hr>
-                <p className="text-primary">
-                    If You Have Account?{" "}
-                    <label
-                        className="mr-2 text-success cursor-pointer"
-                        onClick={() => router.push("/auth/login")}
-                    >
-                        Login Now
-                    </label>
-                    Or
-                    <label
-                        className="ml-2 text-success cursor-pointer"
-                        onClick={() => router.push("/")}
-                    >
-                        Back Home
-                    </label>
-                </p>
             </div>
-        </div>
+        </>
     );
 };
 

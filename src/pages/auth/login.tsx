@@ -10,6 +10,7 @@ import { createOrUpdateUser } from "@/api/auth";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import { useRouter } from "next/router";
 import FormGroup from "@/components/Form/FormGroup";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 type FormValues = {
     email: string;
@@ -163,87 +164,97 @@ const Login = () => {
             });
     };
     return (
-        <div className="container my-14 sm:my-8">
-            <div className="w-[560px] sm:w-[280px] m-auto p-8 sm:p-4 bg-secondary rounded-lg">
-                <h2 className="text-center font-medium text-primary text-2xl">
-                    Login Now!
-                </h2>
-                <div className="space-y-2 mt-4">
-                    <button
-                        onClick={(e) => handleSignUpWithProvider(e, "google")}
-                        className="btn btn-success bg-success text-primary hover:bg-transparent hover:text-primary border-2 btn-block"
-                    >
-                        <FaGoogle className="text-lg mr-1" />
-                        Connection With Google
-                    </button>
-                </div>
-                <h2 className="text-center font-medium text-primary text-xl mt-3">
-                    Or
-                </h2>
-                <form onSubmit={handleSubmit(handleLogin)}>
-                    <FormGroup
-                        register={register}
-                        inputName={"email"}
-                        labelName={"Email"}
-                        errorField={errors.email}
-                        inputType={"email"}
-                        placeholder={"Enter Your Email"}
-                        required="Please Enter Your Email"
-                    />
-
-                    <FormGroup
-                        register={register}
-                        inputName={"password"}
-                        labelName={"Password"}
-                        isRequirePattern={true}
-                        requirePattern={{
-                            required: "Password is required",
-                            minLength: {
-                                value: 6,
-                                message:
-                                    "Password should be 6 characters or longer",
-                            },
-                        }}
-                        errorField={errors.password}
-                        inputType={"password"}
-                        placeholder={"Please Enter Your Password"}
-                        required="Password is required"
-                    />
-                    <label className="label cursor-pointer -mt-3">
-                        <span
-                            className="cursor-pointer text-primary font-medium text-sm sm:text-sm hover:text-success transition-all"
-                            onClick={() => router.push("/auth/forgot-password")}
+        <>
+            <HeadSeo
+                title="login"
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <div className="container my-14 sm:my-8">
+                <div className="w-[560px] sm:w-[280px] m-auto p-8 sm:p-4 bg-secondary rounded-lg">
+                    <h2 className="text-center font-medium text-primary text-2xl">
+                        Login Now!
+                    </h2>
+                    <div className="space-y-2 mt-4">
+                        <button
+                            onClick={(e) =>
+                                handleSignUpWithProvider(e, "google")
+                            }
+                            className="btn btn-success bg-success text-primary hover:bg-transparent hover:text-primary border-2 btn-block"
                         >
-                            Forget Password?
-                        </span>
-                    </label>
-                    <button
-                        disabled={loadingLogin}
-                        type="submit"
-                        className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
-                    >
-                        {loadingLogin ? "Loading" : "Login"}
-                    </button>
-                </form>
-                <hr className="my-4"></hr>
-                <p className="text-primary">
-                    If You Do Not Have Account?{" "}
-                    <label
-                        className="mr-2 text-success cursor-pointer"
-                        onClick={() => router.push("/auth/register")}
-                    >
-                        Register Now
-                    </label>
-                    Or
-                    <label
-                        className="ml-2 text-success cursor-pointer"
-                        onClick={() => router.push("/")}
-                    >
-                        Back Home
-                    </label>
-                </p>
+                            <FaGoogle className="text-lg mr-1" />
+                            Connection With Google
+                        </button>
+                    </div>
+                    <h2 className="text-center font-medium text-primary text-xl mt-3">
+                        Or
+                    </h2>
+                    <form onSubmit={handleSubmit(handleLogin)}>
+                        <FormGroup
+                            register={register}
+                            inputName={"email"}
+                            labelName={"Email"}
+                            errorField={errors.email}
+                            inputType={"email"}
+                            placeholder={"Enter Your Email"}
+                            required="Please Enter Your Email"
+                        />
+
+                        <FormGroup
+                            register={register}
+                            inputName={"password"}
+                            labelName={"Password"}
+                            isRequirePattern={true}
+                            requirePattern={{
+                                required: "Password is required",
+                                minLength: {
+                                    value: 6,
+                                    message:
+                                        "Password should be 6 characters or longer",
+                                },
+                            }}
+                            errorField={errors.password}
+                            inputType={"password"}
+                            placeholder={"Please Enter Your Password"}
+                            required="Password is required"
+                        />
+                        <label className="label cursor-pointer -mt-3">
+                            <span
+                                className="cursor-pointer text-primary font-medium text-sm sm:text-sm hover:text-success transition-all"
+                                onClick={() =>
+                                    router.push("/auth/forgot-password")
+                                }
+                            >
+                                Forget Password?
+                            </span>
+                        </label>
+                        <button
+                            disabled={loadingLogin}
+                            type="submit"
+                            className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
+                        >
+                            {loadingLogin ? "Loading" : "Login"}
+                        </button>
+                    </form>
+                    <hr className="my-4"></hr>
+                    <p className="text-primary">
+                        If You Do Not Have Account?{" "}
+                        <label
+                            className="mr-2 text-success cursor-pointer"
+                            onClick={() => router.push("/auth/register")}
+                        >
+                            Register Now
+                        </label>
+                        Or
+                        <label
+                            className="ml-2 text-success cursor-pointer"
+                            onClick={() => router.push("/")}
+                        >
+                            Back Home
+                        </label>
+                    </p>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

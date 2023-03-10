@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import { getFilterRelatedProducts, getProductsByCount } from "@/api/products";
 import { getListOfCategory } from "@/api/category";
@@ -17,6 +16,7 @@ import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { IProduct } from "types/product.type";
 import { ISubCategories } from "types/sub-category.type";
 import { ICategories } from "types/category.type";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 const brandArray = ["Apple", "Life-Digital", "Samsung", "ASUS", "Lenovo", "HP"];
 const colorArray = ["Green", "Black", "Red", "White"];
@@ -445,18 +445,10 @@ const Shop = () => {
     };
     return (
         <>
-            <Head>
-                <title>Aladin-Shopping</title>
-                <meta
-                    name="description"
-                    content="Aladin Industries Ltd. Providing reliable products since 2022"
-                />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+            <HeadSeo
+                title="Shopping"
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
             <MainLayout>
                 {/* Filter Mobile Side Bar Menu */}
                 <FilterMobileMenu

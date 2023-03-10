@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { CartType } from "types/cart.types";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 const Cart = () => {
     const { state, dispatch } = useStoreContext();
@@ -129,99 +130,109 @@ const Cart = () => {
         }
     };
     return (
-        <MainLayout>
-            <div className="container mt-10">
-                <div className="grid grid-cols-12 gap-5 sm:grid-cols-1 sm:gap-0 md:grid-cols-1 md:gap-0">
-                    <div className="col-span-9 sm:col-span-0 md:col-span-0">
-                        <h4 className="text-xl mb-5 font-semibold text-left text-green-500 bg-white">
-                            Shopping Cart {carts && carts.length}{" "}
-                            {carts && carts.length > 1 ? "Products" : "Product"}
-                        </h4>
-
-                        {/* Show Cart Table*/}
-                        {!carts.length ? (
-                            <h5 className="text-xl mb-5 font-semibold text-left text-primary bg-white">
-                                No Cart Yet{" "}
-                                <Link href="/shop">Continue Shopping</Link>
-                            </h5>
-                        ) : (
-                            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                                {showCartItems()}
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Order Summary Card */}
-                    <div className="col-span-3 sm:col-span-0 md:col-span-0">
-                        <div className="bg-gray-100 p-5  rounded-lg mt-12 md:mt-5 sm:mt-5">
-                            <h4 className="text-xl font-semibold text-green-400 mb-3">
-                                Order Summary
+        <>
+            <HeadSeo
+                title="Cart"
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <MainLayout>
+                <div className="container mt-10">
+                    <div className="grid grid-cols-12 gap-5 sm:grid-cols-1 sm:gap-0 md:grid-cols-1 md:gap-0">
+                        <div className="col-span-9 sm:col-span-0 md:col-span-0">
+                            <h4 className="text-xl mb-5 font-semibold text-left text-green-500 bg-white">
+                                Shopping Cart {carts && carts.length}{" "}
+                                {carts && carts.length > 1
+                                    ? "Products"
+                                    : "Product"}
                             </h4>
-                            <h4 className="text-lg font-semibold text-primary">
-                                Product
-                            </h4>
-                            <hr className="mb-2" />
-                            {carts &&
-                                carts.map((product: CartType) => (
-                                    <p
-                                        className="text-md font-normal text-primary"
-                                        key={product._id}
-                                    >
-                                        {product.title} x {product.count} ={" "}
-                                        {`$${product.price * product.count}`}
-                                    </p>
-                                ))}
-                            <hr className="mt-2" />
-                            <p className="text-lg font-semibold text-primary">
-                                Total Price = {`$${getTotalPrice()}`}
-                            </p>
-                            <hr />
-                            {user ? (
-                                <>
-                                    <button
-                                        className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
-                                        disabled={
-                                            !carts.length ||
-                                            loading.onlinePaymentCheckOut
-                                        }
-                                        onClick={savePaymentOrderToDb}
-                                    >
-                                        {loading.onlinePaymentCheckOut
-                                            ? "Processing..."
-                                            : "Proceed To Checkout"}
-                                    </button>
-                                    <br />
-                                    <button
-                                        className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
-                                        disabled={
-                                            !carts.length ||
-                                            loading.cashOnDelivery
-                                        }
-                                        onClick={saveCashOrderToDb}
-                                    >
-                                        {loading.cashOnDelivery
-                                            ? "Processing..."
-                                            : "Checkout To Cash On Delivery"}
-                                    </button>
-                                </>
+
+                            {/* Show Cart Table*/}
+                            {!carts.length ? (
+                                <h5 className="text-xl mb-5 font-semibold text-left text-primary bg-white">
+                                    No Cart Yet{" "}
+                                    <Link href="/shop">Continue Shopping</Link>
+                                </h5>
                             ) : (
-                                <button
-                                    className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
-                                    disabled={!carts.length}
-                                    onClick={() =>
-                                        router.push(
-                                            "/auth/login?redirect=/cart"
-                                        )
-                                    }
-                                >
-                                    Login To Checkout
-                                </button>
+                                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                    {showCartItems()}
+                                </div>
                             )}
+                        </div>
+
+                        {/* Order Summary Card */}
+                        <div className="col-span-3 sm:col-span-0 md:col-span-0">
+                            <div className="bg-gray-100 p-5  rounded-lg mt-12 md:mt-5 sm:mt-5">
+                                <h4 className="text-xl font-semibold text-green-400 mb-3">
+                                    Order Summary
+                                </h4>
+                                <h4 className="text-lg font-semibold text-primary">
+                                    Product
+                                </h4>
+                                <hr className="mb-2" />
+                                {carts &&
+                                    carts.map((product: CartType) => (
+                                        <p
+                                            className="text-md font-normal text-primary"
+                                            key={product._id}
+                                        >
+                                            {product.title} x {product.count} ={" "}
+                                            {`$${
+                                                product.price * product.count
+                                            }`}
+                                        </p>
+                                    ))}
+                                <hr className="mt-2" />
+                                <p className="text-lg font-semibold text-primary">
+                                    Total Price = {`$${getTotalPrice()}`}
+                                </p>
+                                <hr />
+                                {user ? (
+                                    <>
+                                        <button
+                                            className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                                            disabled={
+                                                !carts.length ||
+                                                loading.onlinePaymentCheckOut
+                                            }
+                                            onClick={savePaymentOrderToDb}
+                                        >
+                                            {loading.onlinePaymentCheckOut
+                                                ? "Processing..."
+                                                : "Proceed To Checkout"}
+                                        </button>
+                                        <br />
+                                        <button
+                                            className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                                            disabled={
+                                                !carts.length ||
+                                                loading.cashOnDelivery
+                                            }
+                                            onClick={saveCashOrderToDb}
+                                        >
+                                            {loading.cashOnDelivery
+                                                ? "Processing..."
+                                                : "Checkout To Cash On Delivery"}
+                                        </button>
+                                    </>
+                                ) : (
+                                    <button
+                                        className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                                        disabled={!carts.length}
+                                        onClick={() =>
+                                            router.push(
+                                                "/auth/login?redirect=/cart"
+                                            )
+                                        }
+                                    >
+                                        Login To Checkout
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </MainLayout>
+            </MainLayout>
+        </>
     );
 };
 

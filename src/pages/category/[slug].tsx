@@ -7,7 +7,7 @@ import Product from "@/components/Product/Product";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { ICategories } from "types/category.type";
 import { getSingleCategory } from "@/api/category";
-import Head from "next/head";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 type ProductByCategoryParamsType = {
     params: {
@@ -37,18 +37,10 @@ const ProductByCategory = ({
 
     return (
         <>
-            <Head>
-                <title>{category?.name}</title>
-                <meta
-                    name="description"
-                    content={`Product by ${category?.name}`}
-                />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
-                />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+            <HeadSeo
+                title={category?.name}
+                content={`Product by ${category?.name}`}
+            />
             <MainLayout>
                 <div className="container mt-12">
                     <SectionTitle

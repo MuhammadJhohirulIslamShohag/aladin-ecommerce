@@ -10,6 +10,7 @@ import Link from "next/link";
 import { createOrUpdateUser } from "@/api/auth";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import { useRouter } from "next/router";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 type FormValues = {
     email: string;
@@ -126,6 +127,10 @@ const CompleteRegister = () => {
 
     return (
         <>
+            <HeadSeo
+                title="complete-register"
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
             <div className="container my-14 sm:my-8">
                 <div className="w-[560px] sm:w-[280px] m-auto p-8 sm:p-4 bg-secondary rounded-lg">
                     <h2 className="text-center font-medium text-primary text-2xl">
