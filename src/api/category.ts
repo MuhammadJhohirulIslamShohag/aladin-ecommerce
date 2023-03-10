@@ -19,7 +19,13 @@ export const getSingleCategory = async (slug: string) =>
 
 export const updateCategory = async (
     token: string,
-    updateCategoryObj: any,
+    updateCategoryObj: {
+        name: string;
+        images: {
+            url:string;
+            public_id:string;
+        }[];
+    },
     slug: string
 ) => {
     return await axios.put(

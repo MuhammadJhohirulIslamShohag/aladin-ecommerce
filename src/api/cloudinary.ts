@@ -1,6 +1,9 @@
 import axios from "axios";
 
-export const uploadingImageFile = (token: string, uploadImageFile: any) => {
+export const uploadingImageFile = (
+    token: string,
+    uploadImageFile: string | Blob | File | ProgressEvent<FileReader>
+) => {
     return axios.post(
         `${process.env.NEXT_PUBLIC_server_api}/upload-images`,
         { uploadImageFile },
