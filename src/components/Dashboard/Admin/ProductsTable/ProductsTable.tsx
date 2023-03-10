@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, Fragment, useMemo } from "react";
 import {
+    getPaginationRowModel,
     useReactTable,
     ColumnDef,
     flexRender,
@@ -24,7 +25,7 @@ const ProductsTable = ({
     data: IProduct[];
     refreshData: any;
 }) => {
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const {
         state: { user },
     } = useStoreContext();
@@ -32,16 +33,13 @@ const ProductsTable = ({
 
     const handleRemoveProduct = (slug: string) => {
         if (user && user.token) {
-            setLoading(true);
             deleteProduct(user.token, slug)
                 .then((res) => {
                     toast.error(`${res.data.title} product is deleted!`);
                     refreshData();
-                    setLoading(false);
                 })
                 .catch((error) => {
                     console.log(error);
-                    setLoading(false);
                 });
         }
     };
@@ -203,6 +201,7 @@ const ProductsTable = ({
     const table = useReactTable({
         data,
         columns,
+        getPaginationRowModel: getPaginationRowModel(),
         getCoreRowModel: getCoreRowModel(),
     });
     return (
@@ -213,8 +212,20 @@ const ProductsTable = ({
                         All Products
                     </h6>
                 </div>
-                <div className="text-gray-500 text-sm font-bold hover:text-green-500 transition-all cursor-pointer">
-                    View All
+                <div>
+                    <select
+                        value={table.getState().pagination.pageSize}
+                        onChange={(e) => {
+                            table.setPageSize(Number(e.target.value));
+                        }}
+                        className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-32 p-2 text-black font-semibold mt-1"
+                    >
+                        {[10, 20, 30, 40, 50].map((pageSize) => (
+                            <option key={pageSize} value={pageSize}>
+                                Show {pageSize}
+                            </option>
+                        ))}
+                    </select>
                 </div>
             </div>
             <div className="relative overflow-x-auto sm:rounded-lg scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100">

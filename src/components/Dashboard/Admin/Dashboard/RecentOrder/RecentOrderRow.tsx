@@ -1,11 +1,10 @@
 import React from "react";
 import { MdOutlineVerified } from "react-icons/md";
 import { VscUnverified } from "react-icons/vsc";
-import { CiViewList } from "react-icons/ci";
 
 const RecentOrderRow = (props: any) => {
     const { orderedBy, paymentIntents, orderStatus } = props.order;
-    
+
     return (
         <tr className="bg-white border-b hover:bg-gray-50 ">
             <td className="w-32 p-4">{orderedBy?.name}</td>
@@ -48,12 +47,6 @@ const RecentOrderRow = (props: any) => {
                 >
                     {orderStatus}
                 </span>
-            </td>
-            <td className="px-6 py-4 font-semibold text-gray-900 ">
-                <span className="hover:text-green-500 transition-all cursor-pointer text-lg" >
-                <CiViewList />
-                </span>
-               
             </td>
         </tr>
     );
