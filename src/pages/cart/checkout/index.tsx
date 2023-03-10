@@ -55,6 +55,9 @@ const Checkout = () => {
     const { state, dispatch } = useStoreContext();
     const { carts, user, isCashOnDelivery, isCouponed } = state;
     const router = useRouter();
+    if(user){
+        
+    }
 
     useEffect(() => {
         if (user && user.token) {

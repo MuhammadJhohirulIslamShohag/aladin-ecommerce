@@ -12,11 +12,9 @@ import {
 import WishlistProduct from "@/components/Product/WishlistProduct/WishlistProduct";
 import MainLayout from "@/layouts/MainLayout/MainLayout";
 import { IProduct } from "types/product.type";
-import useCheckUser from "@/hooks/useCheckUser";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 const WishLists = () => {
-    useCheckUser();
     const [wishLists, setWishList] = useState([]);
     const [loading, setLoading] = useState<boolean>(false);
     const { state, dispatch } = useStoreContext();

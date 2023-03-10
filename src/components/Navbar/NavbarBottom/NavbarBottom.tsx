@@ -24,7 +24,7 @@ const NavbarBottom: React.FC = (): JSX.Element => {
                 </div>
                 <div className="flex justify-start">
                     <ul className="flex items-center">
-                        {user && user.email && (
+                        {(user && user.email) && (
                             <Link href="/products/wish-lists">
                                 <li className="py-3 ml-[5px] px-3 rounded-lg border-2 border-secondary hover:bg-transparent hover:text-primary text-white bg-success transition ease-in-out delay-15 cursor-pointer">
                                     <FaHeart />

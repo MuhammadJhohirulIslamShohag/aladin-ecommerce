@@ -81,12 +81,6 @@ const NavbarTop: React.FC = (): JSX.Element => {
                                             </DropdownListItem>
 
                                             <DropdownListItem
-                                                link="/dashboard/user/user-wishlist"
-                                                className="text-primary hover:text-success"
-                                            >
-                                                WishList
-                                            </DropdownListItem>
-                                            <DropdownListItem
                                                 link="/cart/checkout"
                                                 className="text-primary hover:text-success"
                                             >
