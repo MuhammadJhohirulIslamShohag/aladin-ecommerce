@@ -7,12 +7,12 @@ import OrderInvoiceDownload from "@/components/Order/OrderInvoiceDownload";
 import OrderPaymentInfo from "@/components/Order/OrderPaymentInfo";
 import OrderCartInTable from "@/components/Order/OrderCartInTable";
 import { UserType } from "@/lib/states/storeReducer/storeReducer.type";
-import { IOrder } from 'types/order.types';
+import { IOrder } from "types/order.types";
 import useCheckUser from "@/hooks/useCheckUser";
-
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 const History = () => {
-    useCheckUser()
+    useCheckUser();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
     const { state } = useStoreContext();
@@ -57,34 +57,40 @@ const History = () => {
     };
 
     return (
-        <UserDashboard>
-            <div>
-                {loading ? (
-                    <h4 className="text-center">Loading...</h4>
-                ) : (
-                    <>
-                        <h4 className="text-center text-green-400 mt-2 mb-0">
-                            {orders && orders.length > 0
-                                ? "User Purchase Order"
-                                : "No Purchase Order"}
-                        </h4>
-                        <hr />
-                        {orders &&
-                            orders.length > 0 &&
-                            orders.reverse().map((order:IOrder) => (
-                                <div
-                                    className="mx-5 my-3 p-3 card"
-                                    key={order._id}
-                                >
-                                    <OrderPaymentInfo order={order} />
-                                    <OrderCartInTable order={order} />
-                                    {showDownloadLink(order)}
-                                </div>
-                            ))}
-                    </>
-                )}
-            </div>
-        </UserDashboard>
+        <>
+            <HeadSeo
+                title={"History"}
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <UserDashboard>
+                <div>
+                    {loading ? (
+                        <h4 className="text-center">Loading...</h4>
+                    ) : (
+                        <>
+                            <h4 className="text-center text-green-400 mt-2 mb-0">
+                                {orders && orders.length > 0
+                                    ? "User Purchase Order"
+                                    : "No Purchase Order"}
+                            </h4>
+                            <hr />
+                            {orders &&
+                                orders.length > 0 &&
+                                orders.reverse().map((order: IOrder) => (
+                                    <div
+                                        className="mx-5 my-3 p-3 card"
+                                        key={order._id}
+                                    >
+                                        <OrderPaymentInfo order={order} />
+                                        <OrderCartInTable order={order} />
+                                        {showDownloadLink(order)}
+                                    </div>
+                                ))}
+                        </>
+                    )}
+                </div>
+            </UserDashboard>
+        </>
     );
 };
 

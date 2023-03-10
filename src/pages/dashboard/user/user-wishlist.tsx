@@ -9,6 +9,7 @@ import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import toast from "react-hot-toast";
 import { IProduct } from "types/product.type";
 import useCheckUser from "@/hooks/useCheckUser";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 interface WishListProductType {
     product: IProduct[];
@@ -50,41 +51,47 @@ const UserWishlist = () => {
     };
 
     return (
-        <UserDashboard>
-            <div className="container mt-10">
-                <SectionTitle title={`Wish List By ${user?.fullName}`} />
-                {loading ? (
-                    <div className="grid mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-                        <Skeleton numbers={3} />
-                    </div>
-                ) : wishLists && wishLists[0]?.product?.length < 1 ? (
-                    <p className="text-center text-xl text-primary mt-5">
-                        No Wish List Product Found By {user?.fullName}
-                    </p>
-                ) : (
-                    <div className="grid  mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-                        {wishLists &&
-                            wishLists[0]?.product?.length > 0 &&
-                            wishLists.map(
-                                (
-                                    product: WishListProductType,
-                                    index: number
-                                ) => (
-                                    <div key={index}>
-                                        <WishlistProduct
-                                            product={product.product}
-                                            handleRemovedToWishList={
-                                                handleRemovedToWishList
-                                            }
-                                            isUserWishList
-                                        />
-                                    </div>
-                                )
-                            )}
-                    </div>
-                )}
-            </div>
-        </UserDashboard>
+        <>
+            <HeadSeo
+                title={"User-Wishlist"}
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <UserDashboard>
+                <div className="container mt-10">
+                    <SectionTitle title={`Wish List By ${user?.fullName}`} />
+                    {loading ? (
+                        <div className="grid mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+                            <Skeleton numbers={3} />
+                        </div>
+                    ) : wishLists && wishLists[0]?.product?.length < 1 ? (
+                        <p className="text-center text-xl text-primary mt-5">
+                            No Wish List Product Found By {user?.fullName}
+                        </p>
+                    ) : (
+                        <div className="grid  mt-5 gap-5 grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+                            {wishLists &&
+                                wishLists[0]?.product?.length > 0 &&
+                                wishLists.map(
+                                    (
+                                        product: WishListProductType,
+                                        index: number
+                                    ) => (
+                                        <div key={index}>
+                                            <WishlistProduct
+                                                product={product.product}
+                                                handleRemovedToWishList={
+                                                    handleRemovedToWishList
+                                                }
+                                                isUserWishList
+                                            />
+                                        </div>
+                                    )
+                                )}
+                        </div>
+                    )}
+                </div>
+            </UserDashboard>
+        </>
     );
 };
 
