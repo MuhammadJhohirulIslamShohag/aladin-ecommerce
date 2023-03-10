@@ -2,6 +2,7 @@ import { getProductsBySort } from "@/api/products";
 import ProductsTable from "@/components/Dashboard/Admin/ProductsTable/ProductsTable";
 import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { IProduct } from "types/product.type";
@@ -13,11 +14,17 @@ const Products = ({ products }: { products: IProduct[] }) => {
         router.replace(router.asPath);
     };
     return (
-        <DashboardLayout>
-            <div>
-                <ProductsTable data={products} refreshData={refreshData} />
-            </div>
-        </DashboardLayout>
+        <>
+            <HeadSeo
+                title={"All Product"}
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <DashboardLayout>
+                <div>
+                    <ProductsTable data={products} refreshData={refreshData} />
+                </div>
+            </DashboardLayout>
+        </>
     );
 };
 

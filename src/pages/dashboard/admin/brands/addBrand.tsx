@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { createBrand } from "@/api/brand";
 import useCheckAdmin from "@/hooks/useCheckAdmin";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 interface IFormInputs {
     brand: string;
@@ -42,37 +43,43 @@ const AddBrand = () => {
             });
     };
     return (
-        <DashboardLayout>
-            <div>
-                <div className="bg-secondary p-6 rounded-lg w-3/4 sm:w-full md:w-full">
-                    <h2 className="text-center font-semibold text-primary text-2xl sm:text-lg md:text-xl">
-                        Add New Brand
-                    </h2>
-                    <form
-                        className="md:mt-2 sm:mt-2"
-                        onSubmit={handleSubmit(handleBrandSubmit)}
-                    >
-                        <FormGroup
-                            register={register}
-                            inputName={"brand"}
-                            labelName={"Brand"}
-                            errorField={errors.brand}
-                            inputType={"text"}
-                            placeholder={"Enter Your Brand"}
-                            required="Brand Field Is Required!"
-                        />
-
-                        <button
-                            disabled={loading}
-                            type="submit"
-                            className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
+        <>
+            <HeadSeo
+                title="Add Brand"
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <DashboardLayout>
+                <div>
+                    <div className="bg-secondary p-6 rounded-lg w-3/4 sm:w-full md:w-full">
+                        <h2 className="text-center font-semibold text-primary text-2xl sm:text-lg md:text-xl">
+                            Add New Brand
+                        </h2>
+                        <form
+                            className="md:mt-2 sm:mt-2"
+                            onSubmit={handleSubmit(handleBrandSubmit)}
                         >
-                            {loading ? "Loading" : "Submit"}
-                        </button>
-                    </form>
+                            <FormGroup
+                                register={register}
+                                inputName={"brand"}
+                                labelName={"Brand"}
+                                errorField={errors.brand}
+                                inputType={"text"}
+                                placeholder={"Enter Your Brand"}
+                                required="Brand Field Is Required!"
+                            />
+
+                            <button
+                                disabled={loading}
+                                type="submit"
+                                className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
+                            >
+                                {loading ? "Loading" : "Submit"}
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </DashboardLayout>
+            </DashboardLayout>
+        </>
     );
 };
 

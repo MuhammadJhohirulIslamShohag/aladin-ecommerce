@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import ImageFileUploadForm from "@/components/Form/ImageFileUploadForm/ImageFileUploadForm";
 import useCheckAdmin from "@/hooks/useCheckAdmin";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 interface IFormInputs {
     category: string;
@@ -55,46 +56,52 @@ const AddCategory = () => {
     };
 
     return (
-        <DashboardLayout>
-            <div>
-                <div className="bg-secondary p-6 rounded-lg w-3/4 sm:w-full md:w-full">
-                    <h2 className="text-center font-semibold text-primary text-2xl">
-                        Add New Category
-                    </h2>
-                    <form
-                        className="sm:-mt-2 md:-mt-2"
-                        onSubmit={handleSubmit(handleCategorySubmit)}
-                    >
-                        <div className="grid grid-cols-2">
-                            <ImageFileUploadForm
-                                values={values}
-                                setValues={setValues}
-                                setLoading={setLoading}
-                                errorField={errors.productImg}
-                                register={register}
-                            />
-                        </div>
-                        <FormGroup
-                            register={register}
-                            inputName={"category"}
-                            labelName={"Category"}
-                            errorField={errors.category}
-                            inputType={"text"}
-                            placeholder={"Enter Your Category"}
-                            required="Please Enter Category"
-                        />
-
-                        <button
-                            disabled={loading}
-                            type="submit"
-                            className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
+        <>
+            <HeadSeo
+                title="Add Category"
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <DashboardLayout>
+                <div>
+                    <div className="bg-secondary p-6 rounded-lg w-3/4 sm:w-full md:w-full">
+                        <h2 className="text-center font-semibold text-primary text-2xl">
+                            Add New Category
+                        </h2>
+                        <form
+                            className="sm:-mt-2 md:-mt-2"
+                            onSubmit={handleSubmit(handleCategorySubmit)}
                         >
-                            {loading ? "Loading" : "Submit"}
-                        </button>
-                    </form>
+                            <div className="grid grid-cols-2">
+                                <ImageFileUploadForm
+                                    values={values}
+                                    setValues={setValues}
+                                    setLoading={setLoading}
+                                    errorField={errors.productImg}
+                                    register={register}
+                                />
+                            </div>
+                            <FormGroup
+                                register={register}
+                                inputName={"category"}
+                                labelName={"Category"}
+                                errorField={errors.category}
+                                inputType={"text"}
+                                placeholder={"Enter Your Category"}
+                                required="Please Enter Category"
+                            />
+
+                            <button
+                                disabled={loading}
+                                type="submit"
+                                className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
+                            >
+                                {loading ? "Loading" : "Submit"}
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </DashboardLayout>
+            </DashboardLayout>
+        </>
     );
 };
 

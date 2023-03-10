@@ -13,6 +13,7 @@ import dynamic from "next/dynamic";
 import toast from "react-hot-toast";
 import { ISize } from "types/size.types";
 import useCheckAdmin from "@/hooks/useCheckAdmin";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 const AllSizes = () => {
     useCheckAdmin();
@@ -92,28 +93,34 @@ const AllSizes = () => {
         }
     };
     return (
-        <DashboardLayout>
-            <div>
-                <CustomTable
-                    arrayData={sizes}
-                    handleRemoveData={handleRemoveSize}
-                    handleEditData={handleEditSize}
-                    dataLabelName={"Size"}
-                />
-            </div>
+        <>
+            <HeadSeo
+                title={"All Size"}
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <DashboardLayout>
+                <div>
+                    <CustomTable
+                        arrayData={sizes}
+                        handleRemoveData={handleRemoveSize}
+                        handleEditData={handleEditSize}
+                        dataLabelName={"Size"}
+                    />
+                </div>
 
-            {/*Show Update Color Modal */}
-            {openModal && (
-                <CustomModal
-                    closeModal={closeModal}
-                    handleEditSubmit={handleUpdateSubmit}
-                    setUpdateValue={setUpdateSizeName}
-                    updateValue={updateSizeName}
-                    title={"Update Size"}
-                    labelName={"Size Name"}
-                />
-            )}
-        </DashboardLayout>
+                {/*Show Update Color Modal */}
+                {openModal && (
+                    <CustomModal
+                        closeModal={closeModal}
+                        handleEditSubmit={handleUpdateSubmit}
+                        setUpdateValue={setUpdateSizeName}
+                        updateValue={updateSizeName}
+                        title={"Update Size"}
+                        labelName={"Size Name"}
+                    />
+                )}
+            </DashboardLayout>
+        </>
     );
 };
 

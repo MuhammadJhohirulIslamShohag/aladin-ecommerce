@@ -8,6 +8,7 @@ import { IFormInput } from "@/components/Form/CreateProduct/FormInput.types";
 import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
 import { UseFormReset, UseFormSetValue } from "react-hook-form";
@@ -164,28 +165,34 @@ const AddProduct = ({
     };
 
     return (
-        <DashboardLayout>
-            <div>
-                <div className="bg-secondary p-6 rounded-lg">
-                    <h2 className="text-center font-semibold text-primary text-2xl">
-                        Add New Product
-                    </h2>
-                    <CreateProductForm
-                        handleAddProduct={handleAddProduct}
-                        handleChangeCategory={handleChangeCategory}
-                        subCategories={subCategories}
-                        values={values}
-                        setValues={setValues}
-                        isShow={isShow}
-                        loading={loading}
-                        setLoading={setLoading}
-                        setSubCategoryRef={setSubCategoryRef}
-                        setColorRef={setColorRef}
-                        setSizeRef={setSizeRef}
-                    />
+        <>
+            <HeadSeo
+                title={"Add Product"}
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <DashboardLayout>
+                <div>
+                    <div className="bg-secondary p-6 rounded-lg">
+                        <h2 className="text-center font-semibold text-primary text-2xl">
+                            Add New Product
+                        </h2>
+                        <CreateProductForm
+                            handleAddProduct={handleAddProduct}
+                            handleChangeCategory={handleChangeCategory}
+                            subCategories={subCategories}
+                            values={values}
+                            setValues={setValues}
+                            isShow={isShow}
+                            loading={loading}
+                            setLoading={setLoading}
+                            setSubCategoryRef={setSubCategoryRef}
+                            setColorRef={setColorRef}
+                            setSizeRef={setSizeRef}
+                        />
+                    </div>
                 </div>
-            </div>
-        </DashboardLayout>
+            </DashboardLayout>
+        </>
     );
 };
 

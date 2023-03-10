@@ -9,6 +9,7 @@ import CustomTable from "@/components/Table/CustomTable/CustomTable";
 import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -92,28 +93,34 @@ const AllColors = () => {
         }
     };
     return (
-        <DashboardLayout>
-            <div>
-                <CustomTable
-                    arrayData={colors}
-                    handleRemoveData={handleRemoveColor}
-                    handleEditData={handleEditColor}
-                    dataLabelName={"Color"}
-                />
-            </div>
+        <>
+            <HeadSeo
+                title="All Color"
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <DashboardLayout>
+                <div>
+                    <CustomTable
+                        arrayData={colors}
+                        handleRemoveData={handleRemoveColor}
+                        handleEditData={handleEditColor}
+                        dataLabelName={"Color"}
+                    />
+                </div>
 
-            {/*Show Update Color Modal */}
-            {openModal && (
-                <CustomModal
-                    closeModal={closeModal}
-                    handleEditSubmit={handleUpdateSubmit}
-                    setUpdateValue={setUpdateColorName}
-                    updateValue={updateColorName}
-                    title={"Update Color"}
-                    labelName={"Color Name"}
-                />
-            )}
-        </DashboardLayout>
+                {/*Show Update Color Modal */}
+                {openModal && (
+                    <CustomModal
+                        closeModal={closeModal}
+                        handleEditSubmit={handleUpdateSubmit}
+                        setUpdateValue={setUpdateColorName}
+                        updateValue={updateColorName}
+                        title={"Update Color"}
+                        labelName={"Color Name"}
+                    />
+                )}
+            </DashboardLayout>
+        </>
     );
 };
 

@@ -9,6 +9,7 @@ import UpdateProductForm from "@/components/Form/UpdateProduct/UpdateProduct";
 import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
@@ -198,35 +199,41 @@ const UpdateProduct = ({
             });
     };
     return (
-        <DashboardLayout>
-            <div>
-                <div className="bg-secondary p-6 rounded-lg">
-                    <h2 className="text-center font-semibold text-primary text-2xl">
-                        Update Product
-                    </h2>
-                    <UpdateProductForm
-                        values={values}
-                        setValues={setValues}
-                        subCategories={subCategories}
-                        arraySubCategories={arraySubCategories}
-                        setArraySubCategories={setArraySubCategories}
-                        selectedCategory={selectedCategory}
-                        loading={loading}
-                        setLoading={setLoading}
-                        handleSubmitProduct={handleSubmitProduct}
-                        handleCategoryChange={handleCategoryChange}
-                        multiSelectSubCategories={multiSelectSubCategories}
-                        setMultiSelectSubCategories={
-                            setMultiSelectSubCategories
-                        }
-                        multiSelectSizes={multiSelectSizes}
-                        setMultiSelectSizes={setMultiSelectSizes}
-                        multiSelectColors={multiSelectColors}
-                        setMultiSelectColors={setMultiSelectColors}
-                    />
+        <>
+            <HeadSeo
+                title={values?.title}
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <DashboardLayout>
+                <div>
+                    <div className="bg-secondary p-6 rounded-lg">
+                        <h2 className="text-center font-semibold text-primary text-2xl">
+                            Update Product
+                        </h2>
+                        <UpdateProductForm
+                            values={values}
+                            setValues={setValues}
+                            subCategories={subCategories}
+                            arraySubCategories={arraySubCategories}
+                            setArraySubCategories={setArraySubCategories}
+                            selectedCategory={selectedCategory}
+                            loading={loading}
+                            setLoading={setLoading}
+                            handleSubmitProduct={handleSubmitProduct}
+                            handleCategoryChange={handleCategoryChange}
+                            multiSelectSubCategories={multiSelectSubCategories}
+                            setMultiSelectSubCategories={
+                                setMultiSelectSubCategories
+                            }
+                            multiSelectSizes={multiSelectSizes}
+                            setMultiSelectSizes={setMultiSelectSizes}
+                            multiSelectColors={multiSelectColors}
+                            setMultiSelectColors={setMultiSelectColors}
+                        />
+                    </div>
                 </div>
-            </div>
-        </DashboardLayout>
+            </DashboardLayout>
+        </>
     );
 };
 

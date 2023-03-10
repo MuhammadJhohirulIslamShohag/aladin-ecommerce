@@ -6,6 +6,7 @@ import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditMod
 import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import { UserType } from "@/lib/states/storeReducer/storeReducer.type";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
@@ -126,89 +127,99 @@ const AdminProfile = () => {
         </form>
     );
     return (
-        <DashboardLayout>
-            <div className="grid grid-cols-10 py-10 pl-10 sm:grid-cols-none sm:pl-0 md:grid-cols-2 sm:pt-3">
-                <div className="col-span-6">
-                    <h2 className="text-black text-md font-semibold mb-4">
-                        My Profile
-                    </h2>
-                    <div className="grid grid-cols-8 sm:grid-cols-1">
-                        <div className="col-span-2 sm:flex sm:flex-col sm:items-center">
-                            {values.image?.url && (
-                                <FileUpload
-                                    values={values}
-                                    setValues={setValues}
-                                    setLoading={setLoadingForUpdateProfileImg}
-                                    loading={loadingForUpdateProfileImg}
-                                />
-                            )}
-                        </div>
-                        <div className="col-span-6 m-auto p-4">
-                            <div className="relative flex justify-end items-center">
-                                <span
-                                    className="text-green-500 text-md hover:text-black transition-all cursor-pointer"
-                                    id="my-profile-update-modal"
-                                    onClick={handleShowModal}
-                                >
-                                    <BiEdit />
-                                </span>
-                                {showModal && (
-                                    <ProfileEditModal
-                                        closeModal={handleShowModal}
+        <>
+            <HeadSeo
+                title={"Profile"}
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <DashboardLayout>
+                <div className="grid grid-cols-10 py-10 pl-10 sm:grid-cols-none sm:pl-0 md:grid-cols-2 sm:pt-3">
+                    <div className="col-span-6">
+                        <h2 className="text-black text-md font-semibold mb-4">
+                            My Profile
+                        </h2>
+                        <div className="grid grid-cols-8 sm:grid-cols-1">
+                            <div className="col-span-2 sm:flex sm:flex-col sm:items-center">
+                                {values.image?.url && (
+                                    <FileUpload
                                         values={values}
-                                        loadingCurrentUser={loadingCurrentUser}
-                                        title="Profile Information Update"
+                                        setValues={setValues}
+                                        setLoading={
+                                            setLoadingForUpdateProfileImg
+                                        }
+                                        loading={loadingForUpdateProfileImg}
                                     />
                                 )}
                             </div>
+                            <div className="col-span-6 m-auto p-4">
+                                <div className="relative flex justify-end items-center">
+                                    <span
+                                        className="text-green-500 text-md hover:text-black transition-all cursor-pointer"
+                                        id="my-profile-update-modal"
+                                        onClick={handleShowModal}
+                                    >
+                                        <BiEdit />
+                                    </span>
+                                    {showModal && (
+                                        <ProfileEditModal
+                                            closeModal={handleShowModal}
+                                            values={values}
+                                            loadingCurrentUser={
+                                                loadingCurrentUser
+                                            }
+                                            title="Profile Information Update"
+                                        />
+                                    )}
+                                </div>
 
-                            <div>
-                                <ul>
-                                    <li>
-                                        <p className="text-black text-md font-semibold mb-0">
-                                            Full name:
-                                        </p>
-                                        <span className="text-black mt-1 inline-block">
-                                            {values?.fullName}
-                                        </span>
-                                    </li>
-                                    <li className="mt-2">
-                                        <p className="text-black mb-0 text-md font-semibold">
-                                            Email address:
-                                        </p>
-                                        <span className="text-black mt-1 inline-block sm:break-all">
-                                            {values?.email}
-                                        </span>
-                                    </li>
-                                    <li className="mt-2">
-                                        <p className="text-black mb-0 text-md font-semibold">
-                                            About
-                                        </p>
-                                        <span className="text-black mt-1 inline-block">
-                                            {values?.about}
-                                        </span>
-                                    </li>
-                                </ul>
+                                <div>
+                                    <ul>
+                                        <li>
+                                            <p className="text-black text-md font-semibold mb-0">
+                                                Full name:
+                                            </p>
+                                            <span className="text-black mt-1 inline-block">
+                                                {values?.fullName}
+                                            </span>
+                                        </li>
+                                        <li className="mt-2">
+                                            <p className="text-black mb-0 text-md font-semibold">
+                                                Email address:
+                                            </p>
+                                            <span className="text-black mt-1 inline-block sm:break-all">
+                                                {values?.email}
+                                            </span>
+                                        </li>
+                                        <li className="mt-2">
+                                            <p className="text-black mb-0 text-md font-semibold">
+                                                About
+                                            </p>
+                                            <span className="text-black mt-1 inline-block">
+                                                {values?.about}
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mt-5">
+                            <div className="">
+                                {isSubmitted ? (
+                                    <h2 className="text-black text-md font-semibold text-center mt-4 mb-3">
+                                        Loading
+                                    </h2>
+                                ) : (
+                                    <h4 className="text-black text-md font-semibold text-center mt-4 mb-3">
+                                        Update Password
+                                    </h4>
+                                )}
+                                {updatePasswordForm()}
                             </div>
                         </div>
                     </div>
-                    <div className="mt-5">
-                        <div className="">
-                            {isSubmitted ? (
-                                <h2 className="text-black text-md font-semibold text-center mt-4 mb-3">
-                                    Loading
-                                </h2>
-                            ) : (
-                                <h4 className="text-black text-md font-semibold text-center mt-4 mb-3">
-                                    Update Password
-                                </h4>
-                            )}
-                            {updatePasswordForm()}
-                        </div>
-                    </div>
                 </div>
-            </div>
-        </DashboardLayout>
+            </DashboardLayout>
+        </>
     );
 };
 

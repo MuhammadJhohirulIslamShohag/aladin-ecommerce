@@ -4,6 +4,7 @@ import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditMod
 import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import { UserType } from "@/lib/states/storeReducer/storeReducer.type";
 import { useEffect, useState } from "react";
 import { BiEdit } from "react-icons/bi";
@@ -53,69 +54,75 @@ const AdminAddress = () => {
         setShowModal((prev) => !prev);
     };
     return (
-        <DashboardLayout>
-            <div className="grid grid-cols-10 py-10 pl-10 sm:grid-cols-1 sm:pl-0 sm:pt-3">
-                <div className="col-span-6">
-                    <h2 className="text-black text-md font-semibold mb-0 text-center">
-                        My Address
-                    </h2>
-                    <div className="relative flex justify-end items-center">
-                        <span
-                            className="text-green-500 text-md hover:text-black transition-all cursor-pointer"
-                            id="my-profile-update-modal"
-                            onClick={handleShowModal}
-                        >
-                            <BiEdit />
-                        </span>
-                        {showModal && (
-                            <ProfileEditModal
-                                closeModal={handleShowModal}
-                                values={values}
-                                loadingCurrentUser={loadingCurrentUser}
-                                title="Address Information Update"
-                                isAddressProfile
-                            />
-                        )}
-                    </div>
-                    <div>
-                        <ul>
-                            <li className="flex gap-1">
-                                <p className="text-black text-md font-semibold mb-0">
-                                    User Name:
-                                </p>
-                                <p className="text-black inline-block">
-                                    {values?.username}
-                                </p>
-                            </li>
-                            <li className="mt-2 flex gap-1">
-                                <p className="text-black mb-0 text-md font-semibold">
-                                    Address:
-                                </p>
-                                <p className="text-black inline-block">
-                                    {values?.address}
-                                </p>
-                            </li>
-                            <li className="mt-2 flex gap-1">
-                                <p className="text-black mb-0 text-md font-semibold">
-                                    City:
-                                </p>
-                                <p className="text-black inline-block">
-                                    {values?.city}
-                                </p>
-                            </li>
-                            <li className="mt-2 flex gap-1">
-                                <p className="text-black mb-0 text-md font-semibold">
-                                    Country:
-                                </p>
-                                <p className="text-black inline-block">
-                                    {values?.country}
-                                </p>
-                            </li>
-                        </ul>
+        <>
+            <HeadSeo
+                title={"Address"}
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <DashboardLayout>
+                <div className="grid grid-cols-10 py-10 pl-10 sm:grid-cols-1 sm:pl-0 sm:pt-3">
+                    <div className="col-span-6">
+                        <h2 className="text-black text-md font-semibold mb-0 text-center">
+                            My Address
+                        </h2>
+                        <div className="relative flex justify-end items-center">
+                            <span
+                                className="text-green-500 text-md hover:text-black transition-all cursor-pointer"
+                                id="my-profile-update-modal"
+                                onClick={handleShowModal}
+                            >
+                                <BiEdit />
+                            </span>
+                            {showModal && (
+                                <ProfileEditModal
+                                    closeModal={handleShowModal}
+                                    values={values}
+                                    loadingCurrentUser={loadingCurrentUser}
+                                    title="Address Information Update"
+                                    isAddressProfile
+                                />
+                            )}
+                        </div>
+                        <div>
+                            <ul>
+                                <li className="flex gap-1">
+                                    <p className="text-black text-md font-semibold mb-0">
+                                        User Name:
+                                    </p>
+                                    <p className="text-black inline-block">
+                                        {values?.username}
+                                    </p>
+                                </li>
+                                <li className="mt-2 flex gap-1">
+                                    <p className="text-black mb-0 text-md font-semibold">
+                                        Address:
+                                    </p>
+                                    <p className="text-black inline-block">
+                                        {values?.address}
+                                    </p>
+                                </li>
+                                <li className="mt-2 flex gap-1">
+                                    <p className="text-black mb-0 text-md font-semibold">
+                                        City:
+                                    </p>
+                                    <p className="text-black inline-block">
+                                        {values?.city}
+                                    </p>
+                                </li>
+                                <li className="mt-2 flex gap-1">
+                                    <p className="text-black mb-0 text-md font-semibold">
+                                        Country:
+                                    </p>
+                                    <p className="text-black inline-block">
+                                        {values?.country}
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </DashboardLayout>
+            </DashboardLayout>
+        </>
     );
 };
 

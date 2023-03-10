@@ -4,6 +4,7 @@ import OrdersTable from "@/components/Dashboard/Admin/OrdersTable/OrdersTable";
 import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import { useEffect, useState } from "react";
 import { IOrder } from "types/order.types";
 
@@ -31,11 +32,17 @@ const Orders = () => {
         }
     };
     return (
-        <DashboardLayout>
-            <div>
-                <OrdersTable data={orders} />
-            </div>
-        </DashboardLayout>
+        <>
+            <HeadSeo
+                title="Orders"
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <DashboardLayout>
+                <div>
+                    <OrdersTable data={orders} />
+                </div>
+            </DashboardLayout>
+        </>
     );
 };
 

@@ -15,6 +15,7 @@ import dynamic from "next/dynamic";
 import CustomModal from "@/components/Modal/CustomModal/CustomModal";
 import { ICategories } from "types/category.type";
 import useCheckAdmin from "@/hooks/useCheckAdmin";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 const AllSubCategory = () => {
     useCheckAdmin();
@@ -27,7 +28,7 @@ const AllSubCategory = () => {
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [subCategories, setSubCategories] = useState<ISubCategories[]>([]);
     const [categories, setCategories] = useState<ICategories[]>([]);
-    const [keyword, setKeyword] = useState<string>("");
+    // const [keyword, setKeyword] = useState<string>("");
 
     const { state } = useStoreContext();
     const { user } = state;
@@ -52,8 +53,8 @@ const AllSubCategory = () => {
             .catch((error) => console.log(error.message));
     };
 
-    const searched = (keyword: any) => (c: any) =>
-        c.name.toLowerCase().includes(keyword);
+    // const searched = (keyword: any) => (c: any) =>
+    //     c.name.toLowerCase().includes(keyword);
 
     // handle update category
     const closeModal = () => {
@@ -119,54 +120,62 @@ const AllSubCategory = () => {
     };
 
     return (
-        <DashboardLayout>
-            <div>
-                <SubCategoryTable
-                    subCategories={subCategories}
-                    handleRemoveSubCategory={handleRemoveSubCategory}
-                    handleEditSubCategory={handleEditSubCategory}
-                />
-            </div>
-            {/*Show Update Category Modal */}
-            {openModal && (
-                <CustomModal
-                    isUpdateImages
-                    values={values}
-                    setValues={setValues}
-                    setLoading={setLoading}
-                    closeModal={closeModal}
-                    handleEditSubmit={handleUpdateSubmit}
-                    setUpdateValue={setUpdateSubCategoryName}
-                    updateValue={updateSubCategoryName}
-                    title={"Update Sub Category"}
-                    labelName={" Sub-Category Name"}
-                >
-                    <div className="mb-3 mt-2">
-                        <label className="block mb-1.5 text-sm font-medium text-primary">
-                            Parent Category
-                        </label>
-                        <select
-                            className=" rounded-lg border border-success focus:ring-green-500 focus:border-green-500 focus:outline focus:outline-offset-2 focus:outline-green-600 w-3/4 p-2 text-gray-700 font-semibold mt-1"
-                            onChange={(e) => setParentCategory(e.target.value)}
-                        >
-                            {categories &&
-                                categories.length > 0 &&
-                                categories.map((category) => (
-                                    <option
-                                        key={category._id}
-                                        value={category._id}
-                                        selected={
-                                            category._id === parentCategory
-                                        }
-                                    >
-                                        {category.name}
-                                    </option>
-                                ))}
-                        </select>
-                    </div>
-                </CustomModal>
-            )}
-        </DashboardLayout>
+        <>
+            <HeadSeo
+                title={"All Sub-Category"}
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <DashboardLayout>
+                <div>
+                    <SubCategoryTable
+                        subCategories={subCategories}
+                        handleRemoveSubCategory={handleRemoveSubCategory}
+                        handleEditSubCategory={handleEditSubCategory}
+                    />
+                </div>
+                {/*Show Update Category Modal */}
+                {openModal && (
+                    <CustomModal
+                        isUpdateImages
+                        values={values}
+                        setValues={setValues}
+                        setLoading={setLoading}
+                        closeModal={closeModal}
+                        handleEditSubmit={handleUpdateSubmit}
+                        setUpdateValue={setUpdateSubCategoryName}
+                        updateValue={updateSubCategoryName}
+                        title={"Update Sub Category"}
+                        labelName={" Sub-Category Name"}
+                    >
+                        <div className="mb-3 mt-2">
+                            <label className="block mb-1.5 text-sm font-medium text-primary">
+                                Parent Category
+                            </label>
+                            <select
+                                className=" rounded-lg border border-success focus:ring-green-500 focus:border-green-500 focus:outline focus:outline-offset-2 focus:outline-green-600 w-3/4 p-2 text-gray-700 font-semibold mt-1"
+                                onChange={(e) =>
+                                    setParentCategory(e.target.value)
+                                }
+                            >
+                                {categories &&
+                                    categories.length > 0 &&
+                                    categories.map((category) => (
+                                        <option
+                                            key={category._id}
+                                            value={category._id}
+                                            selected={
+                                                category._id === parentCategory
+                                            }
+                                        >
+                                            {category.name}
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>
+                    </CustomModal>
+                )}
+            </DashboardLayout>
+        </>
     );
 };
 

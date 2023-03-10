@@ -9,6 +9,7 @@ import CustomTable from "@/components/Table/CustomTable/CustomTable";
 import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -21,8 +22,7 @@ const AllBrands = () => {
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [colors, setBrands] = useState<IBrand[]>([]);
-    // step1
-    const [keyword, setKeyword] = useState("");
+    // const [keyword, setKeyword] = useState("");
     const { state } = useStoreContext();
     const { user } = state;
 
@@ -32,8 +32,8 @@ const AllBrands = () => {
 
     // search filter
     // const filtering = categories.filter(category => category.name.toLowerCase().includes(keyword));
-    const searched = (keyword: any) => (c: any) =>
-        c.name.toLowerCase().includes(keyword);
+    // const searched = (keyword: any) => (c: any) =>
+    //     c.name.toLowerCase().includes(keyword);
 
     const handleShowBrand = () =>
         getListOfBrands()
@@ -92,28 +92,34 @@ const AllBrands = () => {
         }
     };
     return (
-        <DashboardLayout>
-            <div>
-                <CustomTable
-                    arrayData={colors}
-                    handleRemoveData={handleRemoveBrand}
-                    handleEditData={handleEditBrand}
-                    dataLabelName={"Brand"}
-                />
-            </div>
+        <>
+            <HeadSeo
+                title="All Brand"
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <DashboardLayout>
+                <div>
+                    <CustomTable
+                        arrayData={colors}
+                        handleRemoveData={handleRemoveBrand}
+                        handleEditData={handleEditBrand}
+                        dataLabelName={"Brand"}
+                    />
+                </div>
 
-            {/*Show Update Brand Modal */}
-            {openModal && (
-                <CustomModal
-                    closeModal={closeModal}
-                    handleEditSubmit={handleUpdateSubmit}
-                    setUpdateValue={setUpdateBrandName}
-                    updateValue={updateBrandName}
-                    title={"Update Brand"}
-                    labelName={"Brand Name"}
-                />
-            )}
-        </DashboardLayout>
+                {/*Show Update Brand Modal */}
+                {openModal && (
+                    <CustomModal
+                        closeModal={closeModal}
+                        handleEditSubmit={handleUpdateSubmit}
+                        setUpdateValue={setUpdateBrandName}
+                        updateValue={updateBrandName}
+                        title={"Update Brand"}
+                        labelName={"Brand Name"}
+                    />
+                )}
+            </DashboardLayout>
+        </>
     );
 };
 

@@ -4,6 +4,7 @@ import CustomerTable from "@/components/Dashboard/Admin/CustomerTable/CustomerTa
 import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import { useEffect, useState } from "react";
 
 const Customers = () => {
@@ -30,11 +31,17 @@ const Customers = () => {
         }
     };
     return (
-        <DashboardLayout>
-            <div>
-                <CustomerTable data={users} />
-            </div>
-        </DashboardLayout>
+        <>
+            <HeadSeo
+                title="Customers"
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <DashboardLayout>
+                <div>
+                    <CustomerTable data={users} />
+                </div>
+            </DashboardLayout>
+        </>
     );
 };
 

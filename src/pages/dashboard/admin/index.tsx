@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import Loader from "@/components/Loader/Loader";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { SlHandbag } from "react-icons/sl";
@@ -17,6 +16,7 @@ import RecentProduct from "@/components/Dashboard/Admin/Dashborad/RecentProduct/
 import RecentUsers from "@/components/Dashboard/Admin/Dashborad/RecentUsers/RecentUsers";
 import LineChart from "@/components/Dashboard/Admin/Dashborad/LineChart/LineChart";
 import useCheckAdmin from "@/hooks/useCheckAdmin";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 type DashboardPropType = {
     products: IProduct[];
@@ -66,8 +66,12 @@ export default function Dashboard({
     };
 
     return (
-        <DashboardLayout>
-           
+        <>
+            <HeadSeo
+                title={"Aladin-Dashboard"}
+                content="Aladin Industries Ltd. Providing reliable products since 2022"
+            />
+            <DashboardLayout>
                 <div>
                     {/* Dash Widget Card */}
                     <section>
@@ -119,8 +123,8 @@ export default function Dashboard({
                         </div>
                     </section>
                 </div>
-          
-        </DashboardLayout>
+            </DashboardLayout>
+        </>
     );
 }
 
