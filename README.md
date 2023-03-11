@@ -29,22 +29,22 @@
 
 -   ### Product Details Page
 <div align="center">
-    <img width="700" src="https://github.com/programming-hero-web-course-4/b612-used-products-resale-clients-side-MuhammadShohagIslam/blob/main/preview/productDetails/project-details.png">
+    <img width="800" src="https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/productDetails/project-details.png">
 </div> 
 <div align="center">
-    <img width="700" src="https://github.com/programming-hero-web-course-4/b612-used-products-resale-clients-side-MuhammadShohagIslam/blob/main/preview/productDetails/description.JPG">
+    <img width="800" src="(https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/productDetails/description.JPG">
 </div> 
 <div align="center">
-    <img width="700" src="https://github.com/programming-hero-web-course-4/b612-used-products-resale-clients-side-MuhammadShohagIslam/blob/main/preview/productDetails/reviewComment.JPG">
+    <img width="800" src="https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/productDetails/reviewComment.JPG">
 </div> 
 <div align="center">
-    <img width="700" src="https://github.com/programming-hero-web-course-4/b612-used-products-resale-clients-side-MuhammadShohagIslam/blob/main/preview/productDetails/shoppingCart.JPG">
+    <img width="800" src="https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/productDetails/shoppingCart.JPG">
 </div> 
 <p>On the Product Details Page, we can see details of the product, where we can see product image with zoom way, we can add product wish list, add to cart. We can use how many review of the product with percentage. We can create add review, update, and searching system of the review.</p>
 
 -   ### Shop Page
 <div align="center">
-    <img width="700" src="https://github.com/programming-hero-web-course-4/b612-used-products-resale-clients-side-MuhammadShohagIslam/blob/main/preview/shop.png">
+    <img width="800" src="https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/shop.png">
 </div> 
 <p>On the Shop Page, we can all product where we can filtering(Price Range, color, Price Low to Highest, Highest to Lowest, Rating, Category, Brand, Shipping, Top Popular, Newest Product), Product Showing With Grid Columns Change</p>
 
@@ -69,33 +69,33 @@
 
 -   ### Dashboard All Orders Page
 <div align="center">
-    <img width="700" src="https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/dashboard/orders.png">
+    <img width="800" src="https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/dashboard/orders.png">
 </div> 
 <p>On the Admin Dashboard All Orders Page, we can see all of the user orders with shipping status functionality </p>
 
 -   ### Dashboard All Products Page
 <div align="center">
-    <img width="700" src="https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/dashboard/allProducts.png">
+    <img width="800" src="https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/dashboard/allProducts.png">
 </div> 
 <p>On the Admin Dashboard All Products Page, we can see all of the product with whole information with edit and delete functionality</p>
 
 -   ### Dashboard Add Product Page
 <div align="center">
-    <img width="700" src="https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/dashboard/addProduct.png">
+    <img width="800" src="https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/dashboard/addProduct.png">
 </div> 
 <p>On the Dashboard Add Product Page, we can update existing product</p>
 
 -   ### Dashboard Update Product Page
 
 <div align="center">
-    <img width="700" src="https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/dashboard/updateProduct.png">
+    <img width="800" src="https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/dashboard/updateProduct.png">
 </div>  
 <p>On the Update Product Page, We can update or edit specific product if we want to edit product</p>
 
 -   ### Categories Page
 
 <div align="center">
-    <img width="700" src="https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/dashboard/allCategory.png">
+    <img width="700" src="https://github.com/MuhammadShohagIslam/ecommerce-frontend/blob/main/preview/dashboard/allCategory.JPG">
 </div> 
 <p>On the My Categories Page, We can see all of our categories where we need to creating time product</p>
 
