@@ -9,13 +9,21 @@ import Link from "next/link";
 import Image from "next/image";
 import classes from "./StripeCheckout.module.css";
 import { StripeCardElementChangeEvent } from "@stripe/stripe-js";
+import { IProduct } from "types/product.type";
 
+type ProductType = {
+    product: IProduct;
+    count: number;
+    color: string;
+    size: string;
+};
 const StripeCheckout = () => {
     const [succeeded, setSucceeded] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
     const [processing, setProcessing] = useState<boolean>(false);
     const [disabled, setDisabled] = useState(true);
     const [clientSecret, setClientSecret] = useState<string>("");
+    const [product, setProduct] = useState<ProductType>();
     const [cartTotal, setCartTotal] = useState<number>(0);
     const [totalPriceAfterDiscount, setTotalPriceAfterDiscount] =
         useState<number>(0);
@@ -35,6 +43,7 @@ const StripeCheckout = () => {
                 setCartTotal(res.data.cartTotal);
                 setTotalPriceAfterDiscount(res.data.totalPriceAfterDiscount);
                 setPayable(res.data.payable);
+                setProduct(res.data.product);
             });
         }
     }, [user, isCouponed]);
@@ -82,10 +91,12 @@ const StripeCheckout = () => {
                 setProcessing(false);
             } else {
                 // create order
-                createOrder(payload, user!.token)
-                    .then((res) => {
-                       
-                    })
+                const paymentInfoObject = {
+                    paymentIntents: payload,
+                    paymentBy: "Stripe",
+                };
+                createOrder(paymentInfoObject, user!.token)
+                    .then((res) => {})
                     .catch((error) => {
                         console.log(error);
                     });
@@ -129,13 +140,24 @@ const StripeCheckout = () => {
 
             <div className="w-full bg-white border border-gray-200 rounded-lg shadow my-5">
                 <div className="flex flex-col items-center pb-10 rounded-full">
-                    <Image
-                        height={200}
-                        width={400}
-                        className="w-80 sm:w-60 h-62 mb-3 rounded-full shadow-lg"
-                        src="/docs/images/people/profile-picture-3.jpg"
-                        alt="payment image"
-                    />
+                    {product &&
+                    product.product.images &&
+                    product.product?.images[0] ? (
+                        <Image
+                            height={200}
+                            width={400}
+                            className="w-80 sm:w-60 h-62 mb-3 rounded-full shadow-lg"
+                            src={product.product.images[0].url}
+                            alt="payment image"
+                        />
+                    ) : (
+                        <img
+                            src="../../../../banner/laptop1Banner.jpg"
+                            alt="payment image"
+                            className="w-80 sm:w-60 h-62 mb-3 rounded-full shadow-lg"
+                        />
+                    )}
+
                     <div className="flex sm:block space-x-3 sm:space-x-0 mt-4 md:mt-6 sm:px-10">
                         <button className="flex transition-all items-center justify-center border-2 border-green-400 px-4 py-2 text-sm font-medium text-center text-white bg-success rounded-lg hover:bg-transparent hover:text-primary focus:ring-4 focus:outline-none focus:ring-green-300 sm:w-full ">
                             {" "}
@@ -179,7 +201,7 @@ const StripeCheckout = () => {
                         Payment Successful.{" "}
                         <Link
                             className="text-green-500 cursor-pointer"
-                            href="/user/history"
+                            href="/dashboard/user/history"
                         >
                             See it in your purchase history.
                         </Link>

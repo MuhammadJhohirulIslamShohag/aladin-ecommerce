@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
+import { FaUserGraduate } from "react-icons/fa";
 import { AiFillDashboard } from "react-icons/ai";
 import { MdLogout } from "react-icons/md";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
@@ -130,17 +131,15 @@ const DashboardNavbar = ({
                             className="btn btn-ghost btn-circle avatar"
                         >
                             <div className="w-10 rounded-full">
-                                {firebaseUser !== null && (
+                                {(firebaseUser !== null &&  firebaseUser?.photoURL )? (
                                     <Image
-                                        src={
-                                            firebaseUser?.photoURL
-                                                ? firebaseUser?.photoURL
-                                                : "/doc"
-                                        }
+                                        src={firebaseUser.photoURL}
                                         alt={"admin profile logo"}
                                         width={100}
                                         height={100}
                                     />
+                                ):(
+                                    <FaUserGraduate className="w-10 h-10 text-gray-900 p-1 rounded-full ring-2 ring-green-400" />
                                 )}
                             </div>
                         </label>

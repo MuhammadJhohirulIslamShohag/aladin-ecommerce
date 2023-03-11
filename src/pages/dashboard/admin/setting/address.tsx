@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { currentUser } from "@/api/auth";
 import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
-import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
@@ -11,7 +10,6 @@ import { BiEdit } from "react-icons/bi";
 import { IProfile } from "../../../../../types/profile.types";
 
 const AdminAddress = () => {
-    useCheckAdmin();
     const [showModal, setShowModal] = useState<boolean>(false);
     const [values, setValues] = useState<IProfile>({
         username: "",

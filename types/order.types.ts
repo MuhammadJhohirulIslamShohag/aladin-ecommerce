@@ -1,5 +1,5 @@
-import { IProduct } from 'types/product.type';
-import { ICustomers } from './customers.type';
+import { IProduct } from "types/product.type";
+import { ICustomers } from "./customers.type";
 
 export interface IOrder {
     _id: string;
@@ -7,11 +7,12 @@ export interface IOrder {
         product: IProduct;
         count: number;
         color: string;
-        size:string;
+        size: string;
     }[];
     paymentIntents: any;
     orderStatus: string;
-    orderedBy: any,
+    orderedBy: any;
+    paymentBy?: string;
     createdAt: Date;
     updatedAt: Date;
     __v: number;

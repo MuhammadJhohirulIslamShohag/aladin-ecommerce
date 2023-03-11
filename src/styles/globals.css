@@ -9,6 +9,11 @@
         margin: 0 auto;
     }
 }
+
+/* Start React Select */
+.select-placeholder-text {
+    color: #d1d5db !important;
+}
 .react-select__control {
     box-shadow: none !important;
     border-color: white !important;
@@ -17,6 +22,7 @@
 .react-select__placeholder {
     color: black !important;
 }
+/* End React Select */
 
 /* swiper for sub_categories_swiper */
 .sub_categories_swiper .swiper-button-prev,
@@ -53,7 +59,6 @@
 .sub_categories_swiper .swiper-button-prev {
     left: 93% !important;
 }
-/* Start Small Devices */
 @media only screen and (max-width: 767px) {
     .sub_categories_swiper .swiper-button-prev {
         left: 68% !important;
@@ -62,9 +67,7 @@
     .sub_categories_swiper .swiper-button-prev {
         margin-top: 98px !important;
     }
-} /* End Small Devices */
-
-/* Start Medium Devices */
+}
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .sub_categories_swiper .swiper-button-prev {
         left: 87% !important;
@@ -73,9 +76,7 @@
     .sub_categories_swiper .swiper-button-prev {
         margin-top: 105px !important;
     }
-} /* End Medium Devices */
-
-/* Start Large Devices */
+}
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
     .sub_categories_swiper .swiper-button-prev {
         left: 90% !important;
@@ -118,7 +119,6 @@
 .new_arrivals_swiper .swiper-button-prev {
     left: 93% !important;
 }
-/* Start Small Devices */
 @media only screen and (max-width: 767px) {
     .new_arrivals_swiper .swiper-button-prev {
         left: 68% !important;
@@ -127,9 +127,7 @@
     .new_arrivals_swiper .swiper-button-prev {
         margin-top: 230px !important;
     }
-} /* End Small Devices */
-
-/* Start Medium Devices */
+}
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .new_arrivals_swiper .swiper-button-prev {
         left: 87% !important;
@@ -138,9 +136,7 @@
     .new_arrivals_swiper .swiper-button-prev {
         margin-top: 230px !important;
     }
-} /* End Medium Devices */
-
-/* Start Large Devices */
+}
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
     .new_arrivals_swiper .swiper-button-prev {
         left: 90% !important;
@@ -183,7 +179,7 @@
 .surprising_sales .swiper-button-prev {
     left: 93% !important;
 }
-/* Start Small Devices */
+
 @media only screen and (max-width: 767px) {
     .surprising_sales .swiper-button-prev {
         left: 68% !important;
@@ -192,16 +188,12 @@
     .surprising_sales .swiper-button-prev {
         margin-top: 184px !important;
     }
-} /* End Small Devices */
-
-/* Start Medium Devices */
+}
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .surprising_sales .swiper-button-prev {
         left: 87% !important;
     }
-} /* End Medium Devices */
-
-/* Start Large Devices */
+}
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
     .surprising_sales .swiper-button-prev {
         left: 90% !important;
@@ -245,7 +237,6 @@
     left: 93% !important;
 }
 
-/* Start Small Devices */
 @media only screen and (max-width: 767px) {
     .blog_swiper .swiper-button-prev {
         left: 68% !important;
@@ -254,16 +245,12 @@
     .blog_swiper .swiper-button-prev {
         margin-top: 220px !important;
     }
-} /* End Small Devices */
-
-/* Start Medium Devices */
+}
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .blog_swiper .swiper-button-prev {
         left: 87% !important;
     }
-} /* End Medium Devices */
-
-/* Start Large Devices */
+} 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
     .blog_swiper .swiper-button-prev {
         left: 90% !important;
@@ -314,6 +301,8 @@
 .react-datepicker-popper {
     z-index: 99999 !important;
 }
+
+/* Start React Date Picker */
 .react-datepicker__day--selected:hover,
 .react-datepicker__day--in-selecting-range:hover,
 .react-datepicker__day--in-range:hover,
@@ -349,12 +338,14 @@
 .react-datepicker__year-text--in-range {
     background-color: #43c24f !important;
 }
+/* End React Date Picker */
 
 /*line chart */
 canvas {
     width: 100% !important;
     height: 100% !important;
 }
+
 /* Start Small Devices */
 @media only screen and (max-width: 767px) {
     .swiper-button-prev {
@@ -368,8 +359,45 @@ canvas {
         width: 100% !important;
         height: 280px !important;
     }
-} /* End Small Devices */
-
-.select-placeholder-text {
-    color: #d1d5db !important;
 }
+
+
+/* Start Scroll To Top */
+.scroll-to-top{
+    background-color: #36D399 !important;
+    transition: all .4s;
+}
+.scroll-to-top svg {
+    width: 19px;
+    height: 27px;
+    display: inline-block;
+    fill: white;
+    transition: all .4s;
+}
+.scroll-to-top:hover {
+    background-color: #000 !important;
+}
+
+@media only screen and (max-width: 767px) {
+    .scroll-to-top {
+        right: 10px !important;
+        bottom: 33px !important;
+        width: 33px !important;
+        height: 33px !important;
+    }
+    .scroll-to-top svg {
+        width: 12px;
+        height: 22px;
+        display: inline-block;
+        fill: #000;
+        transition: all .5s;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .scroll-to-top {
+        right: 12px !important;
+        bottom: 33px !important;
+    }
+}
+/* End Scroll To Top */

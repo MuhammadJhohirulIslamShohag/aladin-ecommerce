@@ -3,7 +3,6 @@ import { currentUser } from "@/api/auth";
 import FileUpload from "@/components/FileUpload/FileUpload";
 import FormGroup from "@/components/Form/FormGroup";
 import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
-import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
@@ -20,7 +19,6 @@ type FormValues = {
 };
 
 const AdminProfile = () => {
-    useCheckAdmin();
     const [showModal, setShowModal] = useState<boolean>(false);
     const [loadingForUpdateProfileImg, setLoadingForUpdateProfileImg] =
         useState<boolean>(false);
@@ -140,16 +138,14 @@ const AdminProfile = () => {
                         </h2>
                         <div className="grid grid-cols-8 sm:grid-cols-1">
                             <div className="col-span-2 sm:flex sm:flex-col sm:items-center">
-                                {values.image?.url && (
-                                    <FileUpload
-                                        values={values}
-                                        setValues={setValues}
-                                        setLoading={
-                                            setLoadingForUpdateProfileImg
-                                        }
-                                        loading={loadingForUpdateProfileImg}
-                                    />
-                                )}
+                                <FileUpload
+                                    values={values}
+                                    setValues={setValues}
+                                    setLoading={
+                                        setLoadingForUpdateProfileImg
+                                    }
+                                    loading={loadingForUpdateProfileImg}
+                                />
                             </div>
                             <div className="col-span-6 m-auto p-4">
                                 <div className="relative flex justify-end items-center">

@@ -17,27 +17,22 @@ const OrderInvoiceDownload = ({ order }: { order: IOrder }) => {
                         <Text style={[styles.tableCell]}>Title</Text>
                         <Text style={[styles.tableCell]}>Price</Text>
                         <Text style={[styles.tableCell]}>Quantity</Text>
-                        <Text style={[styles.tableCell]}>Brand</Text>
-                        <Text style={[styles.tableCell]}>Color</Text>
                     </View>
                     <>
                         {order.products.length &&
                             order.products.map((product) => (
                                 <View
                                     style={[styles.row]}
-                                    key={product.product._id}
+                                    key={product.product?._id}
                                 >
                                     <Text style={[styles.cell]}>
-                                        {product.product.title}
+                                        {product.product?.title}
                                     </Text>
                                     <Text style={[styles.cell]}>
-                                        {product.count}
+                                        {product?.product?.price}
                                     </Text>
                                     <Text style={[styles.cell]}>
-                                        <>{product.product.brand}</>
-                                    </Text>
-                                    <Text style={[styles.cell]}>
-                                        <>{product.color}</>
+                                        {product?.count}
                                     </Text>
                                 </View>
                             ))}
@@ -125,6 +120,19 @@ const styles: any = StyleSheet.create({
         margin: 12,
         fontSize: 14,
         textAlign: "justify",
+    },
+    cell: {
+        fontSize: 10,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignContent: "stretch",
+        flexWrap: "nowrap",
+        alignItems: "stretch",
+        flexGrow: 0,
+        flexShrink: 0,
+        flexBasis: 35,
+        textAlign: "right",
     },
     image: {
         marginVertical: 15,

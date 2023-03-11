@@ -5,7 +5,6 @@ import { createProduct } from "@/api/products";
 import { getListOfSizes } from "@/api/size";
 import CreateProductForm from "@/components/Form/CreateProduct/CreateProductForm";
 import { IFormInput } from "@/components/Form/CreateProduct/FormInput.types";
-import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
@@ -68,7 +67,6 @@ const AddProduct = ({
     sizesData,
     brandsData,
 }: AddProductPropType) => {
-    useCheckAdmin();
     const [values, setValues] = useState({
         ...initialValues,
         categories: categories,

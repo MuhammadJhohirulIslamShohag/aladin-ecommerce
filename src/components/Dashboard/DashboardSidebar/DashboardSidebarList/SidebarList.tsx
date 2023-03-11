@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { FaShoppingBag, FaUsers, FaHeart } from "react-icons/fa";
+import { FaShoppingBag, FaUsers } from "react-icons/fa";
 import { AiFillSetting, AiFillDashboard } from "react-icons/ai";
 import { RiCoupon4Line } from "react-icons/ri";
+import { BsCartCheck } from "react-icons/bs";
 import { BiCategory } from "react-icons/bi";
 import { MdOutlineProductionQuantityLimits, MdLogout } from "react-icons/md";
 import SideBarListItem from "./SideBarListItem/SideBarListItem";
@@ -44,7 +45,18 @@ const SidebarList = () => {
                 <AiFillDashboard className="h-[19px] w-[19px] text-green-400" />
                 <span className="ml-3">Dashboard</span>
             </SideBarListItem>
-
+            <SideBarListItem navigationLink="/dashboard/admin/orders">
+                <BsCartCheck className="h-[19px] w-[19px] text-green-400" />
+                <span className="flex-1 ml-3 whitespace-nowrap">Orders</span>
+            </SideBarListItem>
+            <SideBarListItem navigationLink="/dashboard/admin/customers">
+                <FaShoppingBag className="h-[19px] w-[19px] text-green-400" />
+                <span className="flex-1 ml-3 whitespace-nowrap">Customers</span>
+            </SideBarListItem>
+            <SideBarListItem navigationLink="/dashboard/admin/coupons">
+                <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
+                <span className="flex-1 ml-3 whitespace-nowrap">Coupons</span>
+            </SideBarListItem>
             <SideBarListItem
                 open={openProduct}
                 setOpen={setOpenProduct}
@@ -154,40 +166,6 @@ const SidebarList = () => {
                     name="Add SubCategory"
                 />
             </SideBarListItem>
-
-            <SideBarListItem navigationLink="/dashboard/admin/coupons">
-                <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
-
-                <span className="flex-1 ml-3 whitespace-nowrap">Coupons</span>
-            </SideBarListItem>
-            <SideBarListItem navigationLink="/dashboard/admin/customers">
-                <FaShoppingBag className="h-[19px] w-[19px] text-green-400" />
-
-                <span className="flex-1 ml-3 whitespace-nowrap">Customers</span>
-            </SideBarListItem>
-            <SideBarListItem navigationLink="/dashboard/admin/orders">
-                <FaShoppingBag className="h-[19px] w-[19px] text-green-400" />
-
-                <span className="flex-1 ml-3 whitespace-nowrap">Orders</span>
-            </SideBarListItem>
-
-            <SideBarListItem
-                open={openAllUsers}
-                setOpen={setOpenAllUsers}
-                icon={<FaUsers className="h-[19px] w-[19px] text-green-400" />}
-                dropdownMainMenuName="All Users"
-                isDropdownList
-            >
-                <SideBarDropdownListItem
-                    dropdownNavigationLink="/dashboard/admin/allSellers"
-                    name="All Sellers"
-                />
-                <SideBarDropdownListItem
-                    dropdownNavigationLink="/dashboard/admin/allBuyers"
-                    name="All Buyers"
-                />
-            </SideBarListItem>
-
             <SideBarListItem
                 open={openSetting}
                 setOpen={setOpenSetting}
@@ -204,6 +182,22 @@ const SidebarList = () => {
                 <SideBarDropdownListItem
                     dropdownNavigationLink="/dashboard/admin/setting/address"
                     name="Address"
+                />
+            </SideBarListItem>
+            <SideBarListItem
+                open={openAllUsers}
+                setOpen={setOpenAllUsers}
+                icon={<FaUsers className="h-[19px] w-[19px] text-green-400" />}
+                dropdownMainMenuName="All Users"
+                isDropdownList
+            >
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/allSellers"
+                    name="All Sellers"
+                />
+                <SideBarDropdownListItem
+                    dropdownNavigationLink="/dashboard/admin/allBuyers"
+                    name="All Buyers"
                 />
             </SideBarListItem>
             <SideBarListItem isLabel>

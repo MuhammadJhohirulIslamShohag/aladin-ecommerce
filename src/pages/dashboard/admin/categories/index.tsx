@@ -6,7 +6,6 @@ import {
 } from "@/api/category";
 import CategoryTable from "@/components/Dashboard/Admin/CategoryTable/CategoryTable";
 import CustomModal from "@/components/Modal/CustomModal/CustomModal";
-import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
@@ -16,7 +15,6 @@ import toast from "react-hot-toast";
 import { ICategories } from "types/category.type";
 
 const AllCategory = () => {
-    useCheckAdmin();
     const [values, setValues] = useState({ images: [] });
     const [updateCategoryName, setUpdateCategoryName] = useState<string>("");
     const [categorySlug, setCategorySlug] = useState<string>("");

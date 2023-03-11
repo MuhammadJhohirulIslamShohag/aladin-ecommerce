@@ -12,7 +12,6 @@ import useCheckUser from "@/hooks/useCheckUser";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 const History = () => {
-    useCheckUser();
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
     const { state } = useStoreContext();
@@ -46,7 +45,7 @@ const History = () => {
                     <PDFDownloadLink
                         document={<OrderInvoiceDownload order={order} />}
                         fileName="invoice.pdf"
-                        className="btn btn-sm btn-block btn-outline-info"
+                        className="btn btn-sm btn-block btn-outline-info text-gray-900 hover:text-white"
                         style={{ width: "100%" }}
                     >
                         DownLoad PDF
@@ -55,7 +54,6 @@ const History = () => {
             </div>
         );
     };
-
     return (
         <>
             <HeadSeo
@@ -68,7 +66,7 @@ const History = () => {
                         <h4 className="text-center">Loading...</h4>
                     ) : (
                         <>
-                            <h4 className="text-center text-green-400 mt-2 mb-0">
+                            <h4 className="text-center text-lg text-green-400 mt-2 mb-0">
                                 {orders && orders.length > 0
                                     ? "User Purchase Order"
                                     : "No Purchase Order"}

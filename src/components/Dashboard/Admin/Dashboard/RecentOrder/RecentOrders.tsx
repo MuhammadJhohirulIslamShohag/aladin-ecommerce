@@ -27,10 +27,13 @@ const RecentOrder = (props: RecentOrderType) => {
                                 Total
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Payment
+                                Payment Status
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Status
+                                Payment Method
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Order Status
                             </th>
                         </tr>
                     </thead>

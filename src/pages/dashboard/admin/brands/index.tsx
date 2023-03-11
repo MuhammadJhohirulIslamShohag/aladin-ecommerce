@@ -6,7 +6,6 @@ import {
 } from "@/api/brand";
 import CustomModal from "@/components/Modal/CustomModal/CustomModal";
 import CustomTable from "@/components/Table/CustomTable/CustomTable";
-import useCheckAdmin from "@/hooks/useCheckAdmin";
 import DashboardLayout from "@/layouts/DashboardLayout/DashboardLayout";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
@@ -16,7 +15,6 @@ import toast from "react-hot-toast";
 import { IBrand } from "types/brand.types";
 
 const AllBrands = () => {
-    useCheckAdmin();
     const [updateBrandName, setUpdateBrandName] = useState<string>("");
     const [colorSlug, setBrandSlug] = useState<string>("");
     const [openModal, setOpenModal] = useState<boolean>(false);

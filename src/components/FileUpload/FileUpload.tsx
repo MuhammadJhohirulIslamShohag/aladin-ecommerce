@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import Image from "next/image";
 import { AiOutlineUser } from "react-icons/ai";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import { uploadingImageFile, deletingImageFile } from "@/api/cloudinary";
+import { uploadingImageFile } from "@/api/cloudinary";
 import { createOrUpdateUser } from "@/api/auth";
 import { FileUploadPropsType } from "./FileUpload.types";
 
@@ -128,16 +128,8 @@ const FileUpload = ({
             <div className="mb-3 relative">
                 {values?.image?.url ? (
                     <div className="overflow-hidden h-32 relative mb-2">
-                        {/* <span
-                            onClick={() =>
-                                handleImageRemove(values?.image?.public_id!)
-                            }
-                            className="absolute left-[70%] cursor-pointer top-0 text-rose-500"
-                        >
-                            X
-                        </span> */}
                         <Image
-                            className="h-full w-[75%] rounded-sm md:w-full sm:w-full"
+                            className="h-full w-[98%] rounded-sm md:w-full sm:w-full"
                             src={values?.image.url}
                             alt={values?.username!}
                             width={100}
@@ -146,7 +138,9 @@ const FileUpload = ({
                         />
                     </div>
                 ) : (
-                    <AiOutlineUser className="h-full w-[75%] rounded-sm" />
+                    <div className="overflow-hidden h-32 relative mb-2">
+                        <AiOutlineUser className="h-full w-full rounded-sm  md:w-full sm:w-full" />
+                    </div>
                 )}
             </div>
             <div className="mb-3">
@@ -158,7 +152,6 @@ const FileUpload = ({
                         name="image"
                         onChange={handleFileChange}
                     />
-
                     {loading ? "Uploading " : "Profile Upload"}
                 </label>
             </div>

@@ -125,7 +125,6 @@ const ProductsTable = ({
                                         : `bg-${sc.name.toLowerCase()}-600`
                                 } border border-black border-opacity-10 rounded-full`}
                             ></span>
-                            // <Fragment  key={sc._id}> </Fragment>
                         ))}
                 </span>
             ),

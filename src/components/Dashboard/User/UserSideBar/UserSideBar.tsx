@@ -16,11 +16,10 @@ const UserSideBar = () => {
                     {firebaseUser?.photoURL ? (
                         <Image
                             src={firebaseUser.photoURL}
-                            className="rounded-full"
+                            className="rounded-full h-auto"
                             alt="profile Logo"
                             width={100}
                             height={130}
-                            priority
                         />
                     ) : (
                         <FaUserGraduate className="w-28 h-28 text-gray-900 p-1 rounded-full ring-2 ring-green-300" />

@@ -3,18 +3,22 @@ import { MdOutlineVerified } from "react-icons/md";
 import { VscUnverified } from "react-icons/vsc";
 
 const RecentOrderRow = (props: any) => {
-    const { orderedBy, paymentIntents, orderStatus } = props.order;
+    const { orderedBy, paymentIntents, orderStatus, paymentBy } = props.order;
 
     return (
         <tr className="bg-white border-b hover:bg-gray-50 ">
-            <td className="w-32 p-4">{orderedBy?.name}</td>
-            <td className="px-6 py-4 font-semibold text-gray-900 ">
-                ${paymentIntents.amount / 100}
+            <td scope="row" className="w-32 p-4">
+                <span className="min-w-max flex">{orderedBy?.fullName}</span>
+            </td>
+            <td scope="row" className="px-6 py-4 font-semibold text-gray-900 ">
+                <span className="min-w-max flex">
+                    ${paymentIntents.amount / 100}
+                </span>
             </td>
 
-            <td className="px-6 py-4 font-semibold text-gray-900">
+            <td scope="row" className="px-6 py-4 font-semibold text-gray-900">
                 <span
-                    className={`text-lg ${
+                    className={`text-lg min-w-max flex ${
                         paymentIntents.status === "succeeded"
                             ? "text-green-500"
                             : "text-red-500"
@@ -27,9 +31,14 @@ const RecentOrderRow = (props: any) => {
                     )}
                 </span>
             </td>
-            <td className="px-6 py-4 font-semibold text-gray-900 ">
+            <td scope="row" className="px-6 py-4 font-semibold text-gray-900 ">
+                <span className="min-w-max flex">
+                    {paymentBy ? paymentBy : "Null"}
+                </span>
+            </td>
+            <td scope="row" className="px-6 py-4 font-semibold text-gray-900 ">
                 <span
-                    className={`bg-gradient-to-br ${
+                    className={`min-w-max flex bg-gradient-to-br ${
                         orderStatus === "Not Processed"
                             ? "from-red-500"
                             : orderStatus === "Processing"

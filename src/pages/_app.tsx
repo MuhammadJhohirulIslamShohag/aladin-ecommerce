@@ -1,5 +1,6 @@
 import { ReactElement, ReactNode, useState, useEffect } from "react";
 import type { NextPage } from "next";
+import ScrollToTop from "react-scroll-to-top";
 import "@/styles/globals.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "swiper/swiper.min.css";
@@ -21,7 +22,7 @@ type AppPropsWithLayout = AppProps & {
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter();
-    
+
     useEffect(() => {
         const start = () => {
             setLoading(true);
@@ -43,6 +44,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
     return getLayout(
         <StoreContextProvider>
+            <ScrollToTop smooth color="#000" />
             <Toaster position="top-right" reverseOrder={false} />
             {loading ? <Preloader /> : <Component {...pageProps} />}
         </StoreContextProvider>

@@ -16,7 +16,6 @@ interface WishListProductType {
     isWishList: boolean;
 }
 const UserWishlist = () => {
-    useCheckUser();
     const [wishLists, setWishList] = useState([] as WishListProductType[]);
     const [loading, setLoading] = useState<boolean>(false);
     const { state } = useStoreContext();

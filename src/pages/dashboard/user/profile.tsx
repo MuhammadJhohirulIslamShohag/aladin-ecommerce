@@ -17,7 +17,6 @@ import { IProfile } from "../../../../types/profile.types";
 type FormValues = {
     newPassword: string;
 };
-
 const Profile = () => {
     useCheckUser();
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -135,14 +134,12 @@ const Profile = () => {
                 </h2>
                 <div className="grid grid-cols-8 md:grid-cols-1 sm:grid-cols-1 ">
                     <div className="col-span-2 md:flex md:flex-col md:items-center sm:flex sm:flex-col sm:items-center">
-                        {values.image?.url && (
-                            <FileUpload
-                                values={values}
-                                setValues={setValues}
-                                setLoading={setLoadingForUpdateProfileImg}
-                                loading={loadingForUpdateProfileImg}
-                            />
-                        )}
+                        <FileUpload
+                            values={values}
+                            setValues={setValues}
+                            setLoading={setLoadingForUpdateProfileImg}
+                            loading={loadingForUpdateProfileImg}
+                        />
                     </div>
                     <div className="col-span-6 m-auto p-4 md:m-0 sm:m-0">
                         <div className="relative flex justify-end items-center">
