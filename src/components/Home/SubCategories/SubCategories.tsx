@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import AOS from "aos";
 import { ISubCategories } from "types/sub-category.type";
 import SectionTitle from "../../SectionTitle/SectionTitle";
 import SubCategoryCard from "./SubCategory/SubCategoryCard";
@@ -23,7 +24,11 @@ const SubCategories = ({
     }, [subCategories]);
 
     return (
-        <section className="container py-14 sm:py-8">
+        <section data-aos="fade-up"
+            data-aos-offset="200"
+            data-aos-delay="1"
+            data-aos-duration="1000"
+            data-aos-easing="ease-in-out" className="container py-14 sm:py-8">
             <SectionTitle title="Product By Sub Category " />
             <div className="mt-10">
                 <Swiper

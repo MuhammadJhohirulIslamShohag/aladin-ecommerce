@@ -20,7 +20,11 @@ const NewArrivals = ({ products }: PropsType) => {
     }, [products]);
 
     return (
-        <div className="container pt-3 sm:py-8">
+        <div data-aos="fade-up"
+            data-aos-offset="200"
+            data-aos-delay="1"
+            data-aos-duration="1000"
+            data-aos-easing="ease-in-out" className="container pt-3 sm:py-8">
             <SectionTitle title="New Arrivals" />
             <div className="mt-8">
                 <Swiper
@@ -29,7 +33,7 @@ const NewArrivals = ({ products }: PropsType) => {
                     autoplay={{
                         delay: 3000,
                         disableOnInteraction: false,
-                        pauseOnMouseEnter:true
+                        pauseOnMouseEnter: true
                     }}
                     modules={[Navigation, Autoplay]}
                     className="h-[515px] md:h-[545px] sm:h-[538px] new_arrivals_swiper"

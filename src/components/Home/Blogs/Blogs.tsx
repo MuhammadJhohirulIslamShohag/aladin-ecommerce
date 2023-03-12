@@ -18,7 +18,11 @@ const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
     }, []);
 
     return (
-        <div className="container py-12 sm:py-8" id="blog">
+        <div data-aos="fade-up"
+            data-aos-offset="200"
+            data-aos-delay="1"
+            data-aos-duration="1000"
+            data-aos-easing="ease-in-out" className="container py-12 sm:py-8" id="blog">
             <SectionTitle title="Popular Blogs" />
             <Swiper
                 slidesPerView={1}
@@ -26,7 +30,7 @@ const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
                 autoplay={{
                     delay: 4000,
                     disableOnInteraction: false,
-                    pauseOnMouseEnter:true
+                    pauseOnMouseEnter: true
                 }}
                 modules={[Navigation, Autoplay]}
                 className="h-[610px] sm:h-[570px] blog_swiper"

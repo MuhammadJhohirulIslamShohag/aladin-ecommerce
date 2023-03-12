@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import AOS from "aos";
 import { getListOfCategory } from "@/api/category";
 import { getProductsBySort } from "@/api/products";
 import Banner from "@/components/Home/Banner/Banner";
@@ -17,6 +19,7 @@ import Blogs from "@/components/Home/Blogs/Blogs";
 import { getListOfBlogs } from "@/api/blog";
 import { IBlog } from "types/blog.types";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
+import Preloader from '@/components/UI/Preloader/Preloader';
 
 type HomePropType = {
     products: IProduct[];
@@ -35,22 +38,40 @@ export default function Home({
     flashDealsProducts,
     blogs,
 }: HomePropType) {
+    const [loader, setLoader] = useState(true);
+    useEffect(() => {
+        let timeoutId: null | ReturnType<typeof setTimeout> | number = null
+        const timeOut = () => {
+            timeoutId = window.setTimeout(() => setLoader(false), 1000);
+        };
+        timeOut();
+        AOS.init();
+        AOS.refresh();
+        return () => window.clearTimeout(timeoutId!);
+    }, []);
     return (
         <>
             <HeadSeo
                 title="Aladin"
                 content="Aladin Industries Ltd. Providing reliable products since 2022"
             />
-            <MainLayout>
-                <Banner />
-                <Services />
-                <Categories categories={categories} />
-                <SubCategories subCategories={subCategories} />
-                <FlashDeals products={flashDealsProducts} />
-                <NewArrivals products={products} />
-                <BestSellers products={bestSellerProducts} />
-                <Blogs blogs={blogs} />
-            </MainLayout>
+            {loader ? (
+                <Preloader />
+            ) : (
+                <>
+                    <MainLayout>
+                        <Banner />
+                        <Services />
+                        <Categories categories={categories} />
+                        <SubCategories subCategories={subCategories} />
+                        <FlashDeals products={flashDealsProducts} />
+                        <NewArrivals products={products} />
+                        <BestSellers products={bestSellerProducts} />
+                        <Blogs blogs={blogs} />
+                    </MainLayout>
+                </>
+            )}
+
         </>
     );
 }

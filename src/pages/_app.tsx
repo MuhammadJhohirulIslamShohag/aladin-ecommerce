@@ -2,6 +2,7 @@ import { ReactElement, ReactNode, useState, useEffect } from "react";
 import type { NextPage } from "next";
 import ScrollToTop from "react-scroll-to-top";
 import "@/styles/globals.css";
+import 'aos/dist/aos.css';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "swiper/swiper.min.css";
 import "react-datepicker/dist/react-datepicker.css";

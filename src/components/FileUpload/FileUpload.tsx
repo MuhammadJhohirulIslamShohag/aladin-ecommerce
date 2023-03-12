@@ -144,7 +144,7 @@ const FileUpload = ({
                 )}
             </div>
             <div className="mb-3">
-                <label className="text-white py-2 px-9 bg-gradient-to-br from-green-400 to-voilet-500 px-3.6 text-xs rounded-1.8 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none hover:from-green-600 transition-all">
+                <label className="text-white w-full py-2 px-9 bg-gradient-to-br from-green-400 to-voilet-500 px-3.6 text-xs rounded-1.8 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none hover:from-green-600 transition-all">
                     <input
                         hidden
                         accept="image/*"
