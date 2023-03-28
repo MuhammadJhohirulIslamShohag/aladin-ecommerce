@@ -9,13 +9,13 @@ const NewsLetter = () => {
             data-aos-delay="1"
             data-aos-duration="1000"
             data-aos-easing="ease-in-out"
-            className="container bg-white flex justify-evenly sm:flex-col md:flex-col py-10 sm:py-6"
+            className="container bg-white flex justify-evenly sm:flex-col md:flex-col py-10 sm:pt-2 sm:pb-3"
         >
             <div className="w-2/5 sm:w-full">
-                <h2 className="mb-4 text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl ">Sign up for our newsletter</h2>
-                <p className="mx-auto mb-8 max-w-2xl font-light text-gray-500 md:mb-12 sm:text-xl ">Stay up to date with the announcements and exclusive discounts feel free to sign up with your email.</p>
+                <h2 className="mb-4 text-5xl tracking-tight font-extrabold text-gray-700 sm:text-3xl ">Sign up for our newsletter</h2>
+                <p className="mx-auto text-xl mb-8 max-w-2xl font-light text-gray-500 md:mb-12 sm:text-lg ">Stay up to date with the announcements and exclusive discounts feel free to sign up with your email.</p>
             </div>
-            <div>
+            <div className='mt-10 sm:mt-1 md:mt-3'>
                 <form>
                     <div className="items-center mx-auto mb-3 space-y-4 max-w-screen-sm sm:flex sm:space-y-0">
                         <div className="relative w-full">

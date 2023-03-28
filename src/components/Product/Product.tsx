@@ -95,7 +95,7 @@ const Product = ({ product }: { product: IProduct }) => {
             </div>
             <div className="p-5">
                 <AvgRating product={product} isHomeReviewShow/>
-                <h5 className="my-2 text-xl font-semibold tracking-tight text-primary">
+                <h5 className="my-2 text-xl font-semibold tracking-tight text-gray-800">
                     {title}
                 </h5>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">

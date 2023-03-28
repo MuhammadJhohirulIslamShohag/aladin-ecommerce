@@ -6,12 +6,12 @@ import { IBlog } from "types/blog.types";
 
 const Blog = ({ blog }: { blog: IBlog }) => {
     return (
-        <div className="card min-h-[513px] sm:min-h-[465px] bg-base-100 shadow-lg mt-7 sm:mt-3 mx-2">
+        <div className="card min-h-[513px] sm:min-h-[465px] bg-base-100 shadow-lg mt-7 sm:mt-4 mx-2">
             <figure className="h-[250px] sm:h-[150px] md:h-[190px]">
                 <img className="h-full" src={blog.image} alt={blog.title} />
             </figure>
             <div className="card-body sm:p-4 md:p-5">
-                <h2 className="card-title text-primary">{blog.title}</h2>
+                <h2 className="card-title text-gray-800">{blog.title}</h2>
                 <div className="flex md:flex-col sm:flex-col">
                     <div className="flex items-center text-success text-sm">
                         <BsCalendarDate />
@@ -28,7 +28,7 @@ const Blog = ({ blog }: { blog: IBlog }) => {
                         </span>
                     </div>
                 </div>
-                <p className="text-primary">
+                <p className="text-gray-600">
                     {blog.description.length > 140
                         ? `${blog.description.slice(0, 140)} ...`
                         : blog.description}

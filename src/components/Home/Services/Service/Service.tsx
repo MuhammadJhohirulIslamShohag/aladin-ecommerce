@@ -13,8 +13,8 @@ const Service = ({ children, name, info }: ServiceProps) => {
                 {children}
             </div>
             <div className="pl-3">
-                <h4 className="text-primary">{name}</h4>
-                <p className="text-">{info}</p>
+                <h4 className="text-gray-800">{name}</h4>
+                <p className="text-gray-400">{info}</p>
             </div>
         </div>
     );

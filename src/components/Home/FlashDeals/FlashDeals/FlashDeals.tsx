@@ -23,9 +23,9 @@ const FlashDeals = ({ products }: FlashDealsPropsType) => {
             data-aos-easing="ease-in-out"
         >
             <div className="p-6 flex sm:flex-col items-center justify-between text-white font-black text-2xl uppercase bg-green-300 mb-10 px-6">
-                <h2 className="text-black sm:text-lg">
+                <h2 className="text-gray-800 sm:text-lg">
                     Surprising Sells
-                    <MdFlashOn className="inline-block text-black" />
+                    <MdFlashOn className="inline-block text-gray-700" />
                 </h2>
                 <CountDown date={new Date(2023, 11, 30)} />
             </div>

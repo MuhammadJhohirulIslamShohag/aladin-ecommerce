@@ -28,7 +28,7 @@ const FlashDeal = ({ product }: { product: IProduct }) => {
                 </div>
             </div>
             <div className="flex items-center gap-2 top-2 mb-1">
-                <span className="font-bold text-black">
+                <span className="font-bold text-gray-800">
                     USD{" "}
                     {(product.price - ((product.price * product.discount) / 100)).toFixed(2)}{" "}
                     $
