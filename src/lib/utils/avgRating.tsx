@@ -4,10 +4,12 @@ import { IProduct } from "types/product.type";
 type AvgRatingPropType = {
     product: IProduct;
     isTotalReviewRating?: boolean;
+    isHomeReviewShow?: boolean;
 };
 export const AvgRating = ({
     product,
     isTotalReviewRating = false,
+    isHomeReviewShow = false
 }: AvgRatingPropType) => {
     let avgRating: number | undefined;
     let length: number | undefined;
@@ -25,7 +27,35 @@ export const AvgRating = ({
 
     return (
         <>
-            {!isTotalReviewRating ? (
+
+
+            {isHomeReviewShow ? (
+                <div className="mt-1">
+                    <div className="flex items-center flex-col">
+                        <div className="flex items-center relative">
+                            {avgRating ? (
+                                [0, 1, 2, 3, 4].map((rating: number) => (
+                                    <BsFillStarFill
+                                        key={rating}
+                                        className={`h-3.5 w-3.5 ${avgRating! > rating
+                                            ? "text-rose-600"
+                                            : "text-gray-200"
+                                            }
+         h-4 w-4 flex-shrink-0`}
+                                    />
+                                ))
+                            ) : (
+                                <span className="text-rose-600 text-sm font-semibold">
+                                    No Review Yet
+                                </span>
+                            )}
+                            <span className=" text-red-700 text-[15px] font-medium ml-1 -mt-[5px]">({length})</span>
+                             
+                        </div>
+                       
+                    </div>
+                </div>
+            ) : (!isTotalReviewRating) ? (
                 <div className="mt-1">
                     <h3 className="sr-only">Reviews</h3>
                     <div className="flex items-center">
@@ -34,11 +64,10 @@ export const AvgRating = ({
                                 [0, 1, 2, 3, 4].map((rating: number) => (
                                     <BsFillStarFill
                                         key={rating}
-                                        className={`${
-                                            avgRating! > rating
-                                                ? "text-rose-600"
-                                                : "text-gray-200"
-                                        }
+                                        className={`${avgRating! > rating
+                                            ? "text-rose-600"
+                                            : "text-gray-200"
+                                            }
              h-4 w-4 flex-shrink-0`}
                                     />
                                 ))
@@ -49,7 +78,7 @@ export const AvgRating = ({
                             )}
                         </div>
                         <span className="text-rose-600 text-sm">
-                            {length === 1
+                            {(length === 1 || length === 0)
                                 ? `${length} Review`
                                 : `${length} reviews`}{" "}
                         </span>
@@ -66,11 +95,10 @@ export const AvgRating = ({
                                 [0, 1, 2, 3, 4].map((rating: number) => (
                                     <BsFillStarFill
                                         key={rating}
-                                        className={`${
-                                            avgRating! > rating
-                                                ? "text-orange-400"
-                                                : "text-gray-200"
-                                        }
+                                        className={`${avgRating! > rating
+                                            ? "text-orange-400"
+                                            : "text-gray-200"
+                                            }
                                     h-4 w-4 flex-shrink-0 mr-1`}
                                     />
                                 ))}

@@ -7,6 +7,7 @@ import { MdPageview } from "react-icons/md";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
 import { IProduct } from "types/product.type";
+import { AvgRating } from '@/lib/utils/avgRating';
 
 const Product = ({ product }: { product: IProduct }) => {
     // const [isAddToCart, setIsAddToCart] = useState(false);
@@ -74,7 +75,7 @@ const Product = ({ product }: { product: IProduct }) => {
                     </li>
 
                     <label htmlFor="my-modal-3">
-                        <Link href={`products/${slug}`}>
+                        <Link href={`/products/${slug}`}>
                             <li
                                 className={`py-3 flex items-center px-3 rounded-lg ml-2 border-2 border-success hover:bg-primary hover:border-primary hover:text-white  text-white bg-success transition ease-in-out delay-15 cursor-pointer tooltip tooltip-primary`}
                                 data-tip={"Details Product"}
@@ -93,10 +94,10 @@ const Product = ({ product }: { product: IProduct }) => {
                 />
             </div>
             <div className="p-5">
+                <AvgRating product={product} isHomeReviewShow/>
                 <h5 className="my-2 text-xl font-semibold tracking-tight text-primary">
                     {title}
                 </h5>
-
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                     {description.length > 90
                         ? `${description.slice(0, 90)} ...`

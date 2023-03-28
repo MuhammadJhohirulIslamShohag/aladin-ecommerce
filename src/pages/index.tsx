@@ -15,11 +15,13 @@ import Categories from "@/components/Home/Categories/Categories";
 import { ICategories } from "types/category.type";
 import { ISubCategories } from "types/sub-category.type";
 import FlashDeals from "@/components/Home/FlashDeals/FlashDeals/FlashDeals";
+import Advertise from "@/components/Home/Advertise/Advertise";
 import Blogs from "@/components/Home/Blogs/Blogs";
 import { getListOfBlogs } from "@/api/blog";
 import { IBlog } from "types/blog.types";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import Preloader from '@/components/UI/Preloader/Preloader';
+
 
 type HomePropType = {
     products: IProduct[];
@@ -66,6 +68,7 @@ export default function Home({
                         <SubCategories subCategories={subCategories} />
                         <FlashDeals products={flashDealsProducts} />
                         <NewArrivals products={products} />
+                        <Advertise/>
                         <BestSellers products={bestSellerProducts} />
                         <Blogs blogs={blogs} />
                     </MainLayout>

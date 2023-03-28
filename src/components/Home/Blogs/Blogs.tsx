@@ -22,7 +22,7 @@ const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
             data-aos-offset="200"
             data-aos-delay="1"
             data-aos-duration="1000"
-            data-aos-easing="ease-in-out" className="container py-12 sm:py-8" id="blog">
+            data-aos-easing="ease-in-out" className="container py-16 md:py-12 sm:py-2">
             <SectionTitle title="Popular Blogs" />
             <Swiper
                 slidesPerView={1}

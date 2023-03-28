@@ -40,17 +40,6 @@ const NavbarMiddle = ({
                 <li>
                     <Link
                         className="text-primary hover:bg-transparent hover:text-success text-lg"
-                        href={{
-                            pathname: "/",
-                            hash: "blog",
-                        }}
-                    >
-                        Blogs
-                    </Link>
-                </li>
-                <li>
-                    <Link
-                        className="text-primary hover:bg-transparent hover:text-success text-lg"
                         href="/shop"
                     >
                         Shop
@@ -140,9 +129,9 @@ const NavbarMiddle = ({
                                     onClick={() => router.push("/auth/login")}
                                 >
                                     Login
-                                </label>{" "}
+                                </label>
                             </li>
-                            <li className="text-primary hover:bg-transparent flex items-center justify-center">
+                            <li className="text-success hover:bg-transparent flex items-center justify-center">
                                 or
                             </li>
                             <li>

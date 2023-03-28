@@ -21,12 +21,12 @@ const BestSellers = ({ products }: PropsType) => {
 
     return (
         <div data-aos="fade-up"
-            data-aos-offset="200"
+            data-aos-offset="100"
             data-aos-delay="1"
             data-aos-duration="1000"
-            data-aos-easing="ease-in-out" className="container pt-12 sm:py-8">
+            data-aos-easing="ease-in-out" className="container pt-12 md:pt-6 sm:py-0">
             <SectionTitle title="Best Sellers" />
-            <div className="mt-8">
+            <div className="mt-8 sm:mt-6">
                 <Swiper
                     slidesPerView={1}
                     navigation={true}
@@ -36,7 +36,7 @@ const BestSellers = ({ products }: PropsType) => {
                         pauseOnMouseEnter: true
                     }}
                     modules={[Navigation, Autoplay]}
-                    className="h-[515px] md:h-[545px] sm:h-[538px] new_arrivals_swiper"
+                    className="h-[560px] md:h-[590px] sm:h-[585px] new_arrivals_swiper"
                     breakpoints={{
                         640: {
                             slidesPerView: 1,
