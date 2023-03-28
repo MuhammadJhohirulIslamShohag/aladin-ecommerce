@@ -15,11 +15,13 @@ type FlashDealsPropsType = {
 };
 const FlashDeals = ({ products }: FlashDealsPropsType) => {
     return (
-        <div data-aos="fade-up"
+        <div
+            data-aos="fade-up"
             data-aos-offset="200"
             data-aos-delay="1"
             data-aos-duration="1000"
-            data-aos-easing="ease-in-out">
+            data-aos-easing="ease-in-out"
+        >
             <div className="p-6 flex sm:flex-col items-center justify-between text-white font-black text-2xl uppercase bg-green-300 mb-10 px-6">
                 <h2 className="text-black sm:text-lg">
                     Surprising Sells

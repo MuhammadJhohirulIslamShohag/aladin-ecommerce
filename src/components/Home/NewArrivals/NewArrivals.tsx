@@ -20,11 +20,13 @@ const NewArrivals = ({ products }: PropsType) => {
     }, [products]);
 
     return (
-        <div data-aos="fade-up"
+        <div
+            data-aos="fade-up"
             data-aos-offset="200"
             data-aos-delay="1"
             data-aos-duration="1000"
-            data-aos-easing="ease-in-out" className="container py-6 sm:py-6">
+            data-aos-easing="ease-in-out" className="container py-6 sm:py-6"
+        >
             <SectionTitle title="New Arrivals" />
             <div className="mt-8 sm:mt-6">
                 <Swiper

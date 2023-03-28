@@ -3,11 +3,14 @@
 const Advertise = () => {
     return (
         <>
-            <section data-aos="zoom-in"
-            data-aos-offset="200"
-            data-aos-delay="1"
-            data-aos-duration="1000"
-            data-aos-easing="ease-in-out" className="grid grid-cols-2 sm:grid-cols-1 bg-fixed py-10 sm:py-6">
+            <section
+                data-aos="zoom-in"
+                data-aos-offset="200"
+                data-aos-delay="1"
+                data-aos-duration="1000"
+                data-aos-easing="ease-in-out"
+                className="grid grid-cols-2 sm:grid-cols-1 bg-fixed py-10 sm:py-6"
+            >
                 <div className="z-20 relative">
                     <img
                         className="h-96 sm:h-60 w-full"

@@ -20,11 +20,14 @@ const BestSellers = ({ products }: PropsType) => {
     }, [products]);
 
     return (
-        <div data-aos="fade-up"
+        <div
+            data-aos="fade-up"
             data-aos-offset="100"
             data-aos-delay="1"
             data-aos-duration="1000"
-            data-aos-easing="ease-in-out" className="container pt-12 md:pt-6 sm:py-0">
+            data-aos-easing="ease-in-out"
+            className="container pt-12 md:pt-6 sm:py-0"
+        >
             <SectionTitle title="Best Sellers" />
             <div className="mt-8 sm:mt-6">
                 <Swiper

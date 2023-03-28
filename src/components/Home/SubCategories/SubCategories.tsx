@@ -24,11 +24,13 @@ const SubCategories = ({
     }, [subCategories]);
 
     return (
-        <section data-aos="fade-up"
+        <section
+            data-aos="fade-up"
             data-aos-offset="100"
             data-aos-delay="1"
             data-aos-duration="1000"
-            data-aos-easing="ease-in-out" className="container py-24 md:py-20 sm:py-12 ">
+            data-aos-easing="ease-in-out" className="container py-24 md:py-20 sm:py-12 "
+        >
             <SectionTitle title="Product By Sub Category " />
             <div className="mt-10 sm:mt-5">
                 <Swiper

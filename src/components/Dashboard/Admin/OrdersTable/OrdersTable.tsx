@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import Image from "next/image";
 import { FaUserGraduate, FaProductHunt } from "react-icons/fa";
@@ -96,7 +97,7 @@ const OrdersTable = ({
                                 info.getValue().map((product: any) => (
                                     <div key={product._id} className="relative">
                                         {product?.product &&
-                                        product.product?.images[0]?.url ? (
+                                            product.product?.images[0]?.url ? (
                                             <Image
                                                 width={100}
                                                 height={100}
@@ -139,11 +140,10 @@ const OrdersTable = ({
             id: "Payment",
             cell: (info: any) => (
                 <span
-                    className={`text-lg min-w-max flex ${
-                        info.getValue()?.status === "succeeded"
+                    className={`text-lg min-w-max flex ${info.getValue()?.status === "succeeded"
                             ? "text-green-500"
                             : "text-red-500"
-                    }`}
+                        }`}
                 >
                     {info.getValue()?.status === "succeeded" ? (
                         <MdOutlineVerified />
@@ -160,21 +160,20 @@ const OrdersTable = ({
             cell: ({ row }: any) => (
                 <select
                     name="status"
-                    className={`bg-gradient-to-br ${
-                        row.original?.orderStatus === "Not Processed"
+                    className={`bg-gradient-to-br ${row.original?.orderStatus === "Not Processed"
                             ? "from-red-500"
                             : row.original?.orderStatus === "Processing"
-                            ? "from-blue-500"
-                            : row.original?.orderStatus === "Dispatched"
-                            ? "from-fuchsia-600"
-                            : row.original?.orderStatus === "Cash On Delivery"
-                            ? "from-green-500"
-                            : row.original?.orderStatus === "Completed"
-                            ? "from-green-600"
-                            : row.original?.orderStatus === "Cancelled"
-                            ? "from-red-300"
-                            : ""
-                    }  to-voilet-500 px-3.6 text-xs rounded-1.8 py-2.5 px-4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white`}
+                                ? "from-blue-500"
+                                : row.original?.orderStatus === "Dispatched"
+                                    ? "from-fuchsia-600"
+                                    : row.original?.orderStatus === "Cash On Delivery"
+                                        ? "from-green-500"
+                                        : row.original?.orderStatus === "Completed"
+                                            ? "from-green-600"
+                                            : row.original?.orderStatus === "Cancelled"
+                                                ? "from-red-300"
+                                                : ""
+                        }  to-voilet-500 px-3.6 text-xs rounded-1.8 py-2.5 px-4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white`}
                     defaultValue={row.original?.orderStatus}
                     onChange={(e) =>
                         handleChangeOrderStatus(

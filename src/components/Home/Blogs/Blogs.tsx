@@ -18,11 +18,14 @@ const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
     }, []);
 
     return (
-        <div data-aos="fade-up"
+        <div
+            data-aos="fade-up"
             data-aos-offset="200"
             data-aos-delay="1"
             data-aos-duration="1000"
-            data-aos-easing="ease-in-out" className="container py-16 md:py-12 sm:py-2">
+            data-aos-easing="ease-in-out"
+            className="container py-16 md:py-12 sm:py-2"
+        >
             <SectionTitle title="Popular Blogs" />
             <Swiper
                 slidesPerView={1}

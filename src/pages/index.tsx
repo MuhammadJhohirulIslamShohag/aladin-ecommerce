@@ -21,6 +21,7 @@ import { getListOfBlogs } from "@/api/blog";
 import { IBlog } from "types/blog.types";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import Preloader from '@/components/UI/Preloader/Preloader';
+import NewsLetter from '@/components/Home/NewsLetter/NewsLetter';
 
 
 type HomePropType = {
@@ -71,6 +72,7 @@ export default function Home({
                         <Advertise/>
                         <BestSellers products={bestSellerProducts} />
                         <Blogs blogs={blogs} />
+                        <NewsLetter/>
                     </MainLayout>
                 </>
             )}

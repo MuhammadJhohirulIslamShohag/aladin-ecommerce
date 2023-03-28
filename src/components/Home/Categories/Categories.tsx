@@ -10,8 +10,11 @@ const Categories = ({ categories }: { categories: ICategories[] }) => {
     }, [categories]);
 
     return (
-        <div data-aos="fade-up"
-            data-aos-delay="1" className="grid grid-cols-4 gap-4 px-3 sm:grid-cols-1 md:grid-cols-2">
+        <div
+            data-aos="fade-up"
+            data-aos-delay="1"
+            className="grid grid-cols-4 gap-4 px-3 sm:grid-cols-1 md:grid-cols-2"
+        >
             {categoriesData?.length > 0 ? (
                 <>
                     {categoriesData?.slice(0, 4).map((category: ICategories) => (

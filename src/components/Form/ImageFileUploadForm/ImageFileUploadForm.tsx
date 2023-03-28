@@ -1,7 +1,6 @@
 import Resizer from "react-image-file-resizer";
 import React, { Fragment } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import ModalImage from "@avidian/react-modal-image";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { deletingImageFile, uploadingImageFile } from "@/api/cloudinary";
 
@@ -84,23 +83,21 @@ const ImageFileUploadForm = ({
                 <div className="my-5">
                     {values.images &&
                         values.images.map((image: any) => (
-                            <span key={image.public_id}>
+                            <span key={image?.public_id}>
                                 <button
                                     type="button"
-                                    key={image.public_id}
+                                    key={image?.public_id}
                                     className="relative inline-flex items-center rounded-lg mb-2 transition-all mr-2"
                                 >
-                                    <ModalImage
-                                        small={image.url}
-                                        large={image.url}
+                                    <img
+                                        src={image?.url}
                                         alt={"Product Image"}
-                                        hideDownload={false}
                                         className="h-32 w-36"
                                     />
 
                                     <div
                                         onClick={() =>
-                                            handleImageRemove(image.public_id)
+                                            handleImageRemove(image?.public_id)
                                         }
                                         className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 "
                                     >
@@ -122,7 +119,7 @@ const ImageFileUploadForm = ({
                                     e: React.ChangeEvent<HTMLInputElement>
                                 ) => handleFileChange(e),
                             })}
-                            files={values.images}
+                            files={values?.images}
                             className="file-input file-input-bordered file-input-success w-full max-w-xs"
                         />
                     )}
