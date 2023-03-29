@@ -9,13 +9,30 @@ import { Navigation, Autoplay } from "swiper";
 import Blog from "@/components/Blog/Blog";
 import SectionTitle from "@/components/SectionTitle/SectionTitle";
 import { IBlog } from "types/blog.types";
+import { getListOfBlogs } from "@/api/blog";
+import Loader from "@/components/Loader/Loader";
 
-const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
+const Blogs = () => {
     const [blogsData, setBlogsData] = useState<IBlog[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setBlogsData(blogs);
+        loadingBlogs();
     }, []);
+
+    const loadingBlogs = () => {
+        setLoading(true)
+        getListOfBlogs()
+            .then((res) => {
+                setBlogsData(res.data);
+                setLoading(false)
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false)
+            });
+    };
+
 
     return (
         <div
@@ -28,40 +45,45 @@ const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
             id="blogs"
         >
             <SectionTitle title="Popular Blogs" />
-            <Swiper
-                slidesPerView={1}
-                navigation={true}
-                autoplay={{
-                    delay: 4000,
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter: true
-                }}
-                modules={[Navigation, Autoplay]}
-                className="h-[610px] sm:h-[570px] blog_swiper"
-                breakpoints={{
-                    640: {
-                        slidesPerView: 1,
-                    },
-                    768: {
-                        slidesPerView: 2,
-                        spaceBetween: 15,
-                    },
-                    1024: {
-                        slidesPerView: 2,
-                        spaceBetween: 20,
-                    },
-                    1200: {
-                        slidesPerView: 3,
-                        spaceBetween: 25,
-                    },
-                }}
-            >
-                {blogsData?.map((blog) => (
-                    <SwiperSlide key={blog._id}>
-                        <Blog key={blog._id} blog={blog} />
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+            {loading ? (
+                <Loader height={"h-[450px]"} />
+            ) : (
+                <Swiper
+                    slidesPerView={1}
+                    navigation={true}
+                    autoplay={{
+                        delay: 4000,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: true
+                    }}
+                    modules={[Navigation, Autoplay]}
+                    className="h-[610px] sm:h-[570px] blog_swiper"
+                    breakpoints={{
+                        640: {
+                            slidesPerView: 1,
+                        },
+                        768: {
+                            slidesPerView: 2,
+                            spaceBetween: 15,
+                        },
+                        1024: {
+                            slidesPerView: 2,
+                            spaceBetween: 20,
+                        },
+                        1200: {
+                            slidesPerView: 3,
+                            spaceBetween: 25,
+                        },
+                    }}
+                >
+                    {blogsData?.map((blog) => (
+                        <SwiperSlide key={blog._id}>
+                            <Blog key={blog._id} blog={blog} />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            )}
+
         </div>
     );
 };

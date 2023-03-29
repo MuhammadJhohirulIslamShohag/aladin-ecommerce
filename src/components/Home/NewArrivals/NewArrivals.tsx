@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { IProduct } from "./../../../../types/product.type";
 import Product from "./../../Product/Product";
 import SectionTitle from "./../../SectionTitle/SectionTitle";
@@ -13,11 +13,6 @@ type PropsType = {
     products: IProduct[];
 };
 const NewArrivals = ({ products }: PropsType) => {
-    const [productData, setProductData] = useState<IProduct[]>([]);
-
-    useEffect(() => {
-        setProductData(products);
-    }, [products]);
 
     return (
         <div
@@ -57,7 +52,7 @@ const NewArrivals = ({ products }: PropsType) => {
                         },
                     }}
                 >
-                    {productData?.map((product: IProduct) => (
+                    {products?.map((product: IProduct) => (
                         <SwiperSlide key={product._id}>
                             <Product product={product} />
                         </SwiperSlide>

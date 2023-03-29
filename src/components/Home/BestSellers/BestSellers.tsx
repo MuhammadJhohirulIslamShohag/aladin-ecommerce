@@ -58,7 +58,7 @@ const BestSellers = ({ products }: PropsType) => {
                         },
                     }}
                 >
-                    {productData?.map((product: IProduct) => (
+                    {productData?.sort((a, b) => b.sold - a.sold)?.map((product: IProduct) => (
                         <SwiperSlide key={product._id}>
                             <Product product={product} />
                         </SwiperSlide>

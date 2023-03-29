@@ -504,11 +504,10 @@ const Shop = () => {
                                 <div className="sm:h-96 h-full">
                                     {loading ? (
                                         <div
-                                            className={`grid gap-5 ${
-                                                gridColumn
+                                            className={`grid gap-5 ${gridColumn
                                                     ? `grid-cols-2 md:grid-cols-1 sm:grid-cols-1`
                                                     : `grid-cols-1`
-                                            }`}
+                                                }`}
                                         >
                                             <Skeleton numbers={2} />
                                         </div>
@@ -518,11 +517,10 @@ const Shop = () => {
                                         </p>
                                     ) : (
                                         <div
-                                            className={`grid gap-5 ${
-                                                gridColumn
+                                            className={`grid gap-5 ${gridColumn
                                                     ? `grid-cols-2 md:grid-cols-1 sm:grid-cols-1`
                                                     : `grid-cols-1`
-                                            }`}
+                                                }`}
                                         >
                                             {products &&
                                                 products.length &&

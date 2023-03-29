@@ -60,7 +60,7 @@ const FlashDeals = ({ products }: FlashDealsPropsType) => {
                     className="surprising_sales h-[505px] md:h-[478px] sm:h-[462px]"
                 >
                     <div className="flex flex-wrap pl-1 md:justify-center sm:justify-center">
-                        {products?.map((product: IProduct) => (
+                        {products?.sort((a, b) => b.discount - a.discount)?.map((product: IProduct) => (
                             <SwiperSlide key={product._id}>
                                 <FlashDeal product={product} />
                             </SwiperSlide>
