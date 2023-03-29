@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import AOS from "aos";
 import { getListOfCategory } from "@/api/category";
 import { getProductsBySort } from "@/api/products";
@@ -33,14 +34,14 @@ type HomePropType = {
     blogs: IBlog[];
 };
 
-export default function Home({
+const Home = ({
     products,
     bestSellerProducts,
     subCategories,
     categories,
     flashDealsProducts,
     blogs,
-}: HomePropType) {
+}: HomePropType) => {
     const [loader, setLoader] = useState(true);
     useEffect(() => {
         let timeoutId: null | ReturnType<typeof setTimeout> | number = null
@@ -69,10 +70,10 @@ export default function Home({
                         <SubCategories subCategories={subCategories} />
                         <FlashDeals products={flashDealsProducts} />
                         <NewArrivals products={products} />
-                        <Advertise/>
+                        <Advertise />
                         <BestSellers products={bestSellerProducts} />
                         <Blogs blogs={blogs} />
-                        <NewsLetter/>
+                        <NewsLetter />
                     </MainLayout>
                 </>
             )}
@@ -80,6 +81,8 @@ export default function Home({
         </>
     );
 }
+
+export default dynamic(() => Promise.resolve(Home), { ssr: false });
 
 export const getServerSideProps: GetServerSideProps = async () => {
     const { data } = await getProductsBySort("createdAt", "desc");

@@ -25,6 +25,7 @@ const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
             data-aos-duration="1000"
             data-aos-easing="ease-in-out"
             className="container py-16 md:py-12 sm:py-2"
+            id="blogs"
         >
             <SectionTitle title="Popular Blogs" />
             <Swiper

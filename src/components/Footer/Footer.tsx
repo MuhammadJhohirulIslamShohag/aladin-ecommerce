@@ -7,7 +7,7 @@ const Footer = () => {
     return (
         <div className="bg-secondary mt-10">
             <div className="container">
-                <footer className="grid gap-7 grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 p-10 sm:p-5 text-base-content">
+                <footer className="grid grid-cols-4 sm:grid-cols-1 gap-4 md:grid-cols-3 md:gap-6 justify-between p-10 sm:p-5 text-base-content">
                     <div>
                         <Link
                             href="/"
@@ -29,53 +29,52 @@ const Footer = () => {
                             <Link
                                 href={{
                                     pathname: "/",
-                                    hash: "blog",
+                                    hash: "blogs",
                                 }}
-                                className="link block text-primary link-hover hover:text-success transition ease-in-out delay-15"
+                                className=" block text-primary hover:text-success transition-all ease-in-out delay-15"
                             >
                                 Blogs
                             </Link>
                         </div>
                     </div>
-                    <div>
-                        <div className="text-md md:text-lg sm:text-lg  uppercase text-success font-bold">
+                    <div >
+                        <div className="text-md md:text-lg sm:text-lg uppercase text-success font-bold">
                             Legal
                         </div>
                         <div className="mt-1">
                             <Link
-                                href=""
-                                className="link block text-primary link-hover hover:text-success transition ease-in-out delay-15"
+                                href="/"
+                                className="block text-primary hover:text-success transition-all ease-in-out delay-15 mb-1"
                             >
                                 Privacy Policy
                             </Link>
                             <Link
-                                href=""
-                                className="link block text-primary link-hover hover:text-success transition ease-in-out delay-15"
+                                href="/"
+                                className="block text-primary hover:text-success transition-all ease-in-out delay-15"
                             >
                                 Terms & Conditions
                             </Link>
                         </div>
                     </div>
                     <div>
-                        <span className="text-md uppercase text-success font-bold">
-                            Newsletter
-                        </span>
-                        <div className="form-control w-80 sm:w-full">
-                            <label className="label">
-                                <span className="label-text text-primary">
-                                    Enter your email address
-                                </span>
-                            </label>
-                            <div className="relative">
-                                <input
-                                    type="text"
-                                    placeholder="username@site.com"
-                                    className="input input-bordered w-full pr-28"
-                                />
-                                <button className="btn btn-primary absolute top-0 right-0 rounded-l-none">
-                                    Subscribe
-                                </button>
-                            </div>
+                        <div className="text-md md:text-lg sm:text-lg uppercase text-success font-bold">
+                            Download
+                        </div>
+                        <div className="mt-1" >
+                            <ul className="text-gray-600  font-medium">
+                                <li className="mb-2">
+                                    <Link href="#" className="hover:text-success transition-all ease-in-out delay-15">iOS</Link>
+                                </li>
+                                <li className="mb-2">
+                                    <Link href="#" className="hover:text-success transition-all ease-in-out delay-15">Android</Link>
+                                </li>
+                                <li className="mb-2">
+                                    <Link href="#" className="hover:text-success transition-all ease-in-out delay-15">Windows</Link>
+                                </li>
+                                <li className="mb-2">
+                                    <Link href="#" className="hover:text-success transition-all ease-in-out delay-15">MacOS</Link>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </footer>
@@ -102,7 +101,7 @@ const Footer = () => {
                 </footer>
                 <footer className="footer flex justify-center px-10 sm:px-0 py-4 border-t bg-secondary text-base-content border-base-300 text-center">
                     <p className="text-primary">
-                        Copyright © 2022 - All right reserved by Shohag
+                        Copyright © 2022 - All right reserved by Muhammad Jhohirul Islam Shohag
                     </p>
                 </footer>
             </div>

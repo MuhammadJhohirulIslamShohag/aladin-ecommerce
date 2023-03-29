@@ -10,7 +10,7 @@ const Blog = ({ blog }: { blog: IBlog }) => {
             <figure className="h-[250px] sm:h-[150px] md:h-[190px]">
                 <img className="h-full" src={blog.image} alt={blog.title} />
             </figure>
-            <div className="card-body sm:p-4 md:p-5">
+            <div className="card-body sm:p-4 sm:pb-5 md:p-5">
                 <h2 className="card-title text-gray-800">{blog.title}</h2>
                 <div className="flex md:flex-col sm:flex-col">
                     <div className="flex items-center text-success text-sm">
