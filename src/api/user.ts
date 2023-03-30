@@ -25,7 +25,7 @@ export const saveShippingAddress = (addressValues: any, token: string) => {
         }
     );
 };
-export const getusersShippingAddress = (token: string) => {
+export const getUsersShippingAddress = (token: string) => {
     return axios.get(
         `${process.env.NEXT_PUBLIC_server_api}/users/shipping-address`,
         {
@@ -36,7 +36,7 @@ export const getusersShippingAddress = (token: string) => {
     );
 };
 
-export const getusersCart = (token: string) => {
+export const getUsersCart = (token: string) => {
     return axios.get(`${process.env.NEXT_PUBLIC_server_api}/users/cart`, {
         headers: {
             token,
@@ -98,7 +98,7 @@ export const createOrderCashOnDelivery = (
 };
 
 // getting all orders by users
-export const getOrdersByusers = async (token: string) => {
+export const getOrdersByUser = async (token: string) => {
     return await axios.get(
         `${process.env.NEXT_PUBLIC_server_api}/users/carts/orders`,
         {
