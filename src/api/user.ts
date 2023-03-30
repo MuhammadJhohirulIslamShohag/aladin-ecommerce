@@ -25,7 +25,7 @@ export const saveShippingAddress = (addressValues: any, token: string) => {
         }
     );
 };
-export const getUsersShippingAddress = (token: string) => {
+export const getUserShippingAddress = (token: string) => {
     return axios.get(
         `${process.env.NEXT_PUBLIC_server_api}/users/shipping-address`,
         {

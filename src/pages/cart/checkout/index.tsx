@@ -6,7 +6,7 @@ import {
     createOrderCashOnDelivery,
     emptyCart,
     getTotalPriceAfterDiscount,
-    getUserCart,
+    getUsersCart,
     getUserShippingAddress,
     saveShippingAddress,
 } from "@/api/user";
@@ -61,7 +61,7 @@ const Checkout = () => {
 
     useEffect(() => {
         if (user && user.token) {
-            getUserCart(user.token).then((res) => {
+            getUsersCart(user.token).then((res) => {
                 if (res.data[0]) {
                     setProducts(res.data[0].products);
                     setCartTotal(res.data[0].cartTotal);
