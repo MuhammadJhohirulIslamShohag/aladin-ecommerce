@@ -5,7 +5,7 @@ export const createSubCategory = async (
     subCategoryObject: any
 ) => {
     return await axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/subCategories`,
+        `${process.env.NEXT_PUBLIC_server_api}/sub-categories`,
         subCategoryObject,
         {
             headers: {
@@ -15,11 +15,11 @@ export const createSubCategory = async (
     );
 };
 export const getAllSubCategories = async () =>
-    await axios.get(`${process.env.NEXT_PUBLIC_server_api}/subCategories`);
+    await axios.get(`${process.env.NEXT_PUBLIC_server_api}/sub-categories`);
 
 export const getSubCategory = async (slug: string) =>
     await axios.get(
-        `${process.env.NEXT_PUBLIC_server_api}/subCategories/${slug}`
+        `${process.env.NEXT_PUBLIC_server_api}/sub-categories/${slug}`
     );
 
 export const updateSubCategory = async (
@@ -28,7 +28,7 @@ export const updateSubCategory = async (
     slug: string
 ) => {
     return await axios.put(
-        `${process.env.NEXT_PUBLIC_server_api}/subCategories/${slug}`,
+        `${process.env.NEXT_PUBLIC_server_api}/sub-categories/${slug}`,
         updateSubCategoryObj,
         {
             headers: {
@@ -39,7 +39,7 @@ export const updateSubCategory = async (
 };
 export const deleteSubCategory = async (token: string, slug: string) => {
     return await axios.delete(
-        `${process.env.NEXT_PUBLIC_server_api}/subCategories/${slug}`,
+        `${process.env.NEXT_PUBLIC_server_api}/sub-categories/${slug}`,
         {
             headers: {
                 token,
