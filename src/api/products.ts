@@ -3,7 +3,7 @@ import axios from "axios";
 // for creating product
 export const createProduct = async (token: string, productObject: any) => {
     return await axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/product`,
+        `${process.env.NEXT_PUBLIC_server_api}/products`,
         productObject,
         {
             headers: {

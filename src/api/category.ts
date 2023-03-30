@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const createCategory = async (token: string, categoryObj: any) => {
     return await axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/category`,
+        `${process.env.NEXT_PUBLIC_server_api}/categories`,
         categoryObj,
         {
             headers: {

@@ -6,7 +6,7 @@ export const createOrUpdateUser = async (
     userData: ICurrentUser
 ) => {
     return await axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/create-or-update-user`,
+        `${process.env.NEXT_PUBLIC_server_api}/auth/create-or-update-user`,
         { ...userData },
         {
             headers: {
@@ -18,7 +18,7 @@ export const createOrUpdateUser = async (
 
 export const currentUser = async (token: string) => {
     return await axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/current-user`,
+        `${process.env.NEXT_PUBLIC_server_api}/auth/current-user`,
         {},
         {
             headers: {
@@ -29,7 +29,7 @@ export const currentUser = async (token: string) => {
 };
 export const adminUser = async (token: string) => {
     return await axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/admin-user`,
+        `${process.env.NEXT_PUBLIC_server_api}/auth/admin-user`,
         {},
         {
             headers: {

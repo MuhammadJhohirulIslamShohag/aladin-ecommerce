@@ -5,7 +5,7 @@ export const createPaymentIntent = async (
     isCouponed: boolean
 ) => {
     return await axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/create-payment-intent`,
+        `${process.env.NEXT_PUBLIC_server_api}/stripe/create-payment-intent`,
         { isCouponed },
         {
             headers: {

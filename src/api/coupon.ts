@@ -8,7 +8,7 @@ export const creatingCoupon = async (
     expireDate:Date
 ) => {
     return await axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/coupon`,
+        `${process.env.NEXT_PUBLIC_server_api}/coupons`,
         { couponName, discount, expireDate },
         {
             headers: {

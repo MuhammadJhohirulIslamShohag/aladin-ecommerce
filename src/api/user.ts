@@ -3,7 +3,7 @@ import { CartType } from "types/cart.types";
 
 export const saveOrder = (carts: CartType[], token: string) => {
     return axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/user/cart`,
+        `${process.env.NEXT_PUBLIC_server_api}/users/cart`,
         {
             carts,
         },
@@ -16,7 +16,7 @@ export const saveOrder = (carts: CartType[], token: string) => {
 };
 export const saveShippingAddress = (addressValues: any, token: string) => {
     return axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/user/address`,
+        `${process.env.NEXT_PUBLIC_server_api}/users/address`,
         addressValues,
         {
             headers: {
@@ -25,9 +25,9 @@ export const saveShippingAddress = (addressValues: any, token: string) => {
         }
     );
 };
-export const getUserShippingAddress = (token: string) => {
+export const getusersShippingAddress = (token: string) => {
     return axios.get(
-        `${process.env.NEXT_PUBLIC_server_api}/user/shipping-address`,
+        `${process.env.NEXT_PUBLIC_server_api}/users/shipping-address`,
         {
             headers: {
                 token,
@@ -36,8 +36,8 @@ export const getUserShippingAddress = (token: string) => {
     );
 };
 
-export const getUserCart = (token: string) => {
-    return axios.get(`${process.env.NEXT_PUBLIC_server_api}/user/cart`, {
+export const getusersCart = (token: string) => {
+    return axios.get(`${process.env.NEXT_PUBLIC_server_api}/users/cart`, {
         headers: {
             token,
         },
@@ -45,7 +45,7 @@ export const getUserCart = (token: string) => {
 };
 
 export const emptyCart = (token: string) => {
-    return axios.delete(`${process.env.NEXT_PUBLIC_server_api}/user/cart`, {
+    return axios.delete(`${process.env.NEXT_PUBLIC_server_api}/users/cart`, {
         headers: {
             token,
         },
@@ -58,7 +58,7 @@ export const getTotalPriceAfterDiscount = (
     token: string
 ) => {
     return axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/user/cart/coupon`,
+        `${process.env.NEXT_PUBLIC_server_api}/users/cart/coupon`,
         { couponName },
         {
             headers: {
@@ -71,7 +71,7 @@ export const getTotalPriceAfterDiscount = (
 // creating new order with payment intents
 export const createOrder = (paymentInfoObject: any, token: string) => {
     return axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/user/carts/order`,
+        `${process.env.NEXT_PUBLIC_server_api}/users/carts/order`,
         paymentInfoObject,
         {
             headers: {
@@ -87,7 +87,7 @@ export const createOrderCashOnDelivery = (
     token: string
 ) => {
     return axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/user/carts/order/cash`,
+        `${process.env.NEXT_PUBLIC_server_api}/users/carts/order/cash`,
         { isCashOnDelivery, isCoupon },
         {
             headers: {
@@ -97,10 +97,10 @@ export const createOrderCashOnDelivery = (
     );
 };
 
-// getting all orders by user
-export const getOrdersByUser = async (token: string) => {
+// getting all orders by users
+export const getOrdersByusers = async (token: string) => {
     return await axios.get(
-        `${process.env.NEXT_PUBLIC_server_api}/user/carts/orders`,
+        `${process.env.NEXT_PUBLIC_server_api}/users/carts/orders`,
         {
             headers: {
                 token,
@@ -116,7 +116,7 @@ export const addToWishList = async (
     isWishList: any
 ) => {
     return await axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/user/wishlists`,
+        `${process.env.NEXT_PUBLIC_server_api}/users/wishlists`,
         { productId, isWishList },
         {
             headers: {
@@ -126,10 +126,10 @@ export const addToWishList = async (
     );
 };
 
-// get all wishlist from user
+// get all wishlist from users
 export const getWishLists = async (token: string) => {
     return await axios.get(
-        `${process.env.NEXT_PUBLIC_server_api}/user/wishlists`,
+        `${process.env.NEXT_PUBLIC_server_api}/users/wishlists`,
         {
             headers: {
                 token,
@@ -138,10 +138,10 @@ export const getWishLists = async (token: string) => {
     );
 };
 
-// get all wishlist from user
+// get all wishlist from users
 export const getWishList = async (token: string, productId: string) => {
     return await axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/user/wish-lists`,
+        `${process.env.NEXT_PUBLIC_server_api}/users/wish-lists`,
         { productId },
         {
             headers: {
@@ -154,7 +154,7 @@ export const getWishList = async (token: string, productId: string) => {
 // remove wishlist
 export const removeWishList = async (token: string, productId: string) => {
     return await axios.put(
-        `${process.env.NEXT_PUBLIC_server_api}/user/wishlists`,
+        `${process.env.NEXT_PUBLIC_server_api}/users/wishlists`,
         { productId },
         {
             headers: {
