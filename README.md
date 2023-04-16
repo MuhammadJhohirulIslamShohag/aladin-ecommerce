@@ -2,7 +2,7 @@
 
 # Let's Talk About My Aladin Application
 
-### Aladin Application Live: [https://aladin-ecommerce.onrender.com](https://aladin-ecommerce.onrender.com)
+### Aladin Application Live: [https://aladin-ecommerce.vercel.app/](https://aladin-ecommerce.vercel.app/)
 
 ### Admin Email: admin@gmail.com
 ### Admin Password: 123456
