@@ -1,8 +1,8 @@
+'use client'
 import React from "react";
 import Link from "next/link";
 import { FaUserGraduate } from "react-icons/fa";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/navigation'
 import Image from "next/image";
 
 type NavbarMiddlePropType = {
@@ -15,17 +15,18 @@ const NavbarMiddle = ({
     setProfileSidebar,
     isProfile = false,
 }: NavbarMiddlePropType) => {
-    const { state, firebaseUser, logOut } = useStoreContext();
-    const { user } = state;
+    const user = null
+    // const { state, firebaseUser, logOut } = useStoreContext();
+    // const { user } = state;
     const router = useRouter();
-    const handleLogOut = () => {
-        logOut()
-            .then(() => {
-                // Clear email from storage.
-                window.localStorage.removeItem("accountInfo");
-            })
-            .catch((error) => console.log(error));
-    };
+    // const handleLogOut = () => {
+    //     logOut()
+    //         .then(() => {
+    //             // Clear email from storage.
+    //             window.localStorage.removeItem("accountInfo");
+    //         })
+    //         .catch((error) => console.log(error));
+    // };
     const menuListItem = () => {
         return (
             <>
@@ -86,7 +87,7 @@ const NavbarMiddle = ({
                             className="btn btn-ghost btn-circle avatar hidden sm:flex md:flex"
                         >
                             <div className="w-10 rounded-full">
-                                {firebaseUser !== null &&
+                                {/* {firebaseUser !== null &&
                                 firebaseUser?.photoURL ? (
                                     <Image
                                         src={firebaseUser?.photoURL}
@@ -97,7 +98,7 @@ const NavbarMiddle = ({
                                     />
                                 ) : (
                                     <FaUserGraduate className="w-10 h-10 text-gray-900 p-1 rounded-full ring-2 ring-green-300" />
-                                )}
+                                )} */}
                             </div>
                         </label>
                     )}
@@ -114,9 +115,9 @@ const NavbarMiddle = ({
             </div>
             <div className="navbar-end md:hidden sm:hidden">
                 <ul className="menu flex flex-row">
-                    {user !== null && user.email ? (
+                    {user !== null ? (
                         <li
-                            onClick={handleLogOut}
+                            // onClick={handleLogOut}
                             className="text-primary hover:bg-transparent hover:text-success text-lg cursor-pointer"
                         >
                             LogOut

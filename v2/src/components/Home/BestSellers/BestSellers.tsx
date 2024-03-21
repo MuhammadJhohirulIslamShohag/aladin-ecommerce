@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { IProduct } from "./../../../../types/product.type";
+import { useEffect, useState } from "react";
+import { IProduct } from "../../../types/product.type";
 import Product from "./../../Product/Product";
 import SectionTitle from "./../../SectionTitle/SectionTitle";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
+import { Autoplay, Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation, Autoplay } from "swiper";
 
 type PropsType = {
     products: IProduct[];
@@ -36,7 +36,7 @@ const BestSellers = ({ products }: PropsType) => {
                     autoplay={{
                         delay: 3500,
                         disableOnInteraction: false,
-                        pauseOnMouseEnter: true
+                        pauseOnMouseEnter: true,
                     }}
                     modules={[Navigation, Autoplay]}
                     className="h-[560px] md:h-[590px] sm:h-[585px] new_arrivals_swiper"
@@ -58,11 +58,13 @@ const BestSellers = ({ products }: PropsType) => {
                         },
                     }}
                 >
-                    {productData?.sort((a, b) => b.sold - a.sold)?.map((product: IProduct) => (
-                        <SwiperSlide key={product._id}>
-                            <Product product={product} />
-                        </SwiperSlide>
-                    ))}
+                    {productData
+                        ?.sort((a, b) => b.sold - a.sold)
+                        ?.map((product: IProduct) => (
+                            <SwiperSlide key={product._id}>
+                                <Product product={product} />
+                            </SwiperSlide>
+                        ))}
                 </Swiper>
             </div>
         </div>

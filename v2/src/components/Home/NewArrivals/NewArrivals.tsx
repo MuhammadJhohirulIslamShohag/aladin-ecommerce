@@ -1,26 +1,25 @@
-import React from "react";
-import { IProduct } from "./../../../../types/product.type";
+import { IProduct } from "../../../types/product.type";
 import Product from "./../../Product/Product";
 import SectionTitle from "./../../SectionTitle/SectionTitle";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
+import { Autoplay, Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation, Autoplay } from "swiper";
 
 type PropsType = {
     products: IProduct[];
 };
 const NewArrivals = ({ products }: PropsType) => {
-
     return (
         <div
             data-aos="fade-up"
             data-aos-offset="200"
             data-aos-delay="1"
             data-aos-duration="1000"
-            data-aos-easing="ease-in-out" className="container py-6 sm:py-6"
+            data-aos-easing="ease-in-out"
+            className="container py-6 sm:py-6"
         >
             <SectionTitle title="New Arrivals" />
             <div className="mt-8 sm:mt-6">
@@ -30,7 +29,7 @@ const NewArrivals = ({ products }: PropsType) => {
                     autoplay={{
                         delay: 3000,
                         disableOnInteraction: false,
-                        pauseOnMouseEnter: true
+                        pauseOnMouseEnter: true,
                     }}
                     modules={[Navigation, Autoplay]}
                     className="h-[560px] md:h-[590px] sm:h-[585px] new_arrivals_swiper"

@@ -1,24 +1,21 @@
+'use client'
 import React, { useState } from "react";
 import { AiFillCaretDown } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { FaGift } from "react-icons/fa";
 import Typewriter from "typewriter-effect";
 import DropdownListItem from "../../UI/DropdownListItem/DropdownListItem";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+
 
 const NavbarTop: React.FC = (): JSX.Element => {
     const [toggleDropdownColor, setToggleDropdownColor] =
         useState<boolean>(true);
-    const { state, logOut } = useStoreContext();
-    const { user } = state;
+    // const { state, logOut } = useStoreContext();
+    // const { user } = state;
+    const user = null
 
     const handleLogOut = () => {
-        logOut()
-            .then(() => {
-                // Clear email from storage.
-                window.localStorage.removeItem("accountInfo");
-            })
-            .catch((error) => console.log(error));
+        
     };
     return (
         <>
@@ -63,14 +60,14 @@ const NavbarTop: React.FC = (): JSX.Element => {
                                         toggleDropdownColor ? "hidden" : ""
                                     } absolute menu menu-compact right-24 md:right-9 z-10 sm:right-9 dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52`}
                                 >
-                                    {user && user.role === "admin" && (
+                                    {/* {user && user.role === "admin" && (
                                         <DropdownListItem
                                             link="/dashboard/admin"
                                             className="text-primary hover:text-success"
                                         >
                                             Admin Dashboard
                                         </DropdownListItem>
-                                    )}
+                                    )} */}
                                     
                                    
                                             <DropdownListItem
@@ -87,7 +84,7 @@ const NavbarTop: React.FC = (): JSX.Element => {
                                                 Check Out
                                             </DropdownListItem>
 
-                                    {user !== null && user.email ? (
+                                    {/* {user !== null && user?.email ? (
                                         <li
                                             onClick={handleLogOut}
                                             className="text-primary hover:text-success"
@@ -101,7 +98,7 @@ const NavbarTop: React.FC = (): JSX.Element => {
                                         >
                                             Login
                                         </DropdownListItem>
-                                    )}
+                                    )} */}
                                 </ul>
                             </li>
                         </ul>

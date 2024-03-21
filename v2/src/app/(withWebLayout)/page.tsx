@@ -1,16 +1,22 @@
+// import Banner from "@/components/Home/Banner/Banner";
+// import SubCategories from "@/components/Home/SubCategories/SubCategories";
+// import Services from "@/components/Home/Services/Services";
+
+// import Categories from "@/components/Home/Categories/Categories";
+// import Advertise from "@/components/Home/Advertise/Advertise";
+// import Blogs from "@/components/Home/Blogs/Blogs";
 import NewsLetter from "@/components/Home/NewsLetter/NewsLetter";
 
+
 const Home = () => {
+    // const { products, loading } = useProductsFetch();
     return (
         <>
             {/* <Banner />
             <Services />
             <Categories />
             <SubCategories />
-            <FlashDeals products={products} />
-            <NewArrivals products={products} />
             <Advertise />
-            <BestSellers products={products} />
             <Blogs /> */}
             <NewsLetter />
         </>

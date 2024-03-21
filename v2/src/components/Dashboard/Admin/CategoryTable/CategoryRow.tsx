@@ -1,8 +1,7 @@
-import React from "react";
 import Image from "next/image";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
-import { ICategories } from "./../../../../../types/category.type";
+import { ICategories } from "../../../../types/category.type";
 
 type CategoryRowPropType = {
     category: ICategories;
