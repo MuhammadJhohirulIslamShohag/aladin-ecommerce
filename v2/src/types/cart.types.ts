@@ -1,4 +1,5 @@
-import { IProduct } from "types/product.type";
+import { IProduct } from "./product.type";
+
 
 export interface CountType {
     count: number; 

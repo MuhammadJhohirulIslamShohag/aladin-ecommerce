@@ -1,6 +1,7 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import ReduxProvider from "@/lib/Providers/ReduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
     description: "Aladin-E-Commerce is the seller and buyer project!",
 };
 
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -16,7 +18,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-          <body className={inter.className}>{children}</body>
+            <body className={inter.className}>
+                <ReduxProvider>{children} </ReduxProvider>
+            </body>
         </html>
     );
 }
