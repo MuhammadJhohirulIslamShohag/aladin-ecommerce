@@ -1,155 +1,71 @@
-'use client'
-import React from "react";
+"use client";
 import Link from "next/link";
-import { FaUserGraduate } from "react-icons/fa";
-import { useRouter } from 'next/navigation'
-import Image from "next/image";
+import { FaHeart, FaShoppingCart } from "react-icons/fa";
+import SearchForm from "@/components/UI/SearchForm/SearchForm";
 
-type NavbarMiddlePropType = {
-    openProfileSidebar?: boolean;
-    setProfileSidebar?: React.Dispatch<React.SetStateAction<boolean>>;
-    isProfile?: boolean;
-};
-const NavbarMiddle = ({
-    openProfileSidebar,
-    setProfileSidebar,
-    isProfile = false,
-}: NavbarMiddlePropType) => {
-    const user = null
-    // const { state, firebaseUser, logOut } = useStoreContext();
-    // const { user } = state;
-    const router = useRouter();
-    // const handleLogOut = () => {
-    //     logOut()
-    //         .then(() => {
-    //             // Clear email from storage.
-    //             window.localStorage.removeItem("accountInfo");
-    //         })
-    //         .catch((error) => console.log(error));
+const NavbarMiddle: React.FC = (): JSX.Element => {
+    // const [openShoppingCart, setOpenShoppingCart] = useState(false);
+    // const { carts, user } = state;
+
+    // const handleShoppingCart = () => {
+    //     setTimeout(() => setOpenShoppingCart(!openShoppingCart), 200);
     // };
-    const menuListItem = () => {
-        return (
-            <>
-                <li>
-                    <Link
-                        className="text-primary hover:bg-transparent hover:text-success text-lg"
-                        href="/"
-                    >
-                        Home
-                    </Link>
-                </li>
-                <li>
-                    <Link
-                        className="text-primary hover:bg-transparent hover:text-success text-lg"
-                        href="/shop"
-                    >
-                        Shop
-                    </Link>
-                </li>
-            </>
-        );
-    };
     return (
-        <div className="navbar container">
-            <div className="navbar-start md:w-full md:justify-between sm:w-full sm:justify-between">
-                <Link
-                    href="/"
-                    className="text-success italic font-bold text-4xl  cursor-pointer"
-                >
-                    Aladin
-                </Link>
-                <div className="dropdown flex">
-                    <label
-                        tabIndex={0}
-                        className="btn btn-ghost text-primary hidden sm:flex md:flex"
+        <>
+            <div className="container grid grid-cols-3 pt-2 md:gap-3 gap-0">
+                <div>
+                    <Link
+                        href="/"
+                        className="text-success italic font-bold text-4xl  cursor-pointer"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M4 6h16M4 12h8m-8 6h16"
-                            />
-                        </svg>
-                    </label>
-                    {isProfile && (
-                        <label
-                            onClick={() =>
-                                setProfileSidebar &&
-                                setProfileSidebar(!openProfileSidebar)
-                            }
-                            className="btn btn-ghost btn-circle avatar hidden sm:flex md:flex"
-                        >
-                            <div className="w-10 rounded-full">
-                                {/* {firebaseUser !== null &&
-                                firebaseUser?.photoURL ? (
-                                    <Image
-                                        src={firebaseUser?.photoURL}
-                                        alt={"user profile logo"}
-                                        width={100}
-                                        height={100}
-                                        priority
-                                    />
-                                ) : (
-                                    <FaUserGraduate className="w-10 h-10 text-gray-900 p-1 rounded-full ring-2 ring-green-300" />
-                                )} */}
-                            </div>
-                        </label>
-                    )}
-                    <ul
-                        tabIndex={0}
-                        className="menu menu-compact dropdown-content mt-12 p-2 shadow bg-base-100 rounded-box w-[692px] sm:w-[17.5rem] right-0 "
-                    >
-                        {menuListItem()}
-                    </ul>
+                        Aladin
+                    </Link>
+                </div>
+                <div>
+                    <SearchForm
+                        className={"w-2/3 "}
+                        placeholder={"What are you looking for?"}
+                    />
+                </div>
+                <div>
+                    <div className="flex justify-end">
+                        <ul className="flex items-center">
+                            {/* {(user && user.email) && (
+                            <Link href="/products/wish-lists">
+                                <li className="py-3 ml-[5px] px-3 rounded-lg border-2 border-secondary hover:bg-transparent hover:text-primary text-white bg-success transition ease-in-out delay-15 cursor-pointer">
+                                    <FaHeart />
+                                </li>
+                            </Link>
+                        )} */}
+
+                            <Link href="/products/wish-lists">
+                                <li className="py-3 ml-[5px] px-3 rounded-lg border-2 border-secondary hover:bg-transparent hover:text-primary text-white bg-success transition ease-in-out delay-15 cursor-pointer">
+                                    <FaHeart />
+                                </li>
+                            </Link>
+
+                            <li
+                                // onMouseOver={handleShoppingCart}
+                                className="relative py-3 px-3 rounded-lg ml-[5px] border-2 border-secondary hover:bg-transparent hover:text-primary  text-white bg-success transition ease-in-out delay-15 cursor-pointer"
+                            >
+                                <FaShoppingCart />
+                                <div
+                                    suppressHydrationWarning
+                                    className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2"
+                                >
+                                    {/* {carts?.length} */}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div className="navbar-center sm:hidden md:hidden flex">
-                <ul className="menu menu-horizontal p-0">{menuListItem()}</ul>
-            </div>
-            <div className="navbar-end md:hidden sm:hidden">
-                <ul className="menu flex flex-row">
-                    {user !== null ? (
-                        <li
-                            // onClick={handleLogOut}
-                            className="text-primary hover:bg-transparent hover:text-success text-lg cursor-pointer"
-                        >
-                            LogOut
-                        </li>
-                    ) : (
-                        <>
-                            <li>
-                                <label
-                                    className="text-primary hover:bg-transparent hover:text-success text-lg"
-                                    onClick={() => router.push("/auth/login")}
-                                >
-                                    Login
-                                </label>
-                            </li>
-                            <li className="text-success hover:bg-transparent flex items-center justify-center">
-                                or
-                            </li>
-                            <li>
-                                <label
-                                    className="text-primary hover:bg-transparent hover:text-success text-lg"
-                                    onClick={() =>
-                                        router.push("/auth/register")
-                                    }
-                                >
-                                    Register
-                                </label>
-                            </li>
-                        </>
-                    )}
-                </ul>
-            </div>
-        </div>
+
+            {/* <ShoppingCarts
+                openShoppingCart={openShoppingCart}
+                setOpenShoppingCart={setOpenShoppingCart}
+            /> */}
+        </>
     );
 };
 

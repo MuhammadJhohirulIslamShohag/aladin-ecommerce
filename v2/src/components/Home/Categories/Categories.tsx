@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import Category from "./Category/Category";
-import { ICategories } from "types/category.type";
 import { getListOfCategory } from "@/api/category";
 import Loader from "@/components/Loader/Loader";
+import { ICategories } from "@/types/category.type";
 
 const Categories = () => {
     const [categoriesData, setCategoriesData] = useState<ICategories[]>([]);
