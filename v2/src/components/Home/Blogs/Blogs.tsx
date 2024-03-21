@@ -1,16 +1,17 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+'use client'
+
 import React, { useState, useEffect } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation, Autoplay } from "swiper";
+import { Navigation, Autoplay } from "swiper/modules";
 import Blog from "@/components/Blog/Blog";
 import SectionTitle from "@/components/SectionTitle/SectionTitle";
-import { IBlog } from "types/blog.types";
 import { getListOfBlogs } from "@/api/blog";
 import Loader from "@/components/Loader/Loader";
+import { IBlog } from "@/types/blog.types";
 
 const Blogs = () => {
     const [blogsData, setBlogsData] = useState<IBlog[]>([]);

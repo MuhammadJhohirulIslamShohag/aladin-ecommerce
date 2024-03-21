@@ -1,9 +1,15 @@
-import { Navigation, Pagination, Autoplay } from "swiper";
+"use client";
+
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
+
+// Import Swiper styles
+import 'swiper/css';
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+
 import CustomButton from "../../UI/CustomButton/CustomButton";
-import { Swiper, SwiperSlide } from "swiper/react";
 
 const Banner = () => {
     return (
@@ -18,7 +24,7 @@ const Banner = () => {
                 autoplay={{
                     delay: 3000,
                     disableOnInteraction: false,
-                    pauseOnMouseEnter:true
+                    pauseOnMouseEnter: true,
                 }}
                 navigation={true}
                 modules={[Pagination, Navigation, Autoplay]}

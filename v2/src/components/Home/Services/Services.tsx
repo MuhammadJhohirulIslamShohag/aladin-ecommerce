@@ -1,12 +1,14 @@
+'use client'
 import React from "react";
 import { MdOutlineFreeCancellation } from "react-icons/md";
 import { AiOutlineFileProtect } from "react-icons/ai";
 import { FaMoneyBillAlt, FaGift } from "react-icons/fa";
+
 import Service from "./Service/Service";
 
 const Services = () => {
     return (
-        <div className="container grid grid-cols-4 md:grid-cols-3 sm:grid-cols-1 py-14 md:py-10 sm:py-8 sm:pb-1 md:pb-5">
+        <div className="container grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 lg:py-14 md:py-10 py-8 pb-1 md:pb-5">
             <Service name="Free Delivery" info="On Order Over $100">
                 <MdOutlineFreeCancellation className="text-3xl text-success" />
             </Service>
