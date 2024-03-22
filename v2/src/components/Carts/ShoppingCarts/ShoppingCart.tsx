@@ -2,14 +2,14 @@ import React from "react";
 import Image from "next/image";
 
 const ShoppingCart = ({ cart, removeCartHandler }: any) => {
-    const { _id, price, color, count, title, images } = cart;
+    const { _id, price, color, count, name, imageURLs } = cart;
 
     return (
         <li key={cart._id} className="flex py-6">
             <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                 <Image
-                    src={images && images.length && images[0].url}
-                    alt={title}
+                    src={imageURLs && imageURLs.length && imageURLs[0]}
+                    alt={name}
                     width={80}
                     height={80}
                     className="h-full w-full object-cover object-center"
@@ -19,10 +19,10 @@ const ShoppingCart = ({ cart, removeCartHandler }: any) => {
             <div className="ml-4 flex flex-1 flex-col">
                 <div>
                     <div className="flex justify-between text-base font-medium text-gray-900">
-                        <h3>{title}</h3>
+                        <h3>{name}</h3>
                         <p className="ml-4">{price}</p>
                     </div>
-                    <p className="mt-1 text-sm text-gray-500">{color}</p>
+                    <p className="mt-1 text-sm text-gray-500">{color?.name}</p>
                 </div>
                 <div className="flex flex-1 items-end justify-between text-sm">
                     <p className="text-gray-500">Qty {count}</p>

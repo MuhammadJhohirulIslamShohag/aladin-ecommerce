@@ -1,46 +1,57 @@
-import { Fragment } from "react";
-import Link from "next/link";
+"use client";
 import { Dialog, Transition } from "@headlessui/react";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import Link from "next/link";
+import { Fragment, startTransition, useOptimistic } from "react";
+
 import ShoppingCart from "./ShoppingCart";
-import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
+
+import { getCarts, storeCart } from "@/store/cart/cart";
+import { CartType } from "@/types/cart.types";
+import { useStoreContext } from "@/contexts/StoreContextProvider";
+import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
 
 const ShoppingCarts = ({ openShoppingCart, setOpenShoppingCart }: any) => {
-    const { state, dispatch } = useStoreContext();
-    const { carts } = state;
+    let allCart = getCarts();
+    const { dispatch } = useStoreContext();
+
+    const [cartOptimistic, setRemoveCartOptimistic] = useOptimistic(
+        allCart,
+        (state: CartType[], newState: string) => {
+            return state.filter((cart: CartType) => cart._id !== newState);
+        }
+    );
 
     const getTotalPrice = () => {
         const totalPrice =
-            carts &&
-            carts.reduce((acc, cur: any, i) => {
+            allCart &&
+            allCart.reduce((acc: number, cur: CartType) => {
                 return acc + cur.price * cur.count;
             }, 0);
         return totalPrice;
     };
+
     const removeCartHandler = (productId: string) => {
-        let carts = [];
-        if (typeof window !== "undefined") {
-            // checking already carts to the window localStorage
-            let cartsFromLocalStorage: string | null =
-                window.localStorage.getItem("carts");
-            if (cartsFromLocalStorage !== null) {
-                carts = JSON.parse(cartsFromLocalStorage);
-            }
-        }
+        let carts = allCart;
+
         // delete carts
         for (let i = 0; i < carts.length; i++) {
             if (carts[i]._id === productId) {
                 carts.splice(i, 1);
             }
         }
+
         // set undeleted carts into the window local storage
-        window.localStorage.setItem("carts", JSON.stringify(carts));
-        // store store context
-        dispatch({
-            type: StoreActionType.ADD_TO_CART,
-            payload: carts,
+        startTransition(() => {
+            storeCart(JSON.stringify(carts));
+            setRemoveCartOptimistic(productId);
+            // store store context
+            dispatch({
+                type: StoreActionType.ADD_TO_CART,
+                payload: carts,
+            });
         });
     };
+
     return (
         <Transition.Root show={openShoppingCart} as={Fragment}>
             <Dialog
@@ -110,7 +121,7 @@ const ShoppingCarts = ({ openShoppingCart, setOpenShoppingCart }: any) => {
                                                     </button>
                                                 </div>
                                             </div>
-                                            {carts.length < 1 ? (
+                                            {allCart?.length < 1 ? (
                                                 <div className="flex flex-col justify-center items-center h-96">
                                                     <h2 className="font-medium text-xl mb-2 text-green-600">
                                                         No Product Added into
@@ -141,8 +152,10 @@ const ShoppingCarts = ({ openShoppingCart, setOpenShoppingCart }: any) => {
                                                             role="list"
                                                             className="-my-6 divide-y divide-gray-200"
                                                         >
-                                                            {carts.map(
-                                                                (cart: any) => (
+                                                            {cartOptimistic?.map(
+                                                                (
+                                                                    cart: CartType
+                                                                ) => (
                                                                     <ShoppingCart
                                                                         cart={
                                                                             cart
@@ -162,7 +175,7 @@ const ShoppingCarts = ({ openShoppingCart, setOpenShoppingCart }: any) => {
                                             )}
                                         </div>
 
-                                        {carts.length > 0 && (
+                                        {allCart?.length > 0 && (
                                             <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                                                 <div className="flex justify-between text-base font-medium text-gray-900">
                                                     <p>Subtotal</p>

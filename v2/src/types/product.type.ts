@@ -16,7 +16,7 @@ export interface IProduct {
     subCategory: ISubCategory[];
     quantity: number;
     sold: number;
-    imageURL: [string];
+    imageURLs: [string];
     shipping: string;
     colors: IColor[];
     sizes: ISize[];

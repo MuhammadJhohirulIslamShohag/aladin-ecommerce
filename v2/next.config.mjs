@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        remotePatterns: ["e-commerce-microservice.s3.amazonaws.com"]
+        domains: ["e-commerce-microservice.s3.amazonaws.com"],
     },
 };
 

@@ -1,9 +1,9 @@
-import { Fragment } from "react";
-import Link from "next/link";
-import { Dialog, Transition } from "@headlessui/react";
 import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import ShoppingCart from "./ShoppingCart";
 import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
+import { Dialog, Transition } from "@headlessui/react";
+import Link from "next/link";
+import { Fragment } from "react";
+import ShoppingCart from "./ShoppingCart";
 
 const ShoppingCarts = ({ openShoppingCart, setOpenShoppingCart }: any) => {
     const { state, dispatch } = useStoreContext();

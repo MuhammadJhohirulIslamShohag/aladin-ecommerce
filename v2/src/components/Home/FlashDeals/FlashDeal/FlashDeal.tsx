@@ -1,17 +1,19 @@
-import React from "react";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { IProduct } from "types/product.type";
+
 import { MdFlashOn } from "react-icons/md";
+import { IProduct } from "@/types/product.type";
 
 const FlashDeal = ({ product }: { product: IProduct }) => {
     return (
         <div className="h-[420px]">
             <div className="relative w-full cursor-pointer overflow-hidden h-80">
-                {product.images && product.images.length && (
+                {product.imageURLs && product.imageURLs.length && (
                     <Link href={`products/${product?.slug}`}>
                         <Image
-                            src={product?.images[0]?.url}
+                            src={product?.imageURLs[0]}
                             className="h-full w-full object-contain"
                             alt="surprising sales product"
                             width={100}
@@ -30,13 +32,14 @@ const FlashDeal = ({ product }: { product: IProduct }) => {
             <div className="flex items-center gap-2 top-2 mb-1">
                 <span className="font-bold text-gray-800">
                     USD{" "}
-                    {(product.price - ((product.price * product.discount) / 100)).toFixed(2)}{" "}
+                    {(
+                        product.price -
+                        (product.price * product.discount) / 100
+                    ).toFixed(2)}{" "}
                     $
                 </span>
                 <span className="font-bold line-through text-sm text-gray-600">
-                    - USD{" "}
-                    {(product.price).toFixed(2)}{" "}
-                    $
+                    - USD {product.price.toFixed(2)} $
                 </span>
             </div>
             <div>
@@ -47,29 +50,27 @@ const FlashDeal = ({ product }: { product: IProduct }) => {
                             width: `${
                                 product?.sold &&
                                 product?.quantity &&
-                                (
-                                    (product.sold / product.quantity) *
-                                    100
-                                )
+                                (product.sold / product.quantity) * 100
                             }%`,
                         }}
                     >
                         {product?.sold &&
                             product?.quantity &&
-                            (
-                                (product.sold / product.quantity) *
-                                100
-                            ).toFixed(0)}
+                            ((product.sold / product.quantity) * 100).toFixed(
+                                0
+                            )}
                         %
                     </div>
                 </div>
             </div>
             <div className="text-sm text-black mt-2 w-full flex justify-between">
                 <div>
-                    <span className="text-black font-medium">Sold:</span> {product?.sold}
+                    <span className="text-black font-medium">Sold:</span>{" "}
+                    {product?.sold}
                 </div>
                 <div>
-                    <span className="text-black font-medium">Quantity:</span> {product?.quantity}
+                    <span className="text-black font-medium">Quantity:</span>{" "}
+                    {product?.quantity}
                 </div>
             </div>
         </div>

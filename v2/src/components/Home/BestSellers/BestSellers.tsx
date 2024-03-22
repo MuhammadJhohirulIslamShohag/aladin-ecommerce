@@ -5,8 +5,8 @@ import Product from "./../../Product/Product";
 import SectionTitle from "./../../SectionTitle/SectionTitle";
 
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";

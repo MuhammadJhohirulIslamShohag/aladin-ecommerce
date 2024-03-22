@@ -1,19 +1,19 @@
+import { getListOfBlogs } from "@/api/blog";
 import { Suspense } from "react";
-import Banner from "@/components/Home/Banner/Banner";
-import SubCategories from "@/components/Home/SubCategories/SubCategories";
-import Categories from "@/components/Home/Categories/Categories";
+import { getCategories } from "@/api/category";
+import { getProducts } from "@/api/products";
+import { getAllSubCategories } from "@/api/sub-categories";
 import Advertise from "@/components/Home/Advertise/Advertise";
+import Banner from "@/components/Home/Banner/Banner";
+import BestSellers from "@/components/Home/BestSellers/BestSellers";
 import Blogs from "@/components/Home/Blogs/Blogs";
+import Categories from "@/components/Home/Categories/Categories";
 import NewsLetter from "@/components/Home/NewsLetter/NewsLetter";
 import Services from "@/components/Home/Services/Services";
-import { getListOfBlogs } from "@/api/blog";
-import { getProducts } from "@/api/products";
+import SubCategories from "@/components/Home/SubCategories/SubCategories";
 import Loader from "@/components/Loader/Loader";
-import { getCategories } from "@/api/category";
-import { getAllSubCategories } from "@/api/sub-categories";
-import BestSellers from "@/components/Home/BestSellers/BestSellers";
-// import FlashDeals from "@/components/Home/FlashDeals/FlashDeals/FlashDeals";
-// import NewArrivals from "@/components/Home/NewArrivals/NewArrivals";
+import FlashDeals from "@/components/Home/FlashDeals/FlashDeals/FlashDeals";
+import NewArrivals from "@/components/Home/NewArrivals/NewArrivals";
 
 const Home = async () => {
     // Initiate both requests in parallel
@@ -34,6 +34,7 @@ const Home = async () => {
         <>
             <Banner />
             <Services />
+
             <Suspense fallback={<Loader height={"h-[360px]"} />}>
                 <Categories data={categories.data?.data} />
             </Suspense>
@@ -43,23 +44,23 @@ const Home = async () => {
             </Suspense>
 
             <Suspense fallback={<Loader height={"h-[360px]"} />}>
-                <BestSellers products={products?.data?.data} />
-            </Suspense>
-
-            {/* <Suspense fallback={<Loader height={"h-[360px]"} />}>
                 <FlashDeals products={products?.data?.data} />
             </Suspense>
 
             <Suspense fallback={<Loader height={"h-[360px]"} />}>
-                <NewArrivals products={products?.data?.data} />
-            </Suspense> */}
+                <BestSellers products={products?.data?.data} />
+            </Suspense>
 
-            <NewsLetter />
+            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                <NewArrivals products={products?.data?.data} />
+            </Suspense>
+     
             <Suspense fallback={<Loader height={"h-[450px]"} />}>
                 <Blogs blogs={blogs?.data?.data} />
             </Suspense>
 
             <Advertise />
+            <NewsLetter />
         </>
     );
 };

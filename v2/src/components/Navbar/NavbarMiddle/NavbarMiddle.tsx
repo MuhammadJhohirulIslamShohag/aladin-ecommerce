@@ -2,14 +2,20 @@
 import Link from "next/link";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import SearchForm from "@/components/UI/SearchForm/SearchForm";
+// import { getCarts } from "@/store/cart/cart";
+import { useState } from "react";
+import ShoppingCarts from "@/components/Carts/ShoppingCarts/ShoppingCarts";
+import { useStoreContext } from "@/contexts/StoreContextProvider";
 
 const NavbarMiddle: React.FC = (): JSX.Element => {
-    // const [openShoppingCart, setOpenShoppingCart] = useState(false);
-    // const { carts, user } = state;
+    const { state } = useStoreContext();
+    const { carts } = state;
 
-    // const handleShoppingCart = () => {
-    //     setTimeout(() => setOpenShoppingCart(!openShoppingCart), 200);
-    // };
+    const [openShoppingCart, setOpenShoppingCart] = useState(false);
+
+    const handleShoppingCart = () => {
+        setTimeout(() => setOpenShoppingCart(!openShoppingCart), 200);
+    };
     return (
         <>
             <div className="container grid grid-cols-3 pt-2 md:gap-3 gap-0">
@@ -45,7 +51,7 @@ const NavbarMiddle: React.FC = (): JSX.Element => {
                             </Link>
 
                             <li
-                                // onMouseOver={handleShoppingCart}
+                                onMouseOver={handleShoppingCart}
                                 className="relative py-3 px-3 rounded-lg ml-[5px] border-2 border-secondary hover:bg-transparent hover:text-primary  text-white bg-success transition ease-in-out delay-15 cursor-pointer"
                             >
                                 <FaShoppingCart />
@@ -53,7 +59,8 @@ const NavbarMiddle: React.FC = (): JSX.Element => {
                                     suppressHydrationWarning
                                     className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2"
                                 >
-                                    {/* {carts?.length} */}
+                                    {carts?.length}
+                                    {/* {allCart?.length} */}
                                 </div>
                             </li>
                         </ul>
@@ -61,10 +68,10 @@ const NavbarMiddle: React.FC = (): JSX.Element => {
                 </div>
             </div>
 
-            {/* <ShoppingCarts
+            <ShoppingCarts
                 openShoppingCart={openShoppingCart}
                 setOpenShoppingCart={setOpenShoppingCart}
-            /> */}
+            />
         </>
     );
 };
