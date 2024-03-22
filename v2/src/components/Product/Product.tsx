@@ -1,33 +1,24 @@
-import React from "react";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import _ from "lodash";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdPageview } from "react-icons/md";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
-import { IProduct } from "types/product.type";
-import { AvgRating } from '@/lib/utils/avgRating';
+import { AvgRating } from "@/lib/utils/avgRating";
+import { IProduct } from "@/types/product.type";
+import { getCarts, storeCart } from "@/store/cart/cart";
 
 const Product = ({ product }: { product: IProduct }) => {
     // const [isAddToCart, setIsAddToCart] = useState(false);
-    const { _id, slug, title, images, description, price, discount } = product;
-    const {
-        dispatch,
-        state: { carts },
-    } = useStoreContext();
+    let allCart = getCarts();
+
+    const { _id, slug, title, imageURL, description, price, discount } = product;
+
     const handleAddCart = () => {
         // create cart array
-        let carts = [];
-        // // checking available window or not
-        if (typeof window !== "undefined") {
-            // checking already carts to the window localStorage
-            let cartsFromLocalStorage: string | null =
-                window.localStorage.getItem("carts");
-            if (cartsFromLocalStorage !== null) {
-                carts = JSON.parse(cartsFromLocalStorage);
-            }
-        }
+        let carts = getCarts();
+
         // added cart
         carts.push({
             ...product,
@@ -36,17 +27,12 @@ const Product = ({ product }: { product: IProduct }) => {
         });
         // remove duplicates
         const uniqueCarts = _.uniqWith(carts, _.isEqual);
-        // set cart object in windows localStorage
-        window.localStorage.setItem("carts", JSON.stringify(uniqueCarts));
 
-        // added cart in store context
-        dispatch({
-            type: StoreActionType.ADD_TO_CART,
-            payload: uniqueCarts,
-        });
+        // set cart object in windows localStorage
+        storeCart(JSON.stringify(uniqueCarts));
     };
 
-    const isAddToCart = carts.filter((cart: any) => cart._id === _id);
+    const isAddToCart = allCart.filter((cart: any) => cart._id === _id);
 
     return (
         <div className="rounded-lg shadow-md group cursor-pointer">
@@ -87,14 +73,14 @@ const Product = ({ product }: { product: IProduct }) => {
                 </ul>
                 <Image
                     className="h-full w-full"
-                    src={`${images && images.length && images[0].url}`}
+                    src={`${imageURL && imageURL.length && imageURL[0]}`}
                     alt={title}
                     width={100}
                     height={100}
                 />
             </div>
             <div className="p-5">
-                <AvgRating product={product} isHomeReviewShow/>
+                <AvgRating product={product} isHomeReviewShow />
                 <h5 className="my-2 text-xl font-semibold tracking-tight text-gray-800">
                     {title}
                 </h5>
@@ -104,17 +90,13 @@ const Product = ({ product }: { product: IProduct }) => {
                         : description}
                 </p>
                 <div className="flex items-center gap-2 top-2 mb-1">
-                <span className="font-bold text-gray-700">
-                    USD{" "}
-                    {(price - ((price * discount) / 100)).toFixed(2)}{" "}
-                    $
-                </span>
-                <span className="font-bold line-through text-sm text-gray-600">
-                    - USD{" "}
-                    {(price).toFixed(2)}{" "}
-                    $
-                </span>
-            </div>
+                    <span className="font-bold text-gray-700">
+                        USD {(price - (price * discount) / 100).toFixed(2)} $
+                    </span>
+                    <span className="font-bold line-through text-sm text-gray-600">
+                        - USD {price.toFixed(2)} $
+                    </span>
+                </div>
             </div>
         </div>
     );

@@ -1,49 +1,24 @@
 import axios from "axios";
 
-export const createSubCategory = async (
-    token: string,
-    subCategoryObject: any
-) => {
-    return await axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/sub-categories`,
-        subCategoryObject,
-        {
-            headers: {
-                token,
-            },
-        }
-    );
+export const getAllSubCategories = async (query: Record<string, any>) => {
+    try {
+        return await axios.get(
+            `${process.env.NEXT_PUBLIC_SERVER_API}/sub-categories`,
+            {
+                params: query,
+            }
+        );
+    } catch (error) {
+        throw new Error("Failed to fetch data");
+    }
 };
-export const getAllSubCategories = async () =>
-    await axios.get(`${process.env.NEXT_PUBLIC_server_api}/sub-categories`);
 
-export const getSubCategory = async (slug: string) =>
-    await axios.get(
-        `${process.env.NEXT_PUBLIC_server_api}/sub-categories/${slug}`
-    );
-
-export const updateSubCategory = async (
-    token: string,
-    updateSubCategoryObj: any,
-    slug: string
-) => {
-    return await axios.put(
-        `${process.env.NEXT_PUBLIC_server_api}/sub-categories/${slug}`,
-        updateSubCategoryObj,
-        {
-            headers: {
-                token,
-            },
-        }
-    );
-};
-export const deleteSubCategory = async (token: string, slug: string) => {
-    return await axios.delete(
-        `${process.env.NEXT_PUBLIC_server_api}/sub-categories/${slug}`,
-        {
-            headers: {
-                token,
-            },
-        }
-    );
+export const getSubCategory = async (slug: string) => {
+    try {
+        return await axios.get(
+            `${process.env.NEXT_PUBLIC_server_api}/sub-categories/${slug}`
+        );
+    } catch (error) {
+        throw new Error("Failed to fetch data");
+    }
 };

@@ -1,15 +1,12 @@
-import { ICategories } from "./category.type";
-
-export interface ISubCategories {
-    name: string;
-    slug: string;
-    images: {
-        url: string;
-        public_id: string;
-    }[];
-    createdAt: Date;
-    parent: ICategories;
-    updatedAt: Date;
-    __v: number;
+export interface ISubCategory {
     _id: string;
+    name: string;
+    imageURL: string;
+    createdAt: Date;
+    categories: [
+        {
+            categoryId: string;
+        }
+    ];
+    updatedAt: Date;
 }

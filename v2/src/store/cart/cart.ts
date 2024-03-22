@@ -5,13 +5,13 @@ export const storeCart = (payload: string) => {
     return setToLocalStorage(cartKey, payload);
 };
 
-export const getCart = () => {
+export const getCarts = () => {
     const carts = getFromLocalStorage(cartKey);
 
     if (carts) {
         return JSON.parse(carts);
     } else {
-        return null;
+        return [];
     }
 };
 

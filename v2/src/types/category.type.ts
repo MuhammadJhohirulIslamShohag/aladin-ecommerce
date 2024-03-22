@@ -1,12 +1,7 @@
-export interface ICategories {
+export interface ICategory {
+    _id: string;
     name: string;
-    slug: string;
-    images: {
-        url: string;
-        public_id: string;
-    }[];
+    imageURL: string;
     createdAt: Date;
     updatedAt: Date;
-    __v: number;
-    _id: string;
 }

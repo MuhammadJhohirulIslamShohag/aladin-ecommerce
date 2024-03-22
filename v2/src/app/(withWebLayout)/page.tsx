@@ -1,20 +1,64 @@
+import { Suspense } from "react";
 import Banner from "@/components/Home/Banner/Banner";
-// import SubCategories from "@/components/Home/SubCategories/SubCategories";
-// import Categories from "@/components/Home/Categories/Categories";
+import SubCategories from "@/components/Home/SubCategories/SubCategories";
+import Categories from "@/components/Home/Categories/Categories";
 import Advertise from "@/components/Home/Advertise/Advertise";
 import Blogs from "@/components/Home/Blogs/Blogs";
 import NewsLetter from "@/components/Home/NewsLetter/NewsLetter";
 import Services from "@/components/Home/Services/Services";
+import { getListOfBlogs } from "@/api/blog";
+import { getProducts } from "@/api/products";
+import Loader from "@/components/Loader/Loader";
+import { getCategories } from "@/api/category";
+import { getAllSubCategories } from "@/api/sub-categories";
+import BestSellers from "@/components/Home/BestSellers/BestSellers";
+// import FlashDeals from "@/components/Home/FlashDeals/FlashDeals/FlashDeals";
+// import NewArrivals from "@/components/Home/NewArrivals/NewArrivals";
 
+const Home = async () => {
+    // Initiate both requests in parallel
+    const blogsData = getListOfBlogs({ limit: 3 });
+    const productsData = getProducts();
+    const categoriesData = getCategories({ limit: 4 });
+    const subCategoriesData = getAllSubCategories({ limit: 4 });
 
-const Home = () => {
-    // const { products, loading } = useProductsFetch();
+    // Wait for the promises to resolve
+    const [products, blogs, categories, subCategories] = await Promise.all([
+        productsData,
+        blogsData,
+        categoriesData,
+        subCategoriesData,
+    ]);
+
     return (
         <>
-            <Banner /> 
+            <Banner />
             <Services />
+            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                <Categories data={categories.data?.data} />
+            </Suspense>
+
+            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                <SubCategories data={subCategories.data?.data} />
+            </Suspense>
+
+            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                <BestSellers products={products?.data?.data} />
+            </Suspense>
+
+            {/* <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                <FlashDeals products={products?.data?.data} />
+            </Suspense>
+
+            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                <NewArrivals products={products?.data?.data} />
+            </Suspense> */}
+
             <NewsLetter />
-            <Blogs />
+            <Suspense fallback={<Loader height={"h-[450px]"} />}>
+                <Blogs blogs={blogs?.data?.data} />
+            </Suspense>
+
             <Advertise />
         </>
     );
