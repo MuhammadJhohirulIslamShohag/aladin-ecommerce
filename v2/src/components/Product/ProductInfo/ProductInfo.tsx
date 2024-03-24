@@ -1,11 +1,21 @@
-import React from "react";
-import CustomButton from "@/components/UI/CustomButton/CustomButton";
-import { BsHandbagFill, BsFillHeartFill } from "react-icons/bs";
+'use client'
+
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { RadioGroup } from "@headlessui/react";
+import { BsHandbagFill, BsFillHeartFill } from "react-icons/bs";
+import { useRouter } from "next/navigation";
+
+import CustomButton from "@/components/UI/CustomButton/CustomButton";
 import ProductDescriptionItem from "./../ProductDescription/ProductDescriptionItem";
 import { AvgRating } from "./../../../lib/utils/avgRating";
-import { ProductInfoPropsType } from "./ProductInfo.types";
-import { IColor } from "types/color.types";
+import { IColor } from "@/types/color.types";
+import { useStoreContext } from "@/contexts/StoreContextProvider";
+import { IProduct } from "@/types/product.type";
+import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
+import { getUserInfo } from "@/store/user/users";
+import { IReview } from "@/types/review.types";
+import { CartType } from "@/types/cart.types";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
@@ -13,26 +23,141 @@ function classNames(...classes: string[]) {
 
 const ProductInfo = ({
     product,
-    selectedColor,
-    setSelectedColor,
-    selectedSize,
-    setSelectedSize,
-    handleAddCart,
-    handleAddToWishList,
-    heartFillIcon,
-    isAddToCart,
-}: ProductInfoPropsType) => {
-    const { title, price, category, discount, shipping, brand, subCategory } =
+    reviewProducts,
+}: {
+    product: IProduct;
+    reviewProducts: IReview[];
+}) => {
+    const [selectedColor, setSelectedColor] = useState<string>("");
+    const [selectedSize, setSelectedSize] = useState<string>("");
+    const [heartFillIcon, setHeartFillIcon] = useState<boolean>(false);
+
+    const user = getUserInfo();
+    const router = useRouter();
+
+    const { name, price, category, discount, shipping, brand, subCategory, slug } =
         product;
+
+    const {
+        state: { carts },
+        dispatch,
+    } = useStoreContext();
+
+    useEffect(() => {
+        if (user && user.token) {
+            getWishList(user.token, _id).then((res) => {
+                if (res.data.wishList.length > 0) {
+                    setHeartFillIcon(true);
+                }
+            });
+        }
+    }, [user, _id]);
+
+    useEffect(() => {
+        if (carts.length) {
+            for (let i = 0; i < carts.length; i++) {
+                if (carts[i]._id === _id) {
+                    if (carts[i].color) {
+                        setSelectedColor(carts[i]?.color);
+                    }
+                    if (carts[i].size) {
+                        setSelectedSize(carts[i]?.size);
+                    }
+                }
+            }
+        } else {
+            setSelectedColor("");
+            setSelectedSize("");
+        }
+    }, [_id, carts]);
+
+    useEffect(() => {
+        if (user) {
+            const existingUserRatingObject = product.ratings.find(
+                (rating) => rating.postedBy._id === user._id
+            );
+            if (existingUserRatingObject) {
+                setStar(existingUserRatingObject.star);
+                setComment(existingUserRatingObject.comment);
+            }
+        }
+    }, []);
+
+    const isAddToCart = carts.filter((cart: CartType) => cart._id === _id);
+
+    const handleAddCart = () => {
+        if (isAddToCart?.length <= 0) {
+            let carts = [];
+            if (selectedColor === "") {
+                return toast.error("Select The Color");
+            }
+            if (selectedSize === "") {
+                return toast.error("Select The Size");
+            }
+            if (typeof window !== "undefined") {
+                if (window.localStorage.getItem("carts")) {
+                    // checking already carts to the window localStorage
+                    let cartsFromLocalStorage: string | null =
+                        window.localStorage.getItem("carts");
+                    if (cartsFromLocalStorage !== null) {
+                        carts = JSON.parse(cartsFromLocalStorage);
+                    }
+                }
+            }
+            // push carts into carts array
+            carts.push({
+                ...product?.data?.data,
+                count: 1,
+                price:
+                    product?.data?.data.price -
+                    (product?.data?.data.price * product?.data?.data.discount) /
+                        100,
+                color: selectedColor,
+                size: selectedSize,
+            });
+
+            // remove duplicates value
+            const uniqueCarts = _.uniqWith(carts, _.isEqual);
+
+            // set data local storage
+            window.localStorage.setItem("carts", JSON.stringify(uniqueCarts));
+
+            dispatch({
+                type: StoreActionType.ADD_TO_CART,
+                payload: uniqueCarts,
+            });
+            toast.success("Product Added To The Carts");
+        } else {
+            toast.error("Product Already Added To The Cart");
+        }
+    };
+
+    const handleAddToWishList = () => {
+        if (user && user.token) {
+            if (heartFillIcon) {
+                removeWishList(user.token, _id).then((res) => {
+                    setHeartFillIcon(false);
+                    toast.error("Product Removed To The WishList");
+                });
+            } else {
+                addToWishList(user.token, _id, true).then((res) => {
+                    setHeartFillIcon(true);
+                    toast.success("Product Added To The WishList");
+                });
+            }
+        } else {
+            router.push(`/auth/login?redirect=/products/${slug}`);
+        }
+    };
     return (
         <>
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
                 <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl break-all">
-                    {title}
+                    {name}
                 </h1>
             </div>
             {/* Reviews */}
-            <AvgRating product={product} />
+            <AvgRating product={reviewProducts} />
             {/* Options */}
             <div className="mt-4">
                 <div>

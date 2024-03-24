@@ -3,7 +3,7 @@ import React from "react";
 
 type ProductDescriptionItemPropsType = {
     name: string;
-    value?: string | any[];
+    value?: string | number | any;
     description?: string;
     isBorderClassName?: boolean;
 };

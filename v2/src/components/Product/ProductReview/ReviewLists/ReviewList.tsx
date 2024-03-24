@@ -1,19 +1,23 @@
+"use client";
+
 import Image from "next/image";
 import moment from "moment";
 import { FaUserGraduate } from "react-icons/fa";
-import React from "react";
 import { BsFillStarFill } from "react-icons/bs";
 
-const ReviewList = ({ ratings }: any) => {
-    const { star, postedBy, comment, reviewedAt } = ratings;
+import { IReview } from "@/types/review.types";
+
+const ReviewList = ({ reviewProduct }: { reviewProduct: IReview }) => {
+    const { rating, userId, comment, createdAt } = reviewProduct;
+
     return (
         <div className="grid grid-cols-10 mb-5">
             <div>
-                {postedBy?.image && postedBy && postedBy.image.url ? (
+                {userId && userId.profileImage ? (
                     <Image
                         className="w-10 h-10 rounded-full"
-                        src={postedBy.image.url}
-                        alt={postedBy?.fullName}
+                        src={userId.profileImage}
+                        alt={userId.name}
                         width={40}
                         height={40}
                     />
@@ -23,14 +27,14 @@ const ReviewList = ({ ratings }: any) => {
             </div>
             <div className="col-span-6 border-b-2">
                 <p className="font-bold text-primary capitalize">
-                    {postedBy?.name}
+                    {userId?.name}
                 </p>
                 <ul className="flex mb-2">
-                    {Array.from(Array(5).keys()).map((rating: number) => (
-                        <li key={rating}>
+                    {Array.from(Array(5).keys()).map((star: number) => (
+                        <li key={star}>
                             <BsFillStarFill
                                 className={`${
-                                    star > rating
+                                    rating > star
                                         ? "text-orange-400"
                                         : "text-gray-200"
                                 }
@@ -39,7 +43,7 @@ const ReviewList = ({ ratings }: any) => {
                         </li>
                     ))}
                     <span className="ml-1 text-gray-400 text-sm relative -top-1">
-                        {reviewedAt && moment(reviewedAt).fromNow()}
+                        {createdAt && moment(createdAt).fromNow()}
                     </span>
                 </ul>
                 <p className="mb-2 font-light text-primary">{comment}</p>

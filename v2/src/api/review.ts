@@ -1,10 +1,10 @@
 import axios from "axios";
 
-// for getting all products
-export const getProducts = async (query: Record<string, unknown>) => {
+// for getting all reviews
+export const getReviews = async (query: Record<string, unknown>) => {
     try {
         return await axios.get(
-            `${process.env.NEXT_PUBLIC_SERVER_API}/products`,
+            `${process.env.NEXT_PUBLIC_SERVER_API}/reviews`,
             {
                 params: query,
             }
@@ -14,11 +14,11 @@ export const getProducts = async (query: Record<string, unknown>) => {
     }
 };
 
-// for getting single product
-export const getSingleProduct = async (payload: string) => {
+// for getting single review
+export const getSingleReview = async (payload: string) => {
     try {
         return await axios.get(
-            `${process.env.NEXT_PUBLIC_SERVER_API}/products/${payload}`
+            `${process.env.NEXT_PUBLIC_SERVER_API}/reviews/${payload}`
         );
     } catch (error) {
         throw new Error("Failed to fetch data");

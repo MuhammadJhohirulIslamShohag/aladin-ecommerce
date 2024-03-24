@@ -18,7 +18,7 @@ import NewArrivals from "@/components/Home/NewArrivals/NewArrivals";
 const Home = async () => {
     // Initiate both requests in parallel
     const blogsData = getListOfBlogs({ limit: 3 });
-    const productsData = getProducts();
+    const productsData = getProducts({ limit: -1 });
     const categoriesData = getCategories({ limit: 4 });
     const subCategoriesData = getAllSubCategories({ limit: 4 });
 
@@ -54,7 +54,7 @@ const Home = async () => {
             <Suspense fallback={<Loader height={"h-[360px]"} />}>
                 <NewArrivals products={products?.data?.data} />
             </Suspense>
-     
+
             <Suspense fallback={<Loader height={"h-[450px]"} />}>
                 <Blogs blogs={blogs?.data?.data} />
             </Suspense>

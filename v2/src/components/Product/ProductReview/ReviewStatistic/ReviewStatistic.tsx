@@ -1,17 +1,20 @@
+"use client";
+
 import React from "react";
 import { AvgRating } from "@/lib/utils/avgRating";
+import { IReview } from "@/types/review.types";
 import ReviewProgressBar from "./ReviewProgressBar";
-import { IProduct } from "types/product.type";
 
-const ReviewStatistic = ({ product }: { product: IProduct }) => {
+const ReviewStatistic = ({ reviewProducts }: { reviewProducts: IReview[] }) => {
+
     const calculatePercentage = (number: number) => {
-        const percentage = product.ratings.reduce((acc, cur) => {
+        const percentage = reviewProducts?.reduce((acc, cur) => {
             acc += Number(
-                cur.star == Number(number) || cur.star == Number(number) + 0.5
+                cur.rating == Number(number) || cur.rating == Number(number) + 0.5
             );
             return acc;
         }, 0);
-        return (percentage * 100) / product.ratings.length;
+        return (percentage * 100) / reviewProducts.length;
     };
     const ratingsWithPercentageArray = [
         {
@@ -32,7 +35,7 @@ const ReviewStatistic = ({ product }: { product: IProduct }) => {
     return (
         <div className="grid grid-cols-4 sm:grid-cols-1">
             <div className="mt-4 sm:mt-3">
-                <AvgRating product={product} isTotalReviewRating={true} />
+                <AvgRating product={reviewProducts} isTotalReviewRating={true} />
             </div>
             <div className="col-span-3 px-10 sm:px-5 pt-5">
                 {ratingsWithPercentageArray.length &&

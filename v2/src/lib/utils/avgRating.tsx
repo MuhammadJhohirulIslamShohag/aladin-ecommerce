@@ -1,8 +1,10 @@
+"use client";
+
 import { BsFillStarFill } from "react-icons/bs";
-import { IProduct } from "../../types/product.type";
+import { IReview } from "@/types/review.types";
 
 type AvgRatingPropType = {
-    product: IProduct;
+    product: IReview[];
     isTotalReviewRating?: boolean;
     isHomeReviewShow?: boolean;
 };
@@ -13,13 +15,13 @@ export const AvgRating = ({
 }: AvgRatingPropType) => {
     let avgRating: number | undefined;
     let length: number | undefined;
-    if (product && product.ratings.length) {
+    if (product && product.length) {
         let total: number[] = [];
-        product.ratings.forEach((rating: any) => total.push(rating.star));
-        const highest = product.ratings.length * 5;
+        product.forEach((rating: any) => total.push(rating.star));
+        const highest = product.length * 5;
         const totalReducer = total.reduce((acc, cur) => acc + cur, 0);
         avgRating = (totalReducer * 5) / highest;
-        length = product.ratings.length;
+        length = product.length;
     } else {
         avgRating = 0;
         length = 0;

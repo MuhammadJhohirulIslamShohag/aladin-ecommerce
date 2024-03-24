@@ -3,12 +3,12 @@ import { Tab } from "@headlessui/react";
 import ReviewStatistic from "./ReviewStatistic/ReviewStatistic";
 import ReviewLists from "./ReviewLists/ReviewLists";
 
-const ProductReview = ({ product, handleReviewShowModal }: any) => {
+const ProductReview = ({ reviewProducts, handleReviewShowModal }: any) => {
     return (
         <Tab.Panel>
-            <ReviewStatistic product={product} />
+            <ReviewStatistic reviewProducts={reviewProducts} />
             <ReviewLists
-                product={product}
+                reviewProducts={reviewProducts}
                 handleReviewShowModal={handleReviewShowModal}
             />
         </Tab.Panel>

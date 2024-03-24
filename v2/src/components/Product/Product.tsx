@@ -26,7 +26,7 @@ const Product = ({ product }: { product: IProduct }) => {
         }
     );
 
-    const { _id, slug, title, imageURLs, description, price, discount } =
+    const { _id, slug, name, imageURLs, description, price, discount } =
         product;
 
     const handleAddCart = () => {
@@ -99,7 +99,7 @@ const Product = ({ product }: { product: IProduct }) => {
                 <Image
                     className="h-full w-full"
                     src={`${imageURLs && imageURLs.length && imageURLs[0]}`}
-                    alt={title}
+                    alt={name}
                     width={100}
                     height={100}
                 />
@@ -107,7 +107,7 @@ const Product = ({ product }: { product: IProduct }) => {
             <div className="p-5">
                 {/* <AvgRating product={product} isHomeReviewShow /> */}
                 <h5 className="my-2 text-xl font-semibold tracking-tight text-gray-800">
-                    {title}
+                    {name}
                 </h5>
                 <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                     {description.length > 90

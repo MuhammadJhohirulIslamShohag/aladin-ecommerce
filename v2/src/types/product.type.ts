@@ -7,7 +7,7 @@ import { ISubCategory } from "./sub-category.type";
 
 export interface IProduct {
     _id: string;
-    title: string;
+    name: string;
     slug: string;
     description: string;
     price: number;

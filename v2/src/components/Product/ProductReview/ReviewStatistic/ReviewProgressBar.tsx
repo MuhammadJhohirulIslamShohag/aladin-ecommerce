@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { BsFillStarFill } from "react-icons/bs";
 
@@ -15,7 +17,7 @@ const ReviewProgressBar = ({
             <div className="w-full relative top-1 col-span-3 bg-gray-300  h-2.5">
                 <div
                     className="bg-success h-2.5 sm:h-2 sm:w-2  dark:bg-success"
-                    style={{ width: `${percentage}%` }}
+                    style={{ width: `${percentage ? percentage: 0}%` }}
                 ></div>
             </div>
             <ul className="flex">
@@ -30,7 +32,7 @@ const ReviewProgressBar = ({
                     </li>
                 ))}
                 <span className="ml-1 text-blue-400 relative -top-1">
-                    {percentage}%
+                    {percentage ? percentage: 0}%
                 </span>
             </ul>
         </div>
