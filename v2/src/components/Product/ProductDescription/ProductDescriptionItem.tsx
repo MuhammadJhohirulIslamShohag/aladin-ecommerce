@@ -1,3 +1,5 @@
+'use client'
+
 import { isArray } from "lodash";
 import React from "react";
 

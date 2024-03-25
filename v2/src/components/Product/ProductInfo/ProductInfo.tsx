@@ -1,10 +1,11 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
+import { useState, startTransition } from "react";
+import _ from "lodash";
+import toast  from "react-hot-toast";
+import { useRouter } from "next/navigation";
 import { RadioGroup } from "@headlessui/react";
 import { BsHandbagFill, BsFillHeartFill } from "react-icons/bs";
-import { useRouter } from "next/navigation";
 
 import CustomButton from "@/components/UI/CustomButton/CustomButton";
 import ProductDescriptionItem from "./../ProductDescription/ProductDescriptionItem";
@@ -16,6 +17,7 @@ import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
 import { getUserInfo } from "@/store/user/users";
 import { IReview } from "@/types/review.types";
 import { CartType } from "@/types/cart.types";
+import { getCarts, storeCart } from "@/store/cart/cart";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
@@ -35,96 +37,101 @@ const ProductInfo = ({
     const user = getUserInfo();
     const router = useRouter();
 
-    const { name, price, category, discount, shipping, brand, subCategory, slug } =
-        product;
+    const {
+        name,
+        price,
+        category,
+        discount,
+        shipping,
+        brand,
+        subCategory,
+        slug,
+        _id,
+    } = product;
 
     const {
-        state: { carts },
+        state,
         dispatch,
     } = useStoreContext();
 
-    useEffect(() => {
-        if (user && user.token) {
-            getWishList(user.token, _id).then((res) => {
-                if (res.data.wishList.length > 0) {
-                    setHeartFillIcon(true);
-                }
-            });
-        }
-    }, [user, _id]);
+    // useEffect(() => {
+    //     if (user && user.token) {
+    //         getWishList(user.token, _id).then((res) => {
+    //             if (res.data.wishList.length > 0) {
+    //                 setHeartFillIcon(true);
+    //             }
+    //         });
+    //     }
+    // }, [user, _id]);
 
-    useEffect(() => {
-        if (carts.length) {
-            for (let i = 0; i < carts.length; i++) {
-                if (carts[i]._id === _id) {
-                    if (carts[i].color) {
-                        setSelectedColor(carts[i]?.color);
-                    }
-                    if (carts[i].size) {
-                        setSelectedSize(carts[i]?.size);
-                    }
-                }
-            }
-        } else {
-            setSelectedColor("");
-            setSelectedSize("");
-        }
-    }, [_id, carts]);
+    // useEffect(() => {
+    //     if (carts.length) {
+    //         for (let i = 0; i < carts.length; i++) {
+    //             if (carts[i]._id === _id) {
+    //                 if (carts[i].color) {
+    //                     setSelectedColor(carts[i]?.color);
+    //                 }
+    //                 if (carts[i].size) {
+    //                     setSelectedSize(carts[i]?.size);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         setSelectedColor("");
+    //         setSelectedSize("");
+    //     }
+    // }, [_id, carts]);
 
-    useEffect(() => {
-        if (user) {
-            const existingUserRatingObject = product.ratings.find(
-                (rating) => rating.postedBy._id === user._id
-            );
-            if (existingUserRatingObject) {
-                setStar(existingUserRatingObject.star);
-                setComment(existingUserRatingObject.comment);
-            }
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (user) {
+    //         const existingUserRatingObject = product.ratings.find(
+    //             (rating) => rating.postedBy._id === user._id
+    //         );
+    //         if (existingUserRatingObject) {
+    //             setStar(existingUserRatingObject.star);
+    //             setComment(existingUserRatingObject.comment);
+    //         }
+    //     }
+    // }, []);
 
-    const isAddToCart = carts.filter((cart: CartType) => cart._id === _id);
+   const isAddToCart = state?.carts?.filter((cart: CartType) => cart._id === _id);
 
     const handleAddCart = () => {
+       
         if (isAddToCart?.length <= 0) {
-            let carts = [];
+           
+            let carts = getCarts();
             if (selectedColor === "") {
                 return toast.error("Select The Color");
             }
             if (selectedSize === "") {
                 return toast.error("Select The Size");
             }
-            if (typeof window !== "undefined") {
-                if (window.localStorage.getItem("carts")) {
-                    // checking already carts to the window localStorage
-                    let cartsFromLocalStorage: string | null =
-                        window.localStorage.getItem("carts");
-                    if (cartsFromLocalStorage !== null) {
-                        carts = JSON.parse(cartsFromLocalStorage);
-                    }
-                }
-            }
+
             // push carts into carts array
             carts.push({
-                ...product?.data?.data,
+                ...product,
                 count: 1,
                 price:
-                    product?.data?.data.price -
-                    (product?.data?.data.price * product?.data?.data.discount) /
-                        100,
+                    product?.price - (product?.price * product?.discount) / 100,
                 color: selectedColor,
                 size: selectedSize,
             });
 
+           
+
             // remove duplicates value
             const uniqueCarts = _.uniqWith(carts, _.isEqual);
 
-            // set data local storage
-            window.localStorage.setItem("carts", JSON.stringify(uniqueCarts));
+            // set cart object in windows local storage
+            startTransition(() => {
+                storeCart(JSON.stringify(uniqueCarts));
 
-            dispatch({
-                type: StoreActionType.ADD_TO_CART,
-                payload: uniqueCarts,
+                // added cart in store context
+                dispatch({
+                    type: StoreActionType.ADD_TO_CART,
+                    payload: uniqueCarts,
+                });
             });
             toast.success("Product Added To The Carts");
         } else {
@@ -133,22 +140,23 @@ const ProductInfo = ({
     };
 
     const handleAddToWishList = () => {
-        if (user && user.token) {
-            if (heartFillIcon) {
-                removeWishList(user.token, _id).then((res) => {
-                    setHeartFillIcon(false);
-                    toast.error("Product Removed To The WishList");
-                });
-            } else {
-                addToWishList(user.token, _id, true).then((res) => {
-                    setHeartFillIcon(true);
-                    toast.success("Product Added To The WishList");
-                });
-            }
-        } else {
-            router.push(`/auth/login?redirect=/products/${slug}`);
-        }
+        // if (user && user.token) {
+        //     if (heartFillIcon) {
+        //         removeWishList(user.token, _id).then((res) => {
+        //             setHeartFillIcon(false);
+        //             toast.error("Product Removed To The WishList");
+        //         });
+        //     } else {
+        //         addToWishList(user.token, _id, true).then((res) => {
+        //             setHeartFillIcon(true);
+        //             toast.success("Product Added To The WishList");
+        //         });
+        //     }
+        // } else {
+        //     router.push(`/auth/login?redirect=/products/${slug}`);
+        // }
     };
+
     return (
         <>
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
@@ -205,7 +213,7 @@ const ProductInfo = ({
                             className="mt-4"
                         >
                             <div className="flex items-center space-x-3">
-                                {product?.colors.map((color: IColor) => (
+                                {product?.colors?.map((color: IColor) => (
                                     <RadioGroup.Option
                                         key={color._id}
                                         value={color.name}
@@ -252,7 +260,7 @@ const ProductInfo = ({
                             className="mt-4"
                         >
                             <div className="grid grid-cols-4 gap-4 sm:grid-cols-2 md:grid-cols-3">
-                                {product?.sizes.map((size: any) => (
+                                {product?.sizes?.map((size: any) => (
                                     <RadioGroup.Option
                                         key={size._id}
                                         value={size.name}
@@ -292,34 +300,36 @@ const ProductInfo = ({
                         </RadioGroup>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-1 gap-4">
+                    <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-4">
                         <CustomButton
                             buttonType="button"
-                            className="mt-10 sm:mt-5 w-full"
+                            className="lg:mt-10 md:mt-10 mt-5 w-full"
                             handleClick={handleAddCart}
                         >
                             <BsHandbagFill className="mr-1" />
-                            {isAddToCart?.length > 0
+                            <span> {isAddToCart?.length > 0
                                 ? "Added To Cart"
-                                : "Add To Cart"}
+                                : "Add To Cart"}</span>
+                           
                         </CustomButton>
                         {heartFillIcon ? (
                             <CustomButton
                                 buttonType="button"
-                                className="mt-10 sm:mt-0 w-full md:text-[12px]"
+                                className="lg:mt-10 md:mt-10 mt-0 w-full"
                                 handleClick={handleAddToWishList}
                             >
                                 <BsFillHeartFill className="mr-1" />
-                                Removed To Wishlist
+                                <span>Removed To Wishlist</span>
+                                
                             </CustomButton>
                         ) : (
                             <CustomButton
                                 buttonType="button"
-                                className="mt-10 sm:mt-0 w-full md:text-[12px]"
+                                className="lg:mt-10 md:mt-10 mt-0 w-full"
                                 handleClick={handleAddToWishList}
                             >
                                 <BsFillHeartFill className="mr-1" />
-                                Add To WishList
+                               <span>Add To WishList</span>
                             </CustomButton>
                         )}
                     </div>

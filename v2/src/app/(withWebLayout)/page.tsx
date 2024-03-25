@@ -18,7 +18,7 @@ import NewArrivals from "@/components/Home/NewArrivals/NewArrivals";
 const Home = async () => {
     // Initiate both requests in parallel
     const blogsData = getListOfBlogs({ limit: 3 });
-    const productsData = getProducts({ limit: -1 });
+    const productsData = getProducts({ limit: 0 });
     const categoriesData = getCategories({ limit: 4 });
     const subCategoriesData = getAllSubCategories({ limit: 4 });
 

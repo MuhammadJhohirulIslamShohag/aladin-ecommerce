@@ -10,7 +10,7 @@ const CustomButton = ({ children, className, buttonType="button", handleClick }:
         <div>
             <button
                 type={buttonType}
-                className={`btn hover:bg-transparent hover:text-primary text-white btn-primary ${className}`}
+                className={`hover:bg-transparent transition-all border-[1px] border-primary hover:text-primary text-white bg-primary flex items-center justify-center py-2.5 px-4 rounded-sm ${className}`}
                 onClick={handleClick}
             >
                 {children}
