@@ -1,68 +1,166 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer components {
+    .container {
+        max-width: 1350px;
+        width: 91.66% !important;
+        margin: 0 auto;
+    }
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+/* Start React Select */
+.select-placeholder-text {
+    color: #d1d5db !important;
 }
-a:hover {
-  color: #535bf2;
+.react-select__control {
+    box-shadow: none !important;
+    border-color: white !important;
+    border-radius: 30px !important;
+}
+.react-select__placeholder {
+    color: black !important;
+}
+/* End React Select */
+
+.firebaseui-subtitle,
+.firebaseui-title {
+    color: rgb(83 173 76 / 87%) !important;
+    text-align: center !important;
+}
+.mdl-button--raised.mdl-button--colored:active {
+    background-color: rgb(0 0 0 / 10%) !important;
+    color: #000 !important;
+}
+.mdl-button--raised.mdl-button--colored:hover {
+    background-color: transparent;
+    color: #000;
+}
+.mdl-button--raised.mdl-button--colored {
+    background: #050505 !important;
+    color: hsl(0deg 0% 100% / 90%);
+}
+.react-datepicker-popper {
+    z-index: 99999 !important;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+/* Start React Date Picker */
+.react-datepicker__day--selected:hover,
+.react-datepicker__day--in-selecting-range:hover,
+.react-datepicker__day--in-range:hover,
+.react-datepicker__month-text--selected:hover,
+.react-datepicker__month-text--in-selecting-range:hover,
+.react-datepicker__month-text--in-range:hover,
+.react-datepicker__quarter-text--selected:hover,
+.react-datepicker__quarter-text--in-selecting-range:hover,
+.react-datepicker__quarter-text--in-range:hover,
+.react-datepicker__year-text--selected:hover,
+.react-datepicker__year-text--in-selecting-range:hover,
+.react-datepicker__year-text--in-range:hover {
+    background-color: #43c24f !important;
+}
+.react-datepicker__day:hover,
+.react-datepicker__month-text:hover,
+.react-datepicker__quarter-text:hover,
+.react-datepicker__year-text:hover {
+    background-color: #43c24f !important;
+    color: #fff !important;
+}
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range,
+.react-datepicker__year-text--selected,
+.react-datepicker__year-text--in-selecting-range,
+.react-datepicker__year-text--in-range {
+    background-color: #43c24f !important;
+}
+/* End React Date Picker */
+
+/*line chart */
+canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Start Small Devices */
+@media only screen and (max-width: 767px) {
+    canvas {
+        width: 100% !important;
+        height: 280px !important;
+    }
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+/* Start Scroll To Top */
+.scroll-to-top{
+    background-color: #36D399 !important;
+    transition: all .4s;
+    right: 30px !important;
+    width: 36px !important;
+    height: 40px !important;
+    bottom: 25px !important;
 }
-button:hover {
-  border-color: #646cff;
+.scroll-to-top svg {
+    width: 19px;
+    height: 27px;
+    display: inline-block;
+    fill: white;
+    transition: all .4s;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.scroll-to-top:hover {
+    background-color: #000 !important;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+@media only screen and (max-width: 767px) {
+    .scroll-to-top {
+        right: 10px !important;
+        bottom: 33px !important;
+        width: 33px !important;
+        height: 33px !important;
+    }
+    .scroll-to-top svg {
+        width: 12px;
+        height: 22px;
+        display: inline-block;
+        fill: #000;
+        transition: all .5s;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .scroll-to-top {
+        right: 12px !important;
+        bottom: 33px !important;
+    }
+}
+/* End Scroll To Top */
+
+/* AOS Stop Animation for Small Devices, Tablets */
+@media only screen and (max-width: 767px) {
+    .animated {
+        /*CSS transitions*/
+        -o-transition-property: none !important;
+        -moz-transition-property: none !important;
+        -ms-transition-property: none !important;
+        -webkit-transition-property: none !important;
+        transition-property: none !important;
+        /*CSS transforms*/
+        -o-transform: none !important;
+        -moz-transform: none !important;
+        -ms-transform: none !important;
+        -webkit-transform: none !important;
+        transform: none !important;
+        /*CSS animations*/
+        -webkit-animation: none !important;
+        -moz-animation: none !important;
+        -o-animation: none !important;
+        -ms-animation: none !important;
+        animation: none !important;
+    }
 }

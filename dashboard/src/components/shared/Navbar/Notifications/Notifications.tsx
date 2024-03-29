@@ -8,7 +8,7 @@ import { notificationsData } from "../../../../data/notifications";
 const Notifications = ({ showNotification }: { showNotification: boolean }) => {
     return (
         <div
-            className={`z-50 absolute origin-top-right transition-all top-6 max-w-lg w-96 sm:w-60 max-h-[80vh] right-0 overflow-y-auto my-4 overflow-hidden text-base list-none bg-white divide-y divide-gray-100 rounded  shadow-lg shadow-gray-200 ${
+            className={`z-50 absolute origin-top-right transition-all top-6 max-w-lg lg:w-96 w-60 max-h-[80vh] right-0 overflow-y-auto my-4 overflow-hidden text-base list-none bg-white divide-y divide-gray-100 rounded  shadow-lg shadow-gray-200 ${
                 showNotification ? "scale-100" : "scale-0"
             } scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100`}
         >

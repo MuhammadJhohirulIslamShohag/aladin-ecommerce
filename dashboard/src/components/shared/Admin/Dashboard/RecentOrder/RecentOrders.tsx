@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import RecentOrderRow from "./RecentOrderRow";
 import { RecentOrderType } from "./RecentOrders.types";
 
@@ -13,7 +13,7 @@ const RecentOrder = (props: RecentOrderType) => {
                     </h6>
                 </div>
                 <div className="text-gray-500 text-sm font-bold hover:text-green-500 transition-all cursor-pointer">
-                    <Link href="/dashboard/admin/orders">View All</Link>
+                    <Link to="/dashboard/admin/orders">View All</Link>
                 </div>
             </div>
             <div className="relative overflow-x-auto sm:rounded-lg">

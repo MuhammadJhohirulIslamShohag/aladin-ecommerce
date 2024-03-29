@@ -1,5 +1,5 @@
-import Link from "next/link";
-import React from "react";
+
+import { Link } from "react-router-dom";
 import RecentProductRow from "./RecentProductRow";
 import { RecentProductType } from "./RecentProducts.types";
 
@@ -14,7 +14,7 @@ const RecentProduct = (props: RecentProductType) => {
                     </h6>
                 </div>
                 <div className="text-gray-500 text-sm font-bold hover:text-green-500 transition-all cursor-pointer">
-                    <Link href="/dashboard/admin/products">View All</Link>
+                    <Link to="/dashboard/admin/products">View All</Link>
                 </div>
             </div>
             <div className="relative overflow-x-auto sm:rounded-lg">

@@ -1,34 +1,56 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { Link, Outlet } from "react-router-dom";
+import { CiCircleChevRight } from "react-icons/ci";
 
+import Navbar from "../../components/shared/Navbar/Navbar";
+import SidebarList from "../../components/shared/Sidebar/SidebarList/SidebarList";
+import Footer from "../../components/shared/Footer/Footer";
+import Styles from "../../assets/styles/scrollbar.module.css";
 
-const MainLayout = ({ children }: React.PropsWithChildren<{}>) => {
-    const [openSideBar, setOpenSideBar] = useState<boolean>(false);
+const MainLayout = () => {
+    const [openSideBar, setOpenSideBar] = useState<boolean>(true);
 
     return (
-        <>
-            <DashboardNavbar
-                openSideBar={openSideBar}
-                setOpenSideBar={setOpenSideBar}
-            />
-            <aside
-                className={`w-72 fixed top-0 left-0 z-40  h-screen pt-[65px] duration-500 transition-all bg-white border-r border-gray-200 ${
-                    openSideBar
-                        ? "translate-x-0"
-                        : "sm:-translate-x-full md:-translate-x-full"
-                }`}
-            >
-                <div className="h-full px-3 pt-4 pb-4 overflow-y-auto bg-white">
-                    <SidebarList />
-                </div>
-            </aside>
+        <div className="overflow-hidden">
+            <div className="flex">
+                <div
+                    className={`relative duration-500 transition-all bg-white border-r border-gray-200 ${
+                        Styles.scrollbar
+                    } ${openSideBar ? "w-[350px]" : "w-20"}`}
+                >
+                    <div className="absolute -right-2 top-16 z-500 bg-white rounded-full">
+                        <CiCircleChevRight
+                            className="text-success"
+                            size={25}
+                            onClick={() => setOpenSideBar(!openSideBar)}
+                        />
+                    </div>
+                    <div className="text-center">
+                        <Link
+                            to="/"
+                            className="text-green-400 font-bold lg:text-4xl text-xl"
+                        >
+                            Aladin
+                        </Link>
+                    </div>
 
-            <section
-                className={`pr-4 pl-12 md:pl-4 sm:pl-4 pt-20 ml-64 md:ml-0 sm:ml-0 md:pt-20 sm:pt-20`}
-            >
-                {children}
-                <DashboardFooter />
-            </section>
-        </>
+                    <div>
+                        <SidebarList
+                            openSideBar={openSideBar}
+                            setOpenSideBar={setOpenSideBar}
+                        />
+                    </div>
+                </div>
+
+                <div className="h-[calc(100vh)] w-full overflow-y-auto">
+                    <Navbar />
+                    <div className={`px-5 py-5`}>
+                        <Outlet />
+                    </div>
+                    <Footer />
+                </div>
+            </div>
+        </div>
     );
 };
 

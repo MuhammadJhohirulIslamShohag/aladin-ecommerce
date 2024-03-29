@@ -1,7 +1,7 @@
-import React from "react";
+import { Link } from "react-router-dom";
+
 import { RecentUsersType } from "./RecentUsers.types";
 import RecentUserRow from "./RecentUserRow";
-import Link from "next/link";
 
 const RecentUsers = (props: RecentUsersType) => {
     const { users } = props;
@@ -14,7 +14,7 @@ const RecentUsers = (props: RecentUsersType) => {
                     </h6>
                 </div>
                 <div className="text-gray-500 text-sm font-bold hover:text-green-500 transition-all cursor-pointer">
-                    <Link href="/dashboard/admin/customers">View All</Link>
+                    <Link to="/dashboard/admin/customers">View All</Link>
                 </div>
             </div>
             <div className="relative overflow-x-auto sm:rounded-lg scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100">
