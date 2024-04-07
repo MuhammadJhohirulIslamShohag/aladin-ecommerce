@@ -27,8 +27,10 @@ const DashboardLayout = ({ children }: React.PropsWithChildren<{}>) => {
             <section
                 className={`pr-4 pl-12 md:pl-4 sm:pl-4 pt-20 ml-64 md:ml-0 sm:ml-0 md:pt-20 sm:pt-20`}
             >
-                {children}
-                <DashboardFooter />
+                <div className={`px-5 py-5`}>
+                        <Outlet />
+                    </div>
+                    <Footer />
             </section>
            
         </>
