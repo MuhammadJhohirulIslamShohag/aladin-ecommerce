@@ -3,11 +3,11 @@ import { SlHandbag } from "react-icons/sl";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 
-import DashWidget from "../../components/shared/Admin/Dashboard/DashWidget/DashWidget";
-import RecentOrder from "../../components/shared/Admin/Dashboard/RecentOrder/RecentOrders";
-import RecentProduct from "../../components/shared/Admin/Dashboard/RecentProduct/RecentProducts";
-import LineChart from "../../components/shared/Admin/Dashboard/LineChart/LineChart";
-import RecentUsers from "../../components/shared/Admin/Dashboard/RecentUsers/RecentUsers";
+import DashWidget from "../../components/shared/Dashboard/DashWidget/DashWidget";
+import RecentOrder from "../../components/shared/Dashboard/RecentOrder/RecentOrders";
+import RecentProduct from "../../components/shared/Dashboard/RecentProduct/RecentProducts";
+import LineChart from "../../components/shared/Dashboard/LineChart/LineChart";
+import RecentUsers from "../../components/shared/Dashboard/RecentUsers/RecentUsers";
 
 const Dashboard = () => {
     return (

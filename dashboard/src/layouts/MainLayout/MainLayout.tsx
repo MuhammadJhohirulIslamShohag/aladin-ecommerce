@@ -39,9 +39,10 @@ const MainLayout = () => {
             </aside>
 
             <section
-                className={`lg:pr-4 lg:pl-12 md:pl-4 pl-4 lg:ml-64 md:ml-0 ml-0 pt-20`}
+                className={`lg:pr-4 lg:pl-12 md:pl-4 pl-4 lg:ml-64 md:ml-0 ml-0 pt-20 relative`}
             >
-                <div className={`px-5 py-5`}>
+                <div className="bg-green-400 h-72 left-0 right-0 fixed top-0 w-full -z-10"></div>
+                <div className={`px-5 py-5 `}>
                     <Outlet />
                 </div>
                 <Footer />
