@@ -3,7 +3,7 @@ import {
     FieldValues,
     FieldError,
     RegisterOptions,
-    Path
+    Path,
 } from "react-hook-form";
 import Input from "../../Atoms/Form/Input";
 import Label from "../../Atoms/Form/Label";
@@ -33,35 +33,21 @@ const FormInputGroup = <T extends FieldValues>({
     requirePattern,
     ...rest
 }: FormGroupType<T>) => {
-   console.log(register, "register");
+    // console.log(register, "register");
     return (
         <div className="mb-3">
             <Label name={labelName} {...{ htmlFor: inputName }} />
 
             <Input
-                // {...{
-                //     ...{...register(
-                //         inputName,
-                //         !isRequirePattern
-                //             ? {
-                //                   required: `${errorMessage}`,
-                //               }
-                //             : requirePattern
-                //     )},
-                // }}
-                {...{...register(
-                        inputName,
-                        !isRequirePattern
-                            ? {
-                                  required: `${errorMessage}`,
-                              }
-                            : requirePattern
-                    ),
-                }}
-                {...{ ...rest }}
+                errorMessage={errorMessage}
+                inputName={inputName}
+                register={register}
+                isRequirePattern={isRequirePattern}
                 type={inputType}
+                requirePattern={requirePattern}
                 placeholder={placeholder}
                 className="input input-bordered input-success w-full text-gray-700"
+                {...rest}
             />
 
             {errors?.message && (

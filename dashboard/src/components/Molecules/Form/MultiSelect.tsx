@@ -3,8 +3,8 @@ import Select, { OnChangeValue } from "react-select";
 import { Control, Controller } from "react-hook-form";
 import makeAnimated from "react-select/animated";
 import Paragraph from "../../Atoms/Paragraph";
-import { IFormInput } from "../../Organisms/Form/CreateProduct/Organisms";
 import Label from "../../Atoms/Form/Label";
+import { IFormInput } from "../../Organisms/Form/CreateProduct/FormInput.types";
 const animatedComponents = makeAnimated();
 
 const customStyles = {

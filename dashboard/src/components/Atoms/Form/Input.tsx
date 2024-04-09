@@ -1,25 +1,44 @@
-import React from "react";
 import cn from "../../../utils/cn";
+import {
+    UseFormRegister,
+    Path,
+    FieldValues,
+    RegisterOptions,
+} from "react-hook-form";
 
-interface InputProps {
+interface InputProps<T extends FieldValues> {
     placeholder: string;
     type: string;
-    name: string;
+    register: UseFormRegister<T>;
+    inputName: Path<T>;
+    errorMessage: string | boolean | undefined;
     className: string;
+    isRequirePattern?: boolean | undefined;
+    requirePattern: RegisterOptions | undefined;
 }
 
-const Input: React.FC<InputProps> = ({
+const Input = <T extends FieldValues>({
     placeholder,
     type,
-    name,
+    register,
     className,
+    isRequirePattern = false,
+    inputName,
+    errorMessage,
+    requirePattern,
     ...restProps
-}) => {
-    console.log({restProps},"restProps");
+}: InputProps<T>) => {
     return (
         <input
+            {...register(
+                inputName,
+                !isRequirePattern
+                    ? {
+                          required: errorMessage,
+                      }
+                    : requirePattern
+            )}
             type={type}
-            name={name}
             className={cn(
                 "bg-primary border-primary text-white text-sm rounded-lg focus:border-primary block w-full pl-6 p-3 md:placeholder:text-white placeholder:text-[9px]",
                 className

@@ -23,11 +23,16 @@ const CreateProductForm = (props: CreateProductFormType) => {
         register,
         // control,
         setValue,
+        watch,
         formState: { errors },
         reset,
-    } = useForm<IFormInput>();
+    } = useForm<IFormInput>({
+        defaultValues: {
+            productName: "",
+        },
+    });
 
-    console.log(errors, "errors");
+    console.log(watch("description"), "errors");
 
     return (
         <form
@@ -54,7 +59,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         errors={errors.productName}
                         inputType={"text"}
                         placeholder={"Enter Your Product Name"}
-                        errorMessage="Product Title Is Required!"
+                        errorMessage={"Product Title Is Required!"}
                     />
                 </div>
 
@@ -66,7 +71,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         errors={errors.price}
                         inputType={"number"}
                         placeholder={"Enter Your Product Price"}
-                        errorMessage="Product Price Is Required!"
+                        errorMessage={"Product Price Is Required!"}
                     />
                 </div>
                 <div>
@@ -77,7 +82,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         errors={errors.discount}
                         inputType={"number"}
                         placeholder={"Enter Your Product Discount"}
-                        errorMessage="Product Price Discount Is Required!"
+                        errorMessage={"Product Price Discount Is Required!"}
                     />
                 </div>
                 <div>

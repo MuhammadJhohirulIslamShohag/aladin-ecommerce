@@ -1,5 +1,10 @@
+import {
+    UseFormRegister,
+    FieldValues,
+    FieldError,
+    Path,
+} from "react-hook-form";
 
-import { UseFormRegister, FieldValues, FieldError, Path } from "react-hook-form";
 import Label from "../../Atoms/Form/Label";
 import TextArea from "../../Atoms/Form/TextArea";
 import Paragraph from "../../Atoms/Paragraph";
@@ -11,7 +16,7 @@ type FormGroupType<T extends FieldValues> = {
     errors?: FieldError;
     inputType: string;
     placeholder: string;
-    errorMessage?: string;
+    errorMessage?: string | boolean | undefined;
 };
 
 const FormTextAreaGroup = <T extends FieldValues>({
@@ -27,16 +32,13 @@ const FormTextAreaGroup = <T extends FieldValues>({
             <Label name={labelName} {...{ htmlFor: inputName }} />
 
             <TextArea
-                {...{
-                    ...register(inputName, {
-                        required: `${errorMessage}`,
-                    }),
-                }}
+                errorMessage={errorMessage}
+                inputName={inputName}
+                register={register}
                 placeholder={placeholder}
                 className="input input-bordered input-success w-full text-gray-700"
             />
 
-                
             {errors?.message && (
                 <Paragraph
                     className="text-red-600 text-sm"
