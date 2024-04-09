@@ -4,6 +4,7 @@ import {
     Path,
     FieldValues,
     RegisterOptions,
+    FieldError
 } from "react-hook-form";
 
 interface InputProps<T extends FieldValues> {
@@ -12,7 +13,8 @@ interface InputProps<T extends FieldValues> {
     register: UseFormRegister<T>;
     inputName: Path<T>;
     errorMessage: string | boolean | undefined;
-    className: string;
+    errors?: FieldError | undefined;
+    className: string | undefined;
     isRequirePattern?: boolean | undefined;
     requirePattern: RegisterOptions | undefined;
 }
@@ -26,6 +28,7 @@ const Input = <T extends FieldValues>({
     inputName,
     errorMessage,
     requirePattern,
+    errors,
     ...restProps
 }: InputProps<T>) => {
     return (
@@ -40,8 +43,12 @@ const Input = <T extends FieldValues>({
             )}
             type={type}
             className={cn(
-                "bg-primary border-primary text-white text-sm rounded-lg focus:border-primary block w-full pl-6 p-3 md:placeholder:text-white placeholder:text-[9px]",
-                className
+                ` text-gray-800 text-sm rounded-lg  ring-0 block w-full pl-6 p-3  placeholder:text-[13px] placeholder-gray-600  border  focus:outline-offset-0 focus:outline-0 focus:outline-green-400 focus:ring-green-300 shadow-sm ${
+                    errors?.message
+                        ? "bg-red-50 focus:border-red-200 text-red-700 placeholder-red-700"
+                        : "bg-white focus:border-success"
+                }`,
+                className ? className : ""
             )}
             placeholder={placeholder}
             {...restProps}

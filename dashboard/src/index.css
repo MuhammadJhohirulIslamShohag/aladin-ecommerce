@@ -10,6 +10,17 @@
     }
 }
 
+.ck-editor__main:focus-visible{
+    border-color: rgb(83 173 76 / 87%) !important;
+}
+.ck-content:focus-visible{
+    border-color: rgb(83 173 76 / 87%) !important;
+}
+
+.ck-placeholder:before, .ck.ck-placeholder:before {
+    font-size: 12px
+}
+
 /* Start React Select */
 .select-placeholder-text {
     color: #d1d5db !important;

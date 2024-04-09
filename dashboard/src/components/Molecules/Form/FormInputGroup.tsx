@@ -5,9 +5,10 @@ import {
     RegisterOptions,
     Path,
 } from "react-hook-form";
+
 import Input from "../../Atoms/Form/Input";
 import Label from "../../Atoms/Form/Label";
-import Paragraph from "../../Atoms/Paragraph";
+// import Paragraph from "../../Atoms/Paragraph";
 
 type FormGroupType<T extends FieldValues> = {
     labelName: string;
@@ -19,6 +20,7 @@ type FormGroupType<T extends FieldValues> = {
     errorMessage?: string;
     isRequirePattern?: boolean;
     requirePattern?: RegisterOptions;
+    className?:string | undefined
 };
 
 const FormInputGroup = <T extends FieldValues>({
@@ -28,6 +30,7 @@ const FormInputGroup = <T extends FieldValues>({
     errors,
     inputType,
     placeholder,
+    className,
     errorMessage,
     isRequirePattern = false,
     requirePattern,
@@ -37,25 +40,26 @@ const FormInputGroup = <T extends FieldValues>({
     return (
         <div className="mb-3">
             <Label name={labelName} {...{ htmlFor: inputName }} />
-
+            
             <Input
                 errorMessage={errorMessage}
                 inputName={inputName}
                 register={register}
                 isRequirePattern={isRequirePattern}
                 type={inputType}
+                errors={errors}
                 requirePattern={requirePattern}
                 placeholder={placeholder}
-                className="input input-bordered input-success w-full text-gray-700"
+                className={className}
                 {...rest}
             />
 
-            {errors?.message && (
+            {/* {errors?.message && (
                 <Paragraph
                     className="text-red-600 text-sm"
                     text={errors?.message}
                 />
-            )}
+            )} */}
         </div>
     );
 };

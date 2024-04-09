@@ -4,6 +4,7 @@ import { IFormInput } from "./FormInput.types";
 // import ImageFileUploadForm from "../ImageFileUploadForm/ImageFileUploadForm";
 import FormGroup from "../../../Molecules/Form/FormInputGroup";
 import FormTextAreaGroup from "../../../Molecules/Form/FormTextAreaGroup";
+import FormRichTextGroup from "../../../Molecules/Form/FormRichTextGroup";
 // import SelectInput from "../../../Molecules/Form/SelectInput";
 // import MultiSelect from "../../../Molecules/Form/MultiSelect";
 
@@ -21,7 +22,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
     const {
         handleSubmit,
         register,
-        // control,
+        control,
         setValue,
         watch,
         formState: { errors },
@@ -39,7 +40,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
             onSubmit={handleSubmit((data) =>
                 handleAddProduct(data, reset, setValue)
             )}
-            className="mt-5 md:mt-0 sm:mt-0"
+            className="mt-5 md:mt-0 mt-0"
         >
             <div className="grid grid-cols-2">
                 {/* <ImageFileUploadForm
@@ -50,7 +51,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                     register={register}
                 /> */}
             </div>
-            <div className="grid gap-6 mb-6 grid-cols-2 sm:grid-cols-1 md:grid-cols-1 sm:mb-2 md:mb-0 sm:gap-3">
+            <div className="grid md:gap-x-5 lg:mb-5 lg:grid-cols-2 grid-cols-1 md:grid-cols-1 mb-2 md:mb-0 gap-x-3 gap-y-2">
                 <div>
                     <FormGroup
                         register={register}
@@ -60,9 +61,9 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         inputType={"text"}
                         placeholder={"Enter Your Product Name"}
                         errorMessage={"Product Title Is Required!"}
+                        className={"drop-shadow-md"}
                     />
                 </div>
-
                 <div>
                     <FormGroup
                         register={register}
@@ -72,8 +73,24 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         inputType={"number"}
                         placeholder={"Enter Your Product Price"}
                         errorMessage={"Product Price Is Required!"}
+                        className={"drop-shadow-md"}
                     />
                 </div>
+                <div className="col-span-2">
+                    <FormTextAreaGroup
+                        register={register}
+                        inputType="text"
+                        inputName={"metaName"}
+                        labelName={"Meta Title"}
+                        errors={errors?.metaName}
+                        placeholder={"Provide Product Description Here!"}
+                        errorMessage={
+                            "Product Product Description Is Required!"
+                        }
+                        className={"drop-shadow-md"}
+                    />
+                </div>
+
                 <div>
                     <FormGroup
                         register={register}
@@ -83,6 +100,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         inputType={"number"}
                         placeholder={"Enter Your Product Discount"}
                         errorMessage={"Product Price Discount Is Required!"}
+                        className={"drop-shadow-md"}
                     />
                 </div>
                 <div>
@@ -92,6 +110,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         labelName={"Quantity"}
                         errors={errors.quantity}
                         inputType={"number"}
+                        className={"drop-shadow-md"}
                         placeholder={"Enter Your Product Quantity"}
                         errorMessage="Product Price Quantity Is Required!"
                     />
@@ -174,7 +193,7 @@ const CreateProductForm = (props: CreateProductFormType) => {
                 />
             </div> */}
 
-            <div>
+            {/* <div>
                 <FormTextAreaGroup
                     register={register}
                     inputType="text"
@@ -182,7 +201,18 @@ const CreateProductForm = (props: CreateProductFormType) => {
                     labelName={"Description"}
                     errors={errors?.description}
                     placeholder={"Provide Product Description Here!"}
-                    errorMessage="Product Product Description Is Required!"
+                    errorMessage={"Product Product Description Is Required!"}
+                    className={"drop-shadow-md"}
+                />
+            </div> */}
+            <div>
+                <FormRichTextGroup
+                    inputName={"description"}
+                    labelName={"Description"}
+                    control={control}
+                    errors={errors?.description}
+                    placeholder={"Provide Product Description Here!"}
+                    errorMessage={"Product Product Description Is Required!"}
                 />
             </div>
             <button

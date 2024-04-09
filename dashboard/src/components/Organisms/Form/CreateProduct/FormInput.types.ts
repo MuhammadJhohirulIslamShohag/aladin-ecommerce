@@ -1,5 +1,6 @@
 export interface IFormInput {
     productName:string;
+    metaName:string;
     price:number;
     shipping:string;
     discount:number;

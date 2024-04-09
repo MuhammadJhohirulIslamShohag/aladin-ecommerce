@@ -3,9 +3,8 @@
 import CreateProductForm from "../../components/Organisms/Form/CreateProduct/CreateProductForm";
 
 const AddProductPage = () => {
-
     const handleAddProduct = (
-        data: IFormInput,
+        data: IFormInput
         // reset: UseFormReset<IFormInput>,
         // setValue: UseFormSetValue<IFormInput>
     ) => {
@@ -67,9 +66,7 @@ const AddProductPage = () => {
                 <h2 className="text-center font-semibold text-primary text-2xl">
                     Add New Product
                 </h2>
-                <CreateProductForm
-                    handleAddProduct={handleAddProduct}
-                />
+                <CreateProductForm handleAddProduct={handleAddProduct} />
             </div>
         </div>
     );
