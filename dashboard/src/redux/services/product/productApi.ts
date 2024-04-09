@@ -1,5 +1,5 @@
-import { IProduct } from "../../../types/product.type";
 import { baseApi } from "../../api/baseApi";
+import { IProduct } from "../../../types/product.type";
 
 const productApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
@@ -8,9 +8,13 @@ const productApi = baseApi.injectEndpoints({
                 url: "products",
                 method: "POST",
                 body: payload,
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                },
+            }),
+        }),
+        updateProduct: build.mutation({
+            query: (payload: IProduct) => ({
+                url: "products",
+                method: "PATCH",
+                body: payload,
             }),
         }),
         removedProduct: build.mutation({
@@ -33,4 +37,5 @@ export const {
     useCreateProductMutation,
     useGetProductsQuery,
     useRemovedProductMutation,
+    useUpdateProductMutation,
 } = productApi;

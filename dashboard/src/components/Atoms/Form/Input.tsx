@@ -15,6 +15,7 @@ const Input: React.FC<InputProps> = ({
     className,
     ...restProps
 }) => {
+    console.log({restProps},"restProps");
     return (
         <input
             type={type}

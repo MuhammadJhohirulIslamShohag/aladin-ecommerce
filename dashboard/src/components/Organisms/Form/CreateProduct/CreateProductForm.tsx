@@ -1,61 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useForm } from "react-hook-form";
-import { ISubCategory } from "../../../../types/sub-category.type";
+import { UseFormReset, UseFormSetValue, useForm } from "react-hook-form";
 import { IFormInput } from "./FormInput.types";
-import ImageFileUploadForm from "../ImageFileUploadForm/ImageFileUploadForm";
-import FormGroup from "../../../Molecules/Form/FormGroup";
-import SelectInput from "../../../Molecules/Form/SelectInput";
-import MultiSelect from "../../../Molecules/Form/MultiSelect";
-
-
+// import ImageFileUploadForm from "../ImageFileUploadForm/ImageFileUploadForm";
+import FormGroup from "../../../Molecules/Form/FormInputGroup";
+import FormTextAreaGroup from "../../../Molecules/Form/FormTextAreaGroup";
+// import SelectInput from "../../../Molecules/Form/SelectInput";
+// import MultiSelect from "../../../Molecules/Form/MultiSelect";
 
 type CreateProductFormType = {
-    handleAddProduct: any;
-    setLoading: any;
-    handleChangeCategory: any;
-    values: any;
-    setValues: any;
-    subCategories: ISubCategory[];
-    isShow: boolean;
-    loading: boolean;
-    setSubCategoryRef: any;
-    setColorRef: any;
-    setSizeRef: any;
+    handleAddProduct: (
+        data: IFormInput,
+        reset: UseFormReset<IFormInput>,
+        setValue: UseFormSetValue<IFormInput>
+    ) => void;
 };
 
 const CreateProductForm = (props: CreateProductFormType) => {
-    const {
-        handleAddProduct,
-        handleChangeCategory,
-        values,
-        setValues,
-        subCategories,
-        isShow,
-        loading,
-        setLoading,
-        setSubCategoryRef,
-        setColorRef,
-        setSizeRef,
-    } = props;
-
-    const {
-        sizes,
-        colors,
-        brands,
-        categories,
-        subCategory,
-        sizesData,
-        colorsData,
-    } = values;
+    const { handleAddProduct } = props;
 
     const {
         handleSubmit,
         register,
-        control,
+        // control,
         setValue,
         formState: { errors },
         reset,
     } = useForm<IFormInput>();
+
+    console.log(errors, "errors");
 
     return (
         <form
@@ -65,13 +37,13 @@ const CreateProductForm = (props: CreateProductFormType) => {
             className="mt-5 md:mt-0 sm:mt-0"
         >
             <div className="grid grid-cols-2">
-                <ImageFileUploadForm
+                {/* <ImageFileUploadForm
                     values={values}
                     setValues={setValues}
                     setLoading={setLoading}
                     errorField={errors.productImg}
                     register={register}
-                />
+                /> */}
             </div>
             <div className="grid gap-6 mb-6 grid-cols-2 sm:grid-cols-1 md:grid-cols-1 sm:mb-2 md:mb-0 sm:gap-3">
                 <div>
@@ -79,10 +51,10 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         register={register}
                         inputName={"productName"}
                         labelName={"Product Name"}
-                        errorField={errors.productName}
+                        errors={errors.productName}
                         inputType={"text"}
                         placeholder={"Enter Your Product Name"}
-                        required="Product Title Is Required!"
+                        errorMessage="Product Title Is Required!"
                     />
                 </div>
 
@@ -91,10 +63,10 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         register={register}
                         inputName={"price"}
                         labelName={"Price"}
-                        errorField={errors.price}
+                        errors={errors.price}
                         inputType={"number"}
                         placeholder={"Enter Your Product Price"}
-                        required="Product Price Is Required!"
+                        errorMessage="Product Price Is Required!"
                     />
                 </div>
                 <div>
@@ -102,10 +74,10 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         register={register}
                         inputName={"discount"}
                         labelName={"Discount"}
-                        errorField={errors.discount}
+                        errors={errors.discount}
                         inputType={"number"}
                         placeholder={"Enter Your Product Discount"}
-                        required="Product Price Discount Is Required!"
+                        errorMessage="Product Price Discount Is Required!"
                     />
                 </div>
                 <div>
@@ -113,27 +85,24 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         register={register}
                         inputName={"quantity"}
                         labelName={"Quantity"}
-                        errorField={errors.quantity}
+                        errors={errors.quantity}
                         inputType={"number"}
                         placeholder={"Enter Your Product Quantity"}
-                        required="Product Price Quantity Is Required!"
+                        errorMessage="Product Price Quantity Is Required!"
                     />
                 </div>
             </div>
-            <div className="mb-6 sm:mb-3 md:mb-3">
+            {/* <div className="mb-6 sm:mb-3 md:mb-3">
                 <SelectInput
                     dataArray={categories}
                     labelName={"Product Category"}
                     inputName={"productCategory"}
                     register={register}
-                    errorField={errors.productCategory}
-                    required={{
-                        required: "Product Category Is Required!",
-                        onChange: (e: any) => handleChangeCategory(e),
-                    }}
+                    errors={errors.productCategory}
+                    errorMessage={"Product Category Is Required!"}
                 />
-            </div>
-            {isShow && (
+            </div> */}
+            {/* {isShow && (
                 <div className="mb-6 sm:mb-3 md:mb-3">
                     <MultiSelect
                         dataArray={subCategories}
@@ -147,8 +116,8 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         setValueRef={setSubCategoryRef}
                     />
                 </div>
-            )}
-            <div className="mb-6 sm:mb-3 md:mb-3">
+            )} */}
+            {/* <div className="mb-6 sm:mb-3 md:mb-3">
                 <SelectInput
                     dataArray={brands}
                     labelName={"Brand"}
@@ -159,8 +128,8 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         required: "Product Brand Is Required!",
                     }}
                 />
-            </div>
-            <div className="mb-6 sm:mb-3 md:mb-3">
+            </div> */}
+            {/* <div className="mb-6 sm:mb-3 md:mb-3">
                 <MultiSelect
                     dataArray={colorsData}
                     valueData={colors}
@@ -172,8 +141,8 @@ const CreateProductForm = (props: CreateProductFormType) => {
                     control={control}
                     setValueRef={setColorRef}
                 />
-            </div>
-            <div className="mb-6 sm:mb-3 md:mb-3">
+            </div> */}
+            {/* <div className="mb-6 sm:mb-3 md:mb-3">
                 <MultiSelect
                     dataArray={sizesData}
                     valueData={sizes}
@@ -185,9 +154,9 @@ const CreateProductForm = (props: CreateProductFormType) => {
                     control={control}
                     setValueRef={setSizeRef}
                 />
-            </div>
+            </div> */}
 
-            <div className="mb-6 sm:mb-3 md:mb-3">
+            {/* <div className="mb-6 sm:mb-3 md:mb-3">
                 <SelectInput
                     dataArray={["Yes", "No"]}
                     labelName={"Shipping"}
@@ -198,25 +167,26 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         required: "Product Shipping Is Required!",
                     }}
                 />
-            </div>
+            </div> */}
 
             <div>
-                <FormGroup
+                <FormTextAreaGroup
                     register={register}
+                    inputType="text"
                     inputName={"description"}
                     labelName={"Description"}
-                    errorField={errors?.description}
+                    errors={errors?.description}
                     placeholder={"Provide Product Description Here!"}
-                    required="Product Product Description Is Required!"
+                    errorMessage="Product Product Description Is Required!"
                 />
             </div>
             <button
-                disabled={loading}
+                // disabled={loading}
                 type="submit"
                 value="Add Product"
                 className="btn hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
             >
-                {loading ? "Loading" : "Add Product"}
+                {/* {loading ? "Loading" : "Add Product"} */}Add Product
             </button>
         </form>
     );
