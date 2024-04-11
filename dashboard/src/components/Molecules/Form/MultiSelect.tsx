@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Select, { OnChangeValue } from "react-select";
 import { Control, Controller } from "react-hook-form";
+import Select, { OnChangeValue } from "react-select";
 import makeAnimated from "react-select/animated";
-import Paragraph from "../../Atoms/Paragraph";
 import Label from "../../Atoms/Form/Label";
-import { IFormInput } from "../../Organisms/Form/CreateProduct/FormInput.types";
+import Paragraph from "../../Atoms/Paragraph";
+import { IFormInput } from "../../Organisms/Form/CreateProduct/CreateProductForm.types";
 const animatedComponents = makeAnimated();
 
 const customStyles = {

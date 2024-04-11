@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import Pagination from "../../UI/Pagination/Pagination";
 import CheckBox from "../../Atoms/Form/CheckBox";
 
 interface Column {
@@ -20,9 +19,6 @@ interface TableProps {
     isLoading: boolean;
     pagination?: boolean;
     checkbox?: boolean;
-    pages?: number;
-    page?: number;
-    setPage?: (page: number) => void;
 }
 
 const Table: React.FC<TableProps> = ({
@@ -31,11 +27,7 @@ const Table: React.FC<TableProps> = ({
     isError,
     columns,
     isLoading,
-    pagination = false,
     checkbox = false,
-    pages,
-    page,
-    setPage,
 }) => {
     const [data, setData] = useState<any[]>([]);
     const [selectAll, setSelectAll] = useState<boolean>(false);
@@ -47,7 +39,6 @@ const Table: React.FC<TableProps> = ({
         direction: "asc",
     });
     const [selectedRow, setSelectedRow] = useState<any[]>([]);
-    const [entries, setEntries] = useState<number>(10);
     const [sortedData, setSortedData] = useState<any[]>([]);
 
     useEffect(() => {
@@ -113,6 +104,68 @@ const Table: React.FC<TableProps> = ({
         setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
     };
 
+    let content = null;
+
+    if (sortedData?.length) {
+        content = sortedData?.map((item, idx) => (
+            <tr
+                key={idx}
+                className={`text-gray-600 ${
+                    idx === sortedData?.length - 1 ? "" : ""
+                }`}
+            >
+                {checkbox && (
+                    <td className="px-4 py-3 border-t border-t-success/20 ">
+                        <CheckBox
+                            checked={selectedRow?.find(
+                                (row) => row?.key === item?.key || false
+                            )}
+                            onChange={() => handleSelectedRow(item)}
+                        />
+                    </td>
+                )}
+
+                {columns?.map((column, index) => (
+                    <td
+                        key={index}
+                        className={`px-3 py-2.5 border-t border-t-success/20 whitespace-normal align-middle`}
+                    >
+                        <span className="text-nowrap">
+                            {column.render ? (
+                                <>{column.render({ item })}</>
+                            ) : column?.dataIndex2 ? (
+                                item[column?.dataIndex]?.[
+                                    column?.dataIndex2
+                                ] ? (
+                                    item[column?.dataIndex]?.[
+                                        column?.dataIndex2
+                                    ]
+                                ) : (
+                                    "N/A"
+                                )
+                            ) : item[column?.dataIndex] ? (
+                                item[column?.dataIndex]
+                            ) : (
+                                "N/A"
+                            )}
+                        </span>
+                    </td>
+                ))}
+            </tr>
+        ));
+    }
+
+    // check if data not available
+    if (!sortedData?.length) {
+        const numberOfColumns = columns?.length + 1;
+
+        content = (
+            <tr className={`text-gray-600 text-center`}>
+                <td className="py-36 text-xl" colSpan={numberOfColumns}> No Data Found!</td>
+            </tr>
+        );
+    }
+
     return (
         <>
             <div className="relative overflow-x-auto rounded-lg scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100">
@@ -145,73 +198,9 @@ const Table: React.FC<TableProps> = ({
                             ))}
                         </tr>
                     </thead>
-                    <tbody className="">
-                        {sortedData?.slice(0, entries)?.map((item, idx) => (
-                            <tr
-                                key={idx}
-                                className={`text-gray-600 ${
-                                    idx === sortedData?.length - 1 ? "" : ""
-                                }`}
-                            >
-                                {checkbox && (
-                                    <td className="px-4 py-3 border-t border-t-success/20 ">
-                                        <CheckBox
-                                            checked={selectedRow?.find(
-                                                (row) =>
-                                                    row?.key === item?.key ||
-                                                    false
-                                            )}
-                                            onChange={() =>
-                                                handleSelectedRow(item)
-                                            }
-                                        />
-                                    </td>
-                                )}
-
-                                {columns?.map((column, index) => (
-                                    <td
-                                        key={index}
-                                        className={`px-3 py-2.5 border-t border-t-success/20 whitespace-normal align-middle`}
-                                    >
-                                        <span className="text-nowrap">
-                                            {column.render ? (
-                                                <>{column.render({ item })}</>
-                                            ) : column?.dataIndex2 ? (
-                                                item[column?.dataIndex]?.[
-                                                    column?.dataIndex2
-                                                ] ? (
-                                                    item[column?.dataIndex]?.[
-                                                        column?.dataIndex2
-                                                    ]
-                                                ) : (
-                                                    "N/A"
-                                                )
-                                            ) : item[column?.dataIndex] ? (
-                                                item[column?.dataIndex]
-                                            ) : (
-                                                "N/A"
-                                            )}
-                                        </span>
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
+                    <tbody>{content}</tbody>
                 </table>
             </div>
-
-            {pagination && pages && page && setPage ? (
-                <div>
-                    <Pagination
-                        setEntries={setEntries}
-                        pages={pages}
-                        page={page}
-                        setPage={setPage}
-                    />
-                </div>
-            ) : (
-                ""
-            )}
         </>
     );
 };

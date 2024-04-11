@@ -10,6 +10,16 @@
     }
 }
 
+.hidden-checkbox{
+    display: none !important;
+}
+
+.my-checkbox > ant-checkbox-checked .ant-checkbox-inner {
+    background-color: "red";
+    border-color: "red";
+}
+/**/
+
 .ck-editor__main:focus-visible{
     border-color: rgb(83 173 76 / 87%) !important;
 }

@@ -3,6 +3,12 @@ import { IProduct } from "../../../types/product.type";
 
 const productApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
+        getProducts: build.query({
+            query: (queryParams) => ({
+                url: `products?${queryParams}`,
+                method: "GET",
+            }),
+        }),
         createProduct: build.mutation({
             query: (payload: IProduct) => ({
                 url: "products",
@@ -21,12 +27,6 @@ const productApi = baseApi.injectEndpoints({
             query: (payload: string) => ({
                 url: `products/${payload}`,
                 method: "DELETE",
-            }),
-        }),
-        getProducts: build.query({
-            query: () => ({
-                url: "products",
-                method: "GET",
             }),
         }),
     }),

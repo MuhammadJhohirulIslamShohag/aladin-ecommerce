@@ -1,55 +1,83 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { UseFormReset, UseFormSetValue, useForm } from "react-hook-form";
-import { IFormInput } from "./FormInput.types";
-// import ImageFileUploadForm from "../ImageFileUploadForm/ImageFileUploadForm";
+import { useState } from "react";
+import { UploadFile } from "antd";
+import { UseFormReset, useForm } from "react-hook-form";
+
 import FormGroup from "../../../Molecules/Form/FormInputGroup";
-import FormTextAreaGroup from "../../../Molecules/Form/FormTextAreaGroup";
 import FormRichTextGroup from "../../../Molecules/Form/FormRichTextGroup";
-// import SelectInput from "../../../Molecules/Form/SelectInput";
-// import MultiSelect from "../../../Molecules/Form/MultiSelect";
+import FormTextAreaGroup from "../../../Molecules/Form/FormTextAreaGroup";
+import FormSelectGroup from "../../../Molecules/Form/FormSelectGroup";
+import AntdUploadImage from "../../../Molecules/Upload/Images/AntdUploadImage";
+
+import { ICreateProductForm } from "./CreateProductForm.types";
+import { IBrand } from "../../../../types/brand.types";
+import { ICategory } from "../../../../types/category.type";
+import { IColor } from "../../../../types/color.types";
+import { ISize } from "../../../../types/size.types";
+import { ArrayDataModifyHelpers } from "../../../../utils/arrayDataModify";
+import Button from "../../../Atoms/Button/Button";
+import { ISubCategory } from "../../../../types/sub-category.type";
 
 type CreateProductFormType = {
     handleAddProduct: (
-        data: IFormInput,
-        reset: UseFormReset<IFormInput>,
-        setValue: UseFormSetValue<IFormInput>
+        data: ICreateProductForm,
+        reset: UseFormReset<ICreateProductForm>,
+        setImageFiles: React.Dispatch<React.SetStateAction<UploadFile[]>>
     ) => void;
+    sizes: ISize[];
+    colors: IColor[];
+    categories: ICategory[];
+    subCategories: ISubCategory[];
+    brands: IBrand[];
+    loading: boolean;
 };
 
-const CreateProductForm = (props: CreateProductFormType) => {
-    const { handleAddProduct } = props;
+const CreateProductForm = ({
+    handleAddProduct,
+    sizes,
+    colors,
+    categories,
+    brands,
+    loading,
+    subCategories,
+}: CreateProductFormType) => {
+    // state
+    const [imageFiles, setImageFiles] = useState<UploadFile[]>([]);
 
+    // react hook form
     const {
         handleSubmit,
         register,
         control,
-        setValue,
-        watch,
         formState: { errors },
         reset,
-    } = useForm<IFormInput>({
+    } = useForm<ICreateProductForm>({
         defaultValues: {
             productName: "",
+            metaName: "",
+            description: "",
         },
     });
 
-    console.log(watch("description"), "errors");
+    // submit handler to submit data to server
+    const handleControlProduct = (data: ICreateProductForm) => {
+        handleAddProduct(
+            { ...data, productImgFiles: imageFiles },
+            reset,
+            setImageFiles
+        );
+    };
 
     return (
         <form
-            onSubmit={handleSubmit((data) =>
-                handleAddProduct(data, reset, setValue)
-            )}
-            className="mt-5 md:mt-0 mt-0"
+            onSubmit={handleSubmit(handleControlProduct)}
+            className="lg:mt-5 md:mt-0 mt-0"
         >
             <div className="grid grid-cols-2">
-                {/* <ImageFileUploadForm
-                    values={values}
-                    setValues={setValues}
-                    setLoading={setLoading}
-                    errorField={errors.productImg}
-                    register={register}
-                /> */}
+                <AntdUploadImage
+                    fileList={imageFiles}
+                    setFileList={setImageFiles}
+                    isError={imageFiles?.length > 0 ? false : true}
+                />
             </div>
             <div className="grid md:gap-x-5 lg:mb-5 lg:grid-cols-2 grid-cols-1 md:grid-cols-1 mb-2 md:mb-0 gap-x-3 gap-y-2">
                 <div>
@@ -115,96 +143,121 @@ const CreateProductForm = (props: CreateProductFormType) => {
                         errorMessage="Product Price Quantity Is Required!"
                     />
                 </div>
-            </div>
-            {/* <div className="mb-6 sm:mb-3 md:mb-3">
-                <SelectInput
-                    dataArray={categories}
-                    labelName={"Product Category"}
-                    inputName={"productCategory"}
-                    register={register}
-                    errors={errors.productCategory}
-                    errorMessage={"Product Category Is Required!"}
-                />
-            </div> */}
-            {/* {isShow && (
-                <div className="mb-6 sm:mb-3 md:mb-3">
-                    <MultiSelect
-                        dataArray={subCategories}
-                        valueData={subCategory}
-                        placeholder={"Select the Sub Category"}
-                        multiLabel={"Sub Category"}
-                        multiName={"subCategory"}
-                        required={"Sub Category Is Required!"}
-                        errorFields={errors.subCategory}
+                <div>
+                    <FormSelectGroup
+                        options={ArrayDataModifyHelpers.arrayDataToOptions(
+                            categories,
+                            "name",
+                            {
+                                id: "categoryId",
+                                name: "name",
+                            },
+                            {
+                                id: "_id",
+                                name: "name",
+                            }
+                        )}
+                        placeholder={"Select Product Category"}
+                        labelName={"Category"}
+                        selectName={"category"}
                         control={control}
-                        setValueRef={setSubCategoryRef}
+                        errors={errors.category}
+                        errorMessage={"Product Category Is Required!"}
                     />
                 </div>
-            )} */}
-            {/* <div className="mb-6 sm:mb-3 md:mb-3">
-                <SelectInput
-                    dataArray={brands}
-                    labelName={"Brand"}
-                    inputName={"brand"}
-                    register={register}
-                    errorField={errors.brand}
-                    required={{
-                        required: "Product Brand Is Required!",
-                    }}
-                />
-            </div> */}
-            {/* <div className="mb-6 sm:mb-3 md:mb-3">
-                <MultiSelect
-                    dataArray={colorsData}
-                    valueData={colors}
-                    placeholder={"Select the Colors"}
-                    multiLabel={"Product Colors"}
-                    multiName={"colors"}
-                    required={"Color Is Required!"}
-                    errorFields={errors.colors}
-                    control={control}
-                    setValueRef={setColorRef}
-                />
-            </div> */}
-            {/* <div className="mb-6 sm:mb-3 md:mb-3">
-                <MultiSelect
-                    dataArray={sizesData}
-                    valueData={sizes}
-                    placeholder={"Select the Sizes"}
-                    multiLabel={"Product Sizes"}
-                    multiName={"sizes"}
-                    required={"Size Is Required!"}
-                    errorFields={errors.sizes}
-                    control={control}
-                    setValueRef={setSizeRef}
-                />
-            </div> */}
+                <div>
+                    <FormSelectGroup
+                        options={ArrayDataModifyHelpers.arrayDataToOptions(
+                            subCategories,
+                            "name",
+                            {
+                                id: "subCategoryId",
+                                name: "name",
+                            },
+                            {
+                                id: "_id",
+                                name: "name",
+                            }
+                        )}
+                        placeholder={"Select Product Sub Category"}
+                        labelName={"Sub Category"}
+                        selectName={"subCategories"}
+                        control={control}
+                        mode={"multiple"}
+                        errors={errors.subCategories}
+                        errorMessage={"Product Sub Category Is Required!"}
+                    />
+                </div>
+                <div>
+                    <FormSelectGroup
+                        options={ArrayDataModifyHelpers.arrayDataToOptions(
+                            brands,
+                            "name",
+                            {
+                                id: "brandId",
+                                name: "name",
+                            },
+                            {
+                                id: "_id",
+                                name: "name",
+                            }
+                        )}
+                        placeholder={"Select Product Brand"}
+                        labelName={"Brand"}
+                        selectName={"brand"}
+                        control={control}
+                        errors={errors.brand}
+                        errorMessage={"Product Brand Is Required!"}
+                    />
+                </div>
+                <div>
+                    <FormSelectGroup
+                        options={ArrayDataModifyHelpers.arrayDataToOptions(
+                            colors,
+                            "name",
+                            {
+                                id: "colorId",
+                                name: "name",
+                            },
+                            {
+                                id: "_id",
+                                name: "name",
+                            }
+                        )}
+                        placeholder={"Select Product Color"}
+                        labelName={"Color"}
+                        selectName={"colors"}
+                        control={control}
+                        errors={errors.colors}
+                        mode={"multiple"}
+                        errorMessage={"Product Color Is Required!"}
+                    />
+                </div>
+                <div>
+                    <FormSelectGroup
+                        options={ArrayDataModifyHelpers.arrayDataToOptions(
+                            sizes,
+                            "name",
+                            {
+                                id: "sizeId",
+                                name: "name",
+                            },
+                            {
+                                id: "_id",
+                                name: "name",
+                            }
+                        )}
+                        placeholder={"Select Product Size"}
+                        labelName={"Size"}
+                        selectName={"sizes"}
+                        control={control}
+                        errors={errors.sizes}
+                        mode={"multiple"}
+                        errorMessage={"Product Size Is Required!"}
+                    />
+                </div>
+            </div>
 
-            {/* <div className="mb-6 sm:mb-3 md:mb-3">
-                <SelectInput
-                    dataArray={["Yes", "No"]}
-                    labelName={"Shipping"}
-                    inputName={"shipping"}
-                    register={register}
-                    errorField={errors.shipping}
-                    required={{
-                        required: "Product Shipping Is Required!",
-                    }}
-                />
-            </div> */}
-
-            {/* <div>
-                <FormTextAreaGroup
-                    register={register}
-                    inputType="text"
-                    inputName={"description"}
-                    labelName={"Description"}
-                    errors={errors?.description}
-                    placeholder={"Provide Product Description Here!"}
-                    errorMessage={"Product Product Description Is Required!"}
-                    className={"drop-shadow-md"}
-                />
-            </div> */}
             <div>
                 <FormRichTextGroup
                     inputName={"description"}
@@ -215,14 +268,14 @@ const CreateProductForm = (props: CreateProductFormType) => {
                     errorMessage={"Product Product Description Is Required!"}
                 />
             </div>
-            <button
-                // disabled={loading}
-                type="submit"
-                value="Add Product"
-                className="btn hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
-            >
-                {/* {loading ? "Loading" : "Add Product"} */}Add Product
-            </button>
+            <div className="mt-5">
+                <Button
+                    className={`text-white py-3 px-4 disabled:cursor-not-allowed hover:shadow-green-500/40 bg-green-500 shadow-green-500/20`}
+                    label={loading ? "Loading" : "Add Product"}
+                    type="submit"
+                    disabled={loading}
+                />
+            </div>
         </form>
     );
 };

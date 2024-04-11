@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import {
     Controller,
     FieldValues,
@@ -6,8 +6,11 @@ import {
     Path,
     FieldError,
 } from "react-hook-form";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { Editor } from "@ckeditor/ckeditor5-core";
+
 import cn from "../../../utils/cn";
 
 interface CKEditorAtomProps<T extends FieldValues> {
@@ -27,13 +30,15 @@ const CKEditorAtom = <T extends FieldValues>({
     className,
     errors,
 }: CKEditorAtomProps<T>) => {
+    const editorRef: React.MutableRefObject<Editor | null> = useRef(null);
+
     useEffect(() => {
         let styleElement: HTMLStyleElement | null = null;
         if (errors?.message) {
-            // Create a style element
+            // create a style element
             styleElement = document.createElement("style");
 
-            // Set the CSS rules inside the style element
+            // set the CSS rules inside the style element
             styleElement.innerHTML = `
             .ck-content {
                color: #b91c1c;
@@ -47,11 +52,11 @@ const CKEditorAtom = <T extends FieldValues>({
                 font-size: 13px !important;
             }
         `;
-            // Append the style element to the document's head
+            // append the style element to the document's head
             document.head.appendChild(styleElement);
         }
 
-        // Cleanup function to remove the style element when component unmounts
+        // cleanup function to remove the style element when component unmounts
         return () => {
             if (styleElement) {
                 document.head.removeChild(styleElement);
@@ -64,7 +69,7 @@ const CKEditorAtom = <T extends FieldValues>({
             name={name}
             control={control}
             rules={{
-                required: errorMessage ? errorMessage : false,
+                required: errorMessage || false,
             }}
             render={({ field: { onChange, onBlur, value, ref } }) => (
                 <div
@@ -77,7 +82,10 @@ const CKEditorAtom = <T extends FieldValues>({
                         editor={ClassicEditor}
                         data={value}
                         config={{
-                            placeholder: placeholder ? placeholder : "",
+                            placeholder: placeholder || "",
+                        }}
+                        onReady={(editor) => {
+                            editorRef.current = editor;
                         }}
                         onChange={(_event, editor) => {
                             const data = editor.getData();

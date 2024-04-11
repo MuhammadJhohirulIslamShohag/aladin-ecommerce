@@ -1,14 +1,33 @@
 // import toast from "react-hot-toast";
-
+import { UploadFile } from "antd";
 import CreateProductForm from "../../components/Organisms/Form/CreateProduct/CreateProductForm";
+import { ICreateProductForm } from "../../components/Organisms/Form/CreateProduct/CreateProductForm.types";
+import { useGetBrandsQuery } from "../../redux/services/brand/brandApi";
+import { useGetCategoriesQuery } from "../../redux/services/category/categoryApi";
+import { useGetColorsQuery } from "../../redux/services/color/colorApi";
+import { useGetSizesQuery } from "../../redux/services/size/sizeApi";
+import { UseFormReset } from "react-hook-form";
+import React from "react";
+import { useCreateProductMutation } from "../../redux/services/product/productApi";
+import { useGetSubCategoriesQuery } from "../../redux/services/subCategory/subCategoryApi";
 
 const AddProductPage = () => {
+    const { data: categoryData } = useGetCategoriesQuery({});
+    const { data: subCategoryData } = useGetSubCategoriesQuery({});
+    const { data: brandData } = useGetBrandsQuery({});
+    const { data: colorData } = useGetColorsQuery({});
+    const { data: sizeData } = useGetSizesQuery({});
+
+    const [createProduct, { isLoading }] = useCreateProductMutation();
+
     const handleAddProduct = (
-        data: IFormInput
-        // reset: UseFormReset<IFormInput>,
-        // setValue: UseFormSetValue<IFormInput>
+        data: ICreateProductForm,
+        reset: UseFormReset<ICreateProductForm>,
+        setImageFiles: React.Dispatch<React.SetStateAction<UploadFile[]>>
     ) => {
         console.log(data, "data");
+        reset();
+        setImageFiles([]);
         // setLoading(true);
         // let updateSubCategory;
         // let updateColors;
@@ -62,11 +81,19 @@ const AddProductPage = () => {
     };
     return (
         <div>
-            <div className="bg-secondary p-6 rounded-lg">
+            <div className="bg-secondary px-9 pt-10  pb-9 rounded-lg">
                 <h2 className="text-center font-semibold text-primary text-2xl">
                     Add New Product
                 </h2>
-                <CreateProductForm handleAddProduct={handleAddProduct} />
+                <CreateProductForm
+                    handleAddProduct={handleAddProduct}
+                    sizes={sizeData?.data}
+                    colors={colorData?.data}
+                    categories={categoryData?.data}
+                    brands={brandData?.data}
+                    loading={isLoading}
+                    subCategories={subCategoryData?.data}
+                />
             </div>
         </div>
     );

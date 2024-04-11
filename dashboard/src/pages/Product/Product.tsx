@@ -2,17 +2,35 @@ import { useState } from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
 
 import Table from "../../components/Molecules/Table/Table";
+import Button from "../../components/Atoms/Button/Button";
+import TableFilter from "../../components/Organisms/Table/TableFilter/TableFilter";
+import useDebounce from "../../hooks/useDebounce";
 
 import {
     useGetProductsQuery,
     useRemovedProductMutation,
 } from "../../redux/services/product/productApi";
-import Button from "../../components/Atoms/Button/Button";
 
 const ProductPage = () => {
+    // state
     const [page, setPage] = useState<number>(1);
+    const [limit, setLimit] = useState<number>(5);
+    const [searchTerm, setSearchTerm] = useState<string>("");
 
-    const { data, isError, isLoading } = useGetProductsQuery({});
+    const debouncedValue = useDebounce({ searchQuery: searchTerm, delay: 600 });
+
+    // search query parameter
+    const queryParams = new URLSearchParams({
+        page: JSON.stringify(page),
+        limit: JSON.stringify(limit),
+        searchTerm: debouncedValue,
+    });
+
+
+    // redux api call
+    const { data, isError, isLoading } = useGetProductsQuery(
+        queryParams.toString()
+    );
     const [removedProduct] = useRemovedProductMutation();
 
     const handleRemoveProduct = (id: string) => {
@@ -24,16 +42,25 @@ const ProductPage = () => {
     };
 
     return (
-        <div className="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-md bg-clip-border rounded-md">
-            <div className="px-5 pt-7">
-                <div>
-                    <h6 className="text-gray-900 text-xl font-bold">
-                        All Products
-                    </h6>
-                </div>
-                <div></div>
+        <div>
+            <div className="mt-10 mb-7 flex justify-between">
+                <h6 className="text-white text-4xl font-bold mb-2">
+                    All Products
+                </h6>
             </div>
-            <div className="py-7">
+
+            <div>
+                <TableFilter
+                    page={page}
+                    setPage={setPage}
+                    setLimit={setLimit}
+                    setSearchTerm={setSearchTerm}
+                    pages={data?.meta?.totalPage}
+                    className={"mb-3"}
+                />
+            </div>
+
+            <div className="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-md bg-clip-border rounded-md">
                 <Table
                     isLoading={isLoading}
                     isError={isError}
@@ -154,10 +181,6 @@ const ProductPage = () => {
                             ),
                         },
                     ]}
-                    pagination={true}
-                    pages={data?.meta?.totalPage}
-                    page={page}
-                    setPage={setPage}
                 />
             </div>
         </div>

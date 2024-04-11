@@ -1,7 +1,8 @@
-import cn from "../../../../utils/cn";
+import cn from "../../../utils/cn";
+
 
 // Define a type for the props passed to LocalSearch
-interface LocalSearchProps {
+interface LocalSearchProps extends React.HTMLAttributes<HTMLInputElement> {
     className?: string;
     placeholder: string;
   }
@@ -29,7 +30,6 @@ const LocalSearch = ({ className, placeholder, ...rest }: LocalSearchProps) => {
         </div>
         <input
             type="search"
-            id="default-search"
             {...rest}
             className={cn(
                 "block w-full h-10 pl-10 pr-4 text-sm text-green-400 border border-green-400 rounded-lg bg-white focus:outline-offset-4 focus:outline-1 focus:outline-green-400 focus:ring-green-300",
