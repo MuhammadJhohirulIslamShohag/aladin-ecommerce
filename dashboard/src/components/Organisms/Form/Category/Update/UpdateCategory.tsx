@@ -54,7 +54,7 @@ const UpdateCategory = ({
     const handleUpdateCategory = async (data: TUpdateCategoryForm) => {
         // checking image has
         if (imageFiles?.length < 1) {
-            setErrorMessage("Please Add Image!")
+            setErrorMessage("Please Add Image!");
             toast.error("Please add image!");
             return;
         }
@@ -65,9 +65,16 @@ const UpdateCategory = ({
         // Append form fields to the FormData object
         formData.append("name", data.name);
 
+        const imageURLs =
+            ArrayDataModifyHelpers.imageObjectArrayToStringModify(imageFiles);
+
+        formData.append("imageURLs", JSON.stringify(imageURLs));
+
         // Append each image file individually to the FormData object
         imageFiles.forEach((file) => {
-            formData.append(`categoryImage`, file.originFileObj as Blob);
+            if (file?.originFileObj) {
+                formData.append(`categoryImage`, file.originFileObj as Blob);
+            }
         });
 
         const result = await updateCategory({
@@ -92,8 +99,8 @@ const UpdateCategory = ({
                 const errorMessage =
                     customError.data?.message || "Failed to Create Category!";
                 setErrorMessage(errorMessage);
-            }else{
-                setErrorMessage("Internal Server Error!"); 
+            } else {
+                setErrorMessage("Internal Server Error!");
             }
         }
     };
@@ -105,7 +112,9 @@ const UpdateCategory = ({
                 name: updateData?.name,
             });
             setImageFiles(
-                ArrayDataModifyHelpers.imageDataModify(updateData?.imageURLs)
+                ArrayDataModifyHelpers.imageStringArrayToObjectModify(
+                    updateData?.imageURLs
+                )
             );
         }
     }, [updateData, reset]);
