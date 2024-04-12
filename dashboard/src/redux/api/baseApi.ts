@@ -5,6 +5,13 @@ export const baseApi = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3010/api/v1" }),
     endpoints: () => ({}),
-    tagTypes: ["Users"],
+    tagTypes: [
+        "Users",
+        "Category",
+        "Brand",
+        "Size",
+        "Color",
+        "SubCategory",
+        "Product",
+    ],
 });
-

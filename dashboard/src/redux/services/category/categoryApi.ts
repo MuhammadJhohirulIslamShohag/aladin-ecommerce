@@ -1,5 +1,4 @@
 import { baseApi } from "../../api/baseApi";
-import { ICategory } from "../../../types/category.type";
 
 const categoryApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
@@ -8,26 +7,30 @@ const categoryApi = baseApi.injectEndpoints({
                 url: `categories?${queryParams}`,
                 method: "GET",
             }),
+            providesTags: ["Category"],
         }),
         createCategory: build.mutation({
-            query: (payload: ICategory) => ({
+            query: (payload) => ({
                 url: "categories",
                 method: "POST",
                 body: payload,
             }),
+            invalidatesTags: ["Category"],
         }),
         updateCategory: build.mutation({
-            query: (payload: ICategory) => ({
-                url: "categories",
+            query: (payload) => ({
+                url: `categories/${payload.id}`,
                 method: "PATCH",
-                body: payload,
+                body: payload.payload,
             }),
+            invalidatesTags: ["Category"],
         }),
         removedCategory: build.mutation({
             query: (payload: string) => ({
                 url: `categories/${payload}`,
                 method: "DELETE",
             }),
+            invalidatesTags: ["Category"],
         }),
     }),
     overrideExisting: false,

@@ -15,47 +15,27 @@ const Pagination: React.FC<PaginationProps> = ({ pages, page, setPage }) => {
     return (
         <div className="flex flex-col lg:flex-row justify-between">
             <nav className="flex justify-center items-center text-primary mt-8 lg:mt-0">
-            <Button
+                <Button
                     label={
                         <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M15 19l-7-7 7-7"
-                        />
-                    </svg>
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M15 19l-7-7 7-7"
+                            />
+                        </svg>
                     }
                     disabled={page === 1}
                     onClick={() => setPage(startIndex + 1)}
-                    className="p-2 mr-4 inline-block hover:bg-gray-100 rounded-full cursor-pointer"
+                    className="p-2 mr-4 inline-block hover:bg-gray-100 rounded-full cursor-pointer bg-white/80"
                 />
-                {/* <button
-                    disabled={page === 1}
-                    onClick={() => setPage(startIndex + 1)}
-                    className="p-2 mr-4 inline-block hover:bg-gray-100 rounded-full cursor-pointer"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M15 19l-7-7 7-7"
-                        />
-                    </svg>
-                </button> */}
 
                 <div className="flex items-center gap-3">
                     {Array.from({ length: pages }, (_, number: number) => {
@@ -90,7 +70,7 @@ const Pagination: React.FC<PaginationProps> = ({ pages, page, setPage }) => {
                     label={
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6"
+                            className="h-5 w-5"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -103,30 +83,10 @@ const Pagination: React.FC<PaginationProps> = ({ pages, page, setPage }) => {
                             />
                         </svg>
                     }
-                    className="p-2 ml-4 rounded-full cursor-pointer inline-block hover:bg-gray-100"
+                    className="p-2 ml-4 rounded-full cursor-pointer inline-block hover:bg-gray-100 bg-white/80"
                     disabled={pages === page}
                     onClick={() => setPage(endIndex - 1)}
                 />
-                {/* <button
-                    disabled={pages === page}
-                    onClick={() => setPage(endIndex - 1)}
-                    className="p-2 ml-4 rounded-full cursor-pointer inline-block hover:bg-gray-100"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M9 5l7 7-7 7"
-                        />
-                    </svg>
-                </button> */}
             </nav>
         </div>
     );

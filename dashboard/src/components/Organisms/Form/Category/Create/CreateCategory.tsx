@@ -9,6 +9,9 @@ import AntdUploadImage from "../../../../Molecules/Upload/Images/MultiImageUploa
 
 import { TCreateCategoryForm } from "./createCategory.type";
 import { useCreateCategoryMutation } from "../../../../../redux/services/category/categoryApi";
+import toast from "react-hot-toast";
+import { CustomFetchBaseQueryError } from "../../../../../types/response";
+import Paragraph from "../../../../Atoms/Paragraph";
 
 type CreateCategoryFormType = {
     isModalOpen: boolean;
@@ -21,6 +24,7 @@ const CreateCategory = ({
 }: CreateCategoryFormType) => {
     // state
     const [imageFiles, setImageFiles] = useState<UploadFile[]>([]);
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     // redux api call
     const [createCategory, { isLoading }] = useCreateCategoryMutation();
@@ -38,10 +42,43 @@ const CreateCategory = ({
     });
 
     // submit handler to submit data to server
-    const handleAddCategory = (data: TCreateCategoryForm) => {
-        console.log(data, "data");
-        
+    const handleAddCategory = async (data: TCreateCategoryForm) => {
+        // checking image has
+        if (imageFiles?.length < 1) {
+            toast.error("Please add image!");
+            return;
+        }
+
+        // Create a new FormData object
+        const formData = new FormData();
+
+        // Append form fields to the FormData object
+        formData.append("name", data.name);
+
+        // Append each image file individually to the FormData object
+        imageFiles.forEach((file) => {
+            formData.append(`categoryImage`, file.originFileObj as Blob);
+        });
+
+        const result = await createCategory(formData);
+
+        // check if the request was successful
+        if ("data" in result && result.data && result.data?.success) {
+            reset();
+            setImageFiles([]);
+            toast.success(result.data.message);
+            setErrorMessage('')
+            setIsModalOpen((prev) => !prev)
+        } else {
+            if ("error" in result && result.error) {
+                const customError = result.error as CustomFetchBaseQueryError;
+                const errorMessage =
+                    customError.data?.message || "Failed to create category";
+                setErrorMessage(errorMessage);
+            }
+        }
     };
+
     return (
         <AntdModal
             title="Add New Category"
@@ -74,6 +111,17 @@ const CreateCategory = ({
                         />
                     </div>
                 </div>
+
+                {errorMessage ? (
+                    <div>
+                        <Paragraph
+                            text={errorMessage}
+                            className={"text-red-500 text-sm capitalize font-medium"}
+                        />
+                    </div>
+                ) : (
+                    ""
+                )}
 
                 <div className="mt-5">
                     <Button
