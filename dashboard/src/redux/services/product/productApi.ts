@@ -4,7 +4,7 @@ import { IProduct } from "../../../types/product.type";
 const productApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         getProducts: build.query({
-            query: (queryParams) => ({
+            query: (queryParams:string) => ({
                 url: `products?${queryParams}`,
                 method: "GET",
             }),

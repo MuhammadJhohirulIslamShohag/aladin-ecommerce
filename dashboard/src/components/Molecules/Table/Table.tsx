@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import CheckBox from "../../Atoms/Form/CheckBox";
+import AntdCheckBox from "../../Atoms/Form/AntdCheckBox";
 
 interface Column {
     name: string;
@@ -115,8 +115,8 @@ const Table: React.FC<TableProps> = ({
                 }`}
             >
                 {checkbox && (
-                    <td className="px-4 py-3 border-t border-t-success/20 ">
-                        <CheckBox
+                    <td className="px-4 py-3 border-t border-t-success/20 text-center justify-center">
+                        <AntdCheckBox
                             checked={selectedRow?.find(
                                 (row) => row?.key === item?.key || false
                             )}
@@ -161,21 +161,24 @@ const Table: React.FC<TableProps> = ({
 
         content = (
             <tr className={`text-gray-600 text-center`}>
-                <td className="py-36 text-xl" colSpan={numberOfColumns}> No Data Found!</td>
+                <td className="py-36 text-xl" colSpan={numberOfColumns}>
+                    {" "}
+                    No Data Found!
+                </td>
             </tr>
         );
     }
-
+    
     return (
         <>
             <div className="relative overflow-x-auto rounded-lg scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100">
-                <table className="w-full text-sm text-left text-gray-500 ">
+                <table className="w-full inline-table border-collapse table-auto text-sm text-left text-gray-500 ">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr className="text-sm">
                             {checkbox && (
                                 <th className="p-3 text-center justify-center">
                                     <div className="flex items-center justify-center">
-                                        <CheckBox
+                                        <AntdCheckBox
                                             checked={selectAll}
                                             onChange={handleSelectedAll}
                                         />

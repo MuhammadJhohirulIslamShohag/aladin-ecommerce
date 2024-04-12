@@ -3,6 +3,12 @@ import { ICategory } from "../../../types/category.type";
 
 const categoryApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
+        getCategories: build.query({
+            query: (queryParams: string) => ({
+                url: `categories?${queryParams}`,
+                method: "GET",
+            }),
+        }),
         createCategory: build.mutation({
             query: (payload: ICategory) => ({
                 url: "categories",
@@ -21,12 +27,6 @@ const categoryApi = baseApi.injectEndpoints({
             query: (payload: string) => ({
                 url: `categories/${payload}`,
                 method: "DELETE",
-            }),
-        }),
-        getCategories: build.query({
-            query: () => ({
-                url: "categories",
-                method: "GET",
             }),
         }),
     }),

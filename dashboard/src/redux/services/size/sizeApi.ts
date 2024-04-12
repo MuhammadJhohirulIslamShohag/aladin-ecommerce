@@ -3,6 +3,12 @@ import { ISize } from "../../../types/size.types";
 
 const sizeApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
+        getSizes: build.query({
+            query: (queryParams: string) => ({
+                url: `sizes?${queryParams}`,
+                method: "GET",
+            }),
+        }),
         createSize: build.mutation({
             query: (payload: ISize) => ({
                 url: "sizes",
@@ -21,12 +27,6 @@ const sizeApi = baseApi.injectEndpoints({
             query: (payload: string) => ({
                 url: `sizes/${payload}`,
                 method: "DELETE",
-            }),
-        }),
-        getSizes: build.query({
-            query: () => ({
-                url: "sizes",
-                method: "GET",
             }),
         }),
     }),

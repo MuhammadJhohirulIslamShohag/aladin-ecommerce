@@ -3,6 +3,12 @@ import { IBrand } from "../../../types/brand.types";
 
 const brandApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
+        getBrands: build.query({
+            query: (queryParams: string) => ({
+                url: `brands?${queryParams}`,
+                method: "GET",
+            }),
+        }),
         createBrand: build.mutation({
             query: (payload: IBrand) => ({
                 url: "brands",
@@ -21,12 +27,6 @@ const brandApi = baseApi.injectEndpoints({
             query: (payload: string) => ({
                 url: `brands/${payload}`,
                 method: "DELETE",
-            }),
-        }),
-        getBrands: build.query({
-            query: () => ({
-                url: "brands",
-                method: "GET",
             }),
         }),
     }),

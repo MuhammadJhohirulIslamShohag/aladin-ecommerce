@@ -3,6 +3,12 @@ import { IColor } from "../../../types/color.types";
 
 const colorApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
+        getColors: build.query({
+            query: (queryParams: string) => ({
+                url: `colors?${queryParams}`,
+                method: "GET",
+            }),
+        }),
         createColor: build.mutation({
             query: (payload: IColor) => ({
                 url: "colors",
@@ -21,12 +27,6 @@ const colorApi = baseApi.injectEndpoints({
             query: (payload: string) => ({
                 url: `colors/${payload}`,
                 method: "DELETE",
-            }),
-        }),
-        getColors: build.query({
-            query: () => ({
-                url: "colors",
-                method: "GET",
             }),
         }),
     }),

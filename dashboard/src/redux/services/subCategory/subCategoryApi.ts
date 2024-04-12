@@ -3,6 +3,12 @@ import { ISubCategory } from "../../../types/sub-category.type";
 
 const subCategoryApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
+        getSubCategories: build.query({
+            query: (queryParams: string) => ({
+                url: `sub-categories?${queryParams}`,
+                method: "GET",
+            }),
+        }),
         createSubCategory: build.mutation({
             query: (payload: ISubCategory) => ({
                 url: "sub-categories",
@@ -23,12 +29,7 @@ const subCategoryApi = baseApi.injectEndpoints({
                 method: "DELETE",
             }),
         }),
-        getSubCategories: build.query({
-            query: () => ({
-                url: "sub-categories",
-                method: "GET",
-            }),
-        }),
+       
     }),
     overrideExisting: false,
 });

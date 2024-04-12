@@ -1,21 +1,21 @@
-import { useState } from "react";
 import { UploadFile } from "antd";
+import { useState } from "react";
 import { UseFormReset, useForm } from "react-hook-form";
 
 import FormGroup from "../../../Molecules/Form/FormInputGroup";
 import FormRichTextGroup from "../../../Molecules/Form/FormRichTextGroup";
-import FormTextAreaGroup from "../../../Molecules/Form/FormTextAreaGroup";
 import FormSelectGroup from "../../../Molecules/Form/FormSelectGroup";
+import FormTextAreaGroup from "../../../Molecules/Form/FormTextAreaGroup";
 import AntdUploadImage from "../../../Molecules/Upload/Images/AntdUploadImage";
 
-import { ICreateProductForm } from "./CreateProductForm.types";
 import { IBrand } from "../../../../types/brand.types";
 import { ICategory } from "../../../../types/category.type";
 import { IColor } from "../../../../types/color.types";
 import { ISize } from "../../../../types/size.types";
+import { ISubCategory } from "../../../../types/sub-category.type";
 import { ArrayDataModifyHelpers } from "../../../../utils/arrayDataModify";
 import Button from "../../../Atoms/Button/Button";
-import { ISubCategory } from "../../../../types/sub-category.type";
+import { ICreateProductForm } from "./CreateProductForm.types";
 
 type CreateProductFormType = {
     handleAddProduct: (

@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { FaShoppingBag, FaUsers } from "react-icons/fa";
-import { AiFillSetting, AiFillDashboard } from "react-icons/ai";
-import { RiCoupon4Line } from "react-icons/ri";
-import { BsCartCheck } from "react-icons/bs";
+import { AiFillDashboard, AiFillSetting } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
-import { MdOutlineProductionQuantityLimits, MdLogout } from "react-icons/md";
+import { BsCartCheck } from "react-icons/bs";
+import { FaShoppingBag, FaUsers } from "react-icons/fa";
+import { MdLogout, MdOutlineProductionQuantityLimits } from "react-icons/md";
+import { RiCoupon4Line } from "react-icons/ri";
 
-import SideBarListItem from "./SideBarListItem/SideBarListItem";
 import SideBarDropdownListItem from "./SideBarDropdownListItem/SideBarDropdownListItem";
+import SideBarListItem from "./SideBarListItem/SideBarListItem";
 
 const SidebarList = () => {
     const [openProduct, setOpenProduct] = useState<boolean>(false);
@@ -19,9 +19,7 @@ const SidebarList = () => {
     const [openAllUsers, setOpenAllUsers] = useState<boolean>(false);
     const [openSetting, setOpenSetting] = useState<boolean>(false);
 
-    const handleLogOut = () => {
-        
-    };
+    const handleLogOut = () => {};
 
     return (
         <ul className="space-y-2 px-3">
@@ -40,6 +38,12 @@ const SidebarList = () => {
             <SideBarListItem navigationLink="/coupons">
                 <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
                 <span className="flex-1 ml-3 whitespace-nowrap">Coupons</span>
+            </SideBarListItem>
+            <SideBarListItem navigationLink="/categories">
+                <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
+                <span className="flex-1 ml-3 whitespace-nowrap">
+                    Categories
+                </span>
             </SideBarListItem>
             <SideBarListItem
                 open={openProduct}
