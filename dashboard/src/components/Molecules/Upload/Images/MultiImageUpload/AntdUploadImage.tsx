@@ -1,21 +1,23 @@
-import React, { useState } from "react";
-import type { UploadFile, UploadProps } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { Image, Upload, ConfigProvider } from "antd";
+import type { UploadFile, UploadProps } from "antd";
+import { ConfigProvider, Image, Upload } from "antd";
+import React, { useState } from "react";
 
-import { FileType } from "../../../../types/image.types";
-import { ImageControlHelper } from "../../../../utils/image";
+import { FileType } from "../../../../../types/image.types";
+import { ImageControlHelper } from "../../../../../utils/image";
 
 type AntdUploadImageType = {
     fileList: UploadFile<FileType>[];
     isError: boolean;
     setFileList: React.Dispatch<React.SetStateAction<UploadFile<FileType>[]>>;
+    maxCount: number;
 };
 
 const AntdUploadImage: React.FC<AntdUploadImageType> = ({
     fileList,
     setFileList,
-    isError
+    isError,
+    maxCount = 6,
 }) => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
@@ -55,26 +57,20 @@ const AntdUploadImage: React.FC<AntdUploadImageType> = ({
 
     const uploadButton = (
         <button
-        className={`border-none bg-none hover:border hover:border-success transition-all ${
-            isError
-                ? "border-[1px] border-red-700 text-red-600"
-                : ""
-        }`}
-        type="button"
-    >
-        <PlusOutlined
-            className={`${
-                isError ? " text-red-500" : "text-success"
+            className={`border-none bg-none hover:border hover:border-success transition-all ${
+                isError ? "border-[1px] border-red-700 text-red-600" : ""
             }`}
-        />
-        <div
-            className={`px-1 ${
-                isError ? " text-red-500" : "text-success"
-            }`}
+            type="button"
         >
-            Product Upload
-        </div>
-    </button>
+            <PlusOutlined
+                className={`${isError ? " text-red-500" : "text-success"}`}
+            />
+            <div
+                className={`px-1 ${isError ? " text-red-500" : "text-success"}`}
+            >
+                Product Upload
+            </div>
+        </button>
     );
     return (
         <div className="my-3">
@@ -91,6 +87,7 @@ const AntdUploadImage: React.FC<AntdUploadImageType> = ({
                     listType="picture-card"
                     fileList={fileList}
                     multiple={true}
+                    maxCount={maxCount}
                     onPreview={handlePreview}
                     onChange={handleChange}
                 >
@@ -115,4 +112,3 @@ const AntdUploadImage: React.FC<AntdUploadImageType> = ({
 };
 
 export default AntdUploadImage;
-

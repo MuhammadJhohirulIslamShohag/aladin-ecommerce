@@ -6,7 +6,7 @@ import FormGroup from "../../../Molecules/Form/FormInputGroup";
 import FormRichTextGroup from "../../../Molecules/Form/FormRichTextGroup";
 import FormSelectGroup from "../../../Molecules/Form/FormSelectGroup";
 import FormTextAreaGroup from "../../../Molecules/Form/FormTextAreaGroup";
-import AntdUploadImage from "../../../Molecules/Upload/Images/AntdUploadImage";
+import AntdUploadImage from "../../../Molecules/Upload/Images/MultiImageUpload/AntdUploadImage";
 
 import { IBrand } from "../../../../types/brand.types";
 import { ICategory } from "../../../../types/category.type";
@@ -77,6 +77,7 @@ const CreateProductForm = ({
                     fileList={imageFiles}
                     setFileList={setImageFiles}
                     isError={imageFiles?.length > 0 ? false : true}
+                    maxCount={5}
                 />
             </div>
             <div className="grid md:gap-x-5 lg:mb-5 lg:grid-cols-2 grid-cols-1 md:grid-cols-1 mb-2 md:mb-0 gap-x-3 gap-y-2">

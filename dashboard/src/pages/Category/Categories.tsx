@@ -10,9 +10,12 @@ import {
     useGetCategoriesQuery,
     useRemovedCategoryMutation,
 } from "../../redux/services/category/categoryApi";
+import TableHeader from "../../components/Molecules/Table/TableHeader";
+import CreateCategory from "../../components/Organisms/Form/Category/Create/CreateCategory";
 
 const CategoriesPage = () => {
     // state
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [page, setPage] = useState<number>(1);
     const [limit, setLimit] = useState<number>(5);
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -40,81 +43,101 @@ const CategoriesPage = () => {
         console.log(id);
     };
 
+    const handleAddCategory = () => {
+        setIsModalOpen((prev) => !prev);
+    };
+
     return (
-        <div>
-            <div className="mt-10 mb-7 flex justify-between">
-                <h6 className="text-white text-4xl font-bold mb-2">
-                    All Categories
-                </h6>
-            </div>
-
+        <>
             <div>
-                <TableFilter
-                    page={page}
-                    setPage={setPage}
-                    setLimit={setLimit}
-                    setSearchTerm={setSearchTerm}
-                    pages={data?.meta?.totalPage}
-                    className={"mb-3"}
+                <TableHeader
+                    buttonName="Add Category"
+                    buttonClassName={
+                        "text-gray-800 hover:shadow-white/50 bg-white shadow-white/30"
+                    }
+                    className={"mt-10 mb-7"}
+                    headerTitle={"All Categories"}
+                    onClick={() => handleAddCategory()}
+                    headerClassName={"text-white text-4xl font-bold mb-2"}
+                    isAddButtonShow
                 />
-            </div>
 
-            <div className="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-md bg-clip-border rounded-md">
-                <Table
-                    isLoading={isLoading}
-                    isError={isError}
-                    tableData={data?.data}
-                    checkbox={true}
-                    handleSelectedRowItem={() => console.log()}
-                    columns={[
-                        {
-                            name: "Image",
-                            dataIndex: "_id",
-                            render: ({ item }) => (
-                                <div className="flex">
-                                    {item?.imageURL ? (
-                                        <img
-                                            className="h-10 w-10 rounded-full"
-                                            src={item?.imageURL}
-                                            alt={"category Image"}
+                <div>
+                    <TableFilter
+                        page={page}
+                        setPage={setPage}
+                        setLimit={setLimit}
+                        setSearchTerm={setSearchTerm}
+                        pages={data?.meta?.totalPage}
+                        className={"mb-3"}
+                    />
+                </div>
+
+                <div className="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-md bg-clip-border rounded-md">
+                    <Table
+                        isLoading={isLoading}
+                        isError={isError}
+                        tableData={data?.data}
+                        checkbox={true}
+                        handleSelectedRowItem={() => console.log()}
+                        columns={[
+                            {
+                                name: "Image",
+                                dataIndex: "_id",
+                                render: ({ item }) => (
+                                    <div className="flex">
+                                        {item?.imageURL ? (
+                                            <img
+                                                className="h-10 w-10 rounded-full"
+                                                src={item?.imageURL}
+                                                alt={"category Image"}
+                                            />
+                                        ) : (
+                                            ""
+                                        )}
+                                    </div>
+                                ),
+                            },
+                            {
+                                name: "Name",
+                                dataIndex: "name",
+                                key: "_id",
+                            },
+                            {
+                                name: "Actions",
+                                dataIndex: "actions",
+                                render: ({ item }) => (
+                                    <div className="flex space-x-2">
+                                        <Button
+                                            className={`text-white hover:shadow-blue-500/40 bg-blue-500 shadow-blue-500/20`}
+                                            label={<FaEdit />}
+                                            onClick={() =>
+                                                handleEditProduct(item._id)
+                                            }
                                         />
-                                    ) : (
-                                        ""
-                                    )}
-                                </div>
-                            ),
-                        },
-                        {
-                            name: "Name",
-                            dataIndex: "name",
-                            key: "_id",
-                        },
-                        {
-                            name: "Actions",
-                            dataIndex: "actions",
-                            render: ({ item }) => (
-                                <div className="flex space-x-2">
-                                    <Button
-                                        className={`text-white hover:shadow-blue-500/40 bg-blue-500 shadow-blue-500/20`}
-                                        label={<FaEdit />}
-                                        onClick={() =>
-                                            handleEditProduct(item._id)
-                                        }
-                                    />
-                                    <Button
-                                        className={`text-white hover:shadow-red-500/40 bg-red-500 shadow-red-500/20`}
-                                        label={<FaTrash />}
-                                        onClick={() =>
-                                            handleRemoveProduct(item._id)
-                                        }
-                                    />
-                                </div>
-                            ),
-                        },
-                    ]}
-                />
+                                        <Button
+                                            className={`text-white hover:shadow-red-500/40 bg-red-500 shadow-red-500/20`}
+                                            label={<FaTrash />}
+                                            onClick={() =>
+                                                handleRemoveProduct(item._id)
+                                            }
+                                        />
+                                    </div>
+                                ),
+                            },
+                        ]}
+                    />
+                </div>
             </div>
-        </div>
+            {isModalOpen ? (
+                <CreateCategory
+                    isModalOpen={isModalOpen}
+                    setIsModalOpen={setIsModalOpen}
+                />
+            ) : (
+                ""
+            )}
+        </>
     );
 };
 
