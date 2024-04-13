@@ -106,7 +106,8 @@ const CategoriesPage = () => {
                         isLoading={isLoading}
                         isError={isError}
                         tableData={data?.data}
-                        checkbox={true}
+                        checkbox
+                        isCenter
                         handleSelectedRowItem={() => console.log()}
                         columns={[
                             {

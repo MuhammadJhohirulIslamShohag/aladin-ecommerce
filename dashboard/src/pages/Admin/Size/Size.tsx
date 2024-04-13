@@ -7,17 +7,17 @@ import TableFilter from "../../../components/Organisms/Table/TableFilter/TableFi
 import useDebounce from "../../../hooks/useDebounce";
 
 import TableHeader from "../../../components/Molecules/Table/TableHeader";
-import CreateColor from "../../../components/Organisms/Form/Color/Create/CreateColor";
+import CreateSize from "../../../components/Organisms/Form/Size/Create/CreateSize";
 import DeleteModal from "../../../components/Organisms/Modal/Delete/DeleteModal";
-import UpdateColor from "../../../components/Organisms/Form/Color/Update/UpdateColor";
+import UpdateSize from "../../../components/Organisms/Form/Size/Update/UpdateSize";
 
 import {
-    useGetColorsQuery,
-    useRemovedColorMutation,
-} from "../../../redux/services/color/colorApi";
-import { IColor } from "../../../types/color.types";
+    useGetSizesQuery,
+    useRemovedSizeMutation,
+} from "../../../redux/services/size/sizeApi";
+import { ISize } from "../../../types/size.types";
 
-const ColorPage = () => {
+const SizePage = () => {
     // state
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [deleteModal, setDeleteModal] = useState<{
@@ -28,7 +28,7 @@ const ColorPage = () => {
         open: false,
     });
     const [updateModal, setUpdateModal] = useState<{
-        data: IColor | null;
+        data: ISize | null;
         open: boolean;
     }>({
         data: null,
@@ -48,11 +48,11 @@ const ColorPage = () => {
     });
 
     // redux api call
-    const { data, isError, isLoading } = useGetColorsQuery(
+    const { data, isError, isLoading } = useGetSizesQuery(
         queryParams.toString()
     );
-    const [removedColor, { isLoading: isDeleteLoading }] =
-        useRemovedColorMutation();
+    const [removedSize, { isLoading: isDeleteLoading }] =
+        useRemovedSizeMutation();
 
     // handle remove item
     const handleRemoveItem = (id: string) => {
@@ -63,7 +63,7 @@ const ColorPage = () => {
     };
 
     // handle edit item
-    const handleEditItem = (item: IColor) => {
+    const handleEditItem = (item: ISize) => {
         setUpdateModal({
             data: item,
             open: true,
@@ -71,7 +71,7 @@ const ColorPage = () => {
     };
 
     // handle add item
-    const handleAddColor = () => {
+    const handleAddSize = () => {
         setIsModalOpen((prev) => !prev);
     };
 
@@ -79,13 +79,13 @@ const ColorPage = () => {
         <>
             <div>
                 <TableHeader
-                    buttonName="Add Color"
+                    buttonName="Add Size"
                     buttonClassName={
                         "text-gray-800 hover:shadow-white/50 bg-white shadow-white/30 py-3 px-4"
                     }
                     className={"mt-10 mb-7"}
-                    headerTitle={"All Colors"}
-                    onClick={() => handleAddColor()}
+                    headerTitle={"All Sizes"}
+                    onClick={() => handleAddSize()}
                     headerClassName={"text-white text-4xl font-bold mb-2"}
                     isAddButtonShow
                 />
@@ -140,9 +140,9 @@ const ColorPage = () => {
                 </div>
             </div>
 
-            {/* create Color */}
+            {/* create Size */}
             {isModalOpen ? (
-                <CreateColor
+                <CreateSize
                     isModalOpen={isModalOpen}
                     setIsModalOpen={setIsModalOpen}
                 />
@@ -150,7 +150,7 @@ const ColorPage = () => {
                 ""
             )}
 
-            {/* delete Color */}
+            {/* delete Size */}
             {deleteModal.open ? (
                 <DeleteModal
                     title=""
@@ -164,16 +164,16 @@ const ColorPage = () => {
                     isModalOpen={deleteModal.open}
                     isLoading={isDeleteLoading}
                     setIsModalOpen={setDeleteModal}
-                    deleteActionMethod={removedColor}
+                    deleteActionMethod={removedSize}
                     deletePayload={deleteModal?.data}
                 />
             ) : (
                 ""
             )}
 
-            {/* update Color */}
+            {/* update Size */}
             {updateModal.open ? (
-                <UpdateColor
+                <UpdateSize
                     updateData={updateModal?.data}
                     isModalOpen={updateModal.open}
                     setIsModalOpen={setUpdateModal}
@@ -185,4 +185,4 @@ const ColorPage = () => {
     );
 };
 
-export default ColorPage;
+export default SizePage;

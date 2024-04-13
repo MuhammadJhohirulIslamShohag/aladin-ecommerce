@@ -12,11 +12,11 @@ import { useGetSizesQuery } from "../../../redux/services/size/sizeApi";
 import { useGetSubCategoriesQuery } from "../../../redux/services/subCategory/subCategoryApi";
 
 const AddProductPage = () => {
-    const { data: categoryData } = useGetCategoriesQuery({});
-    const { data: subCategoryData } = useGetSubCategoriesQuery({});
-    const { data: brandData } = useGetBrandsQuery({});
-    const { data: colorData } = useGetColorsQuery({});
-    const { data: sizeData } = useGetSizesQuery({});
+    const { data: categoryData } = useGetCategoriesQuery("");
+    const { data: subCategoryData } = useGetSubCategoriesQuery("");
+    const { data: brandData } = useGetBrandsQuery("");
+    const { data: colorData } = useGetColorsQuery("");
+    const { data: sizeData } = useGetSizesQuery("");
 
     const [createProduct, { isLoading }] = useCreateProductMutation();
 

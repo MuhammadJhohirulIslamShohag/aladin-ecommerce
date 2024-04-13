@@ -19,6 +19,7 @@ interface TableProps {
     isLoading: boolean;
     pagination?: boolean;
     checkbox?: boolean;
+    isCenter?: boolean | undefined;
 }
 
 const Table: React.FC<TableProps> = ({
@@ -27,6 +28,7 @@ const Table: React.FC<TableProps> = ({
     isError,
     columns,
     isLoading,
+    isCenter = false,
     checkbox = false,
 }) => {
     const [data, setData] = useState<any[]>([]);
@@ -128,27 +130,33 @@ const Table: React.FC<TableProps> = ({
                 {columns?.map((column, index) => (
                     <td
                         key={index}
-                        className={`px-3 py-2.5 border-t border-t-success/20 whitespace-normal align-middle`}
+                        className={`px-3 py-2.5 border-t border-t-success/20 whitespace-normal align-middle `}
                     >
-                        <span className="text-nowrap">
-                            {column.render ? (
-                                <>{column.render({ item })}</>
-                            ) : column?.dataIndex2 ? (
-                                item[column?.dataIndex]?.[
-                                    column?.dataIndex2
-                                ] ? (
+                        <div
+                            className={`flex ${
+                                isCenter ? "justify-center" : "justify-start"
+                            }`}
+                        >
+                            <span className="text-nowrap">
+                                {column.render ? (
+                                    <>{column.render({ item })}</>
+                                ) : column?.dataIndex2 ? (
                                     item[column?.dataIndex]?.[
                                         column?.dataIndex2
-                                    ]
+                                    ] ? (
+                                        item[column?.dataIndex]?.[
+                                            column?.dataIndex2
+                                        ]
+                                    ) : (
+                                        "N/A"
+                                    )
+                                ) : item[column?.dataIndex] ? (
+                                    item[column?.dataIndex]
                                 ) : (
                                     "N/A"
-                                )
-                            ) : item[column?.dataIndex] ? (
-                                item[column?.dataIndex]
-                            ) : (
-                                "N/A"
-                            )}
-                        </span>
+                                )}
+                            </span>
+                        </div>
                     </td>
                 ))}
             </tr>
@@ -168,7 +176,7 @@ const Table: React.FC<TableProps> = ({
             </tr>
         );
     }
-    
+
     return (
         <>
             <div className="relative overflow-x-auto rounded-lg scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100">
@@ -177,12 +185,10 @@ const Table: React.FC<TableProps> = ({
                         <tr className="text-sm">
                             {checkbox && (
                                 <th className="p-3 text-center justify-center">
-                                    <div className="flex items-center justify-center">
-                                        <AntdCheckBox
-                                            checked={selectAll}
-                                            onChange={handleSelectedAll}
-                                        />
-                                    </div>
+                                    <AntdCheckBox
+                                        checked={selectAll}
+                                        onChange={handleSelectedAll}
+                                    />
                                 </th>
                             )}
 
@@ -192,7 +198,13 @@ const Table: React.FC<TableProps> = ({
                                     onClick={() => handleSort(column.dataIndex)}
                                     className={`cursor-pointer p-3 text-left whitespace-nowrap`}
                                 >
-                                    <div className="flex items-center justify-start gap-1 text-primary capitalize font-medium">
+                                    <div
+                                        className={`flex items-center gap-1 text-primary capitalize font-medium ${
+                                            isCenter
+                                                ? "justify-center"
+                                                : "justify-start"
+                                        }`}
+                                    >
                                         <span className="relative text-[13px] font-medium">
                                             {column?.name}
                                         </span>

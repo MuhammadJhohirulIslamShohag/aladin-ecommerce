@@ -3,6 +3,7 @@ import ColorPage from "../../pages/Admin/Color/Color";
 import Dashboard from "../../pages/Admin/Dashboard/Dashboard";
 import AddProductPage from "../../pages/Admin/Product/AddProduct";
 import ProductPage from "../../pages/Admin/Product/Product";
+import SizePage from "../../pages/Admin/Size/Size";
 
 export const adminSingleRoutes = [
     {
@@ -24,5 +25,9 @@ export const adminSingleRoutes = [
     {
         path: "colors",
         element: <ColorPage />,
+    },
+    {
+        path: "sizes",
+        element: <SizePage />,
     },
 ];
