@@ -105,6 +105,7 @@ const CreateSubCategory = ({
                         setFileList={setImageFiles}
                         isError={imageFiles?.length > 0 ? false : true}
                         maxCount={1}
+                        title={"Image Upload"}
                     />
                 </div>
                 <div className="grid grid-cols-1">

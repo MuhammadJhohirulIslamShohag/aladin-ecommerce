@@ -4,7 +4,7 @@ import Select, { OnChangeValue } from "react-select";
 import makeAnimated from "react-select/animated";
 import Label from "../../Atoms/Form/Label";
 import Paragraph from "../../Atoms/Paragraph";
-import { IFormInput } from "../../Organisms/Form/CreateProduct/CreateProductForm.types";
+import { IFormInput } from "../../Organisms/Form/Product/Create/CreateProductForm.types";
 const animatedComponents = makeAnimated();
 
 const customStyles = {

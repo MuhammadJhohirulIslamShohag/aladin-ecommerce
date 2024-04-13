@@ -7,6 +7,7 @@ import Paragraph from "../../../../Atoms/Paragraph";
 import AntdModal from "../../../../Atoms/Modal/AntdModal";
 import FormInputGroup from "../../../../Molecules/Form/FormInputGroup";
 import Button from "../../../../Atoms/Button/Button";
+import FormTextAreaGroup from "../../../../Molecules/Form/FormTextAreaGroup";
 import AntdUploadImage from "../../../../Molecules/Upload/Images/MultiImageUpload/AntdUploadImage";
 
 import { TUpdateBrandForm } from "./UpdateBrand.type";
@@ -48,6 +49,10 @@ const UpdateBrand = ({
     } = useForm<TUpdateBrandForm>({
         defaultValues: {
             name: "",
+            email: "",
+            location: "",
+            website: "",
+            description: "",
         },
     });
 
@@ -65,16 +70,15 @@ const UpdateBrand = ({
 
         // Append form fields to the FormData object
         formData.append("name", data.name);
-
-        const imageURLs =
-            ArrayDataModifyHelpers.imageObjectArrayToStringModify(imageFiles);
-
-        formData.append("imageURLs", JSON.stringify(imageURLs));
+        formData.append("email", data.email);
+        formData.append("location", data.location);
+        formData.append("website", data.website);
+        formData.append("description", data.description);
 
         // Append each image file individually to the FormData object
         imageFiles.forEach((file) => {
             if (file?.originFileObj) {
-                formData.append(`BrandImage`, file.originFileObj as Blob);
+                formData.append(`brandImage`, file.originFileObj as Blob);
             }
         });
 
@@ -111,12 +115,16 @@ const UpdateBrand = ({
         if (updateData) {
             reset({
                 name: updateData?.name,
+                email: updateData?.email,
+                location: updateData?.location,
+                website: updateData?.website,
+                description: updateData?.description,
             });
-            // setImageFiles(
-            //     ArrayDataModifyHelpers.imageStringArrayToObjectModify(
-            //         updateData?.imageURLs
-            //     )
-            // );
+            setImageFiles(
+                ArrayDataModifyHelpers.imageStringArrayToObjectModify([
+                    updateData?.imageURL,
+                ])
+            );
         }
     }, [updateData, reset]);
 
@@ -124,6 +132,8 @@ const UpdateBrand = ({
         <AntdModal
             title="Update Brand"
             isModalOpen={isModalOpen}
+            modalWidth={890}
+            isCentered
             onCancel={() =>
                 setIsModalOpen((prev) => ({
                     ...prev,
@@ -141,20 +151,68 @@ const UpdateBrand = ({
                         fileList={imageFiles}
                         setFileList={setImageFiles}
                         isError={imageFiles?.length > 0 ? false : true}
-                        maxCount={4}
+                        maxCount={1}
+                        title="Brand Image Upload"
                     />
                 </div>
 
-                <div className="grid grid-cols-1">
+                <div className="grid grid-cols-2 gap-y-2 gap-x-5">
                     <div>
                         <FormInputGroup
                             register={register}
                             inputName={"name"}
-                            labelName={"Brand Name"}
+                            labelName={"Name"}
                             errors={errors.name}
                             inputType={"text"}
                             placeholder={"Enter Your Brand Name"}
                             errorMessage={"Brand Name Is Required!"}
+                            className={"drop-shadow-md"}
+                        />
+                    </div>
+                    <div>
+                        <FormInputGroup
+                            register={register}
+                            inputName={"email"}
+                            labelName={"Email"}
+                            errors={errors.email}
+                            inputType={"email"}
+                            placeholder={"Enter Your Brand Email"}
+                            errorMessage={"Brand Email Is Required!"}
+                            className={"drop-shadow-md"}
+                        />
+                    </div>
+                    <div>
+                        <FormInputGroup
+                            register={register}
+                            inputName={"location"}
+                            labelName={"Location"}
+                            errors={errors.location}
+                            inputType={"text"}
+                            placeholder={"Enter Your Brand Location"}
+                            errorMessage={"Brand Location Is Required!"}
+                            className={"drop-shadow-md"}
+                        />
+                    </div>
+                    <div>
+                        <FormInputGroup
+                            register={register}
+                            inputName={"website"}
+                            labelName={"Website"}
+                            errors={errors.website}
+                            inputType={"text"}
+                            placeholder={"Enter Your Brand Website"}
+                            errorMessage={"Brand Website Is Required!"}
+                            className={"drop-shadow-md"}
+                        />
+                    </div>
+                    <div>
+                        <FormTextAreaGroup
+                            register={register}
+                            inputName={"description"}
+                            labelName={"Description"}
+                            errors={errors?.description}
+                            placeholder={"Provide Description Here!"}
+                            errorMessage={"Description Is Required!"}
                             className={"drop-shadow-md"}
                         />
                     </div>

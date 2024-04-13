@@ -2,19 +2,19 @@ import { UploadFile } from "antd";
 import { useState } from "react";
 import { UseFormReset, useForm } from "react-hook-form";
 
-import FormGroup from "../../../Molecules/Form/FormInputGroup";
-import FormRichTextGroup from "../../../Molecules/Form/FormRichTextGroup";
-import FormSelectGroup from "../../../Molecules/Form/FormSelectGroup";
-import FormTextAreaGroup from "../../../Molecules/Form/FormTextAreaGroup";
-import AntdUploadImage from "../../../Molecules/Upload/Images/MultiImageUpload/AntdUploadImage";
+import FormGroup from "../../../../Molecules/Form/FormInputGroup";
+import Button from "../../../../Atoms/Button/Button";
+import FormRichTextGroup from "../../../../Molecules/Form/FormRichTextGroup";
+import FormSelectGroup from "../../../../Molecules/Form/FormSelectGroup";
+import FormTextAreaGroup from "../../../../Molecules/Form/FormTextAreaGroup";
+import AntdUploadImage from "../../../../Molecules/Upload/Images/MultiImageUpload/AntdUploadImage";
 
-import { IBrand } from "../../../../types/brand.types";
-import { ICategory } from "../../../../types/category.type";
-import { IColor } from "../../../../types/color.types";
-import { ISize } from "../../../../types/size.types";
-import { ISubCategory } from "../../../../types/sub-category.type";
-import { ArrayDataModifyHelpers } from "../../../../utils/arrayDataModify";
-import Button from "../../../Atoms/Button/Button";
+import { IBrand } from "../../../../../types/brand.types";
+import { ICategory } from "../../../../../types/category.type";
+import { IColor } from "../../../../../types/color.types";
+import { ISize } from "../../../../../types/size.types";
+import { ISubCategory } from "../../../../../types/sub-category.type";
+import { ArrayDataModifyHelpers } from "../../../../../utils/arrayDataModify";
 import { ICreateProductForm } from "./CreateProductForm.types";
 
 type CreateProductFormType = {
@@ -78,6 +78,7 @@ const CreateProductForm = ({
                     setFileList={setImageFiles}
                     isError={imageFiles?.length > 0 ? false : true}
                     maxCount={5}
+                    title="Product Image Upload"
                 />
             </div>
             <div className="grid md:gap-x-5 lg:mb-5 lg:grid-cols-2 grid-cols-1 md:grid-cols-1 mb-2 md:mb-0 gap-x-3 gap-y-2">

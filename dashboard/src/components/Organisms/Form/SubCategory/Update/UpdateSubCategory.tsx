@@ -136,6 +136,7 @@ const UpdateSubCategory = ({
                         setFileList={setImageFiles}
                         isError={imageFiles?.length > 0 ? false : true}
                         maxCount={1}
+                        title="Upload Image"
                     />
                 </div>
 

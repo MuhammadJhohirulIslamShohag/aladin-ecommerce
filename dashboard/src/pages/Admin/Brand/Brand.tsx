@@ -82,7 +82,7 @@ const BrandPage = () => {
         <>
             <div>
                 <TableHeader
-                    buttonName="Add Sub Category"
+                    buttonName="Add Brand"
                     buttonClassName={
                         "text-gray-800 hover:shadow-white/50 bg-white shadow-white/30 py-3 px-4"
                     }
@@ -152,7 +152,11 @@ const BrandPage = () => {
                             {
                                 name: "Website",
                                 dataIndex: "website",
-                                key: "_id",
+                                render: ({ item }) => (
+                                    <h2 className="truncate">
+                                        {item.website}
+                                    </h2>
+                                ),
                             },
                             {
                                 name: "description",

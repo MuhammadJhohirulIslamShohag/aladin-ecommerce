@@ -1,18 +1,18 @@
-import { useState } from "react";
 import { UploadFile } from "antd";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-import AntdModal from "../../../../Atoms/Modal/AntdModal";
-import FormInputGroup from "../../../../Molecules/Form/FormInputGroup";
 import Button from "../../../../Atoms/Button/Button";
-import FormTextAreaGroup from "../../../../Molecules/Form/FormTextAreaGroup";
+import AntdModal from "../../../../Atoms/Modal/AntdModal";
 import Paragraph from "../../../../Atoms/Paragraph";
+import FormInputGroup from "../../../../Molecules/Form/FormInputGroup";
+import FormTextAreaGroup from "../../../../Molecules/Form/FormTextAreaGroup";
 import AntdUploadImage from "../../../../Molecules/Upload/Images/MultiImageUpload/AntdUploadImage";
 
-import { TCreateBrandForm } from "./createBrand.type";
 import { useCreateBrandMutation } from "../../../../../redux/services/brand/brandApi";
 import { CustomFetchBaseQueryError } from "../../../../../types/response";
+import { TCreateBrandForm } from "./createBrand.type";
 
 type CreateBrandFormType = {
     isModalOpen: boolean;
@@ -52,6 +52,10 @@ const CreateBrand = ({ isModalOpen, setIsModalOpen }: CreateBrandFormType) => {
 
         // Append form fields to the FormData object
         formData.append("name", data.name);
+        formData.append("email", data.email);
+        formData.append("location", data.location);
+        formData.append("website", data.website);
+        formData.append("description", data.description);
 
         // Append each image file individually to the FormData object
         imageFiles.forEach((file) => {
@@ -64,8 +68,8 @@ const CreateBrand = ({ isModalOpen, setIsModalOpen }: CreateBrandFormType) => {
         if ("data" in result && result.data && result.data?.success) {
             reset();
             setImageFiles([]);
-            toast.success(result.data.message);
             setErrorMessage("");
+            toast.success(result.data.message);
             setIsModalOpen((prev) => !prev);
         } else {
             if ("error" in result && result.error) {
@@ -81,6 +85,8 @@ const CreateBrand = ({ isModalOpen, setIsModalOpen }: CreateBrandFormType) => {
         <AntdModal
             title="Add New Brand"
             isModalOpen={isModalOpen}
+            modalWidth={890}
+            isCentered
             onCancel={() => setIsModalOpen((prev) => !prev)}
         >
             <form
@@ -92,15 +98,17 @@ const CreateBrand = ({ isModalOpen, setIsModalOpen }: CreateBrandFormType) => {
                         fileList={imageFiles}
                         setFileList={setImageFiles}
                         isError={imageFiles?.length > 0 ? false : true}
-                        maxCount={4}
+                        maxCount={1}
+                        title={"Brand Image Upload"}
+                        
                     />
                 </div>
-                <div className="grid grid-cols-1">
+                <div className="grid grid-cols-2 gap-y-2 gap-x-5">
                     <div>
                         <FormInputGroup
                             register={register}
                             inputName={"name"}
-                            labelName={"Brand Name"}
+                            labelName={"Name"}
                             errors={errors.name}
                             inputType={"text"}
                             placeholder={"Enter Your Brand Name"}
@@ -124,7 +132,7 @@ const CreateBrand = ({ isModalOpen, setIsModalOpen }: CreateBrandFormType) => {
                         <FormInputGroup
                             register={register}
                             inputName={"location"}
-                            labelName={"Brand Location"}
+                            labelName={"Location"}
                             errors={errors.location}
                             inputType={"text"}
                             placeholder={"Enter Your Brand Location"}
@@ -136,19 +144,7 @@ const CreateBrand = ({ isModalOpen, setIsModalOpen }: CreateBrandFormType) => {
                         <FormInputGroup
                             register={register}
                             inputName={"website"}
-                            labelName={"Brand Website"}
-                            errors={errors.website}
-                            inputType={"url"}
-                            placeholder={"Enter Your Brand Website"}
-                            errorMessage={"Brand Website Is Required!"}
-                            className={"drop-shadow-md"}
-                        />
-                    </div>
-                    <div>
-                        <FormInputGroup
-                            register={register}
-                            inputName={"website"}
-                            labelName={"Brand Website"}
+                            labelName={"Website"}
                             errors={errors.website}
                             inputType={"url"}
                             placeholder={"Enter Your Brand Website"}
@@ -163,9 +159,7 @@ const CreateBrand = ({ isModalOpen, setIsModalOpen }: CreateBrandFormType) => {
                             labelName={"Description"}
                             errors={errors?.description}
                             placeholder={"Provide Description Here!"}
-                            errorMessage={
-                                "Product Description Is Required!"
-                            }
+                            errorMessage={"Description Is Required!"}
                             className={"drop-shadow-md"}
                         />
                     </div>

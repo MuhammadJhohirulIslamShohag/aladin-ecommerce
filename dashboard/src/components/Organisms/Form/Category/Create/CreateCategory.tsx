@@ -95,6 +95,7 @@ const CreateCategory = ({
                         setFileList={setImageFiles}
                         isError={imageFiles?.length > 0 ? false : true}
                         maxCount={4}
+                        title={"Category Image Upload"}
                     />
                 </div>
                 <div className="grid grid-cols-1">

@@ -11,6 +11,7 @@ type AntdUploadImageType = {
     isError: boolean;
     setFileList: React.Dispatch<React.SetStateAction<UploadFile<FileType>[]>>;
     maxCount: number;
+    title: string
 };
 
 const AntdUploadImage: React.FC<AntdUploadImageType> = ({
@@ -18,6 +19,7 @@ const AntdUploadImage: React.FC<AntdUploadImageType> = ({
     setFileList,
     isError,
     maxCount = 6,
+    title="Image Upload"
 }) => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
@@ -68,7 +70,7 @@ const AntdUploadImage: React.FC<AntdUploadImageType> = ({
             <div
                 className={`px-1 ${isError ? " text-red-500" : "text-success"}`}
             >
-                Product Upload
+                {title}
             </div>
         </button>
     );

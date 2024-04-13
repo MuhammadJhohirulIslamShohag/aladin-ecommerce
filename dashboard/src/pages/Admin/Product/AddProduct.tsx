@@ -2,8 +2,8 @@
 import { UploadFile } from "antd";
 import React from "react";
 import { UseFormReset } from "react-hook-form";
-import CreateProductForm from "../../../components/Organisms/Form/CreateProduct/CreateProductForm";
-import { ICreateProductForm } from "../../../components/Organisms/Form/CreateProduct/CreateProductForm.types";
+import CreateProductForm from "../../../components/Organisms/Form/Product/Create/CreateProductForm";
+import { ICreateProductForm } from "../../../components/Organisms/Form/Product/Create/CreateProductForm.types";
 import { useGetBrandsQuery } from "../../../redux/services/brand/brandApi";
 import { useGetCategoriesQuery } from "../../../redux/services/category/categoryApi";
 import { useGetColorsQuery } from "../../../redux/services/color/colorApi";
