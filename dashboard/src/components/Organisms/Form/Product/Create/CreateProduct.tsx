@@ -1,7 +1,9 @@
-import { UploadFile } from "antd";
 import { useState } from "react";
-import { UseFormReset, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { UploadFile } from "antd";
+import toast from "react-hot-toast";
 
+import Paragraph from "../../../../Atoms/Paragraph";
 import FormGroup from "../../../../Molecules/Form/FormInputGroup";
 import Button from "../../../../Atoms/Button/Button";
 import FormRichTextGroup from "../../../../Molecules/Form/FormRichTextGroup";
@@ -16,32 +18,33 @@ import { ISize } from "../../../../../types/size.types";
 import { ISubCategory } from "../../../../../types/sub-category.type";
 import { ArrayDataModifyHelpers } from "../../../../../utils/arrayDataModify";
 import { ICreateProductForm } from "./CreateProductForm.types";
+import { useCreateProductMutation } from "../../../../../redux/services/product/productApi";
+import { CustomFetchBaseQueryError } from "../../../../../types/response";
+import { useNavigate } from "react-router-dom";
 
 type CreateProductFormType = {
-    handleAddProduct: (
-        data: ICreateProductForm,
-        reset: UseFormReset<ICreateProductForm>,
-        setImageFiles: React.Dispatch<React.SetStateAction<UploadFile[]>>
-    ) => void;
     sizes: ISize[];
     colors: IColor[];
     categories: ICategory[];
     subCategories: ISubCategory[];
     brands: IBrand[];
-    loading: boolean;
 };
 
 const CreateProductForm = ({
-    handleAddProduct,
     sizes,
     colors,
     categories,
     brands,
-    loading,
     subCategories,
 }: CreateProductFormType) => {
     // state
     const [imageFiles, setImageFiles] = useState<UploadFile[]>([]);
+    const [errorMessage, setErrorMessage] = useState<string>("");
+
+    const navigate = useNavigate()
+
+    // redux api call
+    const [createProduct, { isLoading }] = useCreateProductMutation();
 
     // react hook form
     const {
@@ -52,24 +55,64 @@ const CreateProductForm = ({
         reset,
     } = useForm<ICreateProductForm>({
         defaultValues: {
-            productName: "",
-            metaName: "",
+            name: "",
+            metaTitle: "",
             description: "",
         },
     });
 
     // submit handler to submit data to server
-    const handleControlProduct = (data: ICreateProductForm) => {
-        handleAddProduct(
-            { ...data, productImgFiles: imageFiles },
-            reset,
-            setImageFiles
-        );
+    const handleAddProduct = async (data: ICreateProductForm) => {
+        // checking image has
+        if (imageFiles?.length < 1) {
+            toast.error("Please add image!");
+            return;
+        }
+
+        // Create a new FormData object
+        const formData = new FormData();
+
+        // Append form fields to the FormData object
+        formData.append("name", data.name);
+        formData.append("metaTitle", data.metaTitle);
+        formData.append("description", data.description);
+        formData.append("category", data.category);
+        formData.append("brand", data.brand);
+        formData.append("price", JSON.stringify(data.price));
+        formData.append("discount", JSON.stringify(data.discount));
+        formData.append("quantity", JSON.stringify(data.quantity));
+        formData.append("isFeatured", JSON.stringify(data.isFeatured));
+        formData.append("subCategories", JSON.stringify(data.subCategories));
+        formData.append("sizes", JSON.stringify(data.sizes));
+        formData.append("colors", JSON.stringify(data.colors));
+
+        // Append each image file individually to the FormData object
+        imageFiles.forEach((file) => {
+            formData.append(`productImage`, file.originFileObj as Blob);
+        });
+
+        const result = await createProduct(formData);
+
+        // check if the request was successful
+        if ("data" in result && result.data && result.data?.success) {
+            reset();
+            setImageFiles([]);
+            setErrorMessage("");
+            toast.success(result.data.message);
+            navigate("/products")
+        } else {
+            if ("error" in result && result.error) {
+                const customError = result.error as CustomFetchBaseQueryError;
+                const errorMessage =
+                    customError.data?.message || "Failed to create Brand";
+                setErrorMessage(errorMessage);
+            }
+        }
     };
 
     return (
         <form
-            onSubmit={handleSubmit(handleControlProduct)}
+            onSubmit={handleSubmit(handleAddProduct)}
             className="lg:mt-5 md:mt-0 mt-0"
         >
             <div className="grid grid-cols-2">
@@ -85,9 +128,9 @@ const CreateProductForm = ({
                 <div>
                     <FormGroup
                         register={register}
-                        inputName={"productName"}
+                        inputName={"name"}
                         labelName={"Product Name"}
-                        errors={errors.productName}
+                        errors={errors.name}
                         inputType={"text"}
                         placeholder={"Enter Your Product Name"}
                         errorMessage={"Product Title Is Required!"}
@@ -109,9 +152,9 @@ const CreateProductForm = ({
                 <div className="col-span-2">
                     <FormTextAreaGroup
                         register={register}
-                        inputName={"metaName"}
+                        inputName={"metaTitle"}
                         labelName={"Meta Title"}
-                        errors={errors?.metaName}
+                        errors={errors?.metaTitle}
                         placeholder={"Provide Product Description Here!"}
                         errorMessage={
                             "Product Product Description Is Required!"
@@ -257,6 +300,26 @@ const CreateProductForm = ({
                         errorMessage={"Product Size Is Required!"}
                     />
                 </div>
+                <div>
+                    <FormSelectGroup
+                        options={[
+                            {
+                                label: "Yes",
+                                value: "true",
+                            },
+                            {
+                                label: "No",
+                                value: "false",
+                            },
+                        ]}
+                        placeholder={"Select Is Featured"}
+                        labelName={"isFeatured"}
+                        selectName={"isFeatured"}
+                        control={control}
+                        errors={errors.isFeatured}
+                        errorMessage={"Is Featured Is Required!"}
+                    />
+                </div>
             </div>
 
             <div>
@@ -269,12 +332,24 @@ const CreateProductForm = ({
                     errorMessage={"Product Product Description Is Required!"}
                 />
             </div>
+            {errorMessage ? (
+                <div>
+                    <Paragraph
+                        text={errorMessage}
+                        className={
+                            "text-red-500 text-sm capitalize font-medium"
+                        }
+                    />
+                </div>
+            ) : (
+                ""
+            )}
             <div className="mt-5">
                 <Button
                     className={`text-white py-3 px-4 disabled:cursor-not-allowed hover:shadow-green-500/40 bg-green-500 shadow-green-500/20`}
-                    label={loading ? "Loading" : "Add Product"}
+                    label={isLoading ? "Loading" : "Add Product"}
                     type="submit"
-                    disabled={loading}
+                    disabled={isLoading}
                 />
             </div>
         </form>

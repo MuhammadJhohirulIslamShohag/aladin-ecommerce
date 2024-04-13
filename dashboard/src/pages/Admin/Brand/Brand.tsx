@@ -77,7 +77,6 @@ const BrandPage = () => {
         setIsModalOpen((prev) => !prev);
     };
 
-    console.log(data, "data");
     return (
         <>
             <div>
@@ -192,7 +191,7 @@ const BrandPage = () => {
                 </div>
             </div>
 
-            {/* create Sub Category */}
+            {/* create brand */}
             {isModalOpen ? (
                 <CreateBrand
                     isModalOpen={isModalOpen}
@@ -202,7 +201,7 @@ const BrandPage = () => {
                 ""
             )}
 
-            {/* delete Sub Category */}
+            {/* delete brand */}
             {deleteModal.open ? (
                 <DeleteModal
                     title=""
@@ -223,7 +222,7 @@ const BrandPage = () => {
                 ""
             )}
 
-            {/* update Sub Category */}
+            {/* update brand */}
             {updateModal.open ? (
                 <UpdateBrand
                     updateData={updateModal?.data}

@@ -35,6 +35,7 @@ const imageStringArrayToObjectModify = (data: string[]): TImage[] => {
     }));
     return modifyData?.length ? modifyData : [];
 };
+
 const imageObjectArrayToStringModify = (data: UploadFile[]): string[] => {
     const modifyData = data
         .filter((item) => !item?.originFileObj)

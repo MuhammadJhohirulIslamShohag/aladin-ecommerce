@@ -8,6 +8,7 @@ import { ISubCategory } from "./sub-category.type";
 export interface IProduct {
     _id: string;
     name: string;
+    metaTitle: string;
     slug: string;
     description: string;
     price: number;
@@ -16,7 +17,7 @@ export interface IProduct {
     subCategory: ISubCategory[];
     quantity: number;
     sold: number;
-    imageURLs: [string];
+    imageURLs: string[];
     shipping: string;
     colors: IColor[];
     sizes: ISize[];

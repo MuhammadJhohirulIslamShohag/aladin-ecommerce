@@ -63,11 +63,11 @@ const SidebarList = () => {
                 isDropdownList
             >
                 <SideBarDropdownListItem
-                    dropdownNavigationLink="/admin/products"
+                    dropdownNavigationLink="/products"
                     name="My Products"
                 />
                 <SideBarDropdownListItem
-                    dropdownNavigationLink="/admin/products/addProduct"
+                    dropdownNavigationLink="/products/add-product"
                     name="Add Product"
                 />
             </SideBarListItem>

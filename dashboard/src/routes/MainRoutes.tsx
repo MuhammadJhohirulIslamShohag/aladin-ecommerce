@@ -10,13 +10,14 @@ const mainRoutes = createBrowserRouter([
         path: "/",
         element: <MainLayout />,
         children: [
+            ...allCommonRoutes.children,
             {
                 path: "/admin",
                 children: [...allAdminRoutes],
             },
         ],
     },
-    ...allCommonRoutes,
+    ...allCommonRoutes.single,
 ]);
 
 export default mainRoutes;

@@ -20,6 +20,7 @@ interface AntdSelectProps<T extends FieldValues> {
     mode: "multiple" | "tags" | undefined;
     selectName: Path<T>;
     errors?: FieldError | undefined;
+    defaultValue?:  T | null | undefined | OptionType<string>[]
 }
 
 function AntdSelect<T extends FieldValues>({
@@ -29,6 +30,7 @@ function AntdSelect<T extends FieldValues>({
     placeholder,
     errorMessage,
     errors,
+    defaultValue,
     mode,
     ...rest
 }: AntdSelectProps<T> & SelectProps<T>) {
@@ -64,6 +66,7 @@ function AntdSelect<T extends FieldValues>({
                             status={errors?.message ? "error" : ""}
                             placeholder={placeholder}
                             options={options}
+                            defaultValue={defaultValue}
                             mode={mode}
                             {...rest}
                         />

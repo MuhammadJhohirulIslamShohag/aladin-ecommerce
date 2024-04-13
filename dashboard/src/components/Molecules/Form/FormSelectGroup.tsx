@@ -1,3 +1,4 @@
+
 import { Control, FieldValues, FieldError, Path } from "react-hook-form";
 
 import Label from "../../Atoms/Form/Label";
@@ -11,13 +12,15 @@ interface OptionType<T> {
 type FormSelectGroupType<T extends FieldValues> = {
     labelName: string;
     className?: string | undefined;
-    selectName: Path<T>;
-    control: Control<T>;
+    selectName: Path<T> | string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    control: Control<T | any>;
     errors?: FieldError | undefined;
     mode?: "multiple" | "tags" | undefined;
     placeholder: string;
     options: OptionType<string>[] | undefined;
     errorMessage?: string | undefined;
+    defaultValue?: OptionType<string>[] | T | null | undefined 
 };
 
 const FormSelectGroup = <T extends FieldValues>({
@@ -27,6 +30,7 @@ const FormSelectGroup = <T extends FieldValues>({
     placeholder,
     control,
     className,
+    defaultValue,
     errorMessage,
     options,
     mode,
@@ -41,6 +45,7 @@ const FormSelectGroup = <T extends FieldValues>({
                 control={control}
                 placeholder={placeholder}
                 className={className}
+                defaultValue={defaultValue}
                 errors={errors}
                 options={options}
                 mode={mode}

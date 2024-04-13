@@ -1,6 +1,6 @@
 import { UploadFile } from "antd";
 
-export interface ICreateProductForm {
+export interface IUpdateProductForm {
     name: string;
     metaTitle: string;
     price: number;
