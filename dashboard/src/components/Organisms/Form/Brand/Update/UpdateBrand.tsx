@@ -9,34 +9,35 @@ import FormInputGroup from "../../../../Molecules/Form/FormInputGroup";
 import Button from "../../../../Atoms/Button/Button";
 import AntdUploadImage from "../../../../Molecules/Upload/Images/MultiImageUpload/AntdUploadImage";
 
-import { TUpdateCategoryForm } from "./UpdateCategory.type";
-import { useUpdateCategoryMutation } from "../../../../../redux/services/category/categoryApi";
+import { TUpdateBrandForm } from "./UpdateBrand.type";
+import { useUpdateBrandMutation } from "../../../../../redux/services/brand/brandApi";
 import { CustomFetchBaseQueryError } from "../../../../../types/response";
-import { ICategory } from "../../../../../types/category.type";
-import { ArrayDataModifyHelpers } from "../../../../../utils/arrayDataModify";
 
-type UpdateCategoryFormType = {
+import { ArrayDataModifyHelpers } from "../../../../../utils/arrayDataModify";
+import { IBrand } from "../../../../../types/brand.types";
+
+type UpdateBrandFormType = {
     isModalOpen: boolean;
     setIsModalOpen: React.Dispatch<
         React.SetStateAction<{
-            data: ICategory | null;
+            data: IBrand | null;
             open: boolean;
         }>
     >;
-    updateData: ICategory | null;
+    updateData: IBrand | null;
 };
 
-const UpdateCategory = ({
+const UpdateBrand = ({
     isModalOpen,
     setIsModalOpen,
     updateData,
-}: UpdateCategoryFormType) => {
+}: UpdateBrandFormType) => {
     // state
     const [imageFiles, setImageFiles] = useState<UploadFile[]>([]);
     const [errorMessage, setErrorMessage] = useState<string>("");
 
     // redux api call
-    const [updateCategory, { isLoading }] = useUpdateCategoryMutation();
+    const [updateBrand, { isLoading }] = useUpdateBrandMutation();
 
     // react hook form
     const {
@@ -44,14 +45,14 @@ const UpdateCategory = ({
         register,
         formState: { errors },
         reset,
-    } = useForm<TUpdateCategoryForm>({
+    } = useForm<TUpdateBrandForm>({
         defaultValues: {
             name: "",
         },
     });
 
     // submit handler to submit data to server
-    const handleUpdateCategory = async (data: TUpdateCategoryForm) => {
+    const handleUpdateBrand = async (data: TUpdateBrandForm) => {
         // checking image has
         if (imageFiles?.length < 1) {
             setErrorMessage("Please Add Image!");
@@ -73,11 +74,11 @@ const UpdateCategory = ({
         // Append each image file individually to the FormData object
         imageFiles.forEach((file) => {
             if (file?.originFileObj) {
-                formData.append(`categoryImage`, file.originFileObj as Blob);
+                formData.append(`BrandImage`, file.originFileObj as Blob);
             }
         });
 
-        const result = await updateCategory({
+        const result = await updateBrand({
             payload: formData,
             id: updateData?._id,
         });
@@ -97,7 +98,7 @@ const UpdateCategory = ({
             if ("error" in result && result.error) {
                 const customError = result.error as CustomFetchBaseQueryError;
                 const errorMessage =
-                    customError.data?.message || "Failed to Create Category!";
+                    customError.data?.message || "Failed to Create Brand!";
                 setErrorMessage(errorMessage);
             } else {
                 setErrorMessage("Internal Server Error!");
@@ -105,23 +106,23 @@ const UpdateCategory = ({
         }
     };
 
-    // update category data
+    // update Brand data
     useEffect(() => {
         if (updateData) {
             reset({
                 name: updateData?.name,
             });
-            setImageFiles(
-                ArrayDataModifyHelpers.imageStringArrayToObjectModify(
-                    updateData?.imageURLs
-                )
-            );
+            // setImageFiles(
+            //     ArrayDataModifyHelpers.imageStringArrayToObjectModify(
+            //         updateData?.imageURLs
+            //     )
+            // );
         }
     }, [updateData, reset]);
 
     return (
         <AntdModal
-            title="Update Category"
+            title="Update Brand"
             isModalOpen={isModalOpen}
             onCancel={() =>
                 setIsModalOpen((prev) => ({
@@ -132,7 +133,7 @@ const UpdateCategory = ({
             }
         >
             <form
-                onSubmit={handleSubmit(handleUpdateCategory)}
+                onSubmit={handleSubmit(handleUpdateBrand)}
                 className="lg:mt-5 md:mt-0 mt-0  pt-4 pb-7 px-6"
             >
                 <div className="grid grid-cols-1">
@@ -149,11 +150,11 @@ const UpdateCategory = ({
                         <FormInputGroup
                             register={register}
                             inputName={"name"}
-                            labelName={"Category Name"}
+                            labelName={"Brand Name"}
                             errors={errors.name}
                             inputType={"text"}
-                            placeholder={"Enter Your Category Name"}
-                            errorMessage={"Category Name Is Required!"}
+                            placeholder={"Enter Your Brand Name"}
+                            errorMessage={"Brand Name Is Required!"}
                             className={"drop-shadow-md"}
                         />
                     </div>
@@ -175,7 +176,7 @@ const UpdateCategory = ({
                 <div className="mt-5">
                     <Button
                         className={`text-white py-3 px-4 disabled:cursor-not-allowed hover:shadow-green-500/40 bg-green-500 shadow-green-500/20`}
-                        label={isLoading ? "Loading" : "Update Category"}
+                        label={isLoading ? "Loading" : "Update Brand"}
                         type="submit"
                         disabled={isLoading}
                     />
@@ -185,4 +186,4 @@ const UpdateCategory = ({
     );
 };
 
-export default UpdateCategory;
+export default UpdateBrand;

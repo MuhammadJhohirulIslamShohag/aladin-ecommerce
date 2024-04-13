@@ -65,15 +65,10 @@ const UpdateSubCategory = ({
         // Append form fields to the FormData object
         formData.append("name", data.name);
 
-        const imageURLs =
-            ArrayDataModifyHelpers.imageObjectArrayToStringModify(imageFiles);
-
-        formData.append("imageURL", JSON.stringify(imageURLs));
-
         // Append each image file individually to the FormData object
         imageFiles.forEach((file) => {
             if (file?.originFileObj) {
-                formData.append(`SubCategoryImage`, file.originFileObj as Blob);
+                formData.append(`subCategoryImage`, file.originFileObj as Blob);
             }
         });
 
@@ -97,7 +92,7 @@ const UpdateSubCategory = ({
             if ("error" in result && result.error) {
                 const customError = result.error as CustomFetchBaseQueryError;
                 const errorMessage =
-                    customError.data?.message || "Failed to Create SubCategory!";
+                    customError.data?.message || "Failed to Create Sub Category!";
                 setErrorMessage(errorMessage);
             } else {
                 setErrorMessage("Internal Server Error!");
@@ -111,11 +106,11 @@ const UpdateSubCategory = ({
             reset({
                 name: updateData?.name,
             });
-            // setImageFiles(
-            //     ArrayDataModifyHelpers.imageStringArrayToObjectModify(
-            //         updateData?.imageURL
-            //     )
-            // );
+            setImageFiles(
+                ArrayDataModifyHelpers.imageStringArrayToObjectModify(
+                    [updateData?.imageURL]
+                )
+            );
         }
     }, [updateData, reset]);
 

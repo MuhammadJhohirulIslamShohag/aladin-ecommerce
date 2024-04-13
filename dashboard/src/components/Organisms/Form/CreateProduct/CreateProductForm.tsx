@@ -108,7 +108,6 @@ const CreateProductForm = ({
                 <div className="col-span-2">
                     <FormTextAreaGroup
                         register={register}
-                        inputType="text"
                         inputName={"metaName"}
                         labelName={"Meta Title"}
                         errors={errors?.metaName}

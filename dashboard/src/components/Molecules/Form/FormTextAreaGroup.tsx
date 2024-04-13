@@ -14,7 +14,6 @@ type FormGroupType<T extends FieldValues> = {
     inputName: Path<T>;
     register: UseFormRegister<T>;
     errors?: FieldError | undefined;
-    inputType: string;
     placeholder: string;
     errorMessage?: string | boolean | undefined;
 };

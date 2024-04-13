@@ -60,8 +60,10 @@ const CreateSubCategory = ({
         const formData = new FormData();
 
         // Append form fields to the FormData object
+        console.log(JSON.parse(data.category).categoryId);
+ 
         formData.append("name", data.name);
-        formData.append("categoryId", data.category);
+        formData.append("categoryId", JSON.parse(data.category).categoryId);
 
         // Append each image file individually to the FormData object
         imageFiles.forEach((file) => {

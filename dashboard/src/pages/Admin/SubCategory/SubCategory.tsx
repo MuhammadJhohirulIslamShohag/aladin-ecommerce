@@ -6,19 +6,19 @@ import Table from "../../../components/Molecules/Table/Table";
 import TableFilter from "../../../components/Organisms/Table/TableFilter/TableFilter";
 import useDebounce from "../../../hooks/useDebounce";
 
+import AntdImage from "../../../components/Molecules/Image/Image";
 import TableHeader from "../../../components/Molecules/Table/TableHeader";
-import CreateCategory from "../../../components/Organisms/Form/Category/Create/CreateCategory";
+import CreateSubCategory from "../../../components/Organisms/Form/SubCategory/Create/CreateSubCategory";
+import UpdateSubCategory from "../../../components/Organisms/Form/SubCategory/Update/UpdateSubCategory";
 import DeleteModal from "../../../components/Organisms/Modal/Delete/DeleteModal";
-import UpdateCategory from "../../../components/Organisms/Form/Category/Update/UpdateCategory";
 
 import {
-    useGetCategoriesQuery,
-    useRemovedCategoryMutation,
-} from "../../../redux/services/category/categoryApi";
-import { ICategory } from "../../../types/category.type";
-import AntdImage from "../../../components/Molecules/Image/Image";
+    useGetSubCategoriesQuery,
+    useRemovedSubCategoryMutation,
+} from "../../../redux/services/subCategory/subCategoryApi";
+import { ISubCategory } from "../../../types/sub-category.type";
 
-const CategoriesPage = () => {
+const SubCategoryPage = () => {
     // state
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [deleteModal, setDeleteModal] = useState<{
@@ -29,7 +29,7 @@ const CategoriesPage = () => {
         open: false,
     });
     const [updateModal, setUpdateModal] = useState<{
-        data: ICategory | null;
+        data: ISubCategory | null;
         open: boolean;
     }>({
         data: null,
@@ -46,14 +46,15 @@ const CategoriesPage = () => {
         page: JSON.stringify(page),
         limit: JSON.stringify(limit),
         searchTerm: debouncedValue,
+        populate: "categoryId",
     });
 
     // redux api call
-    const { data, isError, isLoading } = useGetCategoriesQuery(
+    const { data, isError, isLoading } = useGetSubCategoriesQuery(
         queryParams.toString()
     );
-    const [removedCategory, { isLoading: isDeleteLoading }] =
-        useRemovedCategoryMutation();
+    const [removedSubCategory, { isLoading: isDeleteLoading }] =
+        useRemovedSubCategoryMutation();
 
     // handle remove item
     const handleRemoveItem = (id: string) => {
@@ -64,7 +65,7 @@ const CategoriesPage = () => {
     };
 
     // handle edit item
-    const handleEditItem = (item: ICategory) => {
+    const handleEditItem = (item: ISubCategory) => {
         setUpdateModal({
             data: item,
             open: true,
@@ -72,21 +73,22 @@ const CategoriesPage = () => {
     };
 
     // handle add item
-    const handleAddCategory = () => {
+    const handleAddSubCategory = () => {
         setIsModalOpen((prev) => !prev);
     };
 
+    console.log(data, "data");
     return (
         <>
             <div>
                 <TableHeader
-                    buttonName="Add Category"
+                    buttonName="Add Sub Category"
                     buttonClassName={
                         "text-gray-800 hover:shadow-white/50 bg-white shadow-white/30 py-3 px-4"
                     }
                     className={"mt-10 mb-7"}
-                    headerTitle={"All Categories"}
-                    onClick={() => handleAddCategory()}
+                    headerTitle={"All SubCategory"}
+                    onClick={() => handleAddSubCategory()}
                     headerClassName={"text-white text-4xl font-bold mb-2"}
                     isAddButtonShow
                 />
@@ -116,31 +118,31 @@ const CategoriesPage = () => {
                                 dataIndex: "_id",
                                 render: ({ item }) => (
                                     <div className="flex">
-                                        {item?.imageURLs?.length
-                                            ? item?.imageURLs?.map(
-                                                  (
-                                                      img: string,
-                                                      idx: number
-                                                  ) => (
-                                                      <AntdImage
-                                                          key={idx}
-                                                          src={img}
-                                                          height={40}
-                                                          width={40}
-                                                          className={
-                                                              "w-10 h-10 rounded-full"
-                                                          }
-                                                          alt={"category-image"}
-                                                      />
-                                                  )
-                                              )
-                                            : ""}
+                                        {item?.imageURL ? (
+                                            <AntdImage
+                                                src={item?.imageURL}
+                                                height={40}
+                                                width={40}
+                                                className={
+                                                    "w-10 h-10 rounded-full"
+                                                }
+                                                alt={"sub-category-image"}
+                                            />
+                                        ) : (
+                                            ""
+                                        )}
                                     </div>
                                 ),
                             },
                             {
                                 name: "Name",
                                 dataIndex: "name",
+                                key: "_id",
+                            },
+                            {
+                                name: "Category Name",
+                                dataIndex: "categoryId",
+                                dataIndex2: "name",
                                 key: "_id",
                             },
                             {
@@ -168,9 +170,9 @@ const CategoriesPage = () => {
                 </div>
             </div>
 
-            {/* create category */}
+            {/* create Sub Category */}
             {isModalOpen ? (
-                <CreateCategory
+                <CreateSubCategory
                     isModalOpen={isModalOpen}
                     setIsModalOpen={setIsModalOpen}
                 />
@@ -178,7 +180,7 @@ const CategoriesPage = () => {
                 ""
             )}
 
-            {/* delete category */}
+            {/* delete Sub Category */}
             {deleteModal.open ? (
                 <DeleteModal
                     title=""
@@ -192,16 +194,16 @@ const CategoriesPage = () => {
                     isModalOpen={deleteModal.open}
                     isLoading={isDeleteLoading}
                     setIsModalOpen={setDeleteModal}
-                    deleteActionMethod={removedCategory}
+                    deleteActionMethod={removedSubCategory}
                     deletePayload={deleteModal?.data}
                 />
             ) : (
                 ""
             )}
 
-            {/* update category */}
+            {/* update Sub Category */}
             {updateModal.open ? (
-                <UpdateCategory
+                <UpdateSubCategory
                     updateData={updateModal?.data}
                     isModalOpen={updateModal.open}
                     setIsModalOpen={setUpdateModal}
@@ -213,4 +215,4 @@ const CategoriesPage = () => {
     );
 };
 
-export default CategoriesPage;
+export default SubCategoryPage;

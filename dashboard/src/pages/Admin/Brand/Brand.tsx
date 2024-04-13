@@ -7,18 +7,18 @@ import TableFilter from "../../../components/Organisms/Table/TableFilter/TableFi
 import useDebounce from "../../../hooks/useDebounce";
 
 import TableHeader from "../../../components/Molecules/Table/TableHeader";
-import CreateCategory from "../../../components/Organisms/Form/Category/Create/CreateCategory";
+import CreateBrand from "../../../components/Organisms/Form/Brand/Create/CreateBrand";
+import UpdateBrand from "../../../components/Organisms/Form/Brand/Update/UpdateBrand";
 import DeleteModal from "../../../components/Organisms/Modal/Delete/DeleteModal";
-import UpdateCategory from "../../../components/Organisms/Form/Category/Update/UpdateCategory";
-
-import {
-    useGetCategoriesQuery,
-    useRemovedCategoryMutation,
-} from "../../../redux/services/category/categoryApi";
-import { ICategory } from "../../../types/category.type";
 import AntdImage from "../../../components/Molecules/Image/Image";
 
-const CategoriesPage = () => {
+import {
+    useGetBrandsQuery,
+    useRemovedBrandMutation,
+} from "../../../redux/services/brand/brandApi";
+import { IBrand } from "../../../types/brand.types";
+
+const BrandPage = () => {
     // state
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [deleteModal, setDeleteModal] = useState<{
@@ -29,7 +29,7 @@ const CategoriesPage = () => {
         open: false,
     });
     const [updateModal, setUpdateModal] = useState<{
-        data: ICategory | null;
+        data: IBrand | null;
         open: boolean;
     }>({
         data: null,
@@ -46,14 +46,15 @@ const CategoriesPage = () => {
         page: JSON.stringify(page),
         limit: JSON.stringify(limit),
         searchTerm: debouncedValue,
+        populate: "categoryId",
     });
 
     // redux api call
-    const { data, isError, isLoading } = useGetCategoriesQuery(
+    const { data, isError, isLoading } = useGetBrandsQuery(
         queryParams.toString()
     );
-    const [removedCategory, { isLoading: isDeleteLoading }] =
-        useRemovedCategoryMutation();
+    const [removedBrand, { isLoading: isDeleteLoading }] =
+        useRemovedBrandMutation();
 
     // handle remove item
     const handleRemoveItem = (id: string) => {
@@ -64,7 +65,7 @@ const CategoriesPage = () => {
     };
 
     // handle edit item
-    const handleEditItem = (item: ICategory) => {
+    const handleEditItem = (item: IBrand) => {
         setUpdateModal({
             data: item,
             open: true,
@@ -72,21 +73,22 @@ const CategoriesPage = () => {
     };
 
     // handle add item
-    const handleAddCategory = () => {
+    const handleAddBrand = () => {
         setIsModalOpen((prev) => !prev);
     };
 
+    console.log(data, "data");
     return (
         <>
             <div>
                 <TableHeader
-                    buttonName="Add Category"
+                    buttonName="Add Sub Category"
                     buttonClassName={
                         "text-gray-800 hover:shadow-white/50 bg-white shadow-white/30 py-3 px-4"
                     }
                     className={"mt-10 mb-7"}
-                    headerTitle={"All Categories"}
-                    onClick={() => handleAddCategory()}
+                    headerTitle={"All Brand"}
+                    onClick={() => handleAddBrand()}
                     headerClassName={"text-white text-4xl font-bold mb-2"}
                     isAddButtonShow
                 />
@@ -116,25 +118,19 @@ const CategoriesPage = () => {
                                 dataIndex: "_id",
                                 render: ({ item }) => (
                                     <div className="flex">
-                                        {item?.imageURLs?.length
-                                            ? item?.imageURLs?.map(
-                                                  (
-                                                      img: string,
-                                                      idx: number
-                                                  ) => (
-                                                      <AntdImage
-                                                          key={idx}
-                                                          src={img}
-                                                          height={40}
-                                                          width={40}
-                                                          className={
-                                                              "w-10 h-10 rounded-full"
-                                                          }
-                                                          alt={"category-image"}
-                                                      />
-                                                  )
-                                              )
-                                            : ""}
+                                        {item?.imageURL ? (
+                                            <AntdImage
+                                                src={item?.imageURL}
+                                                height={40}
+                                                width={40}
+                                                className={
+                                                    "w-10 h-10 rounded-full"
+                                                }
+                                                alt={"brand-image"}
+                                            />
+                                        ) : (
+                                            ""
+                                        )}
                                     </div>
                                 ),
                             },
@@ -142,6 +138,30 @@ const CategoriesPage = () => {
                                 name: "Name",
                                 dataIndex: "name",
                                 key: "_id",
+                            },
+                            {
+                                name: "Email",
+                                dataIndex: "email",
+                                key: "_id",
+                            },
+                            {
+                                name: "Location",
+                                dataIndex: "location",
+                                key: "_id",
+                            },
+                            {
+                                name: "Website",
+                                dataIndex: "website",
+                                key: "_id",
+                            },
+                            {
+                                name: "description",
+                                dataIndex: "description",
+                                render: ({ item }) => (
+                                    <h2 className="truncate">
+                                        {item.description}
+                                    </h2>
+                                ),
                             },
                             {
                                 name: "Actions",
@@ -168,9 +188,9 @@ const CategoriesPage = () => {
                 </div>
             </div>
 
-            {/* create category */}
+            {/* create Sub Category */}
             {isModalOpen ? (
-                <CreateCategory
+                <CreateBrand
                     isModalOpen={isModalOpen}
                     setIsModalOpen={setIsModalOpen}
                 />
@@ -178,7 +198,7 @@ const CategoriesPage = () => {
                 ""
             )}
 
-            {/* delete category */}
+            {/* delete Sub Category */}
             {deleteModal.open ? (
                 <DeleteModal
                     title=""
@@ -192,16 +212,16 @@ const CategoriesPage = () => {
                     isModalOpen={deleteModal.open}
                     isLoading={isDeleteLoading}
                     setIsModalOpen={setDeleteModal}
-                    deleteActionMethod={removedCategory}
+                    deleteActionMethod={removedBrand}
                     deletePayload={deleteModal?.data}
                 />
             ) : (
                 ""
             )}
 
-            {/* update category */}
+            {/* update Sub Category */}
             {updateModal.open ? (
-                <UpdateCategory
+                <UpdateBrand
                     updateData={updateModal?.data}
                     isModalOpen={updateModal.open}
                     setIsModalOpen={setUpdateModal}
@@ -213,4 +233,4 @@ const CategoriesPage = () => {
     );
 };
 
-export default CategoriesPage;
+export default BrandPage;

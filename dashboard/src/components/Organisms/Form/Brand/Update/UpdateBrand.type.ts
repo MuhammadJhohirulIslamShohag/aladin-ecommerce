@@ -1,13 +1,14 @@
-export interface IBrand {
+import { UploadFile } from "antd";
+
+
+export type TUpdateBrandForm = {
+    brandImage: UploadFile;
     name: string;
     email: string;
     location: string;
     website: string;
     description: string;
-    imageURL: string;
     status: "active" | "inActive";
-    createdAt: Date;
-    updatedAt: Date;
-    __v: number;
-    _id: string;
-}
+};
+
+

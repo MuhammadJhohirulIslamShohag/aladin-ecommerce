@@ -5,6 +5,7 @@ import Button from "../../../components/Atoms/Button/Button";
 import Table from "../../../components/Molecules/Table/Table";
 import TableFilter from "../../../components/Organisms/Table/TableFilter/TableFilter";
 import useDebounce from "../../../hooks/useDebounce";
+import AntdImage from "../../../components/Molecules/Image/Image";
 
 import {
     useGetProductsQuery,
@@ -75,11 +76,15 @@ const ProductPage = () => {
                                     {item?.imageURLs?.length
                                         ? item?.imageURLs?.map(
                                               (img: string, idx: number) => (
-                                                  <img
+                                                  <AntdImage
                                                       key={idx}
-                                                      className="h-10 w-10 rounded-full"
                                                       src={img}
-                                                      alt={"product Image"}
+                                                      height={40}
+                                                      width={40}
+                                                      className={
+                                                          "w-10 h-10 rounded-full"
+                                                      }
+                                                      alt={"product-image"}
                                                   />
                                               )
                                           )
