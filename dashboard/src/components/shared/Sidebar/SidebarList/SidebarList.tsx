@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { AiFillDashboard, AiFillSetting } from "react-icons/ai";
-import { BiCategory } from "react-icons/bi";
 import { BsCartCheck } from "react-icons/bs";
 import { FaShoppingBag, FaUsers } from "react-icons/fa";
 import { MdLogout, MdOutlineProductionQuantityLimits } from "react-icons/md";
@@ -11,11 +10,6 @@ import SideBarListItem from "./SideBarListItem/SideBarListItem";
 
 const SidebarList = () => {
     const [openProduct, setOpenProduct] = useState<boolean>(false);
-    const [openCategories, setOpenCategories] = useState<boolean>(false);
-    const [openBrands, setOpenBrands] = useState<boolean>(false);
-    const [openColors, setOpenColors] = useState<boolean>(false);
-    const [openSizes, setOpenSizes] = useState<boolean>(false);
-    const [openSubCategories, setOpenSubCategories] = useState<boolean>(false);
     const [openAllUsers, setOpenAllUsers] = useState<boolean>(false);
     const [openSetting, setOpenSetting] = useState<boolean>(false);
 
@@ -23,27 +17,41 @@ const SidebarList = () => {
 
     return (
         <ul className="space-y-2 px-3">
-            <SideBarListItem navigationLink="/">
+            <SideBarListItem navigationLink="/admin/dashboard">
                 <AiFillDashboard className="h-[19px] w-[19px] text-green-400" />
                 <span className="ml-3">Dashboard</span>
             </SideBarListItem>
-            <SideBarListItem navigationLink="/orders">
+            <SideBarListItem navigationLink="/admin/orders">
                 <BsCartCheck className="h-[19px] w-[19px] text-green-400" />
                 <span className="flex-1 ml-3 whitespace-nowrap">Orders</span>
             </SideBarListItem>
-            <SideBarListItem navigationLink="/customers">
+            <SideBarListItem navigationLink="/admin/customers">
                 <FaShoppingBag className="h-[19px] w-[19px] text-green-400" />
                 <span className="flex-1 ml-3 whitespace-nowrap">Customers</span>
             </SideBarListItem>
-            <SideBarListItem navigationLink="/coupons">
+            <SideBarListItem navigationLink="/admin/coupons">
                 <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
                 <span className="flex-1 ml-3 whitespace-nowrap">Coupons</span>
             </SideBarListItem>
-            <SideBarListItem navigationLink="/categories">
+            <SideBarListItem navigationLink="/admin/categories">
                 <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
-                <span className="flex-1 ml-3 whitespace-nowrap">
-                    Categories
-                </span>
+                <span className="flex-1 ml-3 whitespace-nowrap">Category</span>
+            </SideBarListItem>
+            <SideBarListItem navigationLink="/admin/sub-categories">
+                <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
+                <span className="flex-1 ml-3 whitespace-nowrap">SubCategory</span>
+            </SideBarListItem>
+            <SideBarListItem navigationLink="/admin/colors">
+                <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
+                <span className="flex-1 ml-3 whitespace-nowrap">Color</span>
+            </SideBarListItem>
+            <SideBarListItem navigationLink="/admin/sizes">
+                <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
+                <span className="flex-1 ml-3 whitespace-nowrap">Size</span>
+            </SideBarListItem>
+            <SideBarListItem navigationLink="/admin/brands">
+                <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
+                <span className="flex-1 ml-3 whitespace-nowrap">Brand</span>
             </SideBarListItem>
             <SideBarListItem
                 open={openProduct}
@@ -55,105 +63,15 @@ const SidebarList = () => {
                 isDropdownList
             >
                 <SideBarDropdownListItem
-                    dropdownNavigationLink="/products"
+                    dropdownNavigationLink="/admin/products"
                     name="My Products"
                 />
                 <SideBarDropdownListItem
-                    dropdownNavigationLink="/products/addProduct"
+                    dropdownNavigationLink="/admin/products/addProduct"
                     name="Add Product"
                 />
             </SideBarListItem>
 
-            <SideBarListItem
-                open={openCategories}
-                setOpen={setOpenCategories}
-                icon={
-                    <BiCategory className="h-[19px] w-[19px] text-green-400" />
-                }
-                dropdownMainMenuName="Categories"
-                isDropdownList
-            >
-                <SideBarDropdownListItem
-                    dropdownNavigationLink="/categories"
-                    name="All Categories"
-                />
-                <SideBarDropdownListItem
-                    dropdownNavigationLink="/categories/addCategory"
-                    name="Add Category"
-                />
-            </SideBarListItem>
-            <SideBarListItem
-                open={openBrands}
-                setOpen={setOpenBrands}
-                icon={
-                    <BiCategory className="h-[19px] w-[19px] text-green-400" />
-                }
-                dropdownMainMenuName="Brands"
-                isDropdownList
-            >
-                <SideBarDropdownListItem
-                    dropdownNavigationLink="/brands"
-                    name="All Brands"
-                />
-                <SideBarDropdownListItem
-                    dropdownNavigationLink="/brands/addBrand"
-                    name="Add Brand"
-                />
-            </SideBarListItem>
-            <SideBarListItem
-                open={openColors}
-                setOpen={setOpenColors}
-                icon={
-                    <BiCategory className="h-[19px] w-[19px] text-green-400" />
-                }
-                dropdownMainMenuName="Colors"
-                isDropdownList
-            >
-                <SideBarDropdownListItem
-                    dropdownNavigationLink="/colors"
-                    name="All Colors"
-                />
-                <SideBarDropdownListItem
-                    dropdownNavigationLink="/colors/addColor"
-                    name="Add Color"
-                />
-            </SideBarListItem>
-            <SideBarListItem
-                open={openSizes}
-                setOpen={setOpenSizes}
-                icon={
-                    <BiCategory className="h-[19px] w-[19px] text-green-400" />
-                }
-                dropdownMainMenuName="Sizes"
-                isDropdownList
-            >
-                <SideBarDropdownListItem
-                    dropdownNavigationLink="/sizes"
-                    name="All Sizes"
-                />
-                <SideBarDropdownListItem
-                    dropdownNavigationLink="/sizes/addSize"
-                    name="Add Size"
-                />
-            </SideBarListItem>
-            <SideBarListItem
-                open={openSubCategories}
-                setOpen={setOpenSubCategories}
-                icon={
-                    <BiCategory className="h-[19px] w-[19px] text-green-400" />
-                }
-                dropdownMainMenuName="SubCategories"
-                isDropdownList
-            >
-                <SideBarDropdownListItem
-                    dropdownNavigationLink="/subCategories"
-                    name="All SubCategory"
-                />
-                <SideBarDropdownListItem
-                    dropdownNavigationLink="/subCategories/addSubCategory"
-                    name="Add SubCategory"
-                />
-            </SideBarListItem>
             <SideBarListItem
                 open={openSetting}
                 setOpen={setOpenSetting}

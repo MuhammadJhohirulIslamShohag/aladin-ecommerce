@@ -1,5 +1,4 @@
 import { baseApi } from "../../api/baseApi";
-import { ISubCategory } from "../../../types/sub-category.type";
 
 const subCategoryApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
@@ -8,28 +7,31 @@ const subCategoryApi = baseApi.injectEndpoints({
                 url: `sub-categories?${queryParams}`,
                 method: "GET",
             }),
+            providesTags: ["SubCategory"],
         }),
         createSubCategory: build.mutation({
-            query: (payload: ISubCategory) => ({
+            query: (payload) => ({
                 url: "sub-categories",
                 method: "POST",
                 body: payload,
             }),
+            invalidatesTags: ["SubCategory"],
         }),
         updateSubCategory: build.mutation({
-            query: (payload: ISubCategory) => ({
-                url: "sub-categories",
+            query: ({ payload, id }) => ({
+                url: `sub-categories/${id}`,
                 method: "PATCH",
                 body: payload,
             }),
+            invalidatesTags: ["SubCategory"],
         }),
         removedSubCategory: build.mutation({
             query: (payload: string) => ({
                 url: `sub-categories/${payload}`,
                 method: "DELETE",
             }),
+            invalidatesTags: ["SubCategory"],
         }),
-       
     }),
     overrideExisting: false,
 });

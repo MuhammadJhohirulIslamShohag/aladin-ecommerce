@@ -1,23 +1,23 @@
 import { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-import Button from "../../components/Atoms/Button/Button";
-import Table from "../../components/Molecules/Table/Table";
-import TableFilter from "../../components/Organisms/Table/TableFilter/TableFilter";
-import useDebounce from "../../hooks/useDebounce";
+import Button from "../../../components/Atoms/Button/Button";
+import Table from "../../../components/Molecules/Table/Table";
+import TableFilter from "../../../components/Organisms/Table/TableFilter/TableFilter";
+import useDebounce from "../../../hooks/useDebounce";
 
-import TableHeader from "../../components/Molecules/Table/TableHeader";
-import CreateCategory from "../../components/Organisms/Form/Category/Create/CreateCategory";
-import DeleteModal from "../../components/Organisms/Modal/Delete/DeleteModal";
-import UpdateCategory from "../../components/Organisms/Form/Category/Update/UpdateCategory";
+import TableHeader from "../../../components/Molecules/Table/TableHeader";
+import CreateColor from "../../../components/Organisms/Form/Color/Create/CreateColor";
+import DeleteModal from "../../../components/Organisms/Modal/Delete/DeleteModal";
+import UpdateColor from "../../../components/Organisms/Form/Color/Update/UpdateColor";
 
 import {
-    useGetCategoriesQuery,
-    useRemovedCategoryMutation,
-} from "../../redux/services/category/categoryApi";
-import { ICategory } from "../../types/category.type";
+    useGetColorsQuery,
+    useRemovedColorMutation,
+} from "../../../redux/services/color/colorApi";
+import { IColor } from "../../../types/color.types";
 
-const CategoriesPage = () => {
+const ColorPage = () => {
     // state
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [deleteModal, setDeleteModal] = useState<{
@@ -28,7 +28,7 @@ const CategoriesPage = () => {
         open: false,
     });
     const [updateModal, setUpdateModal] = useState<{
-        data: ICategory | null;
+        data: IColor | null;
         open: boolean;
     }>({
         data: null,
@@ -48,13 +48,13 @@ const CategoriesPage = () => {
     });
 
     // redux api call
-    const { data, isError, isLoading } = useGetCategoriesQuery(
+    const { data, isError, isLoading } = useGetColorsQuery(
         queryParams.toString()
     );
-    const [removedCategory, { isLoading: isDeleteLoading }] =
-        useRemovedCategoryMutation();
+    const [removedColor, { isLoading: isDeleteLoading }] =
+        useRemovedColorMutation();
 
-    // handle remove item    
+    // handle remove item
     const handleRemoveItem = (id: string) => {
         setDeleteModal({
             data: id,
@@ -63,7 +63,7 @@ const CategoriesPage = () => {
     };
 
     // handle edit item
-    const handleEditItem = (item: ICategory) => {
+    const handleEditItem = (item: IColor) => {
         setUpdateModal({
             data: item,
             open: true,
@@ -71,7 +71,7 @@ const CategoriesPage = () => {
     };
 
     // handle add item
-    const handleAddCategory = () => {
+    const handleAddColor = () => {
         setIsModalOpen((prev) => !prev);
     };
 
@@ -79,13 +79,13 @@ const CategoriesPage = () => {
         <>
             <div>
                 <TableHeader
-                    buttonName="Add Category"
+                    buttonName="Add Color"
                     buttonClassName={
                         "text-gray-800 hover:shadow-white/50 bg-white shadow-white/30 py-3 px-4"
                     }
                     className={"mt-10 mb-7"}
-                    headerTitle={"All Categories"}
-                    onClick={() => handleAddCategory()}
+                    headerTitle={"All Colors"}
+                    onClick={() => handleAddColor()}
                     headerClassName={"text-white text-4xl font-bold mb-2"}
                     isAddButtonShow
                 />
@@ -109,29 +109,6 @@ const CategoriesPage = () => {
                         checkbox={true}
                         handleSelectedRowItem={() => console.log()}
                         columns={[
-                            {
-                                name: "Image",
-                                dataIndex: "_id",
-                                render: ({ item }) => (
-                                    <div className="flex">
-                                        {item?.imageURLs?.length
-                                            ? item?.imageURLs?.map(
-                                                  (
-                                                      img: string,
-                                                      idx: number
-                                                  ) => (
-                                                      <img
-                                                          key={idx}
-                                                          className="h-10 w-10 rounded-full"
-                                                          src={img}
-                                                          alt={"product Image"}
-                                                      />
-                                                  )
-                                              )
-                                            : ""}
-                                    </div>
-                                ),
-                            },
                             {
                                 name: "Name",
                                 dataIndex: "name",
@@ -162,9 +139,9 @@ const CategoriesPage = () => {
                 </div>
             </div>
 
-            {/* create category */}
+            {/* create Color */}
             {isModalOpen ? (
-                <CreateCategory
+                <CreateColor
                     isModalOpen={isModalOpen}
                     setIsModalOpen={setIsModalOpen}
                 />
@@ -172,7 +149,7 @@ const CategoriesPage = () => {
                 ""
             )}
 
-            {/* delete category */}
+            {/* delete Color */}
             {deleteModal.open ? (
                 <DeleteModal
                     title=""
@@ -186,16 +163,16 @@ const CategoriesPage = () => {
                     isModalOpen={deleteModal.open}
                     isLoading={isDeleteLoading}
                     setIsModalOpen={setDeleteModal}
-                    deleteActionMethod={removedCategory}
+                    deleteActionMethod={removedColor}
                     deletePayload={deleteModal?.data}
                 />
             ) : (
                 ""
             )}
 
-            {/* update category */}
+            {/* update Color */}
             {updateModal.open ? (
-                <UpdateCategory
+                <UpdateColor
                     updateData={updateModal?.data}
                     isModalOpen={updateModal.open}
                     setIsModalOpen={setUpdateModal}
@@ -207,4 +184,4 @@ const CategoriesPage = () => {
     );
 };
 
-export default CategoriesPage;
+export default ColorPage;

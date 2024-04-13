@@ -1,33 +1,36 @@
 import { baseApi } from "../../api/baseApi";
-import { IProduct } from "../../../types/product.type";
 
 const productApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         getProducts: build.query({
-            query: (queryParams:string) => ({
+            query: (queryParams: string) => ({
                 url: `products?${queryParams}`,
                 method: "GET",
             }),
+            providesTags: ["Product"],
         }),
         createProduct: build.mutation({
-            query: (payload: IProduct) => ({
+            query: (payload) => ({
                 url: "products",
                 method: "POST",
                 body: payload,
             }),
+            invalidatesTags: ["Product"],
         }),
         updateProduct: build.mutation({
-            query: (payload: IProduct) => ({
-                url: "products",
+            query: ({ payload, id }) => ({
+                url: `products/${id}`,
                 method: "PATCH",
                 body: payload,
             }),
+            invalidatesTags: ["Product"],
         }),
         removedProduct: build.mutation({
             query: (payload: string) => ({
                 url: `products/${payload}`,
                 method: "DELETE",
             }),
+            invalidatesTags: ["Product"],
         }),
     }),
     overrideExisting: false,

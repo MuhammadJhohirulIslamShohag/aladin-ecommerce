@@ -1,15 +1,15 @@
 // import toast from "react-hot-toast";
 import { UploadFile } from "antd";
-import CreateProductForm from "../../components/Organisms/Form/CreateProduct/CreateProductForm";
-import { ICreateProductForm } from "../../components/Organisms/Form/CreateProduct/CreateProductForm.types";
-import { useGetBrandsQuery } from "../../redux/services/brand/brandApi";
-import { useGetCategoriesQuery } from "../../redux/services/category/categoryApi";
-import { useGetColorsQuery } from "../../redux/services/color/colorApi";
-import { useGetSizesQuery } from "../../redux/services/size/sizeApi";
-import { UseFormReset } from "react-hook-form";
 import React from "react";
-import { useCreateProductMutation } from "../../redux/services/product/productApi";
-import { useGetSubCategoriesQuery } from "../../redux/services/subCategory/subCategoryApi";
+import { UseFormReset } from "react-hook-form";
+import CreateProductForm from "../../../components/Organisms/Form/CreateProduct/CreateProductForm";
+import { ICreateProductForm } from "../../../components/Organisms/Form/CreateProduct/CreateProductForm.types";
+import { useGetBrandsQuery } from "../../../redux/services/brand/brandApi";
+import { useGetCategoriesQuery } from "../../../redux/services/category/categoryApi";
+import { useGetColorsQuery } from "../../../redux/services/color/colorApi";
+import { useCreateProductMutation } from "../../../redux/services/product/productApi";
+import { useGetSizesQuery } from "../../../redux/services/size/sizeApi";
+import { useGetSubCategoriesQuery } from "../../../redux/services/subCategory/subCategoryApi";
 
 const AddProductPage = () => {
     const { data: categoryData } = useGetCategoriesQuery({});

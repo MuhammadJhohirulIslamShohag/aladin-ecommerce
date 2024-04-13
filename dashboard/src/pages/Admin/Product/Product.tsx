@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { FaTrash, FaEdit } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
-import Table from "../../components/Molecules/Table/Table";
-import Button from "../../components/Atoms/Button/Button";
-import TableFilter from "../../components/Organisms/Table/TableFilter/TableFilter";
-import useDebounce from "../../hooks/useDebounce";
+import Button from "../../../components/Atoms/Button/Button";
+import Table from "../../../components/Molecules/Table/Table";
+import TableFilter from "../../../components/Organisms/Table/TableFilter/TableFilter";
+import useDebounce from "../../../hooks/useDebounce";
 
 import {
     useGetProductsQuery,
     useRemovedProductMutation,
-} from "../../redux/services/product/productApi";
+} from "../../../redux/services/product/productApi";
 
 const ProductPage = () => {
     // state
@@ -25,7 +25,6 @@ const ProductPage = () => {
         limit: JSON.stringify(limit),
         searchTerm: debouncedValue,
     });
-
 
     // redux api call
     const { data, isError, isLoading } = useGetProductsQuery(

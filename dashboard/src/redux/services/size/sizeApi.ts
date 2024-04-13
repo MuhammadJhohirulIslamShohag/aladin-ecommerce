@@ -1,5 +1,4 @@
 import { baseApi } from "../../api/baseApi";
-import { ISize } from "../../../types/size.types";
 
 const sizeApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
@@ -8,26 +7,30 @@ const sizeApi = baseApi.injectEndpoints({
                 url: `sizes?${queryParams}`,
                 method: "GET",
             }),
+            providesTags: ["Size"],
         }),
         createSize: build.mutation({
-            query: (payload: ISize) => ({
+            query: (payload) => ({
                 url: "sizes",
                 method: "POST",
                 body: payload,
             }),
+            invalidatesTags: ["Size"],
         }),
         updateSize: build.mutation({
-            query: (payload: ISize) => ({
-                url: "sizes",
+            query: ({ payload, id }) => ({
+                url: `sizes/${id}`,
                 method: "PATCH",
                 body: payload,
             }),
+            invalidatesTags: ["Size"],
         }),
         removedSize: build.mutation({
             query: (payload: string) => ({
                 url: `sizes/${payload}`,
                 method: "DELETE",
             }),
+            invalidatesTags: ["Size"],
         }),
     }),
     overrideExisting: false,

@@ -1,5 +1,4 @@
 import { baseApi } from "../../api/baseApi";
-import { IBrand } from "../../../types/brand.types";
 
 const brandApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
@@ -8,26 +7,30 @@ const brandApi = baseApi.injectEndpoints({
                 url: `brands?${queryParams}`,
                 method: "GET",
             }),
+            providesTags: ["Brand"],
         }),
         createBrand: build.mutation({
-            query: (payload: IBrand) => ({
+            query: (payload) => ({
                 url: "brands",
                 method: "POST",
                 body: payload,
             }),
+            invalidatesTags: ["Brand"],
         }),
         updateBrand: build.mutation({
-            query: (payload: IBrand) => ({
-                url: "brands",
+            query: ({ payload, id }) => ({
+                url: `brands/${id}`,
                 method: "PATCH",
                 body: payload,
             }),
+            invalidatesTags: ["Brand"],
         }),
         removedBrand: build.mutation({
             query: (payload: string) => ({
                 url: `brands/${payload}`,
                 method: "DELETE",
             }),
+            invalidatesTags: ["Brand"],
         }),
     }),
     overrideExisting: false,
