@@ -25,6 +25,26 @@ const arrayDataToOptions = <T extends Record<string, any>>(
     }
 };
 
+const arrayDataToModifyArray = <T extends Record<string, any>>(
+    payload: T[],
+    value: {
+        id: string;
+        name: string;
+    }
+) => {
+    let result: string[] = [];
+
+    if (Array.isArray(payload)) {
+        result = payload?.map((item) =>
+            JSON.stringify({
+                [value.id]: item[value.id],
+                [value.name]: item[value.name],
+            })
+        );
+    }
+    return result;
+};
+
 const imageStringArrayToObjectModify = (data: string[]): TImage[] => {
     const modifyData = data?.map((imgUrl, index) => ({
         uid: `-${index}`,
@@ -48,4 +68,5 @@ export const ArrayDataModifyHelpers = {
     arrayDataToOptions,
     imageStringArrayToObjectModify,
     imageObjectArrayToStringModify,
+    arrayDataToModifyArray,
 };

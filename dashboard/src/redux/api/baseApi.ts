@@ -13,5 +13,6 @@ export const baseApi = createApi({
         "Color",
         "SubCategory",
         "Product",
+        "Coupon"
     ],
 });

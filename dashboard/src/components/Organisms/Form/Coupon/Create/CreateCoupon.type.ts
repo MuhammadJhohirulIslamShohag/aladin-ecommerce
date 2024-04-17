@@ -1,14 +1,11 @@
+// Discount Type Enum
 type DiscountType = "Fixed" | "Percentage";
 
-export interface ICoupon {
-    _id: string;
+export type TCreateCouponForm = {
     code: string;
     uses: number;
     discountAmount: number;
     isActive: boolean;
     discountType: DiscountType;
     expiresAt: Date;
-    createdAt: Date;
-    updatedAt: Date;
-    __v: number;
-}
+};

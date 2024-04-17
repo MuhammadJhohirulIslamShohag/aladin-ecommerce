@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import AntdCheckBox from "../../Atoms/Form/AntdCheckBox";
+import Empty from "../../Atoms/EmptyData/Empty";
 
 interface Column {
     name: string;
@@ -169,11 +170,11 @@ const Table: React.FC<TableProps> = ({
 
         content = (
             <tr className={`text-gray-600 text-center`}>
-                <td className="py-36 text-xl" colSpan={numberOfColumns}>
-                    {" "}
-                    No Data Found!
+                <td className="py-24 text-xl" colSpan={numberOfColumns}>
+                    <Empty/>
                 </td>
             </tr>
+           
         );
     }
 

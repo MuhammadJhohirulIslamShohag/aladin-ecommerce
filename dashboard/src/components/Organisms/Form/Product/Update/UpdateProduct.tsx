@@ -10,6 +10,7 @@ import FormRichTextGroup from "../../../../Molecules/Form/FormRichTextGroup";
 import FormSelectGroup from "../../../../Molecules/Form/FormSelectGroup";
 import AntdModal from "../../../../Atoms/Modal/AntdModal";
 import FormTextAreaGroup from "../../../../Molecules/Form/FormTextAreaGroup";
+import FormSkeleton from "../../../Skeleton/Form/Form";
 import AntdUploadImage from "../../../../Molecules/Upload/Images/MultiImageUpload/AntdUploadImage";
 
 import { ArrayDataModifyHelpers } from "../../../../../utils/arrayDataModify";
@@ -24,7 +25,6 @@ import { useGetSubCategoriesQuery } from "../../../../../redux/services/subCateg
 import { useGetBrandsQuery } from "../../../../../redux/services/brand/brandApi";
 import { useGetColorsQuery } from "../../../../../redux/services/color/colorApi";
 import { useGetSizesQuery } from "../../../../../redux/services/size/sizeApi";
-import FormSkeleton from "../../../Skeleton/Form/Form";
 
 type UpdateProductFormType = {
     isModalOpen: boolean;
@@ -61,6 +61,7 @@ const UpdateProduct = ({
         handleSubmit,
         register,
         control,
+        getValues,
         formState: { errors },
         reset,
     } = useForm<IUpdateProductForm>({
@@ -82,19 +83,64 @@ const UpdateProduct = ({
         // Create a new FormData object
         const formData = new FormData();
 
+        const selectData = {
+            category: data.category
+                ? JSON.stringify(data.category)
+                : JSON.stringify(updateData.category),
+            brand: data.brand
+                ? JSON.stringify(data.brand)
+                : JSON.stringify(updateData.brand),
+            subCategories: data.subCategories
+                ? JSON.stringify(data.subCategories)
+                : JSON.stringify(
+                      ArrayDataModifyHelpers.arrayDataToModifyArray(
+                          updateData.subCategories,
+                          {
+                              id: "subCategoryId",
+                              name: "name",
+                          }
+                      )
+                  ),
+            sizes: data.sizes
+                ? JSON.stringify(data.sizes)
+                : JSON.stringify(
+                      ArrayDataModifyHelpers.arrayDataToModifyArray(
+                          updateData.sizes,
+                          {
+                              id: "sizeId",
+                              name: "name",
+                          }
+                      )
+                  ),
+            colors: data.colors
+                ? JSON.stringify(data.colors)
+                : JSON.stringify(
+                      ArrayDataModifyHelpers.arrayDataToModifyArray(
+                          updateData.colors,
+                          {
+                              id: "colorId",
+                              name: "name",
+                          }
+                      )
+                  ),
+            isFeatured: data.isFeatured
+                ? JSON.stringify(data.isFeatured)
+                : JSON.stringify(updateData.isFeatured),
+        };
+
         // Append form fields to the FormData object
         formData.append("name", data.name);
         formData.append("metaTitle", data.metaTitle);
         formData.append("description", data.description);
-        formData.append("category", data.category);
-        formData.append("brand", data.brand);
+        formData.append("category", selectData.category);
+        formData.append("brand", selectData.brand);
         formData.append("price", JSON.stringify(data.price));
         formData.append("discount", JSON.stringify(data.discount));
         formData.append("quantity", JSON.stringify(data.quantity));
-        formData.append("isFeatured", JSON.stringify(data.isFeatured));
-        formData.append("subCategories", JSON.stringify(data.subCategories));
-        formData.append("sizes", JSON.stringify(data.sizes));
-        formData.append("colors", JSON.stringify(data.colors));
+        formData.append("isFeatured", selectData.isFeatured);
+        formData.append("subCategories", selectData.subCategories);
+        formData.append("sizes", selectData.sizes);
+        formData.append("colors", selectData.colors);
 
         const imageURLs =
             ArrayDataModifyHelpers.imageObjectArrayToStringModify(imageFiles);
@@ -116,9 +162,14 @@ const UpdateProduct = ({
         // check if the request was successful
         if ("data" in result && result.data && result.data?.success) {
             reset();
+            toast.success(result.data.message);
             setImageFiles([]);
             setErrorMessage("");
-            toast.success(result.data.message);
+            setIsModalOpen((prev) => ({
+                ...prev,
+                data: "",
+                open: false,
+            }));
         } else {
             if ("error" in result && result.error) {
                 const customError = result.error as CustomFetchBaseQueryError;
@@ -126,6 +177,11 @@ const UpdateProduct = ({
                     customError.data?.message || "Failed to create Brand";
                 setErrorMessage(errorMessage);
             }
+            setIsModalOpen((prev) => ({
+                ...prev,
+                data: "",
+                open: false,
+            }));
         }
     };
 
@@ -280,7 +336,11 @@ const UpdateProduct = ({
                                 selectName={"category"}
                                 control={control}
                                 errors={errors.category}
-                                errorMessage={"Product Category Is Required!"}
+                                errorMessage={
+                                    getValues("category") === undefined
+                                        ? ""
+                                        : "Product Category Is Required!"
+                                }
                             />
                         </div>
                         <div>
@@ -316,7 +376,9 @@ const UpdateProduct = ({
                                 mode={"multiple"}
                                 errors={errors.subCategories}
                                 errorMessage={
-                                    "Product Sub Category Is Required!"
+                                    getValues("subCategories") === undefined
+                                        ? ""
+                                        : "Product Sub Category Is Required!"
                                 }
                             />
                         </div>
@@ -355,7 +417,11 @@ const UpdateProduct = ({
                                 selectName={"brand"}
                                 control={control}
                                 errors={errors.brand}
-                                errorMessage={"Product Brand Is Required!"}
+                                errorMessage={
+                                    getValues("brand") === undefined
+                                        ? ""
+                                        : "Product Brand Is Required!"
+                                }
                             />
                         </div>
                         <div>
@@ -390,7 +456,11 @@ const UpdateProduct = ({
                                 control={control}
                                 errors={errors.colors}
                                 mode={"multiple"}
-                                errorMessage={"Product Color Is Required!"}
+                                errorMessage={
+                                    getValues("colors") === undefined
+                                        ? ""
+                                        : "Product Color Is Required!"
+                                }
                             />
                         </div>
                         <div>
@@ -425,7 +495,11 @@ const UpdateProduct = ({
                                 control={control}
                                 errors={errors.sizes}
                                 mode={"multiple"}
-                                errorMessage={"Product Size Is Required!"}
+                                errorMessage={
+                                    getValues("sizes") === undefined
+                                        ? ""
+                                        : "Product Size Is Required!"
+                                }
                             />
                         </div>
                         <div>
@@ -450,7 +524,11 @@ const UpdateProduct = ({
                                 selectName={"isFeatured"}
                                 control={control}
                                 errors={errors.isFeatured}
-                                errorMessage={"Is Featured Is Required!"}
+                                errorMessage={
+                                    getValues("isFeatured") === undefined
+                                        ? ""
+                                        : "Is Featured Is Required!"
+                                }
                             />
                         </div>
                     </div>

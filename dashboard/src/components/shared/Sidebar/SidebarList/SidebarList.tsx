@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AiFillDashboard, AiFillSetting } from "react-icons/ai";
 import { BsCartCheck } from "react-icons/bs";
-import { FaShoppingBag, FaUsers } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
 import { MdLogout, MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { RiCoupon4Line } from "react-icons/ri";
 
@@ -25,11 +25,7 @@ const SidebarList = () => {
                 <BsCartCheck className="h-[19px] w-[19px] text-green-400" />
                 <span className="flex-1 ml-3 whitespace-nowrap">Orders</span>
             </SideBarListItem>
-            <SideBarListItem navigationLink="/admin/customers">
-                <FaShoppingBag className="h-[19px] w-[19px] text-green-400" />
-                <span className="flex-1 ml-3 whitespace-nowrap">Customers</span>
-            </SideBarListItem>
-            <SideBarListItem navigationLink="/admin/coupons">
+            <SideBarListItem navigationLink="/coupons">
                 <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
                 <span className="flex-1 ml-3 whitespace-nowrap">Coupons</span>
             </SideBarListItem>

@@ -10,6 +10,21 @@
     }
 }
 
+/* Start Date Input */
+input[type="datetime-local"]::-webkit-datetime-edit-day-field:focus,
+input[type="datetime-local"]::-webkit-datetime-edit-month-field:focus,
+input[type="datetime-local"]::-webkit-datetime-edit-hour-field:focus,
+input[type="datetime-local"]::-webkit-datetime-edit-minute-field:focus,
+input[type="datetime-local"]::-webkit-datetime-edit-ampm-field:focus,
+input[type="datetime-local"]::-webkit-datetime-edit-year-field:focus {
+    background-color: #10b981;
+    color: white;
+    outline: none;
+}
+
+
+/* End Date Input */
+
 .hidden-checkbox{
     display: none !important;
 }
