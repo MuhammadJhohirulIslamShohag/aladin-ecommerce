@@ -60,7 +60,7 @@ const Home = async () => {
             </Suspense>
 
             <Advertise />
-            <NewsLetter />
+            {/* <NewsLetter /> */}
         </>
     );
 };

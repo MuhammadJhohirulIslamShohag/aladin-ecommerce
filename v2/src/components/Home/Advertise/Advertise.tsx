@@ -9,7 +9,7 @@ const Advertise = () => {
                 data-aos-delay="1"
                 data-aos-duration="1000"
                 data-aos-easing="ease-in-out"
-                className="grid md:grid-cols-2 grid-cols-1 bg-fixed pt-28 pb-32 sm:pt-2 sm:pb-10 md:pb-14 md:pt-2"
+                className="grid md:grid-cols-2 grid-cols-1 bg-fixed pt-28 pb-32 sm:pt-2 sm:pb-10 md:pb-14 md:pt-2 "
             >
                 <div className="z-20 relative">
                     <img
