@@ -2,10 +2,11 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
+import { IProduct } from "@/types/product.type";
 
 interface FollowUsSocialCardProps {
-    handleImageClick: (social: string, idx: number) => void;
-    social: string;
+    handleImageClick: (social: IProduct, idx: number) => void;
+    social: IProduct;
     name: string;
     idx: number;
 }

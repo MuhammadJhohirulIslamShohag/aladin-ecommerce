@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -6,9 +8,16 @@ import FollowUsSocialCard from "../../Molecules/Social/FollowUsSocialCard";
 import SectionTitle from "../../Molecules/SectionTitle";
 import ProductImageModal from "../../Molecules/Modal/ProductImageModal";
 
-const FollowUsSocial = ({ products }) => {
+import { IProduct } from "@/types/product.type";
+
+const FollowUsSocial: React.FC<{ products: IProduct[] }> = ({ products }) => {
     // state handling
-    const [imageState, setImageState] = useState({
+    const [imageState, setImageState] = useState<{
+        selectedImage: string[] | null;
+        currentIndex: number;
+        link: string;
+        imageName: string;
+    }>({
         selectedImage: null,
         currentIndex: 0,
         link: "",
@@ -16,13 +25,13 @@ const FollowUsSocial = ({ products }) => {
     });
 
     // handle image click
-    const handleImageClick = (social, index) => {
+    const handleImageClick = (social: IProduct, index: number) => {
         setImageState((prev) => ({
             ...prev,
             selectedImage: social?.imageURLs,
             currentIndex: index,
-            link: social?.link || "/social",
-            imageName: social?.title || "social-media-picture",
+            link: `/${social?.slug}`,
+            imageName: social?.name || "social-media-picture",
         }));
     };
 
@@ -51,14 +60,14 @@ const FollowUsSocial = ({ products }) => {
                         disableOnInteraction: false,
                     }}
                     modules={[Autoplay]}
-                    className="mySwiper "
+                    className="mySwiper"
                 >
                     {products?.map((product, index) => (
                         <SwiperSlide key={index}>
                             <FollowUsSocialCard
                                 handleImageClick={handleImageClick}
                                 social={product}
-                                name={product?.title}
+                                name={product?.name}
                                 idx={index}
                             />
                         </SwiperSlide>

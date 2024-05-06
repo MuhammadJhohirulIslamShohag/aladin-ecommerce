@@ -9,7 +9,7 @@ import { IProduct } from "@/types/product.type";
 
 interface ComparisonProductProps {
     products: IProduct[];
-    setSearchValue: React.Dispatch<SetStateAction<string>>;
+    setSearchValue: React.Dispatch<React.SetStateAction<string>>
 }
 
 interface comparisonStateValue {

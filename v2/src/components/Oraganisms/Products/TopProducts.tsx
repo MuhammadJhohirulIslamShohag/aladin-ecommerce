@@ -1,3 +1,4 @@
+"use client";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -11,8 +12,13 @@ import { Grid, Navigation, Autoplay } from "swiper/modules";
 import FlatProductCard from "../../Molecules/Products/FlatProductCard";
 import ProductCard from "../../Molecules/Products/ProductCard";
 import SectionTitle from "../../Molecules/SectionTitle";
+import { IProduct } from "@/types/product.type";
 
-const TopProducts = ({ products = [] }) => {
+interface TopProductsProps {
+    products: IProduct[];
+}
+
+const TopProducts: React.FC<TopProductsProps> = ({ products }) => {
     return (
         <div>
             <SectionTitle title={"Top Products"} />
@@ -70,7 +76,7 @@ const TopProducts = ({ products = [] }) => {
                 </div>
                 <div className="xl:col-span-3 lg:col-span-5  text-white lg:flex hidden justify-center items-center  rounded-md py-3 lg:h-full xl:h-[380px]">
                     {products?.slice(0, 1)?.map((product) => (
-                        <ProductCard key={product.id} product={product} />
+                        <ProductCard key={product._id} product={product} />
                     ))}
                 </div>
             </div>
