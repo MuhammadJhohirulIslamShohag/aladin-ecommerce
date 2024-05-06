@@ -1,4 +1,5 @@
 import { getCarts } from "@/store/cart/cart";
+import { getCompareProducts } from "@/store/compare/compare.product";
 import {
     StoreDataType,
     StoreAction,
@@ -6,20 +7,39 @@ import {
 } from "./storeReducer.type";
 
 export const initialState: StoreDataType = {
-    carts: [],
     text: "",
     isCashOnDelivery: false,
-    shippingAddress: {},
     isCouped: false,
+    shippingAddress: {},
+    carts: [],
+    wishLists: [],
+    compareProducts: [],
 };
 
 //  to add data from window local storage to the initial state
 if (typeof window !== "undefined") {
+    // for carts
     const carts = getCarts();
     if (carts?.length) {
         initialState.carts = carts;
     } else {
         initialState.carts = [];
+    }
+
+    // for compare products
+    const compareProducts = getCompareProducts();
+    if (compareProducts?.length) {
+        initialState.compareProducts = compareProducts;
+    } else {
+        initialState.compareProducts = [];
+    }
+
+    // for wish list products
+    const wishListProducts = getCompareProducts();
+    if (wishListProducts?.length) {
+        initialState.wishLists = wishListProducts;
+    } else {
+        initialState.wishLists = [];
     }
 }
 
@@ -50,6 +70,72 @@ export const storeReducer = (
             };
         case StoreActionType.SEARCH_FILTER_VALUE:
             return { ...state, text: action.payload };
+
+        // Compare products
+        case StoreActionType.ADD_TO_COMPARE:
+            const isCompareProductExist = state.compareProducts.find(
+                (product) => product._id === action.payload._id
+            );
+
+            if (!isCompareProductExist) {
+                const updatedCompareProducts = [
+                    ...state.compareProducts,
+                    action.payload,
+                ];
+                if (updatedCompareProducts.length > 4) {
+                    updatedCompareProducts.shift();
+                }
+                return {
+                    ...state,
+                    compareProducts: updatedCompareProducts,
+                };
+            }
+            return state;
+        case StoreActionType.REMOVE_TO_COMPARE:
+            return {
+                ...state,
+                compareProducts: state.compareProducts.filter(
+                    (product) => product._id !== action.payload
+                ),
+            };
+        case StoreActionType.REMOVE_ALL_COMPARE:
+            return {
+                ...state,
+                compareProducts: [],
+            };
+
+        // wish list products
+        case StoreActionType.ADD_TO_WISH:
+            const isWishListProductExist = state.wishLists.find(
+                (product) => product._id === action.payload._id
+            );
+
+            if (!isWishListProductExist) {
+                const updatedWishListProducts = [
+                    ...state.compareProducts,
+                    action.payload,
+                ];
+                if (updatedWishListProducts.length > 4) {
+                    updatedWishListProducts.shift();
+                }
+                return {
+                    ...state,
+                    compareProducts: updatedWishListProducts,
+                };
+            }
+            return state;
+        case StoreActionType.REMOVE_TO_WISH:
+            return {
+                ...state,
+                wishLists: state.wishLists.filter(
+                    (product) => product._id !== action.payload
+                ),
+            };
+        case StoreActionType.REMOVE_ALL_WISH:
+            return {
+                ...state,
+                wishLists: [],
+            };
         default:
             return state;
     }
