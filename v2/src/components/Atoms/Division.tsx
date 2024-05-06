@@ -1,9 +1,9 @@
+import React from "react";
 import cn from "@/lib/cn";
 
-interface DivisionProps {
+interface DivisionProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
     className?: string;
-    rest?: { [key: string]: unknown };
 }
 
 const Division: React.FC<DivisionProps> = ({

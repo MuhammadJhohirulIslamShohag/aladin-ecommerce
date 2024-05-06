@@ -1,27 +1,36 @@
+"use client";
+
 import React, { useState } from "react";
-import toast from "react-hot-toast";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { FaWindowClose } from "react-icons/fa";
 import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 
 import CustomModal from "../../Atoms/Modal/CustomModal";
-import ProductImages from "../../Molecules/Products/ProductImages";
-import ConfirmCartModal from "../../Molecules/Modal/ConfirmCartModal";
+import ProductImages from "./ProductImages";
+import ConfirmCartModal from "../Modal/ConfirmCartModal";
 
-import { addToCart } from "../../../store/features/Cart/cartSlice";
+import { IProduct } from "@/types/product.type";
 
-const ProductView = ({ product, setProductView }) => {
+interface ProductViewProps {
+    product: IProduct;
+    setProductView: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ProductView: React.FC<ProductViewProps> = ({
+    product,
+    setProductView,
+}) => {
     /* state */
     const [openModal, setOpenModal] = useState(false);
     const [quantity, setQuantity] = useState(1);
     const {
-        status,
         brand,
         name,
         imageURLs,
-        keyFeatures,
         _id,
+        keyFeatures,
         quantity: productQuantity,
         price,
         discount,
@@ -44,8 +53,8 @@ const ProductView = ({ product, setProductView }) => {
             _id,
             productQuantity,
         };
-        dispatch(addToCart({ ...addedProduct, quantity })),
-            setOpenModal((prevState) => !prevState);
+        // dispatch(addToCart({ ...addedProduct, quantity })),
+        setOpenModal((prevState) => !prevState);
     };
 
     /* Handle product quantity increment here */
@@ -269,7 +278,7 @@ const ProductView = ({ product, setProductView }) => {
 
             {/* Add to Cart modal  */}
             {openModal && (
-                <CustomModal isOpen={openModal}>
+                <CustomModal onClose={() => setOpenModal((prev) => !prev)}>
                     <ConfirmCartModal
                         handleCart={() => setOpenModal((prev) => !prev)}
                         productName={product.name}

@@ -4,7 +4,7 @@ import { FaCheck, FaWindowClose } from "react-icons/fa";
 
 interface SaveProductModalProps {
     product: IProduct;
-    onCloseSaveProductModal: React.Dispatch<SetStateAction<string>>;
+    onCloseSaveProductModal: React.Dispatch<React.SetStateAction<boolean>>
     isProductExist: boolean;
 }
 

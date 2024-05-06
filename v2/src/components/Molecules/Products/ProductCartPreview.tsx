@@ -1,23 +1,32 @@
+"use client";
+
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { FaWindowClose } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 
 import Button from "../../Atoms/Button/Button";
 import CustomModal from "../../Atoms/Modal/CustomModal";
 import ConfirmCartModal from "../Modal/ConfirmCartModal";
 import ProductImages from "./ProductImages";
 
-import { addToCart } from "../../../store/features/Cart/cartSlice";
+import { IProduct } from "@/types/product.type";
 
-const ProductCartPreview = ({ product, handleClose }) => {
+interface ProductCartViewProps {
+    product: IProduct;
+    handleClose: () => void;
+}
+
+const ProductCartPreview: React.FC<ProductCartViewProps> = ({
+    product,
+    handleClose,
+}) => {
     /* state */
     const [openModal, setOpenModal] = useState(false);
     const [quantity, setQuantity] = useState(1);
     const {
-        status,
         brand,
         name,
         imageURLs,
@@ -31,7 +40,7 @@ const ProductCartPreview = ({ product, handleClose }) => {
     const discountPrice = Math.ceil(price * (discount / 100));
     const netPrice = Math.ceil(price - discountPrice) * quantity;
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     /* Handle add to cart */
     const handleAddToCart = () => {
@@ -44,7 +53,7 @@ const ProductCartPreview = ({ product, handleClose }) => {
             _id,
             productQuantity,
         };
-        dispatch(addToCart({ ...addedProduct, quantity })),
+        // dispatch(addToCart({ ...addedProduct, quantity })),
         setOpenModal((prevState) => !prevState);
     };
 
@@ -258,7 +267,7 @@ const ProductCartPreview = ({ product, handleClose }) => {
 
             {/* Add to Cart modal  */}
             {openModal && (
-                <CustomModal isOpen={openModal}>
+                <CustomModal onClose={() => setOpenModal((prev) => !prev)}>
                     <ConfirmCartModal
                         handleCart={() => setOpenModal((prev) => !prev)}
                         productName={product.name}

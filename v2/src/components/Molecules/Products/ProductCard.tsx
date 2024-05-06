@@ -1,81 +1,77 @@
+"use client";
+
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import Link from "next/link";
 import { MdCompareArrows } from "react-icons/md";
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { IoIosEye } from "react-icons/io";
-import { Link } from "react-router-dom";
+// import toast from "react-hot-toast";
 
 import CustomModal from "../../Atoms/Modal/CustomModal";
-import SaveProductModal from "../../Molecules/Modal/SaveProductModal";
-import CompareProductInfo from "../../Molecules/Products/CompareProductInfo";
+import SaveProductModal from "../Modal/SaveProductModal";
+import CompareProductInfo from "./CompareProductInfo";
 import ProductCartPreview from "./ProductCartPreview";
 import ProductView from "./ProductView";
 
-import numberWithCommas from "../../../utils/numberWithCommas";
+import numberWithCommas from "@/utils/numberWithCommas";
 import ValidateImage from "../../Atoms/ValidateImage";
-import useAuthData from "../../../hooks/useAuthData";
 import TooltipButton from "../Button/TooltipButton/TooltipButton";
 
-import { useAddWishlistMutation } from "../../../store/service/wishlist/wishlistApiService";
-import { useGetSingleUserQuery } from "../../../store/service/user/userApiService";
+import { IProduct } from "@/types/product.type";
+import { removeSpace } from "@/utils/removeSpace";
+// import useAuthData from "../../../hooks/useAuthData";
 
-const ProductCard = ({ product = {} }) => {
-    const [addWishList] = useAddWishlistMutation();
-    const dispatch = useDispatch();
+const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
+    // const [addWishList] = useAddWishlistMutation();
+    // const dispatch = useDispatch();
     const { name, price, discount, slug, imageURLs, quantity } = product;
 
     const discountPrice = Math.ceil(price * (discount / 100));
     const netPrice = Math.ceil(price - discountPrice);
 
-    const { user } = useAuthData();
-    const { data, refetch } = useGetSingleUserQuery({
-        id: user?._id,
-    });
+    // const { user } = useAuthData();
+    // const { data, refetch } = useGetSingleUserQuery({
+    //     id: user?._id,
+    // });
 
-    const userWishLists = data?.data?.wishList || [];
-    const wishListProduct = userWishLists.find(
-        (wishList) => wishList?.productId?._id === product?._id
-    );
+    // const userWishLists = data?.data?.wishList || [];
+    // const wishListProduct = userWishLists.find(
+    //     (wishList) => wishList?.productId?._id === product?._id
+    // );
 
     const [modalOpen, setModalOpen] = useState(false);
     const [productView, setProductView] = useState(false);
     const [saveProductModalOpen, setSaveProductModalOpen] = useState(false);
     const [compareModalOpen, setCompareModalOpen] = useState(false);
 
-    const manageWishListProduct = async (id) => {
-        await addWishList(id).then((res) => {
-            if (res?.data?.success) {
-                toast.success(res?.data?.message, {
-                    duration: 5000,
-                });
-                refetch();
-            } else {
-                toast.error(res?.error?.data?.errorMessages?.[0]?.message, {
-                    duration: 5000,
-                });
-            }
-        });
+    const manageWishListProduct = async (id: string) => {
+        // await addWishList(id).then((res) => {
+        //   if (res?.data?.success) {
+        //     toast.success(res?.data?.message, {
+        //       duration: 5000,
+        //     });
+        //     refetch();
+        //   } else {
+        //     toast.error(res?.error?.data?.errorMessages?.[0]?.message, {
+        //       duration: 5000,
+        //     });
+        //   }
+        // });
     };
 
     const handleAddCart = () => {
         setModalOpen((prevState) => !prevState);
     };
 
-    const makeProductTitle = (name) => {
-        const removeSpace = name?.replace(/\s/g, "_");
-        return removeSpace;
-    };
-
-    const title = makeProductTitle(name);
     return (
         <>
-            <div className="bg-white rounded-md py-2  shadow-md cursor-pointer hover:shadow-lg transition duration-300 group relative  z-20 overflow-hidden">
+            <div className="bg-white rounded-md py-2 shadow-md cursor-pointer hover:shadow-lg transition duration-300 group relative z-20 overflow-hidden">
                 {/* product image */}
                 <div className="py-4 relative">
                     <Link
                         className="w-full inline-block"
-                        to={`/product/${title}`}
+                        href={`/product/${removeSpace(name)}`}
                     >
                         <ValidateImage
                             imageUrl={imageURLs?.[0]}
@@ -84,7 +80,7 @@ const ProductCard = ({ product = {} }) => {
                         />
                     </Link>
 
-                    <div className="absolute bottom-0 w-full  opacity-0 group-hover:opacity-100 transition-opacity duration-300  bg-black/10 z-10">
+                    <div className="absolute bottom-0 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/10 z-10">
                         <div className="flex gap-2 py-1 px-0 transition-all group-hover:px-6 justify-between items-center duration-300">
                             <TooltipButton
                                 id="product-view"
@@ -115,11 +111,11 @@ const ProductCard = ({ product = {} }) => {
                             <TooltipButton
                                 id="add-to-wishlist"
                                 content="Add to wishlist"
-                                className={`${
-                                    wishListProduct
-                                        ? ""
-                                        : "text-white bg-green-400"
-                                }`}
+                                // className={`${
+                                //     wishListProduct
+                                //         ? ""
+                                //         : "text-white bg-green-400"
+                                // }`}
                             >
                                 <button
                                     onClick={() =>
@@ -137,7 +133,7 @@ const ProductCard = ({ product = {} }) => {
                                 <button
                                     onClick={() => {
                                         setCompareModalOpen((prev) => !prev);
-                                        dispatch(addToCompare({ ...product }));
+                                        // dispatch(addToCompare({ ...product }));
                                     }}
                                 >
                                     <MdCompareArrows className="text-2xl" />
@@ -150,23 +146,20 @@ const ProductCard = ({ product = {} }) => {
                 <div className="pt-3 px-4 pb-3">
                     <div className="h-[80px]">
                         <Link
-                            to={`/product/${slug}`}
+                            href={`/product/${slug}`}
                             className="text-xs lg:text-[15px] text-primaryBlack font-bold hover:text-primary hover:underline"
                             title={name}
                         >
                             {name?.length > 35
                                 ? name.slice(0, 35) + "..."
                                 : name}
-                            {/* {name} */}
                         </Link>
                         <>
-                            {data?.discount ? (
+                            {discount ? (
                                 <div className="flex items-center gap-3">
-                                    {/* net price */}
                                     <p className="text-lg text-primary font-bold">
                                         {numberWithCommas(netPrice)}৳
                                     </p>
-                                    {/* price */}
                                     <del className="text-sm text-textGray">
                                         {numberWithCommas(price)}৳
                                     </del>
@@ -182,18 +175,16 @@ const ProductCard = ({ product = {} }) => {
 
                 {discount > 0 && (
                     <p className="bg-primary w-fit px-2 py-0.5 text-white font-semibold text-xs rounded-r-md absolute top-3 left-0">
-                        {
-                            <span>
-                                {numberWithCommas(discountPrice)}৳ Discount on
-                                Online Order
-                            </span>
-                        }
+                        <span>
+                            {numberWithCommas(discountPrice)}৳ Discount on
+                            Online Order
+                        </span>
                     </p>
                 )}
             </div>
 
             {productView && (
-                <CustomModal isOpen={productView}>
+                <CustomModal onClose={() => setProductView((prev) => !prev)}>
                     <ProductView
                         product={product}
                         setProductView={setProductView}
@@ -201,21 +192,19 @@ const ProductCard = ({ product = {} }) => {
                 </CustomModal>
             )}
             {saveProductModalOpen && (
-                <CustomModal isOpen={setSaveProductModalOpen}>
+                <CustomModal
+                    onClose={() => setSaveProductModalOpen((prev) => !prev)}
+                >
                     <SaveProductModal
                         onCloseSaveProductModal={setSaveProductModalOpen}
-                        savedProductInfo={{
-                            data: {
-                                name: product?.name,
-                                id: product?._id,
-                            },
-                        }}
-                        isProductExist={wishListProduct}
+                        product={product}
+                        // isProductExist={wishListProduct}
+                        isProductExist={false}
                     />
                 </CustomModal>
             )}
             {modalOpen && (
-                <CustomModal isOpen={modalOpen}>
+                <CustomModal onClose={() => setModalOpen((prev) => !prev)}>
                     <ProductCartPreview
                         product={product}
                         handleClose={() => setModalOpen((prev) => !prev)}
@@ -223,7 +212,9 @@ const ProductCard = ({ product = {} }) => {
                 </CustomModal>
             )}
             {compareModalOpen && (
-                <CustomModal isOpen={compareModalOpen}>
+                <CustomModal
+                    onClose={() => setCompareModalOpen((prev) => !prev)}
+                >
                     <CompareProductInfo
                         onCloseCompareModal={() =>
                             setCompareModalOpen((prev) => !prev)

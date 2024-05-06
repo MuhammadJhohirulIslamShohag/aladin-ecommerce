@@ -8,7 +8,7 @@ import { Tooltip } from "react-tooltip";
 interface TooltipButtonProps {
     children: React.ReactNode;
     className?: string;
-    tooltipPlacement?: "top" | "bottom" | "left" | "right";
+    tooltipPlacement?: "top" | "bottom" | "left" | "right" | "top-end";
     content?: string;
     id: string;
 }
