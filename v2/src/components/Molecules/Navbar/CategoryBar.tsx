@@ -1,17 +1,32 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import Link from "next/link";
+
 import { FaAngleRight } from "react-icons/fa";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 
-const CategoryBar = ({ categoriesData }) => {
+interface Category {
+    category: string;
+    menu?: Menu[];
+}
+
+interface Menu {
+    title: string;
+}
+
+interface CategoryBarProps {
+    categoriesData: Category[];
+}
+
+const CategoryBar: React.FC<CategoryBarProps> = ({ categoriesData }) => {
     const [openCategory, setOpenCategory] = useState(false);
+
     return (
         <>
             <button
                 onClick={() => setOpenCategory((prev) => !prev)}
                 type="button"
-                className="text-white bg-black font-medium rounded-t-lg text-sm  text-center items-center flex w-[270px] h-[53px] px-5 justify-between cursor-pointer"
+                className="text-white bg-black font-medium rounded-t-lg text-sm  text-center items-center flex w-[270px] h-[53px] px-5 justify-between cursor-pointer"
             >
                 <div className="flex items-center gap-2">
                     <span>
@@ -31,11 +46,15 @@ const CategoryBar = ({ categoriesData }) => {
             <div
                 className={`z-10 origin-top transition-all ${
                     openCategory ? "scale-100" : "scale-0"
-                }   top-full absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-[270px] `}
+                }   top-full absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-[270px] `}
             >
-                <ul className="py-2 text-sm text-gray-700   ">
+                <ul className="py-2 text-sm text-gray-700   ">
                     {categoriesData?.map((data, idx) => (
-                        <Link className="" key={idx} to={`/${data?.category}`}>
+                        <Link
+                            className=""
+                            key={idx}
+                            href={`/${data?.category}`}
+                        >
                             <li className="flex justify-between items-center px-4 py-2 hover:bg-green-400 transition-all duration-300 group relative">
                                 <span className="transition-all duration-300 group-hover:text-white">
                                     {data?.category}
@@ -45,8 +64,11 @@ const CategoryBar = ({ categoriesData }) => {
                                 </span>
                                 <ul className="left-full absolute hidden text-sm text-gray-700 group-hover:block bg-white w-[270px] top-0 shadow rounded-t-lg pt-2">
                                     {data?.menu?.map((data, idx) => (
-                                        <Link key={idx} to={`/${data?.title}`}>
-                                            <li class="flex justify-between items-center px-4 py-2 hover:bg-green-400 transition-all duration-300 group/subMenu">
+                                        <Link
+                                            key={idx}
+                                            href={`/${data?.title}`}
+                                        >
+                                            <li className="flex justify-between items-center px-4 py-2 hover:bg-green-400 transition-all duration-300 group/subMenu">
                                                 <span className="transition-all duration-300 group-hover/subMenu:text-white">
                                                     {data?.title}
                                                 </span>

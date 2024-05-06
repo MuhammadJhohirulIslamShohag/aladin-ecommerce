@@ -7,8 +7,8 @@ import { useDispatch } from "react-redux";
 
 import Button from "../../Atoms/Button/Button";
 import CustomModal from "../../Atoms/Modal/CustomModal";
-import ConfirmCartModal from "../../Molecules/Modal/ConfirmCartModal";
-import ProductImages from "../../Molecules/Products/ProductImages";
+import ConfirmCartModal from "../Modal/ConfirmCartModal";
+import ProductImages from "./ProductImages";
 
 import { addToCart } from "../../../store/features/Cart/cartSlice";
 

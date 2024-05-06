@@ -1,8 +1,21 @@
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import SocialMediaImage from "../../../assets/Image/social/1.jpg";
 
-const FollowUsSocialCard = ({ handleImageClick, social, name, idx }) => {
+interface FollowUsSocialCardProps {
+    handleImageClick: (social: string, idx: number) => void;
+    social: string;
+    name: string;
+    idx: number;
+}
+
+const FollowUsSocialCard: React.FC<FollowUsSocialCardProps> = ({
+    handleImageClick,
+    social,
+    name,
+    idx,
+}) => {
     return (
         <div className="relative overflow-hidden border border-white/50 group cursor-pointer">
             <div className="before:absolute before:inset-0 before:bg-green-400 before:opacity-0 before:z-50 before:transition-all before:duration-700 group-hover:before:opacity-80"></div>
@@ -12,11 +25,13 @@ const FollowUsSocialCard = ({ handleImageClick, social, name, idx }) => {
             >
                 <FaSearch className="text-white text-4xl" />
             </div>
-            <Link to="/" className="block">
-                <img
-                    src={SocialMediaImage}
+            <Link href="/" className="block">
+                <Image
+                    src={"../../../assets/Image/social/1.jpg"}
                     alt={name}
                     className="transition-transform duration-500 group-hover:scale-125"
+                    width={100}
+                    height={100}
                 />
             </Link>
         </div>
