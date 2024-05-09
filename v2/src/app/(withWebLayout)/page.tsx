@@ -1,19 +1,22 @@
-import { getListOfBlogs } from "@/api/blog";
 import { Suspense } from "react";
+
+import { getListOfBlogs } from "@/api/blog";
 import { getCategories } from "@/api/category";
 import { getProducts } from "@/api/products";
 import { getAllSubCategories } from "@/api/sub-categories";
+
 import Advertise from "@/components/Home/Advertise/Advertise";
-import BestSellers from "@/components/Home/BestSellers/BestSellers";
-import Blogs from "@/components/Home/Blogs/Blogs";
 import Categories from "@/components/Home/Categories/Categories";
-import NewsLetter from "@/components/Home/NewsLetter/NewsLetter";
-import Services from "@/components/Home/Services/Services";
 import SubCategories from "@/components/Home/SubCategories/SubCategories";
 import Loader from "@/components/Loader/Loader";
-import FlashDeals from "@/components/Home/FlashDeals/FlashDeals/FlashDeals";
-import NewArrivals from "@/components/Home/NewArrivals/NewArrivals";
 import Hero from "@/components/Oraganisms/Home/Hero";
+import FeaturedProducts from "@/components/Oraganisms/Products/FeaturedProducts";
+import NewArrivals from "@/components/Oraganisms/Products/NewArrivals";
+import Services from "@/components/Oraganisms/Services";
+import FlashDeals from "@/components/Oraganisms/Home/FlashDeals";
+import Blogs from "@/components/Oraganisms/Blogs";
+import TopProducts from "@/components/Oraganisms/Products/TopProducts";
+import TopSellsProduct from "@/components/Oraganisms/Products/TopSellsProduct";
 
 const Home = async () => {
     // Initiate both requests in parallel
@@ -49,21 +52,29 @@ const Home = async () => {
             <Suspense fallback={<Loader height={"h-[360px]"} />}>
                 <FlashDeals products={products?.data?.data} />
             </Suspense>
+            <div className="container">
+                <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                    <FeaturedProducts products={products?.data?.data} />
+                </Suspense>
 
-            <Suspense fallback={<Loader height={"h-[360px]"} />}>
-                <BestSellers products={products?.data?.data} />
-            </Suspense>
+                <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                    <TopProducts products={products?.data?.data} />
+                </Suspense>
 
-            <Suspense fallback={<Loader height={"h-[360px]"} />}>
-                <NewArrivals products={products?.data?.data} />
-            </Suspense>
+                <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                    <NewArrivals products={products?.data?.data} />
+                </Suspense>
 
-            <Suspense fallback={<Loader height={"h-[450px]"} />}>
-                <Blogs blogs={blogs?.data?.data} />
-            </Suspense>
+                <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                    <TopSellsProduct products={products?.data?.data} />
+                </Suspense>
+
+                <Suspense fallback={<Loader height={"h-[450px]"} />}>
+                    <Blogs blogs={blogs?.data?.data} />
+                </Suspense>
+            </div>
 
             <Advertise />
-            {/* <NewsLetter /> */}
         </>
     );
 };

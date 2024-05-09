@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -7,7 +7,6 @@ import { FaAngleRight } from "react-icons/fa";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import { IMenuCategory } from "@/types/menu.category.type";
-
 
 interface CategoryBarProps {
     categoriesData: IMenuCategory[];
@@ -45,12 +44,11 @@ const CategoryBar: React.FC<CategoryBarProps> = ({ categoriesData }) => {
             >
                 <ul className="py-2 text-sm text-gray-700   ">
                     {categoriesData?.map((data, idx) => (
-                        <Link
-                            className=""
+                        <li
                             key={idx}
-                            href={`/${data?.category}`}
+                            className="flex justify-between items-center px-4 py-2 hover:bg-green-400 transition-all duration-300 group relative"
                         >
-                            <li className="flex justify-between items-center px-4 py-2 hover:bg-green-400 transition-all duration-300 group relative">
+                            <Link href={`/${data?.category}`}>
                                 <span className="transition-all duration-300 group-hover:text-white">
                                     {data?.category}
                                 </span>
@@ -59,20 +57,18 @@ const CategoryBar: React.FC<CategoryBarProps> = ({ categoriesData }) => {
                                 </span>
                                 <ul className="left-full absolute hidden text-sm text-gray-700 group-hover:block bg-white w-[270px] top-0 shadow rounded-t-lg pt-2">
                                     {data?.menu?.map((data, idx) => (
-                                        <Link
-                                            key={idx}
-                                            href={`/${data?.title}`}
-                                        >
-                                            <li className="flex justify-between items-center px-4 py-2 hover:bg-green-400 transition-all duration-300 group/subMenu">
+                                        <li key={idx}>
+                                            {" "}
+                                            <Link href={`/${data?.title}`}>
                                                 <span className="transition-all duration-300 group-hover/subMenu:text-white">
                                                     {data?.title}
                                                 </span>
-                                            </li>
-                                        </Link>
+                                            </Link>
+                                        </li>
                                     ))}
                                 </ul>
-                            </li>
-                        </Link>
+                            </Link>
+                        </li>
                     ))}
                 </ul>
             </div>

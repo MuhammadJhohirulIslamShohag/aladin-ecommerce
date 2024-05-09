@@ -66,7 +66,7 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
 
     return (
         <>
-            <div className="bg-white rounded-md py-2 shadow-md cursor-pointer hover:shadow-lg transition duration-300 group relative z-20 overflow-hidden">
+            <div className="bg-white rounded-md py-2 shadow-md cursor-pointer hover:shadow-lg transition duration-300 group relative z-20 overflow-hidden w-full">
                 {/* product image */}
                 <div className="py-4 relative">
                     <Link

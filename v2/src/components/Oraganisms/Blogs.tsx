@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import Blog from "@/components/Blog/Blog";
-import SectionTitle from "@/components/SectionTitle/SectionTitle";
+import Blog from "../Molecules/Blog";
+import SectionTitle from "../Molecules/SectionTitle";
+
 import { IBlog } from "@/types/blog.types";
 
 // Import Swiper React components

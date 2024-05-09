@@ -20,9 +20,9 @@ const SectionTitle: React.FC<SectionTitleProps> = ({ title = "" }) => {
                     {title}
                 </span>
             </h2>
-            <div className="before:block before:absolute before:bg-black/80 relative inline-block before:w-16 before:h-1 before:top-1/2 before:-translate-y-1/2 before:right-[100%] after:block after:absolute after:bg-black/80  after:w-16 after:h-1 after:top-1/2 after:-translate-y-1/2 after:left-[100%] ">
+            <div className="before:block before:absolute before:bg-black/80 relative inline-block before:w-16 before:h-1 before:top-1/2 before:-translate-y-1/2 before:right-[100%] after:block after:absolute after:bg-black/80 after:w-16 after:h-1 after:top-1/2 after:-translate-y-1/2 after:left-[100%] ">
                 <Image
-                    src={"../../assets/Image/section-title.png"}
+                    src={"/section-title.png"}
                     alt=""
                     className="w-14 h-9 mx-auto"
                     width={100}

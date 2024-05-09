@@ -2,8 +2,10 @@
 import React from "react";
 import { MdFlashOn } from "react-icons/md";
 
-import FlashDeal from "./../FlashDeal/FlashDeal";
+
 import CountDown from "@/components/CountDown/CountDown";
+import FlashDeal from "@/components/Molecules/Products/FlashDeal";
+
 import { IProduct } from "@/types/product.type";
 
 // Import Swiper React components

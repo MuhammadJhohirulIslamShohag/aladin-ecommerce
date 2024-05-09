@@ -1,14 +1,24 @@
+"use client"
+
 import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { BsCalendarDate } from "react-icons/bs";
 import { BiUserPlus } from "react-icons/bi";
-import Link from "next/link";
-import { IBlog } from "types/blog.types";
+
+import { IBlog } from "@/types/blog.types";
 
 const Blog = ({ blog }: { blog: IBlog }) => {
     return (
         <div className="card min-h-[513px] sm:min-h-[465px] bg-base-100 shadow-lg mt-7 sm:mt-4 mx-2">
             <figure className="h-[250px] sm:h-[150px] md:h-[190px]">
-                <img className="h-full" src={blog.image} alt={blog.title} />
+                <Image
+                    className="h-full"
+                    src={blog.image}
+                    alt={blog.title}
+                    width={100}
+                    height={100}
+                />
             </figure>
             <div className="card-body sm:p-4 sm:pb-5 md:p-5">
                 <h2 className="card-title text-gray-800">{blog.title}</h2>

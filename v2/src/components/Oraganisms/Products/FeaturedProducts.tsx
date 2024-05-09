@@ -1,7 +1,7 @@
+import { IProduct } from "@/types/product.type";
 import React from "react";
 import ProductCard from "../../Molecules/Products/ProductCard";
 import SectionTitle from "../../Molecules/SectionTitle";
-import { IProduct } from "@/types/product.type";
 
 interface FeaturedProductsProps {
     products: IProduct[];

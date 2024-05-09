@@ -32,7 +32,7 @@ const ValidateImage: React.FC<ValidateImageProps> = ({
     };
 
     // Check if imageUrl is empty or undefined, and use notFoundImage in that case
-    const finalImageUrl = imageUrl || "/public/placeholder.jpg";
+    const finalImageUrl = imageUrl || "/placeholder.jpg";
 
     return (
         <>
@@ -46,7 +46,7 @@ const ValidateImage: React.FC<ValidateImageProps> = ({
                         ? finalImageUrl
                         : fallbackImageUrl
                         ? fallbackImageUrl
-                        : "/public/placeholder.jpg"
+                        : "/placeholder.jpg"
                 }
                 onClick={handleClick}
                 alt={alt ? alt : ""}

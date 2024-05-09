@@ -1,10 +1,13 @@
 'use client'
+
 import React from "react";
 import { MdOutlineFreeCancellation } from "react-icons/md";
 import { AiOutlineFileProtect } from "react-icons/ai";
 import { FaMoneyBillAlt, FaGift } from "react-icons/fa";
 
-import Service from "./Service/Service";
+import Service from "../Molecules/Service/Service";
+
+
 
 const Services = () => {
     return (

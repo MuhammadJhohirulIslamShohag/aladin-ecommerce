@@ -2,6 +2,7 @@ import React from "react";
 
 import PlainProductCard from "../../Molecules/Products/PlainProductCard";
 import SectionTitle from "../../Molecules/SectionTitle";
+
 import { IProduct } from "@/types/product.type";
 
 interface TopSellsProductProps {
