@@ -1,9 +1,14 @@
-import React, { useEffect, startTransition, useOptimistic, useRef } from "react";
+import React, {
+    useEffect,
+    startTransition,
+    useOptimistic,
+    useRef,
+} from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 import Link from "next/link";
 
-import ValidateImage from "./../../ImageValidate/ValidateImage";
+import ValidateImage from "../../Atoms/ValidateImage";
 
 import {
     getCompareProducts,
@@ -27,22 +32,41 @@ const CompareItemModal: React.FC<CompareItemModalProps> = ({
 
     const [comProductOptimistic, setRemoveComProductOptimistic] = useOptimistic(
         allCompareProducts,
-        (state: IProduct[], newState: string) => {
-            return state.filter((p: IProduct) => p._id !== newState);
+        (state: IProduct[], newState: unknown) => {
+            if (Array.isArray(newState)) {
+                return (state = []);
+            } else {
+                return state.filter((p: IProduct) => p._id !== newState);
+            }
         }
     );
 
     const removeCompareProduct = (productId: string) => {
-        let compareProducts: IProduct[] = allCompareProducts.slice();
+        let compareProducts: IProduct[] = allCompareProducts.filter(
+            (product) => product._id !== productId
+        );
 
-        // set undeleted carts into the window local storage
+        // set undeleted compare products into the window local storage
         startTransition(() => {
             storeCompareProducts(JSON.stringify(compareProducts));
             setRemoveComProductOptimistic(productId);
             // store store context
             dispatch({
                 type: StoreActionType.REMOVE_TO_COMPARE,
-                payload: compareProducts,
+                payload: productId,
+            });
+        });
+    };
+
+    const removeAllCompareProduct = () => {
+        // set undeleted compare products into the window local storage
+        startTransition(() => {
+            storeCompareProducts(JSON.stringify([]));
+            setRemoveComProductOptimistic([]);
+            // store store context
+            dispatch({
+                type: StoreActionType.REMOVE_ALL_COMPARE,
+                payload: [],
             });
         });
     };
@@ -78,47 +102,49 @@ const CompareItemModal: React.FC<CompareItemModalProps> = ({
                     onClick={() => setIsCompareModalOpen(false)}
                     className="text-black hover:text-opacity-80 "
                 >
-                    <AiOutlineClose size={25} className="text-green-500 hover:text-green-700 " />
+                    <AiOutlineClose
+                        size={25}
+                        className="text-green-500 hover:text-green-700 "
+                    />
                 </button>
             </div>
             {comProductOptimistic.length > 0 ? (
                 <>
-                    {comProductOptimistic.map((compareProductItem: IProduct) => (
-                        <div
-                            key={compareProductItem?._id}
-                            className="flex justify-between w-full border-b pl-1 pr-2 py-2 hover:bg-gray-50"
-                        >
-                            <div className="w-[15%]">
-                                <ValidateImage
-                                    imageStyle="w-[45px] h-[45px]"
-                                    imageUrl={compareProductItem?.imageURLs[0]}
-                                    alt={compareProductItem?.name}
+                    {comProductOptimistic.map(
+                        (compareProductItem: IProduct) => (
+                            <div
+                                key={compareProductItem?._id}
+                                className="flex justify-between w-full border-b pl-1 pr-2 py-2 hover:bg-gray-50"
+                            >
+                                <div className="w-[15%]">
+                                    <ValidateImage
+                                        className="w-[45px] h-[45px]"
+                                        imageUrl={
+                                            compareProductItem?.imageURLs?.[0]
+                                        }
+                                        alt={compareProductItem?.name}
+                                    />
+                                </div>
+                                <div className="w-[80%]">
+                                    <p className="text-sm font-semibold text-black">
+                                        {compareProductItem?.name}
+                                    </p>
+                                </div>
+                                <MdDelete
+                                    onClick={() => {
+                                        removeCompareProduct(
+                                            compareProductItem?._id
+                                        );
+                                    }}
+                                    className="hover:text-red-600 cursor-pointer"
+                                    size={20}
                                 />
                             </div>
-                            <div className="w-[80%]">
-                                <p className="text-sm font-semibold text-black">
-                                    {compareProductItem?.name}
-                                </p>
-                            </div>
-                            <MdDelete
-                                onClick={() => {
-                                    removeCompareProduct(
-                                        compareProductItem?._id
-                                    );
-                                }}
-                                className="hover:text-red-600 cursor-pointer"
-                                size={20}
-                            />
-                        </div>
-                    ))}
+                        )
+                    )}
                     <div className="mt-4 pb-2 flex items-center justify-end p-2 gap-8">
                         <button
-                            onClick={() =>
-                                dispatch({
-                                    type: StoreActionType.REMOVE_ALL_COMPARE,
-                                    payload: [],
-                                })
-                            }
+                            onClick={removeAllCompareProduct}
                             className="text-black font-semibold hover:underline"
                         >
                             Clear

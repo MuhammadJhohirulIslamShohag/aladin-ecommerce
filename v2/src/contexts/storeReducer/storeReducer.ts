@@ -1,9 +1,9 @@
 import { getCarts } from "@/store/cart/cart";
 import { getCompareProducts } from "@/store/compare/compare.product";
 import {
-    StoreDataType,
     StoreAction,
     StoreActionType,
+    StoreDataType,
 } from "./storeReducer.type";
 
 export const initialState: StoreDataType = {
@@ -73,24 +73,10 @@ export const storeReducer = (
 
         // Compare products
         case StoreActionType.ADD_TO_COMPARE:
-            const isCompareProductExist = state.compareProducts.find(
-                (product) => product._id === action.payload._id
-            );
-
-            if (!isCompareProductExist) {
-                const updatedCompareProducts = [
-                    ...state.compareProducts,
-                    action.payload,
-                ];
-                if (updatedCompareProducts.length > 4) {
-                    updatedCompareProducts.shift();
-                }
-                return {
-                    ...state,
-                    compareProducts: updatedCompareProducts,
-                };
-            }
-            return state;
+            return {
+                ...state,
+                compareProducts: action.payload,
+            };
         case StoreActionType.REMOVE_TO_COMPARE:
             return {
                 ...state,
@@ -106,24 +92,10 @@ export const storeReducer = (
 
         // wish list products
         case StoreActionType.ADD_TO_WISH:
-            const isWishListProductExist = state.wishLists.find(
-                (product) => product._id === action.payload._id
-            );
-
-            if (!isWishListProductExist) {
-                const updatedWishListProducts = [
-                    ...state.compareProducts,
-                    action.payload,
-                ];
-                if (updatedWishListProducts.length > 4) {
-                    updatedWishListProducts.shift();
-                }
-                return {
-                    ...state,
-                    compareProducts: updatedWishListProducts,
-                };
-            }
-            return state;
+            return {
+                ...state,
+                wishLists: action.payload,
+            };
         case StoreActionType.REMOVE_TO_WISH:
             return {
                 ...state,

@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { startTransition, useState } from "react";
 import toast from "react-hot-toast";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { FaWindowClose } from "react-icons/fa";
-// import { useDispatch } from "react-redux";
+import _ from "lodash";
 
 import Button from "../../Atoms/Button/Button";
 import CustomModal from "../../Atoms/Modal/CustomModal";
@@ -13,6 +13,9 @@ import ConfirmCartModal from "../Modal/ConfirmCartModal";
 import ProductImages from "./ProductImages";
 
 import { IProduct } from "@/types/product.type";
+import { useStoreContext } from "@/contexts/StoreContextProvider";
+import { getCarts, storeCart } from "@/store/cart/cart";
+import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
 
 interface ProductCartViewProps {
     product: IProduct;
@@ -26,8 +29,12 @@ const ProductCartPreview: React.FC<ProductCartViewProps> = ({
     /* state */
     const [openModal, setOpenModal] = useState(false);
     const [quantity, setQuantity] = useState(1);
+
     const {
-        brand,
+        dispatch
+    } = useStoreContext();
+
+    const {
         name,
         imageURLs,
         _id,
@@ -44,15 +51,27 @@ const ProductCartPreview: React.FC<ProductCartViewProps> = ({
 
     /* Handle add to cart */
     const handleAddToCart = () => {
-        const addedProduct = {
-            name,
-            price: Number(netPrice),
-            status,
-            brand,
-            imageURLs,
-            _id,
-            productQuantity,
-        };
+       // create cart array
+       let carts = getCarts();
+
+       // added cart
+       carts.push({
+           ...product,
+           price: Number(netPrice),
+           count: quantity,
+       });
+       // remove duplicates
+       const uniqueCarts = _.uniqWith(carts, _.isEqual);
+
+       // set cart object in windows localStorage
+       startTransition(() => {
+           storeCart(JSON.stringify(uniqueCarts));
+           // added cart in store context
+           dispatch({
+               type: StoreActionType.ADD_TO_CART,
+               payload: uniqueCarts,
+           });
+       });
         // dispatch(addToCart({ ...addedProduct, quantity })),
         setOpenModal((prevState) => !prevState);
     };

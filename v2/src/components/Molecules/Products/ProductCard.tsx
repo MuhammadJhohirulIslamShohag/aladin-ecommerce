@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
 import Link from "next/link";
-import { MdCompareArrows } from "react-icons/md";
+import React, { startTransition, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { IoIosEye } from "react-icons/io";
+import { MdCompareArrows } from "react-icons/md";
+import _ from "lodash";
 // import toast from "react-hot-toast";
 
 import CustomModal from "../../Atoms/Modal/CustomModal";
@@ -20,11 +21,22 @@ import TooltipButton from "../Button/TooltipButton/TooltipButton";
 
 import { IProduct } from "@/types/product.type";
 import { removeSpace } from "@/utils/removeSpace";
+import {
+    getCompareProducts,
+    storeCompareProducts,
+} from "@/store/compare/compare.product";
+import { useStoreContext } from "@/contexts/StoreContextProvider";
+import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
+import {
+    getWishListProducts,
+    storeWishListProducts,
+} from "@/store/wishList/wishList.product";
 // import useAuthData from "../../../hooks/useAuthData";
 
 const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
     // const [addWishList] = useAddWishlistMutation();
-    // const dispatch = useDispatch();
+    const { dispatch } = useStoreContext();
+
     const { name, price, discount, slug, imageURLs, quantity } = product;
 
     const discountPrice = Math.ceil(price * (discount / 100));
@@ -45,7 +57,26 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
     const [saveProductModalOpen, setSaveProductModalOpen] = useState(false);
     const [compareModalOpen, setCompareModalOpen] = useState(false);
 
-    const manageWishListProduct = async (id: string) => {
+    const handleAddWishListProduct = async () => {
+        // create wish list products array
+        let wishListProducts = getWishListProducts();
+
+        // added wish list product
+        wishListProducts.push({
+            ...product,
+        });
+        // remove duplicates
+        const uniqueWishListProducts = _.uniqWith(wishListProducts, _.isEqual);
+
+        // set cart object in windows localStorage
+        startTransition(() => {
+            storeWishListProducts(JSON.stringify(uniqueWishListProducts));
+            // added cart in store context
+            dispatch({
+                type: StoreActionType.ADD_TO_WISH,
+                payload: uniqueWishListProducts,
+            });
+        });
         // await addWishList(id).then((res) => {
         //   if (res?.data?.success) {
         //     toast.success(res?.data?.message, {
@@ -62,6 +93,30 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
 
     const handleAddCart = () => {
         setModalOpen((prevState) => !prevState);
+    };
+
+    const handleAddCompareProduct = () => {
+        // create compare products array
+        let compareProducts = getCompareProducts();
+
+        // added compare product
+        compareProducts.push({
+            ...product,
+        });
+        // remove duplicates
+        const uniqueCompareProducts = _.uniqWith(compareProducts, _.isEqual);
+
+        // set cart object in windows localStorage
+        startTransition(() => {
+            storeCompareProducts(JSON.stringify(uniqueCompareProducts));
+            // added cart in store context
+            dispatch({
+                type: StoreActionType.ADD_TO_COMPARE,
+                payload: uniqueCompareProducts,
+            });
+        });
+
+        setCompareModalOpen((prev) => !prev);
     };
 
     return (
@@ -83,7 +138,7 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                     <div className="absolute bottom-0 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/70 z-10">
                         <div className="flex gap-2 py-1 px-0 transition-all group-hover:px-6 justify-between items-center duration-300">
                             <TooltipButton
-                             tooltipPlacement="top-start"
+                                tooltipPlacement="top-start"
                                 id="product-view"
                                 content="Product View"
                             >
@@ -118,11 +173,7 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                                 //         : "text-white bg-green-400"
                                 // }`}
                             >
-                                <button
-                                    onClick={() =>
-                                        manageWishListProduct(product?._id)
-                                    }
-                                >
+                                <button onClick={handleAddWishListProduct}>
                                     <AiFillHeart className={`text-2xl `} />
                                 </button>
                             </TooltipButton>
@@ -131,12 +182,7 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                                 content="Add to Compare"
                                 tooltipPlacement="top-end"
                             >
-                                <button
-                                    onClick={() => {
-                                        setCompareModalOpen((prev) => !prev);
-                                        // dispatch(addToCompare({ ...product }));
-                                    }}
-                                >
+                                <button onClick={handleAddCompareProduct}>
                                     <MdCompareArrows className="text-2xl" />
                                 </button>
                             </TooltipButton>

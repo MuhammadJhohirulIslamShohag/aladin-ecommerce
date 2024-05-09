@@ -1,5 +1,5 @@
 import { wishListProductKey } from "@/constants/storageKey";
-import { setToLocalStorage, getFromLocalStorage } from "@/utils/local-storage";
+import { getFromLocalStorage, setToLocalStorage } from "@/utils/local-storage";
 
 export const storeWishListProducts = (payload: string) => {
     return setToLocalStorage(wishListProductKey, payload);
