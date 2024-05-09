@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import AOS from "aos";
-import SectionTitle from "../../SectionTitle/SectionTitle";
-import SubCategoryCard from "./SubCategory/SubCategoryCard";
+import SubCategory from "../Molecules/SubCategory";
+import SectionTitle from "../Molecules/SectionTitle";
+
 import { ISubCategory } from "@/types/sub-category.type";
 
 // Import Swiper React components
@@ -50,7 +50,7 @@ const SubCategories = ({ data }: { data: ISubCategory[] }) => {
                         key={subCategory._id}
                         style={{ height: "366px" }}
                     >
-                        <SubCategoryCard subCategory={subCategory} />
+                        <SubCategory subCategory={subCategory} />
                     </SwiperSlide>
                 ))}
             </Swiper>

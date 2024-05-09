@@ -1,4 +1,4 @@
-import Category from "./Category/Category";
+import Category from "../Molecules/Category";
 import { ICategory } from "@/types/category.type";
 
 const Categories = ({ data }: { data: ICategory[] }) => {

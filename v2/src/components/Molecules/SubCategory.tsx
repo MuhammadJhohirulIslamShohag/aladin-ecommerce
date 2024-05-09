@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ISubCategory } from "@/types/sub-category.type";
 
-const SubCategoryCard = ({ subCategory }: { subCategory: ISubCategory }) => {
+const SubCategory = ({ subCategory }: { subCategory: ISubCategory }) => {
     const { _id, name, imageURL } = subCategory;
 
     return (
@@ -20,4 +20,4 @@ const SubCategoryCard = ({ subCategory }: { subCategory: ISubCategory }) => {
     );
 };
 
-export default SubCategoryCard;
+export default SubCategory;

@@ -6,8 +6,6 @@ import { getProducts } from "@/api/products";
 import { getAllSubCategories } from "@/api/sub-categories";
 
 import Advertise from "@/components/Home/Advertise/Advertise";
-import Categories from "@/components/Home/Categories/Categories";
-import SubCategories from "@/components/Home/SubCategories/SubCategories";
 import Loader from "@/components/Loader/Loader";
 import Hero from "@/components/Oraganisms/Home/Hero";
 import FeaturedProducts from "@/components/Oraganisms/Products/FeaturedProducts";
@@ -17,6 +15,8 @@ import FlashDeals from "@/components/Oraganisms/Home/FlashDeals";
 import Blogs from "@/components/Oraganisms/Blogs";
 import TopProducts from "@/components/Oraganisms/Products/TopProducts";
 import TopSellsProduct from "@/components/Oraganisms/Products/TopSellsProduct";
+import Categories from "@/components/Oraganisms/Categories";
+import SubCategories from "@/components/Oraganisms/SubCategories";
 
 const Home = async () => {
     // Initiate both requests in parallel
@@ -80,28 +80,3 @@ const Home = async () => {
 };
 
 export default Home;
-
-// export const getServerSideProps: GetServerSideProps = async () => {
-//     const { data } = await getProductsBySort("createdAt", "desc");
-//     const { data: bestSellerProductData } = await getProductsBySort(
-//         "sold",
-//         "desc"
-//     );
-//     const { data: flashDealsProductData } = await getProductsBySort(
-//         "discount",
-//         "desc"
-//     );
-//     const { data: categoriesData } = await getListOfCategory();
-//     const { data: subCategoriesData } = await getAllSubCategories();
-//     const { data: blogsData } = await getListOfBlogs();
-//     return {
-//         props: {
-//             products: data,
-//             bestSellerProducts: bestSellerProductData,
-//             flashDealsProducts: flashDealsProductData,
-//             subCategories: subCategoriesData,
-//             categories: categoriesData,
-//             blogs: blogsData,
-//         },
-//     };
-// };

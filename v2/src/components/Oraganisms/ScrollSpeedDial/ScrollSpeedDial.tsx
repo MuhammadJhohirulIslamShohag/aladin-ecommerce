@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import SpeedDial from "../SpeedDial/SpeedDial";
-import CompareModal from "./../Modal/FixedModal/CompareModal";
-import CartModal from "./../Modal/FixedModal/CartModal";
-import ShoppingCarts from "../Carts/ShoppingCarts/ShoppingCarts";
-import CompareItemModal from "./../Modal/FixedModal/CompareItemModal";
+import { useState } from "react";
+import ShoppingCarts from "../../Carts/ShoppingCarts/ShoppingCarts";
+import CartModal from "../../Modal/FixedModal/CartModal";
+import CompareItemModal from "../../Modal/FixedModal/CompareItemModal";
+import CompareModal from "../../Modal/FixedModal/CompareModal";
+import SpeedDial from "../../Molecules/SpeedDial/SpeedDial";
 
 const ScrollSpeedDial = () => {
     const [isCartDetailsModalOpen, setIsCartDetailsModalOpen] = useState(false);
