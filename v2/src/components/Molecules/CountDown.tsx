@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { calcTimeDifferent } from "./calcTimeDifferent";
+import { calcTimeDifferent } from "@/utils/calcTimeDifferent";
+
 
 const CountDown = ({ date }: { date: Date }) => {
     const [timeInMs, setTimeInMs] = useState(date.getTime());

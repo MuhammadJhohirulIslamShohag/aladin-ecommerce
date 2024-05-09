@@ -80,9 +80,10 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                         />
                     </Link>
 
-                    <div className="absolute bottom-0 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/10 z-10">
+                    <div className="absolute bottom-0 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/70 z-10">
                         <div className="flex gap-2 py-1 px-0 transition-all group-hover:px-6 justify-between items-center duration-300">
                             <TooltipButton
+                             tooltipPlacement="top-start"
                                 id="product-view"
                                 content="Product View"
                             >

@@ -9,6 +9,7 @@ import { ISubCategory } from "@/types/sub-category.type";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import { Navigation, Autoplay } from "swiper/modules";
+
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -70,7 +71,7 @@ const SubCategories = ({ data }: { data: ISubCategory[] }) => {
             data-aos-easing="ease-in-out"
             className="container py-24 md:py-20 sm:py-12 "
         >
-            <SectionTitle title="Product By Sub Category " />
+            <SectionTitle title="Sub Category" />
 
             <div className="mt-10 sm:mt-5">{content}</div>
         </section>

@@ -2,9 +2,8 @@
 import React from "react";
 import { MdFlashOn } from "react-icons/md";
 
-
-import CountDown from "@/components/CountDown/CountDown";
 import FlashDeal from "@/components/Molecules/Products/FlashDeal";
+import CountDown from "@/components/Molecules/CountDown";
 
 import { IProduct } from "@/types/product.type";
 
