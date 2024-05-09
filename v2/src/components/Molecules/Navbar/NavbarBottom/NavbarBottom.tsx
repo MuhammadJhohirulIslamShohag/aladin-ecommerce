@@ -1,15 +1,26 @@
+
 import React from "react";
 
-import CategoryBar from "../../../Molecules/Navbar/CategoryBar";
-import NavbarMenu from "../../../Molecules/Navbar/NavbarMenu";
+import CategoryBar from "./CategoryBar";
+import NavbarMenu from "./NavbarMenu";
 
-const NavbarBottom: React.FC = () => {
+import { IMenuCategory, INavbarMenu } from "@/types/menu.category.type";
+
+interface NavbarBottomProps {
+    categoriesData: IMenuCategory[];
+    navbarMenuData: INavbarMenu[];
+}
+
+const NavbarBottom: React.FC<NavbarBottomProps> = ({
+    categoriesData,
+    navbarMenuData,
+}) => {
     return (
         <nav className="bg-green-400 w-full z-20 start-0">
-            <div className="container mx-auto px-6 ">
+            <div className="container mx-auto px-6">
                 <div className="flex flex-wrap items-center justify-between">
                     <div className="flex items-center  rtl:space-x-reverse relative pt-2">
-                        <CategoryBar categoriesData={[]} />
+                        <CategoryBar categoriesData={categoriesData || []} />
                     </div>
                     <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                         <button
@@ -20,7 +31,7 @@ const NavbarBottom: React.FC = () => {
                         </button>
                     </div>
                     <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
-                        <NavbarMenu data={[]} />
+                        <NavbarMenu data={navbarMenuData || []} />
                     </div>
                 </div>
             </div>

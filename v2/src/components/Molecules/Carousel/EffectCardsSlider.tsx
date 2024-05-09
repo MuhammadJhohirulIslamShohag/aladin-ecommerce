@@ -36,7 +36,7 @@ const EffectCardsSlider: React.FC<Props> = ({ products }) => {
             ) : (
                 <ValidateImage
                     className="max-h-full h-full w-full object-fill"
-                    imageUrl="../../../../public/placeholder.jpg"
+                    imageUrl="/public/placeholder.jpg"
                     alt={"Aladin placeholder"}
                 />
             )}

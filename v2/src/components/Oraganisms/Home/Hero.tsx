@@ -6,9 +6,9 @@ import { IProduct } from "@/types/product.type";
 
 interface IHeroProps {
     products: IProduct[];
-    setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 }
-const Hero: React.FC<IHeroProps> = ({ products, setSearchValue }) => {
+const Hero: React.FC<IHeroProps> = ({ products }) => {
+
     return (
         <div className="container mx-auto px-6 lg:h-[550px] h-full mb-10">
             <div className="flex lg:flex-row flex-col gap-4">
@@ -18,7 +18,6 @@ const Hero: React.FC<IHeroProps> = ({ products, setSearchValue }) => {
                 <div className="flex lg:flex-col md:flex-row flex-col xl:w-[25%] lg:w-[30%]  w-full pt-3 lg:space-y-4 md:space-y-0 space-y-6">
                     <ComparisonProduct
                         products={products}
-                        setSearchValue={setSearchValue}
                     />
                     <EffectCardsSlider products={products} />
                 </div>

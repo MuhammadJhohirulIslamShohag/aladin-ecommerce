@@ -9,7 +9,6 @@ import { IProduct } from "@/types/product.type";
 
 interface ComparisonProductProps {
     products: IProduct[];
-    setSearchValue: React.Dispatch<React.SetStateAction<string>>
 }
 
 interface comparisonStateValue {
@@ -17,10 +16,7 @@ interface comparisonStateValue {
     name: string;
 }
 
-const ComparisonProduct: React.FC<ComparisonProductProps> = ({
-    products,
-    setSearchValue,
-}) => {
+const ComparisonProduct: React.FC<ComparisonProductProps> = ({ products }) => {
     const [comparisonOneValue, setComparisonOneValue] =
         useState<comparisonStateValue>({
             name: "",
@@ -47,7 +43,6 @@ const ComparisonProduct: React.FC<ComparisonProductProps> = ({
             ...prev,
             name: event.target.value,
         }));
-        setSearchValue(event.target.value);
     };
 
     const handleComparisonTwoChange = (
@@ -57,7 +52,6 @@ const ComparisonProduct: React.FC<ComparisonProductProps> = ({
             ...prev,
             name: event.target.value,
         }));
-        setSearchValue(event.target.value);
     };
 
     const handleComparisonOneFocus = () => {

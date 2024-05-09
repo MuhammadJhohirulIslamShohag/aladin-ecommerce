@@ -4,7 +4,6 @@ import { getCategories } from "@/api/category";
 import { getProducts } from "@/api/products";
 import { getAllSubCategories } from "@/api/sub-categories";
 import Advertise from "@/components/Home/Advertise/Advertise";
-import Banner from "@/components/Home/Banner/Banner";
 import BestSellers from "@/components/Home/BestSellers/BestSellers";
 import Blogs from "@/components/Home/Blogs/Blogs";
 import Categories from "@/components/Home/Categories/Categories";
@@ -14,6 +13,7 @@ import SubCategories from "@/components/Home/SubCategories/SubCategories";
 import Loader from "@/components/Loader/Loader";
 import FlashDeals from "@/components/Home/FlashDeals/FlashDeals/FlashDeals";
 import NewArrivals from "@/components/Home/NewArrivals/NewArrivals";
+import Hero from "@/components/Oraganisms/Home/Hero";
 
 const Home = async () => {
     // Initiate both requests in parallel
@@ -32,7 +32,10 @@ const Home = async () => {
 
     return (
         <>
-            <Banner />
+            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                <Hero products={products.data?.data} />
+            </Suspense>
+
             <Services />
 
             <Suspense fallback={<Loader height={"h-[360px]"} />}>

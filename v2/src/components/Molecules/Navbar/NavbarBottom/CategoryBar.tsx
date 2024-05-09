@@ -1,21 +1,16 @@
+"use client"
+
 import React, { useState } from "react";
 import Link from "next/link";
 
 import { FaAngleRight } from "react-icons/fa";
 import { FaBarsStaggered } from "react-icons/fa6";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
+import { IMenuCategory } from "@/types/menu.category.type";
 
-interface Category {
-    category: string;
-    menu?: Menu[];
-}
-
-interface Menu {
-    title: string;
-}
 
 interface CategoryBarProps {
-    categoriesData: Category[];
+    categoriesData: IMenuCategory[];
 }
 
 const CategoryBar: React.FC<CategoryBarProps> = ({ categoriesData }) => {
