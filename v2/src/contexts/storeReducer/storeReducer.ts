@@ -5,6 +5,7 @@ import {
     StoreActionType,
     StoreDataType,
 } from "./storeReducer.type";
+import { getWishListProducts } from "@/store/wishList/wishList.product";
 
 export const initialState: StoreDataType = {
     text: "",
@@ -20,27 +21,17 @@ export const initialState: StoreDataType = {
 if (typeof window !== "undefined") {
     // for carts
     const carts = getCarts();
-    if (carts?.length) {
-        initialState.carts = carts;
-    } else {
-        initialState.carts = [];
-    }
+    initialState.carts = carts?.length ? carts : [];
 
     // for compare products
     const compareProducts = getCompareProducts();
-    if (compareProducts?.length) {
-        initialState.compareProducts = compareProducts;
-    } else {
-        initialState.compareProducts = [];
-    }
+    initialState.compareProducts = compareProducts?.length
+        ? compareProducts
+        : [];
 
     // for wish list products
-    const wishListProducts = getCompareProducts();
-    if (wishListProducts?.length) {
-        initialState.wishLists = wishListProducts;
-    } else {
-        initialState.wishLists = [];
-    }
+    const wishListProducts = getWishListProducts();
+    initialState.wishLists = wishListProducts?.length ? wishListProducts : [];
 }
 
 export const storeReducer = (

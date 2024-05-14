@@ -6,8 +6,8 @@ import { AiFillHeart } from "react-icons/ai";
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { IoIosEye } from "react-icons/io";
 import { MdCompareArrows } from "react-icons/md";
+import toast from "react-hot-toast";
 import _ from "lodash";
-// import toast from "react-hot-toast";
 
 import CustomModal from "../../Atoms/Modal/CustomModal";
 import SaveProductModal from "../Modal/SaveProductModal";
@@ -31,26 +31,17 @@ import {
     getWishListProducts,
     storeWishListProducts,
 } from "@/store/wishList/wishList.product";
-// import useAuthData from "../../../hooks/useAuthData";
+import { addToWishList } from "@/api/user";
+import { getUserInfo } from "@/store/user/users";
 
 const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
-    // const [addWishList] = useAddWishlistMutation();
+    const user = getUserInfo();
     const { dispatch } = useStoreContext();
 
-    const { name, price, discount, slug, imageURLs, quantity } = product;
+    const { name, price, discount, slug, imageURLs, quantity, _id } = product;
 
     const discountPrice = Math.ceil(price * (discount / 100));
     const netPrice = Math.ceil(price - discountPrice);
-
-    // const { user } = useAuthData();
-    // const { data, refetch } = useGetSingleUserQuery({
-    //     id: user?._id,
-    // });
-
-    // const userWishLists = data?.data?.wishList || [];
-    // const wishListProduct = userWishLists.find(
-    //     (wishList) => wishList?.productId?._id === product?._id
-    // );
 
     const [modalOpen, setModalOpen] = useState(false);
     const [productView, setProductView] = useState(false);
@@ -58,7 +49,7 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
     const [compareModalOpen, setCompareModalOpen] = useState(false);
 
     const handleAddWishListProduct = async () => {
-        // create wish list products array
+        // all wish list products array
         let wishListProducts = getWishListProducts();
 
         // added wish list product
@@ -77,18 +68,14 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                 payload: uniqueWishListProducts,
             });
         });
-        // await addWishList(id).then((res) => {
-        //   if (res?.data?.success) {
-        //     toast.success(res?.data?.message, {
-        //       duration: 5000,
-        //     });
-        //     refetch();
-        //   } else {
-        //     toast.error(res?.error?.data?.errorMessages?.[0]?.message, {
-        //       duration: 5000,
-        //     });
-        //   }
-        // });
+
+        await addToWishList(user?.token, _id).then((res) => {
+            if (res?.data?.success) {
+                toast.success(res?.data?.message, {
+                    duration: 5000,
+                });
+            }
+        });
     };
 
     const handleAddCart = () => {

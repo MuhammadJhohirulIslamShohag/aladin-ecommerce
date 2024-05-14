@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CartType } from "types/cart.types";
+import { CartType } from "@/types/cart.types";
 
 export const saveOrder = (carts: CartType[], token: string) => {
     return axios.post(
@@ -110,32 +110,38 @@ export const getOrdersByUser = async (token: string) => {
 };
 
 // add to wishlist
-export const addToWishList = async (
-    token: string,
-    productId: string,
-    isWishList: any
-) => {
-    return await axios.post(
-        `${process.env.NEXT_PUBLIC_server_api}/users/wishlists`,
-        { productId, isWishList },
-        {
-            headers: {
-                token,
+export const addToWishList = async (token: string, productId: string) => {
+    try {
+        return await axios.post(
+            `${process.env.NEXT_PUBLIC_server_api}/users/wishlist`,
+            {
+                productId,
             },
-        }
-    );
+            {
+                headers: {
+                    token,
+                },
+            }
+        );
+    } catch (error) {
+        throw new Error("Failed to fetch data");
+    }
 };
 
 // get all wishlist from users
 export const getWishLists = async (token: string) => {
-    return await axios.get(
-        `${process.env.NEXT_PUBLIC_server_api}/users/wishlists`,
-        {
-            headers: {
-                token,
-            },
-        }
-    );
+    try {
+        return await axios.get(
+            `${process.env.NEXT_PUBLIC_SERVER_API}/users/wishlists`,
+            {
+                headers: {
+                    token,
+                },
+            }
+        );
+    } catch (error) {
+        throw new Error("Failed to fetch data");
+    }
 };
 
 // get all wishlist from users
@@ -153,13 +159,16 @@ export const getWishList = async (token: string, productId: string) => {
 
 // remove wishlist
 export const removeWishList = async (token: string, productId: string) => {
-    return await axios.put(
-        `${process.env.NEXT_PUBLIC_server_api}/users/wishlists`,
-        { productId },
-        {
-            headers: {
-                token,
-            },
-        }
-    );
+    try {
+        return await axios.delete(
+            `${process.env.NEXT_PUBLIC_server_api}/users/wishlist/${productId}`,
+            {
+                headers: {
+                    token,
+                },
+            }
+        );
+    } catch (error) {
+        throw new Error("Failed to fetch data");
+    }
 };
