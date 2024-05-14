@@ -13,6 +13,7 @@ export interface ICurrentUser {
     country?: string;
     createdAt?: Date;
     updatedAt?: Date;
+    token?: string;
     __v?: number;
     _id?: string;
 }

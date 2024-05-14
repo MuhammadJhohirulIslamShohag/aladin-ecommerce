@@ -1,7 +1,13 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+"use client";
+
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+import ShippingAddressForm from "@/components/Form/ShippingAddressForm";
+import useCheckUser from "@/hooks/useCheckUser";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
+
 import {
     createOrderCashOnDelivery,
     emptyCart,
@@ -10,13 +16,9 @@ import {
     getUserShippingAddress,
     saveShippingAddress,
 } from "@/api/user";
-import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
-import toast from "react-hot-toast";
-import { useRouter } from "next/router";
-import ShippingAddressForm from "@/components/Form/ShippingAddressForm";
-import MainLayout from "@/layouts/MainLayout/MainLayout";
-import useCheckUser from "@/hooks/useCheckUser";
-import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
+import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
+import { useStoreContext } from "@/contexts/StoreContextProvider";
+import { getUserInfo } from "@/store/user/users";
 
 type AddressType = {
     fullName?: string;
@@ -52,12 +54,11 @@ const Checkout = () => {
         processingOrderLoading: false,
         couponLoading: false,
     });
+    const user = getUserInfo();
     const { state, dispatch } = useStoreContext();
-    const { carts, user, isCashOnDelivery, isCouponed } = state;
+
+    const { carts, isCashOnDelivery, isCouped } = state;
     const router = useRouter();
-    if(user){
-        
-    }
 
     useEffect(() => {
         if (user && user.token) {
@@ -285,7 +286,7 @@ const Checkout = () => {
             processingOrderLoading: true,
         });
         if (user && user.token) {
-            createOrderCashOnDelivery(isCashOnDelivery, isCouponed, user.token)
+            createOrderCashOnDelivery(isCashOnDelivery, isCouped, user.token)
                 .then((res) => {
                     // reset carts from window local storage
                     if (typeof window !== "undefined") {
@@ -331,133 +332,126 @@ const Checkout = () => {
                 title="Checkout"
                 content="Aladin Industries Ltd. Providing reliable products since 2022"
             />
-            <MainLayout>
-                <div className="container mt-10 px-40">
-                    <div className="grid grid-cols-12 gap-16 sm:grid-cols-1 sm:gap-0 md:grid-cols-1 md:gap-0">
-                        <div className="col-span-7 sm:col-span-0 md:col-span-0">
-                            <h4 className="text-xl mb-5 font-semibold text-left text-green-500 bg-white">
-                                Delivery Address
+
+            <div className="container mt-10 px-40">
+                <div className="grid grid-cols-12 gap-16 sm:grid-cols-1 sm:gap-0 md:grid-cols-1 md:gap-0">
+                    <div className="col-span-7 sm:col-span-0 md:col-span-0">
+                        <h4 className="text-xl mb-5 font-semibold text-left text-green-500 bg-white">
+                            Delivery Address
+                        </h4>
+
+                        {/* Shipping Address Form*/}
+                        <ShippingAddressForm
+                            addressValues={addressValues}
+                            validationError={validationError}
+                            loading={loading.shippingAddressLoading}
+                            handleAddressValueChange={handleAddressValueChange}
+                            submitShippingAddressToDb={
+                                submitShippingAddressToDb
+                            }
+                        />
+                        <hr className="my-4" />
+
+                        {/* Coupon Form*/}
+                        <h4 className="text-green-400">Got Coupon?</h4>
+                        {inValidCouponName && (
+                            <div className="bg-success text-center">
+                                <h6 className="text-white p-2">
+                                    {inValidCouponName}
+                                </h6>
+                            </div>
+                        )}
+                        {couponForm()}
+                    </div>
+
+                    {/* Order Summary Card */}
+                    <div className="col-span-5 sm:col-span-0 md:col-span-0">
+                        <div className="bg-gray-100 p-5  rounded-lg mt-16 md:mt-5 sm:mt-5">
+                            <h4 className="text-xl font-semibold text-green-400 mb-3">
+                                Order Summary
                             </h4>
-
-                            {/* Shipping Address Form*/}
-                            <ShippingAddressForm
-                                addressValues={addressValues}
-                                validationError={validationError}
-                                loading={loading.shippingAddressLoading}
-                                handleAddressValueChange={
-                                    handleAddressValueChange
-                                }
-                                submitShippingAddressToDb={
-                                    submitShippingAddressToDb
-                                }
-                            />
-                            <hr className="my-4" />
-
-                            {/* Coupon Form*/}
-                            <h4 className="text-green-400">Got Coupon?</h4>
-                            {inValidCouponName && (
-                                <div className="bg-success text-center">
-                                    <h6 className="text-white p-2">
-                                        {inValidCouponName}
-                                    </h6>
+                            <h4 className="text-lg font-semibold text-primary">
+                                Product
+                            </h4>
+                            <hr className="mb-2" />
+                            {carts &&
+                                carts.map((product: any) => (
+                                    <p
+                                        className="text-md font-normal text-primary"
+                                        key={product._id}
+                                    >
+                                        {product.title} x {product.count} ={" "}
+                                        {`$${product.price * product.count}`}
+                                    </p>
+                                ))}
+                            <hr className="mt-2" />
+                            <p className="text-lg font-semibold text-primary">
+                                Total Price = {`$${cartTotal}`}
+                            </p>
+                            <hr />
+                            {totalPriceAfterDiscount > 0 && (
+                                <div className="bg-success mb-2">
+                                    <p className="text-lg font-semibold text-primary">
+                                        Total Price After Discount : $
+                                        {totalPriceAfterDiscount}
+                                    </p>
                                 </div>
                             )}
-                            {couponForm()}
-                        </div>
 
-                        {/* Order Summary Card */}
-                        <div className="col-span-5 sm:col-span-0 md:col-span-0">
-                            <div className="bg-gray-100 p-5  rounded-lg mt-16 md:mt-5 sm:mt-5">
-                                <h4 className="text-xl font-semibold text-green-400 mb-3">
-                                    Order Summary
-                                </h4>
-                                <h4 className="text-lg font-semibold text-primary">
-                                    Product
-                                </h4>
-                                <hr className="mb-2" />
-                                {carts &&
-                                    carts.map((product: any) => (
-                                        <p
-                                            className="text-md font-normal text-primary"
-                                            key={product._id}
-                                        >
-                                            {product.title} x {product.count} ={" "}
-                                            {`$${
-                                                product.price * product.count
-                                            }`}
-                                        </p>
-                                    ))}
-                                <hr className="mt-2" />
-                                <p className="text-lg font-semibold text-primary">
-                                    Total Price = {`$${cartTotal}`}
-                                </p>
-                                <hr />
-                                {totalPriceAfterDiscount > 0 && (
-                                    <div className="bg-success mb-2">
-                                        <p className="text-lg font-semibold text-primary">
-                                            Total Price After Discount : $
-                                            {totalPriceAfterDiscount}
-                                        </p>
-                                    </div>
-                                )}
+                            <hr />
 
-                                <hr />
-
-                                {isCashOnDelivery ? (
-                                    <button
-                                        className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
-                                        disabled={
-                                            !isAddressSave ||
-                                            products.length < 1 ||
-                                            loading.processingOrderLoading
-                                        }
-                                        onClick={handleCashOrderDelivery}
-                                    >
-                                        {loading.processingOrderLoading
-                                            ? "Processing..."
-                                            : "Place Order"}
-                                    </button>
-                                ) : (
-                                    <button
-                                        className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
-                                        disabled={
-                                            !isAddressSave ||
-                                            products.length < 1 ||
-                                            loading.processingOrderLoading
-                                        }
-                                        onClick={() => {
-                                            setLoading({
-                                                ...loading,
-                                                processingOrderLoading: true,
-                                            });
-                                            router.push(
-                                                "/cart/checkout/payment"
-                                            );
-                                        }}
-                                    >
-                                        {loading.processingOrderLoading
-                                            ? "Processing..."
-                                            : "Place Order"}
-                                    </button>
-                                )}
-
+                            {isCashOnDelivery ? (
                                 <button
                                     className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
                                     disabled={
+                                        !isAddressSave ||
                                         products.length < 1 ||
-                                        loading.emptyingCartLoading
+                                        loading.processingOrderLoading
                                     }
-                                    onClick={handleEmptyCart}
+                                    onClick={handleCashOrderDelivery}
                                 >
-                                    {loading && loading.emptyingCartLoading
-                                        ? "Removing..."
-                                        : "Empty Cart"}
+                                    {loading.processingOrderLoading
+                                        ? "Processing..."
+                                        : "Place Order"}
                                 </button>
-                            </div>
+                            ) : (
+                                <button
+                                    className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                                    disabled={
+                                        !isAddressSave ||
+                                        products.length < 1 ||
+                                        loading.processingOrderLoading
+                                    }
+                                    onClick={() => {
+                                        setLoading({
+                                            ...loading,
+                                            processingOrderLoading: true,
+                                        });
+                                        router.push("/cart/checkout/payment");
+                                    }}
+                                >
+                                    {loading.processingOrderLoading
+                                        ? "Processing..."
+                                        : "Place Order"}
+                                </button>
+                            )}
+
+                            <button
+                                className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                                disabled={
+                                    products.length < 1 ||
+                                    loading.emptyingCartLoading
+                                }
+                                onClick={handleEmptyCart}
+                            >
+                                {loading && loading.emptyingCartLoading
+                                    ? "Removing..."
+                                    : "Empty Cart"}
+                            </button>
                         </div>
                     </div>
                 </div>
-            </MainLayout>
+            </div>
         </>
     );
 };

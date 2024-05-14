@@ -1,19 +1,16 @@
-import { createOrUpdateUser } from "@/api/auth";
-import FormGroup from "@/components/Form/FormGroup";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import {
-    StoreActionType,
-    UserType,
-} from "@/lib/states/storeReducer/storeReducer.type";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { IProfile } from "types/profile.types";
+
+import FormGroup from "@/components/Form/FormGroup";
+
+import { createOrUpdateUser } from "@/api/auth";
+import { useStoreContext } from "@/contexts/StoreContextProvider";
+import { IProfile } from "@/types/profile.types";
 
 type ProfileEditModalPropType = {
     title: string;
     closeModal: () => void;
     values: IProfile;
-    loadingCurrentUser: (user: UserType) => void;
     isAddressProfile?: boolean;
 };
 type FormProfileValues = {
@@ -31,11 +28,9 @@ const ProfileEditModal = (props: ProfileEditModalPropType) => {
         closeModal,
         values,
         title,
-        loadingCurrentUser,
         isAddressProfile = false,
     } = props;
-    const { state, dispatch, userProfileUpdate } = useStoreContext();
-    const { user } = state;
+    const { dispatch } = useStoreContext();
     const {
         handleSubmit,
         register,
@@ -55,7 +50,7 @@ const ProfileEditModal = (props: ProfileEditModalPropType) => {
         } else {
             userObject = {
                 address: {
-                    email: user!.email,
+                    email: values!.email,
                     username: data.username!,
                     address: data.address!,
                     city: data.city!,
@@ -65,7 +60,7 @@ const ProfileEditModal = (props: ProfileEditModalPropType) => {
             };
         }
         if (userObject || userObject.address) {
-            createOrUpdateUser(user!.token, userObject!)
+            createOrUpdateUser(values.token, userObject!)
                 .then((res) => {
                     if (!isAddressProfile) {
                         toast.success("Profile Update Successfully!");
@@ -73,16 +68,16 @@ const ProfileEditModal = (props: ProfileEditModalPropType) => {
                         toast.success("Address Update Successfully!");
                     }
                     reset();
-                    dispatch({
-                        type: StoreActionType.LOGGED_IN_USER,
-                        payload: {
-                            fullName: res.data.fullName,
-                            email: res.data.email,
-                            token: user!.token,
-                            image: res.data.image.url,
-                            _id: res.data._id,
-                        },
-                    });
+                    // dispatch({
+                    //     type: StoreActionType.LOGGED_IN_USER,
+                    //     payload: {
+                    //         fullName: res.data.fullName,
+                    //         email: res.data.email,
+                    //         token: values!.token,
+                    //         image: res.data.image.url,
+                    //         _id: res.data._id,
+                    //     },
+                    // });
                 })
                 .catch((error) => {
                     console.log(error);
@@ -90,32 +85,9 @@ const ProfileEditModal = (props: ProfileEditModalPropType) => {
                 .finally(() => {
                     reset();
                 });
-            loadingCurrentUser(user!);
-            if (!isAddressProfile) {
-                updateTheProfileToFirebase(
-                    values.fullName!,
-                    values?.image?.url!
-                );
-            }
         }
     };
 
-    // update the profile
-    const updateTheProfileToFirebase = (
-        fullName: string,
-        photoImage: string
-    ) => {
-        const profile = {
-            displayName: fullName,
-            photoURL: photoImage,
-        };
-        userProfileUpdate(profile)
-            .then((result) => {})
-            .catch((error) => {
-                toast.error(error);
-            })
-            .finally(() => {});
-    };
 
     return (
         <>

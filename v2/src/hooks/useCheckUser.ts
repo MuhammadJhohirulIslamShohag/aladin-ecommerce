@@ -1,20 +1,20 @@
+"use client";
+
 import { useEffect } from "react";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/navigation'
+import { getUserInfo } from "@/store/user/users";
 
 const useCheckUser = () => {
-    const { state } = useStoreContext();
-    const { user } = state;
-
+    const user = getUserInfo();
     const router = useRouter();
 
-    useEffect(() => {
-        if (!user) {
-            router.push("/auth/login");
-        } else if (user.role !== "user") {
-            router.push("/");
-        }
-    }, [user, router]);
+    // useEffect(() => {
+    //     if (!user) {
+    //         router.push("/auth/login");
+    //     } else if (user.role !== "user") {
+    //         router.push("/");
+    //     }
+    // }, [user, router]);
 };
 
 export default useCheckUser;

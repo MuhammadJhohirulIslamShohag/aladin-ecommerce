@@ -1,5 +1,7 @@
+"use client"
+
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from 'next/navigation'
 
 type SideBarItemPropType = {
     link: string;
@@ -8,9 +10,10 @@ type SideBarItemPropType = {
 };
 const SideBarItem = (props: SideBarItemPropType) => {
     const { link, name, children } = props;
-    const router = useRouter();
+    const pathname  = usePathname();
+    
     return (
-        <li className={router.pathname == link ? "bg-gray-100 rounded-lg" : ""}>
+        <li className={pathname  == link ? "bg-gray-100 rounded-lg" : ""}>
             <Link
                 href={link}
                 className={`flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100`}

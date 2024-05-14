@@ -10,5 +10,6 @@ export interface IProfile {
     address?: string;
     city?: string;
     postalCode?: string;
+    token: string;
     country?: string;
 }

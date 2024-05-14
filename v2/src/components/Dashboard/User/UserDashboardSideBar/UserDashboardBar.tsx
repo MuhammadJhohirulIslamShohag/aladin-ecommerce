@@ -1,4 +1,4 @@
-
+"use client"
 import SideBarItem from "./SideBarItem";
 import { MdManageAccounts, MdOutlineSyncProblem } from "react-icons/md";
 import { DiSublime } from "react-icons/di";

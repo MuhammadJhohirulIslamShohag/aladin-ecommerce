@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import { FaUserGraduate } from "react-icons/fa";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
 
 type NavbarMiddlePropType = {
     openProfileSidebar?: boolean;
