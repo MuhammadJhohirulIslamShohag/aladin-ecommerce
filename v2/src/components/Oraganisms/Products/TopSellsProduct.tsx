@@ -11,7 +11,7 @@ interface TopSellsProductProps {
 
 const TopSellsProduct: React.FC<TopSellsProductProps> = ({ products }) => {
     return (
-        <div>
+        <div className="py-32">
             <SectionTitle title={"Top Sells"} />
             <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-5">
                 <div className="">

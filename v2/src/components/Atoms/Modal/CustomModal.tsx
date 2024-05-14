@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect } from "react";
 import cn from "@/lib/cn";
+import React, { useEffect } from "react";
 
 interface CustomModalProps {
     children: React.ReactNode;

@@ -14,7 +14,7 @@ const SpeedDial = () => {
 
     return (
         <div
-            className="fixed flex end-5 bottom-1/2 group"
+            className="fixed flex end-5 bottom-1/2 group z-[9999]"
             onMouseLeave={() => setIsHovered(false)}
         >
             <div

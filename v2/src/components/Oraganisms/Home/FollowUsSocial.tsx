@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-import FollowUsSocialCard from "../../Molecules/Social/FollowUsSocialCard";
-import SectionTitle from "../../Molecules/SectionTitle";
 import ProductImageModal from "../../Molecules/Modal/ProductImageModal";
+import SectionTitle from "../../Molecules/SectionTitle";
+import FollowUsSocialCard from "../../Molecules/Social/FollowUsSocialCard";
 
 import { IProduct } from "@/types/product.type";
 

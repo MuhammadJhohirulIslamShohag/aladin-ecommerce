@@ -1,16 +1,21 @@
+import cn from "@/lib/cn";
 import Image from "next/image";
 import React from "react";
 
 interface SectionTitleProps {
     title?: string;
+    className?: string;
 }
 
-const SectionTitle: React.FC<SectionTitleProps> = ({ title = "" }) => {
+const SectionTitle: React.FC<SectionTitleProps> = ({
+    title = "",
+    className = "",
+}) => {
     const firstIndex = title?.indexOf(" ");
     const modifiedTitle = title?.substring(firstIndex);
 
     return (
-        <div className="text-center mb-10 ">
+        <div className={cn("text-center mb-10 ", className)}>
             <h2 className="text-4xl relative font-bold uppercase z-20 text-black">
                 <span className="text-green-400 font-extrabold">
                     {title?.split(" ")[0]}

@@ -1,72 +1,35 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
-import React, { useState } from "react";
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { FaHeartBroken, FaSearch } from "react-icons/fa";
 import { MdCompareArrows } from "react-icons/md";
 
-import CustomModal from "../../Atoms/Modal/CustomModal";
-import SaveProductModal from "../../Molecules/Modal/SaveProductModal";
-import CompareProductInfo from "../../Molecules/Products/CompareProductInfo";
-import ProductCartPreview from "./ProductCartPreview";
-import ProductView from "./ProductView";
-
-// import { useDispatch } from "react-redux";
-// import useAuthData from "../../../hooks/useAuthData";
 import numberWithCommas from "@/utils/numberWithCommas";
 import Division from "../../Atoms/Division";
 import ValidateImage from "../../Atoms/ValidateImage";
+
 import { IProduct } from "@/types/product.type";
 
-const FlatProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
-    //   const [addWishList] = useAddWishlistMutation();
-    //   const dispatch = useDispatch();
-    const { name, price, discount, imageURLs } = product;
+interface FlatProductCardProps {
+    product: IProduct;
+    handleAddCart: (product: IProduct) => void;
+    handleCompare: (product: IProduct) => void;
+    handleWishListProduct: (product: IProduct) => void;
+    handleProductView: (product: IProduct) => void;
+}
 
+const FlatProductCard: React.FC<FlatProductCardProps> = ({
+    product,
+    handleAddCart,
+    handleCompare,
+    handleWishListProduct,
+    handleProductView,
+}) => {
+    const { name, price, discount, imageURLs } = product;
     const discountPrice = Math.ceil(price * (discount / 100));
     const netPrice = Math.ceil(price - discountPrice);
-
-    //   const { user, token } = useAuthData();
-    //   const { data, isLoading, refetch } = useGetSingleUserQuery({
-    //     id: user?._id,
-    //   });
-
-    //   const userWishLists = data?.data?.wishList || [];
-    //   const wishListProduct = userWishLists.find(
-    //     (wishList) => wishList?.productId?._id === product?._id
-    //   );
-
-    const [modalOpen, setModalOpen] = useState(false);
-    const [productView, setProductView] = useState(false);
-    const [saveProductModalOpen, setSaveProductModalOpen] = useState(false);
-    const [compareModalOpen, setCompareModalOpen] = useState(false);
-
-    const manageWishListProduct = async (id: string) => {
-        // await addWishList(id).then((res) => {
-        //   if (res?.data?.success) {
-        //     toast.success(res?.data?.message, {
-        //       duration: 5000,
-        //     });
-        //     refetch();
-        //   } else {
-        //     toast.error(res?.error?.data?.errorMessages?.[0]?.message, {
-        //       duration: 5000,
-        //     });
-        //   }
-        // });
-    };
-
-    const handleAddCart = () => {
-        setModalOpen((prevState) => !prevState);
-    };
-
-    const makeProductTitle = (name: string) => {
-        const removeSpace = name?.replace(/\s/g, "_");
-        return removeSpace;
-    };
-
-    const title = makeProductTitle(name);
 
     return (
         <>
@@ -111,30 +74,25 @@ const FlatProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                         <div className="flex gap-2 flex-wrap">
                             <Division
                                 className="p-2 hidden lg:block rounded-full shadow-md hover:bg-primary group/edit duration-300 transition cursor-pointer  bg-white text-textPrimary"
-                                onClick={() => handleAddCart()}
+                                onClick={() => handleAddCart(product)}
                             >
                                 <BsFillCartPlusFill className="text-2xl" />
                             </Division>
                             <Division
                                 className="px-2 rounded-full shadow-md hover:bg-primary group/edit duration-300 transition cursor-pointer  bg-white text-textPrimary flex items-center justify-center"
-                                onClick={() =>
-                                    manageWishListProduct(product?._id)
-                                }
+                                onClick={() => handleWishListProduct(product)}
                             >
                                 <FaHeartBroken className={`text-2xl `} />
                             </Division>
                             <Division
                                 className="px-3 rounded-full shadow-md hover:bg-primary group/edit duration-300 transition cursor-pointer  bg-white text-textPrimary flex items-center justify-center"
-                                onClick={() => setProductView(!productView)}
+                                onClick={() => handleProductView(product)}
                             >
                                 <FaSearch className="text-md" />
                             </Division>
                             <Division
                                 className="px-2 rounded-full shadow-md hover:bg-primary group/edit duration-300 transition cursor-pointer  bg-white text-textPrimary flex items-center justify-center"
-                                onClick={() => {
-                                    setCompareModalOpen((prev) => !prev);
-                                    // dispatch(addToCompare({ ...product }));
-                                }}
+                                onClick={() => handleCompare(product)}
                             >
                                 <MdCompareArrows className="text-2xl" />
                             </Division>
@@ -142,47 +100,6 @@ const FlatProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                     </div>
                 </div>
             </div>
-
-            {productView && (
-                <CustomModal onClose={() => setProductView((prev) => !prev)}>
-                    <ProductView
-                        product={product}
-                        setProductView={setProductView}
-                    />
-                </CustomModal>
-            )}
-            {saveProductModalOpen && (
-                <CustomModal
-                    onClose={() => setSaveProductModalOpen((prev) => !prev)}
-                >
-                    <SaveProductModal
-                        onCloseSaveProductModal={setSaveProductModalOpen}
-                        product={product}
-                        isProductExist={false}
-                        // isProductExist={wishListProduct}
-                    />
-                </CustomModal>
-            )}
-            {modalOpen && (
-                <CustomModal onClose={() => setModalOpen((prev) => !prev)}>
-                    <ProductCartPreview
-                        product={product}
-                        handleClose={() => setModalOpen((prev) => !prev)}
-                    />
-                </CustomModal>
-            )}
-            {compareModalOpen && (
-                <CustomModal
-                    onClose={() => setCompareModalOpen((prev) => !prev)}
-                >
-                    <CompareProductInfo
-                        onCloseCompareModal={() =>
-                            setCompareModalOpen((prev) => !prev)
-                        }
-                        compareProductName={product?.name}
-                    />
-                </CustomModal>
-            )}
         </>
     );
 };

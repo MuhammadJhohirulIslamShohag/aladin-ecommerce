@@ -10,6 +10,10 @@
     }
 }
 
+.body{
+    background-color: #0f172a !important;
+}
+
 /* Start React Select */
 .select-placeholder-text {
     color: #d1d5db !important;
@@ -582,6 +586,65 @@ canvas {
     bottom: 10%;
     position: absolute;
     right: 0;
+}
+
+
+.content-wrapper {
+    padding-bottom: 2px;
+    background: linear-gradient(to right, black 0%, black 100%);
+    background-size: 0px 1px;
+    background-repeat: no-repeat;
+    background-position: left 87%;
+    transition: all 0.5s;
+}
+
+/* top product slider */
+.top_product:hover .swiper-button-prev,
+.top_product:hover .swiper-button-next {
+    right: 0 !important;
+    border: 2px solid #36d399 !important;
+    width: 33px !important;
+    height: 33px !important;
+    background-color: #36d399 !important;
+    transition: all 0.4s !important;
+    border-radius: 50% !important;
+}
+
+.top_product .swiper-button-prev {
+    left: 0% !important;
+}
+.top_product .swiper-button-next {
+    right: 0% !important;
+}
+
+.top_product .swiper-button-next:after,
+.top_product .swiper-button-prev:after {
+    display: none;
+}
+.top_product:hover .swiper-button-next:after,
+.top_product:hover .swiper-button-prev:after {
+    font-size: 15px !important;
+    color: white !important;
+    font-weight: bolder !important;
+    transition: all 0.4s !important;
+    display: block !important;
+}
+.top_product .swiper-button-next:hover:after,
+.top_product .swiper-button-prev:hover:after {
+    color: black !important;
+}
+
+/* small product slider */
+.small_product_slider .swiper-pagination-horizontal {
+    width: 21% !important;
+    left: 80% !important;
+    top: -1% !important;
+}
+
+.small_product_slider .swiper-pagination-bullet-active {
+    background: #4ade80 !important;
+    width: 30px !important;
+    border-radius: 5px !important;
 }
 
 

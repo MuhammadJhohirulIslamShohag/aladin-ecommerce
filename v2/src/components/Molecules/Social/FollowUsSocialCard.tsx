@@ -28,9 +28,9 @@ const FollowUsSocialCard: React.FC<FollowUsSocialCardProps> = ({
             </div>
             <Link href="/" className="block">
                 <Image
-                    src={"../../../assets/Image/social/1.jpg"}
+                    src={social?.imageURLs?.[0]}
                     alt={name}
-                    className="transition-transform duration-500 group-hover:scale-125"
+                    className="transition-transform duration-500 group-hover:scale-125 w-full h-full"
                     width={100}
                     height={100}
                 />

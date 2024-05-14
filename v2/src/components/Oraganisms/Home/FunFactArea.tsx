@@ -8,10 +8,10 @@ import FunFactCard from "../../Molecules/FunFactCard";
 function FunFactArea(): JSX.Element {
     return (
         <section
-            className="relative bg-center bg-cover flex justify-center items-center lg:h-[400px] py-10"
+            className="relative bg-center bg-cover flex justify-center items-center lg:h-[400px] py-10 mt-24"
             style={{
                 backgroundImage:
-                    "url('http://localhost:5173/src/assets/Image/fun-fact/s2.jpg')",
+                    "url('/fun-fact/s2.jpg')",
             }}
         >
             <div className="absolute inset-0 bg-black opacity-50"></div>

@@ -17,6 +17,9 @@ import TopProducts from "@/components/Oraganisms/Products/TopProducts";
 import TopSellsProduct from "@/components/Oraganisms/Products/TopSellsProduct";
 import Categories from "@/components/Oraganisms/Categories";
 import SubCategories from "@/components/Oraganisms/SubCategories";
+import FollowUsSocial from "@/components/Oraganisms/Home/FollowUsSocial";
+import FunFactArea from "@/components/Oraganisms/Home/FunFactArea";
+import SmallProductSlider from "@/components/Oraganisms/Home/SmallProductSlider";
 
 const Home = async () => {
     // Initiate both requests in parallel
@@ -64,17 +67,23 @@ const Home = async () => {
                 <Suspense fallback={<Loader height={"h-[360px]"} />}>
                     <NewArrivals products={products?.data?.data} />
                 </Suspense>
-
                 <Suspense fallback={<Loader height={"h-[360px]"} />}>
-                    <TopSellsProduct products={products?.data?.data} />
-                </Suspense>
-
-                <Suspense fallback={<Loader height={"h-[450px]"} />}>
-                    <Blogs blogs={blogs?.data?.data} />
+                    <SmallProductSlider title="Best Food" products={products?.data?.data} />
                 </Suspense>
             </div>
 
+            <FunFactArea />
+
+            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                <TopSellsProduct products={products?.data?.data} />
+            </Suspense>
             <Advertise />
+            <Suspense fallback={<Loader height={"h-[450px]"} />}>
+                <Blogs blogs={blogs?.data?.data} />
+            </Suspense>
+            <Suspense fallback={<Loader height={"h-[450px]"} />}>
+                <FollowUsSocial products={products?.data?.data} />
+            </Suspense>
         </>
     );
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect, SetStateAction } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -71,7 +71,6 @@ const ComparisonProduct: React.FC<ComparisonProductProps> = ({ products }) => {
             }));
             // dispatch(addToCompare({ ...product }));
             setIsComparisonOneFocused(false);
-            setSearchValue("");
         } else if (inputField === 2) {
             setComparisonTwoValue((prev) => ({
                 ...prev,
@@ -80,14 +79,12 @@ const ComparisonProduct: React.FC<ComparisonProductProps> = ({ products }) => {
             }));
             // dispatch(addToCompare({ ...product }));
             setIsComparisonTwoFocused(false);
-            setSearchValue("");
         }
     };
 
     const handleSendComparisonProduct = () => {
         if (comparisonOneValue?.name && comparisonTwoValue.name) {
-            router.push("/product/compare", { scroll: false });
-            setSearchValue("");
+            router.push("/products/compare", { scroll: false });
         } else {
             toast.error("Please do not empty any comparison input field!");
         }
@@ -170,7 +167,7 @@ const ComparisonProduct: React.FC<ComparisonProductProps> = ({ products }) => {
                             <BsSearch size={20} color="#7F7F7F" />
                         </div>
                         {isComparisonTwoFocused && (
-                            <ul className="w-full bg-white px-4 pt-2 pb-4 rounded-b-sm">
+                            <ul className="w-full absolute z-50 bg-white px-4 pt-2 pb-4 rounded-b-sm">
                                 {products?.slice(6, 10)?.map((product) => (
                                     <li
                                         key={product._id}

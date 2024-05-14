@@ -149,7 +149,7 @@ const CompareItemModal: React.FC<CompareItemModalProps> = ({
                         >
                             Clear
                         </button>
-                        <Link href="/product/compare">
+                        <Link href="/products/compare">
                             <button className="w-fit h-9 px-4 text-sm text-white font-bold border-2 border-infoColor py-1 tracking-wide rounded-md hover:text-white bg-btnPrimary hover:bg-primary transition-all duration-300">
                                 Compare Now
                             </button>

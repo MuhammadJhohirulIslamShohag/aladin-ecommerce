@@ -25,3 +25,11 @@ export interface IProduct {
     updatedAt: Date;
     __v: number;
 }
+
+export interface RootProperty {
+    [key: string]: string | undefined | React.ReactNode;
+}
+
+export interface CompareProduct {
+    [key: string]: string | undefined;
+}
