@@ -3,6 +3,7 @@ import ProductInfo from "@/components/Product/ProductInfo/ProductInfo";
 import SectionTitle from "@/components/SectionTitle/SectionTitle";
 import ProductDetailsTab from "@/components/Product/ProductDetailsTab";
 import Product from "@/components/Product/Product";
+
 import { getSingleProduct, getProducts } from "@/api/products";
 import { IProduct } from "@/types/product.type";
 import { getReviews } from "@/api/review";
@@ -79,12 +80,5 @@ const ProductDetails = async ({ params }: { params: { slug: string } }) => {
         </>
     );
 };
-
-/*
-
-
-            
-
-*/
 
 export default ProductDetails;

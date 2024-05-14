@@ -80,7 +80,7 @@ const WishlistProduct = () => {
 
     return (
         <>
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto px-6 mt-10">
                 <SectionTitle title={"Wishlist Products"} />
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-8 gap-4 px-2 lg:px-0">
                     {wishListProductsOptimistic?.map((product: IProduct) => (
