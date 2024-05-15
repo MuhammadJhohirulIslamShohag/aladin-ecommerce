@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 type FilterMobileMenuItemType = {
     filterMenuItemName: string;
-    filterMenuSubItems: JSX.Element[] | JSX.Element | 0 | false;
+    filterMenuSubItems: JSX.Element | 0 | false;
     isShowCloseOpenButton?: boolean;
 };
 const FilterMobileMenuItem = ({

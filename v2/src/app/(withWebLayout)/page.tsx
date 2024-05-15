@@ -5,7 +5,7 @@ import { getCategories } from "@/api/category";
 import { getProducts } from "@/api/products";
 import { getAllSubCategories } from "@/api/sub-categories";
 
-import Advertise from "@/components/Home/Advertise/Advertise";
+
 import Loader from "@/components/Loader/Loader";
 import Hero from "@/components/Oraganisms/Home/Hero";
 import FeaturedProducts from "@/components/Oraganisms/Products/FeaturedProducts";
@@ -20,6 +20,7 @@ import SubCategories from "@/components/Oraganisms/SubCategories";
 import FollowUsSocial from "@/components/Oraganisms/Home/FollowUsSocial";
 import FunFactArea from "@/components/Oraganisms/Home/FunFactArea";
 import SmallProductSlider from "@/components/Oraganisms/Home/SmallProductSlider";
+import Advertise from "@/components/Oraganisms/Advertise/Advertise";
 
 const Home = async () => {
     // Initiate both requests in parallel

@@ -1,14 +1,17 @@
+"use client";
+
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import FilterMobileMenuItem from "./FilterMobileMenuItem";
+
+import FilterMobileMenuItem from "../../../Molecules/FilterMenu/FilterMobileMenu/FilterMobileMenuItem";
 
 type FilterMenuType = {
-    checkboxColor: 0 | JSX.Element[];
-    checkboxShipping: 0 | JSX.Element[];
-    checkboxBrands: 0 | JSX.Element[];
-    checkboxSubCategories: false | JSX.Element[];
+    checkboxColor: JSX.Element;
+    checkboxShipping: JSX.Element;
+    checkboxBrands: JSX.Element;
+    checkboxSubCategories: JSX.Element;
     starRatingFilter: JSX.Element;
-    showCategories: 0 | JSX.Element[];
+    showCategories: JSX.Element;
     showRange: JSX.Element;
     openFilterMobileMenu: boolean;
     setOpenFilterMobileMenu: React.Dispatch<React.SetStateAction<boolean>>;
