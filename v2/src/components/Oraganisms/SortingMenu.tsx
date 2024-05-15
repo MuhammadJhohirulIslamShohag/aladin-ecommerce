@@ -47,18 +47,18 @@ const SortingMenu = ({
                 </div>
 
                 {openSortingMenu && (
-                    <div className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="absolute right-0 z-[99999] mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1" role="none">
                             <SortingMenuItem
                                 sortingMenuItemName={"Most Popular"}
                                 handleSortingProducts={handleSortingProducts}
-                                sort={"sold"}
+                                sort={"-sold"}
                                 order={"desc"}
                             />
                             <SortingMenuItem
                                 sortingMenuItemName={"Newest"}
                                 handleSortingProducts={handleSortingProducts}
-                                sort={"createdAt"}
+                                sort={"-createdAt"}
                                 order={"desc"}
                             />
                             <SortingMenuItem
@@ -70,7 +70,7 @@ const SortingMenu = ({
                             <SortingMenuItem
                                 sortingMenuItemName={"Price: High to Low"}
                                 handleSortingProducts={handleSortingProducts}
-                                sort={"price"}
+                                sort={"-price"}
                                 order={-1}
                             />
                         </div>

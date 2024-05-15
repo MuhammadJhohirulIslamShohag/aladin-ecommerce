@@ -20,8 +20,8 @@ const ShowCategory: React.FC<ShowCategoryProps> = ({
                     <div className="space-y-4">
                         <CheckBox
                             handleCheck={handleChange}
-                            checked={checkValue.includes(data?._id)}
-                            value={data._id}
+                            checked={checkValue.includes(data?.name)}
+                            value={data.name}
                             label={data?.name}
                             name={"category"}
                         />

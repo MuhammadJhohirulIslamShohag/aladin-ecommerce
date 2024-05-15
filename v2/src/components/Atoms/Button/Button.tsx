@@ -1,7 +1,7 @@
 import cn from "@/lib/cn";
 
 interface ButtonProps {
-    label: string | Element | React.ReactNode;
+    label: string | Element | React.ReactNode | any;
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
     className?: string;
     rest?: { [key: string]: unknown };

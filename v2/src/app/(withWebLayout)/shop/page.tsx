@@ -24,43 +24,39 @@ import { useGetColorsQuery } from "@/redux/services/color/colorApiService";
 import { useGetProductsQuery } from "@/redux/services/product/productApiService";
 import { useGetSubCategoriesQuery } from "@/redux/services/subCategory/subCategoryApiService";
 import { IProduct } from "@/types/product.type";
+import Pagination from "@/components/Molecules/Pagination/Pagination";
 
 const Shop = () => {
     const [openSortingMenu, setOpenSortingMenu] = useState<boolean>(false);
     const [openFilterMobileMenu, setOpenFilterMobileMenu] =
         useState<boolean>(false);
     const [gridColumn, setGridColumn] = useState<boolean>(true);
-    const [price, setPrice] = useState<number[]>([0, 0]);
+    const [price, setPrice] = useState<number[]>([0, 3000]);
     const [categoriesId, setCategoriesId] = useState<string[]>([]);
     const [subCategoryId, setSubCategoryId] = useState<string[]>([]);
-    const [sortConfig, setSortConfig] = useState<{
-        orderBy: string | number;
-        sortBy: string;
-    }>({
-        orderBy: "" || 0,
-        sortBy: "",
-    });
+    const [sortConfig, setSortConfig] = useState<string>("");
     const [brand, setBrand] = useState<string>("");
     const [color, setColor] = useState<string>("");
     const [shipping, setShipping] = useState<string>("");
-
-    const [pageLimit, setPageLimit] = useState(10);
     const [pageNumber, setPageNumber] = useState(1);
 
     const { state, dispatch } = useStoreContext();
     const { text } = state;
 
-    const query: { [key: string]: unknown } = {
-        limit: String(pageLimit),
+    const query: Record<string, string> = {
+        limit: String(6),
         page: String(pageNumber),
         searchTerm: text,
+        sort: sortConfig,
+        minPrice: String(price[0]),
+        maxPrice: String(price[1]),
     };
 
     if (brand) {
         query["brand.name"] = brand;
     }
     if (categoriesId?.length) {
-        query["category.categoryId"] = categoriesId.join(",");
+        query["category.name"] = categoriesId.join(",");
     }
     if (subCategoryId?.length) {
         query["subCategories.name"] = subCategoryId.join(",");
@@ -102,6 +98,7 @@ const Shop = () => {
         setTimeout(() => {
             setPrice(value);
         }, 400);
+        setPageNumber(1)
     };
 
     // handle check for categories
@@ -111,7 +108,7 @@ const Shop = () => {
             type: StoreActionType.SEARCH_FILTER_VALUE,
             payload: "",
         });
-        setPrice([0, 0]);
+        setPrice([0, 3000]);
         setBrand("");
         setColor("");
         setShipping("");
@@ -129,6 +126,7 @@ const Shop = () => {
             inTheState.splice(foundInTheState, 1);
         }
         setCategoriesId(inTheState);
+        setPageNumber(1)
     };
 
     const clickRating = (num: number) => {
@@ -137,12 +135,13 @@ const Shop = () => {
             type: StoreActionType.SEARCH_FILTER_VALUE,
             payload: "",
         });
-        setPrice([0, 0]);
+        setPrice([0, 3000]);
         setCategoriesId([]);
         setSubCategoryId([]);
         setBrand("");
         setColor("");
         setShipping("");
+        setPageNumber(1)
     };
 
     // check for sub-categories
@@ -154,7 +153,7 @@ const Shop = () => {
             type: StoreActionType.SEARCH_FILTER_VALUE,
             payload: "",
         });
-        setPrice([0, 0]);
+        setPrice([0, 3000]);
         setBrand("");
         setColor("");
         setShipping("");
@@ -167,6 +166,7 @@ const Shop = () => {
         } else {
             inTheState.splice(foundTheState, 1);
         }
+        setPageNumber(1)
         setSubCategoryId(inTheState);
     };
 
@@ -177,11 +177,12 @@ const Shop = () => {
             type: StoreActionType.SEARCH_FILTER_VALUE,
             payload: "",
         });
-        setPrice([0, 0]);
+        setPrice([0, 3000]);
         setCategoriesId([]);
         setSubCategoryId([]);
         setShipping("");
         setColor("");
+        setPageNumber(1)
         setBrand(event.target.value);
     };
 
@@ -192,7 +193,8 @@ const Shop = () => {
             type: StoreActionType.SEARCH_FILTER_VALUE,
             payload: "",
         });
-        setPrice([0, 0]);
+        setPageNumber(1)
+        setPrice([0, 3000]);
         setCategoriesId([]);
         setSubCategoryId([]);
         setBrand("");
@@ -207,7 +209,8 @@ const Shop = () => {
             type: StoreActionType.SEARCH_FILTER_VALUE,
             payload: "",
         });
-        setPrice([0, 0]);
+        setPageNumber(1)
+        setPrice([0, 3000]);
         setCategoriesId([]);
         setSubCategoryId([]);
         setBrand("");
@@ -216,11 +219,8 @@ const Shop = () => {
     };
     // sorting products
     const handleSortingProducts = (sort: string, order: number | string) => {
-        setSortConfig((prev) => ({
-            ...prev,
-            sortBy: sort,
-            orderBy: order,
-        }));
+        setPageNumber(1)
+        setSortConfig(sort);
     };
     return (
         <>
@@ -346,16 +346,16 @@ const Shop = () => {
 
                             {/* Filter Products */}
                             <div className="col-span-3">
-                                <div className="h-96 md:h-full">
+                                <div className="">
                                     {isLoading ? (
                                         <div
                                             className={`grid gap-5 ${
                                                 gridColumn
-                                                    ? `lg:grid-cols-2 md:grid-cols-1 grid-cols-1`
-                                                    : `grid-cols-1`
+                                                    ? `lg:grid-cols-3 md:grid-cols-2 grid-cols-1`
+                                                    : `md:grid-cols-2 grid-cols-1`
                                             }`}
                                         >
-                                            <Skeleton numbers={2} />
+                                            <Skeleton numbers={6} />
                                         </div>
                                     ) : products && products.length < 1 ? (
                                         <p className="text-center text-xl text-primary">
@@ -384,6 +384,16 @@ const Shop = () => {
                                                 )}
                                         </div>
                                     )}
+                                </div>
+
+                                <div className="mt-5">
+                                    <Pagination
+                                        pages={
+                                            productsInfo?.meta?.totalPage || 10
+                                        }
+                                        page={pageNumber}
+                                        setPage={setPageNumber}
+                                    />
                                 </div>
                             </div>
                         </div>
