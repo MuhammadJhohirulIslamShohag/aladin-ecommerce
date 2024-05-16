@@ -1,18 +1,32 @@
-import React from "react";
+"use client"
 
-const ShippingAddressForm = ({
-    addressValues,
-    validationError,
-    loading,
-    handleAddressValueChange,
-    submitShippingAddressToDb,
-}:any) => {
-    const { fullName, address, country, city, postalCode } = addressValues;
-   
+import React from "react";
+import { useForm } from "react-hook-form";
+
+type AddressType = {
+    fullName?: string;
+    address?: string;
+    country?: string;
+    city?: string;
+    postalCode?: string;
+};
+
+const ShippingAddressForm = ({ loading, submitShippingAddress }: any) => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<AddressType>();
+
     return (
-        <form onSubmit={submitShippingAddressToDb}>
+        <form onSubmit={handleSubmit(submitShippingAddress)}>
             <div>
-                <label htmlFor="fullName" className="block mb-2 text-sm font-medium text-primary">Full Name:</label>
+                <label
+                    htmlFor="fullName"
+                    className="block mb-2 text-sm font-medium text-primary"
+                >
+                    Full Name:
+                </label>
                 <input
                     type="text"
                     name="fullName"
@@ -22,7 +36,7 @@ const ShippingAddressForm = ({
                         validationError && validationError.fullName
                             ? "input-error"
                             : "input-success"
-                    }`} 
+                    }`}
                     id="fullName"
                     placeholder="Enter Your Full Name"
                 />
@@ -33,7 +47,12 @@ const ShippingAddressForm = ({
                 )}
             </div>
             <div>
-                <label htmlFor="address" className="block mb-2 text-sm font-medium text-primary">Address:</label>
+                <label
+                    htmlFor="address"
+                    className="block mb-2 text-sm font-medium text-primary"
+                >
+                    Address:
+                </label>
                 <input
                     type="text"
                     name="address"
@@ -41,8 +60,8 @@ const ShippingAddressForm = ({
                     onChange={handleAddressValueChange}
                     className={`input input-bordered w-full  text-primary ${
                         validationError && validationError.address
-                        ? "input-error"
-                        : "input-success"
+                            ? "input-error"
+                            : "input-success"
                     }`}
                     id="address"
                     placeholder="Enter Your Address"
@@ -54,7 +73,12 @@ const ShippingAddressForm = ({
                 )}
             </div>
             <div className="form-group">
-                <label htmlFor="country" className="block mb-2 text-sm font-medium text-primary">Country</label>
+                <label
+                    htmlFor="country"
+                    className="block mb-2 text-sm font-medium text-primary"
+                >
+                    Country
+                </label>
                 <input
                     type="text"
                     name="country"
@@ -62,8 +86,8 @@ const ShippingAddressForm = ({
                     onChange={handleAddressValueChange}
                     className={`input input-bordered  w-full  text-primary ${
                         validationError && validationError.country
-                        ? "input-error"
-                        : "input-success"
+                            ? "input-error"
+                            : "input-success"
                     }`}
                     id="country"
                     placeholder="Enter Your Country Name"
@@ -72,10 +96,15 @@ const ShippingAddressForm = ({
                     <div className="text-red-500">
                         {validationError.country}
                     </div>
-                ) }
+                )}
             </div>
             <div className="form-group">
-                <label htmlFor="city" className="block mb-2 text-sm font-medium text-primary">City</label>
+                <label
+                    htmlFor="city"
+                    className="block mb-2 text-sm font-medium text-primary"
+                >
+                    City
+                </label>
                 <input
                     type="text"
                     name="city"
@@ -83,20 +112,23 @@ const ShippingAddressForm = ({
                     onChange={handleAddressValueChange}
                     className={`input input-bordered  w-full text-primary ${
                         validationError && validationError.city
-                        ? "input-error"
-                        : "input-success"
+                            ? "input-error"
+                            : "input-success"
                     }`}
                     id="city"
                     placeholder="Enter Your City Name"
                 />
                 {validationError && validationError.city && (
-                    <div className="text-red-500">
-                        {validationError.city}
-                    </div>
-                ) }
+                    <div className="text-red-500">{validationError.city}</div>
+                )}
             </div>
             <div className="form-group">
-                <label htmlFor="postalCode" className="block mb-2 text-sm font-medium text-primary">Postal Code:</label>
+                <label
+                    htmlFor="postalCode"
+                    className="block mb-2 text-sm font-medium text-primary"
+                >
+                    Postal Code:
+                </label>
                 <input
                     type="text"
                     name="postalCode"
@@ -104,8 +136,8 @@ const ShippingAddressForm = ({
                     onChange={handleAddressValueChange}
                     className={`input input-bordered  w-full text-primary ${
                         validationError && validationError.postalCode
-                        ? "input-error"
-                        : "input-success"
+                            ? "input-error"
+                            : "input-success"
                     }`}
                     id="postalCode"
                     placeholder="Enter Your Postal Code"
@@ -114,9 +146,13 @@ const ShippingAddressForm = ({
                     <div className="text-red-500">
                         {validationError.postalCode}
                     </div>
-                ) }
+                )}
             </div>
-            <button type="submit" className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2" disabled={loading}>
+            <button
+                type="submit"
+                className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
+                disabled={loading}
+            >
                 {loading ? "Saving..." : "Save"}
             </button>
         </form>

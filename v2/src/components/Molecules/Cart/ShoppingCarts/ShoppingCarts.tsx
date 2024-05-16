@@ -1,6 +1,6 @@
 "use client";
-import { Dialog, Transition } from "@headlessui/react";
 import Link from "next/link";
+import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, startTransition, useOptimistic } from "react";
 
 import ShoppingCart from "./ShoppingCart";
@@ -10,7 +10,16 @@ import { CartType } from "@/types/cart.types";
 import { useStoreContext } from "@/contexts/StoreContextProvider";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
 
-const ShoppingCarts = ({ openShoppingCart, setOpenShoppingCart }: any) => {
+interface ShoppingCartsProps {
+    openShoppingCart: boolean;
+    setOpenShoppingCart: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ShoppingCarts: React.FC<ShoppingCartsProps> = ({
+    openShoppingCart,
+    setOpenShoppingCart,
+}) => {
+
     let allCart = getCarts();
     const { dispatch } = useStoreContext();
 

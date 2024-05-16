@@ -2,48 +2,30 @@
 
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
-import ShippingAddressForm from "@/components/Form/ShippingAddressForm";
+import { useRouter } from "next/navigation";
+
 import useCheckUser from "@/hooks/useCheckUser";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
+import DeliveryAddress from "@/components/Oraganisms/Checkout/DeliveryAddress";
+import OrderSummary from "@/components/Oraganisms/Checkout/OrderSummary";
 
 import {
     createOrderCashOnDelivery,
     emptyCart,
     getTotalPriceAfterDiscount,
-    getUsersCart,
     getUserShippingAddress,
     saveShippingAddress,
 } from "@/api/user";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
 import { useStoreContext } from "@/contexts/StoreContextProvider";
 import { getUserInfo } from "@/store/user/users";
+import { getCarts } from "@/store/cart/cart";
+import { useGetCartsQuery } from "@/redux/services/cart/cartApiService";
 
-type AddressType = {
-    fullName?: string;
-    address?: string;
-    country?: string;
-    city?: string;
-    postalCode?: string;
-};
-const initialAddressValue = {
-    fullName: "",
-    address: "",
-    country: "",
-    city: "",
-    postalCode: "",
-};
 const Checkout = () => {
     useCheckUser();
-    const [products, setProducts] = useState([]);
-    const [cartTotal, setCartTotal] = useState<number>(0);
-    const [addressValues, setAddressValues] =
-        useState<AddressType>(initialAddressValue);
+
     const [isAddressSave, setIsAddressSave] = useState<boolean>(false);
-    const [validationError, setValidationError] = useState<AddressType | null>(
-        null
-    );
     const [couponName, setCouponName] = useState<string>("");
     const [inValidCouponName, setInValidCouponName] = useState<string>("");
     const [totalPriceAfterDiscount, setTotalPriceAfterDiscount] =
@@ -54,28 +36,22 @@ const Checkout = () => {
         processingOrderLoading: false,
         couponLoading: false,
     });
-    const user = getUserInfo();
-    const { state, dispatch } = useStoreContext();
 
-    const { carts, isCashOnDelivery, isCouped } = state;
+    const user = getUserInfo();
+    const carts = getCarts();
     const router = useRouter();
 
-    useEffect(() => {
-        if (user && user.token) {
-            getUsersCart(user.token).then((res) => {
-                if (res.data[0]) {
-                    setProducts(res.data[0].products);
-                    setCartTotal(res.data[0].cartTotal);
-                }
-            });
-        }
-    }, [user]);
+    const { state, dispatch } = useStoreContext();
+    const { isCashOnDelivery, isCouped } = state;
+
+    // redux api call
+    const { data: userCartsData } = useGetCartsQuery(user._id);
+    const userCarts = userCartsData?.data;
 
     useEffect(() => {
         if (user && user.token) {
             getUserShippingAddress(user.token).then((res) => {
                 if (res.data.address) {
-                    setAddressValues(res.data.address);
                     if (typeof window !== "undefined") {
                         window.localStorage.setItem(
                             "shippingAddress",
@@ -112,8 +88,6 @@ const Checkout = () => {
             });
             emptyCart(user.token)
                 .then((res) => {
-                    setProducts([]);
-                    setCartTotal(0);
                     setCouponName("");
                     setTotalPriceAfterDiscount(0);
                     // store to the context
@@ -139,115 +113,43 @@ const Checkout = () => {
                 });
         }
     };
-    const handleAddressValueChange = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        setAddressValues({
-            ...addressValues,
-            [e.target.name]: e.target.value,
-        });
-    };
+
     // save address to the database
-    const submitShippingAddressToDb = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const { error, isValid } = validator();
+    const submitShippingAddress = (data) => {
+        if (user && user.token) {
+            setLoading({
+                ...loading,
+                shippingAddressLoading: true,
+            });
+            saveShippingAddress(data, user!.token)
+                .then((res) => {
+                    setIsAddressSave(true);
+                    toast.success("Save Address!");
 
-        if (isValid) {
-            if (user && user.token) {
-                setLoading({
-                    ...loading,
-                    shippingAddressLoading: true,
-                });
-                saveShippingAddress(addressValues, user!.token)
-                    .then((res) => {
-                        setIsAddressSave(true);
-                        toast.success("Save Address!");
-
-                        if (typeof window !== "undefined") {
-                            window.localStorage.setItem(
-                                "shippingAddress",
-                                JSON.stringify(res.data.address)
-                            );
-                        }
-                        dispatch({
-                            type: StoreActionType.ADD_SHIPPING_ADDRESS,
-                            payload: res.data.address,
-                        });
-                        setLoading({
-                            ...loading,
-                            shippingAddressLoading: false,
-                        });
-
-                        setValidationError(null);
-                    })
-                    .catch((error) => {
-                        setLoading({
-                            ...loading,
-                            shippingAddressLoading: false,
-                        });
-                        console.log(error);
+                    if (typeof window !== "undefined") {
+                        window.localStorage.setItem(
+                            "shippingAddress",
+                            JSON.stringify(res.data.address)
+                        );
+                    }
+                    dispatch({
+                        type: StoreActionType.ADD_SHIPPING_ADDRESS,
+                        payload: res.data.address,
                     });
-            }
-        } else {
-            setValidationError(error);
+                    setLoading({
+                        ...loading,
+                        shippingAddressLoading: false,
+                    });
+                })
+                .catch((error) => {
+                    setLoading({
+                        ...loading,
+                        shippingAddressLoading: false,
+                    });
+                    console.log(error);
+                });
         }
     };
-
-    const validator = () => {
-        const { fullName, address, country, city, postalCode } = addressValues;
-        let error: AddressType = {};
-
-        if (!fullName || fullName.trim() === "") {
-            error.fullName = "Enter Your Valid Name !";
-        }
-        if (!address || address.trim() === "") {
-            error.address = "Enter Your Valid Address !";
-        }
-        if (!country || country.trim() === "") {
-            error.country = "Enter Your Valid Country !";
-        }
-        if (!city || city.trim() === "") {
-            error.city = "Enter Your Valid City !";
-        }
-        if (!postalCode || postalCode.trim() === "") {
-            error.postalCode = "Enter Your Valid Postal-Code !";
-        }
-        const isValid = Object.keys(error).length === 0;
-
-        return {
-            isValid,
-            error,
-        };
-    };
-
-    const couponForm = () => (
-        <form onSubmit={handleCouponSubmit}>
-            <div>
-                <label
-                    htmlFor="coupon"
-                    className="block mb-2 text-sm font-medium text-primary"
-                >
-                    Coupon:
-                </label>
-                <input
-                    type="text"
-                    name="couponName"
-                    value={couponName}
-                    onChange={(e) => setCouponName(e.target.value)}
-                    className="input input-bordered input-success w-1/2 text-primary"
-                    id="coupon"
-                    placeholder="Enter Coupon"
-                    autoFocus
-                />
-            </div>
-            <button
-                className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
-                disabled={carts.length === 0 || loading.couponLoading}
-            >
-                {loading.couponLoading ? "Saving..." : "Save"}
-            </button>
-        </form>
-    );
 
     const handleCouponSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -334,126 +236,34 @@ const Checkout = () => {
             />
 
             <div className="container mt-10 px-40">
-                <div className="grid grid-cols-12 gap-16 sm:grid-cols-1 sm:gap-0 md:grid-cols-1 md:gap-0">
-                    <div className="col-span-7 sm:col-span-0 md:col-span-0">
-                        <h4 className="text-xl mb-5 font-semibold text-left text-green-500 bg-white">
-                            Delivery Address
-                        </h4>
-
-                        {/* Shipping Address Form*/}
-                        <ShippingAddressForm
-                            addressValues={addressValues}
-                            validationError={validationError}
-                            loading={loading.shippingAddressLoading}
-                            handleAddressValueChange={handleAddressValueChange}
-                            submitShippingAddressToDb={
-                                submitShippingAddressToDb
-                            }
-                        />
-                        <hr className="my-4" />
-
-                        {/* Coupon Form*/}
-                        <h4 className="text-green-400">Got Coupon?</h4>
-                        {inValidCouponName && (
-                            <div className="bg-success text-center">
-                                <h6 className="text-white p-2">
-                                    {inValidCouponName}
-                                </h6>
-                            </div>
-                        )}
-                        {couponForm()}
-                    </div>
+                <div className="grid lg:grid-cols-12 lg:gap-16 grid-cols-1 gap-0 md:grid-cols-1">
+                    <DeliveryAddress
+                        submitShippingAddress={submitShippingAddress}
+                        inValidCouponName={inValidCouponName}
+                        handleCouponSubmit={handleCouponSubmit}
+                        couponName={couponName}
+                        setCouponName={setCouponName}
+                        carts={carts}
+                        couponLoading={loading.couponLoading}
+                    />
 
                     {/* Order Summary Card */}
-                    <div className="col-span-5 sm:col-span-0 md:col-span-0">
-                        <div className="bg-gray-100 p-5  rounded-lg mt-16 md:mt-5 sm:mt-5">
-                            <h4 className="text-xl font-semibold text-green-400 mb-3">
-                                Order Summary
-                            </h4>
-                            <h4 className="text-lg font-semibold text-primary">
-                                Product
-                            </h4>
-                            <hr className="mb-2" />
-                            {carts &&
-                                carts.map((product: any) => (
-                                    <p
-                                        className="text-md font-normal text-primary"
-                                        key={product._id}
-                                    >
-                                        {product.title} x {product.count} ={" "}
-                                        {`$${product.price * product.count}`}
-                                    </p>
-                                ))}
-                            <hr className="mt-2" />
-                            <p className="text-lg font-semibold text-primary">
-                                Total Price = {`$${cartTotal}`}
-                            </p>
-                            <hr />
-                            {totalPriceAfterDiscount > 0 && (
-                                <div className="bg-success mb-2">
-                                    <p className="text-lg font-semibold text-primary">
-                                        Total Price After Discount : $
-                                        {totalPriceAfterDiscount}
-                                    </p>
-                                </div>
-                            )}
-
-                            <hr />
-
-                            {isCashOnDelivery ? (
-                                <button
-                                    className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
-                                    disabled={
-                                        !isAddressSave ||
-                                        products.length < 1 ||
-                                        loading.processingOrderLoading
-                                    }
-                                    onClick={handleCashOrderDelivery}
-                                >
-                                    {loading.processingOrderLoading
-                                        ? "Processing..."
-                                        : "Place Order"}
-                                </button>
-                            ) : (
-                                <button
-                                    className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
-                                    disabled={
-                                        !isAddressSave ||
-                                        products.length < 1 ||
-                                        loading.processingOrderLoading
-                                    }
-                                    onClick={() => {
-                                        setLoading({
-                                            ...loading,
-                                            processingOrderLoading: true,
-                                        });
-                                        router.push("/cart/checkout/payment");
-                                    }}
-                                >
-                                    {loading.processingOrderLoading
-                                        ? "Processing..."
-                                        : "Place Order"}
-                                </button>
-                            )}
-
-                            <button
-                                className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
-                                disabled={
-                                    products.length < 1 ||
-                                    loading.emptyingCartLoading
-                                }
-                                onClick={handleEmptyCart}
-                            >
-                                {loading && loading.emptyingCartLoading
-                                    ? "Removing..."
-                                    : "Empty Cart"}
-                            </button>
-                        </div>
-                    </div>
+                    <OrderSummary
+                        carts={carts}
+                        cartTotal={userCarts?.[0]?.cartTotal}
+                        totalPriceAfterDiscount={totalPriceAfterDiscount}
+                        isCashOnDelivery={isCashOnDelivery}
+                        products={userCarts?.[0]?.products}
+                        handleCashOrderDelivery={handleCashOrderDelivery}
+                        setLoading={setLoading}
+                        loading={loading}
+                        handleEmptyCart={handleEmptyCart}
+                        isAddressSave={isAddressSave}
+                    />
                 </div>
             </div>
         </>
     );
 };
 
-export default dynamic(() => Promise.resolve(Checkout), { ssr: false });
+export default Checkout;

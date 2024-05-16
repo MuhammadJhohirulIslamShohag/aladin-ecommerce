@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useState, startTransition } from "react";
-import { BiMinus, BiPlus } from "react-icons/bi";
-import { BsFillCartPlusFill } from "react-icons/bs";
 import { FaWindowClose } from "react-icons/fa";
 import toast from "react-hot-toast";
 import _ from "lodash";
@@ -10,6 +8,7 @@ import _ from "lodash";
 import CustomModal from "../../Atoms/Modal/CustomModal";
 import ProductImages from "./ProductImages";
 import ConfirmCartModal from "../Modal/ConfirmCartModal";
+import AddCountCart from "../AddCountCart";
 
 import { IProduct } from "@/types/product.type";
 import { getCarts, storeCart } from "@/store/cart/cart";
@@ -29,9 +28,7 @@ const ProductView: React.FC<ProductViewProps> = ({
     const [openModal, setOpenModal] = useState(false);
     const [quantity, setQuantity] = useState(1);
 
-    const {
-        dispatch
-    } = useStoreContext();
+    const { dispatch } = useStoreContext();
 
     const {
         name,
@@ -49,27 +46,27 @@ const ProductView: React.FC<ProductViewProps> = ({
 
     /* Handle add to cart */
     const handleAddToCart = () => {
-         // create cart array
-         let carts = getCarts();
+        // create cart array
+        let carts = getCarts();
 
-         // added cart
-         carts.push({
-             ...product,
-             price: Number(netPrice),
-             count: quantity,
-         });
-         // remove duplicates
-         const uniqueCarts = _.uniqWith(carts, _.isEqual);
- 
-         // set cart object in windows localStorage
-         startTransition(() => {
-             storeCart(JSON.stringify(uniqueCarts));
-             // added cart in store context
-             dispatch({
-                 type: StoreActionType.ADD_TO_CART,
-                 payload: uniqueCarts,
-             });
-         });
+        // added cart
+        carts.push({
+            ...product,
+            price: Number(netPrice),
+            count: quantity,
+        });
+        // remove duplicates
+        const uniqueCarts = _.uniqWith(carts, _.isEqual);
+
+        // set cart object in windows localStorage
+        startTransition(() => {
+            storeCart(JSON.stringify(uniqueCarts));
+            // added cart in store context
+            dispatch({
+                type: StoreActionType.ADD_TO_CART,
+                payload: uniqueCarts,
+            });
+        });
         // dispatch(addToCart({ ...addedProduct, quantity })),
         setOpenModal((prevState) => !prevState);
     };
@@ -234,61 +231,12 @@ const ProductView: React.FC<ProductViewProps> = ({
                             Out of Stock
                         </button>
                     ) : (
-                        <div className="mt-6 flex flex-wrap items-center gap-4">
-                            <div className="flex items-center w-fit h-[40px] gap-2 rounded-sm">
-                                {/* button */}
-                                <input
-                                    type="number"
-                                    value={quantity}
-                                    className="w-6 rounded-l-lg bg-black/60 h-full outline-none text-center text-white font-semibold"
-                                    readOnly
-                                />
-                                <div className="space-y-1">
-                                    <div
-                                        onClick={handleDecrement}
-                                        className={`rounded-t-lg cursor-pointer bg-black/60 hover:bg-black/60 h-full flex items-center px-2 ${
-                                            quantity === 1
-                                                ? "opacity-50 cursor-not-allowed"
-                                                : ""
-                                        }`}
-                                    >
-                                        <BiMinus
-                                            size={20}
-                                            className="text-white"
-                                        />
-                                    </div>
-
-                                    {/* button */}
-                                    <div
-                                        onClick={handleIncrement}
-                                        className={`rounded-b-lg cursor-pointer bg-black/60 hover:bg-gray-100 h-full flex items-center px-2 ${
-                                            quantity == 79
-                                                ? "opacity-50 cursor-not-allowed"
-                                                : ""
-                                        }`}
-                                    >
-                                        <BiPlus
-                                            size={20}
-                                            className="text-white"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div
-                                    onClick={handleAddToCart}
-                                    className={`cursor-pointer bg-black/60 hover:bg-black/60 h-full flex items-center px-2 rounded-r-lg ${
-                                        quantity === 1
-                                            ? "opacity-50 cursor-not-allowed"
-                                            : ""
-                                    }`}
-                                >
-                                    <BsFillCartPlusFill
-                                        size={20}
-                                        className="text-white"
-                                    />
-                                </div>
-                            </div>
-                        </div>
+                        <AddCountCart
+                            handleDecrement={handleDecrement}
+                            handleIncrement={handleIncrement}
+                            handleAddToCart={handleAddToCart}
+                            quantity={quantity}
+                        />
                     )}
                 </div>
             </div>

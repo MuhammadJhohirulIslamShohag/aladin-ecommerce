@@ -1,10 +1,12 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
+
 import SearchForm from "@/components/UI/SearchForm/SearchForm";
+import ShoppingCarts from "../../Cart/ShoppingCarts/ShoppingCarts";
 // import { getCarts } from "@/store/cart/cart";
-import { useState } from "react";
-import ShoppingCarts from "@/components/Carts/ShoppingCarts/ShoppingCarts";
+
 import { useStoreContext } from "@/contexts/StoreContextProvider";
 
 const NavbarMiddle: React.FC = (): JSX.Element => {

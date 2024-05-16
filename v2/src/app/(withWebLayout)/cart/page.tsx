@@ -1,22 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
-import dynamic from "next/dynamic";
-import Link from "next/link";
-import CartTable from "@/components/Carts/CartTable/CartTable";
-import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
+import { useRouter } from "next/navigation";
 
-import { saveOrder } from "@/api/user";
-import { useRouter } from "next/router";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
+import ShowingCarts from "@/components/Oraganisms/Cart/ShowingCarts";
+
 import { useStoreContext } from "@/contexts/StoreContextProvider";
 import { getUserInfo } from "@/store/user/users";
 import { CartType } from "@/types/cart.types";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
+import { getCarts } from "@/store/cart/cart";
+import { useAddCartMutation } from "@/redux/services/cart/cartApiService";
 
 const Cart = () => {
     const user = getUserInfo();
-    const { state, dispatch } = useStoreContext();
-    const { carts } = state;
+    const { dispatch } = useStoreContext();
+
+    const carts = getCarts();
 
     const [loading, setLoading] = useState({
         onlinePaymentCheckOut: false,
@@ -25,113 +26,64 @@ const Cart = () => {
 
     const router = useRouter();
 
-    /* show table */
-    const showCartItems = () => (
-        <div className="relative overflow-x-auto sm:rounded-lg scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100">
-            <table className="w-full text-sm text-left text-gray-500 ">
-                <thead className="text-xs uppercase bg-gray-50 text-gray-900 ">
-                    <tr>
-                        <th scope="col" className="px-6 py-3">
-                            Image
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Name
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Price
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Brand
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Color
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Size
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Count
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Shipping
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Remove
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {carts &&
-                        carts.length &&
-                        carts.map((cart: CartType) => (
-                            <CartTable key={cart._id} product={cart} />
-                        ))}
-                </tbody>
-            </table>
-        </div>
-    );
+    // redux api call
+    const [addCart] = useAddCartMutation();
 
     const getTotalPrice = () => {
         const totalPrice =
             carts &&
-            carts.reduce((acc, cur: CartType) => {
+            carts.reduce((acc: number, cur: CartType) => {
                 return acc + cur.price * cur.count;
             }, 0);
         return totalPrice;
     };
 
-    const savePaymentOrderToDb = () => {
+    const savePaymentOrderToDb = async () => {
         setLoading({
             ...loading,
             onlinePaymentCheckOut: true,
         });
         if (user !== null) {
-            saveOrder(carts, user.token)
-                .then((res) => {
-                    if (res.data.ok) {
-                        setLoading({
-                            ...loading,
-                            onlinePaymentCheckOut: false,
-                        });
-                        router.push("/cart/checkout");
-                    }
-                })
-                .catch((error) => {
-                    setLoading({
-                        ...loading,
-                        onlinePaymentCheckOut: false,
-                    });
-                    console.log(error);
+            const result = await addCart(carts);
+            // check if the request was successful
+            if ("data" in result && result.data && result.data?.success) {
+                setLoading({
+                    ...loading,
+                    onlinePaymentCheckOut: false,
                 });
+                router.push("/cart/checkout");
+            } else {
+                setLoading({
+                    ...loading,
+                    onlinePaymentCheckOut: false,
+                });
+            }
         }
     };
-    const saveCashOrderToDb = () => {
+    const saveCashOrderToDb = async () => {
         setLoading({
             ...loading,
             cashOnDelivery: true,
         });
         if (user !== null) {
-            saveOrder(carts, user.token)
-                .then((res) => {
-                    if (res.data.ok) {
-                        dispatch({
-                            type: StoreActionType.CASH_ON_DELIVERY,
-                            payload: true,
-                        });
-                        setLoading({
-                            ...loading,
-                            cashOnDelivery: false,
-                        });
-                        router.push("/cart/checkout");
-                    }
-                })
-                .catch((error) => {
-                    setLoading({
-                        ...loading,
-                        cashOnDelivery: false,
-                    });
-                    console.log(error);
+            const result = await addCart(carts);
+            // check if the request was successful
+            if ("data" in result && result.data && result.data?.success) {
+                dispatch({
+                    type: StoreActionType.CASH_ON_DELIVERY,
+                    payload: true,
                 });
+                setLoading({
+                    ...loading,
+                    cashOnDelivery: false,
+                });
+                router.push("/cart/checkout");
+            } else {
+                setLoading({
+                    ...loading,
+                    cashOnDelivery: false,
+                });
+            }
         }
     };
     return (
@@ -142,25 +94,9 @@ const Cart = () => {
             />
 
             <div className="container mt-10">
-                <div className="grid grid-cols-12 gap-5 sm:grid-cols-1 sm:gap-0 md:grid-cols-1 md:gap-0">
-                    <div className="col-span-9 sm:col-span-0 md:col-span-0">
-                        <h4 className="text-xl mb-5 font-semibold text-left text-green-500 bg-white">
-                            Shopping Cart {carts && carts.length}{" "}
-                            {carts && carts.length > 1 ? "Products" : "Product"}
-                        </h4>
-
-                        {/* Show Cart Table*/}
-                        {!carts.length ? (
-                            <h5 className="text-xl mb-5 font-semibold text-left text-primary bg-white">
-                                No Cart Yet{" "}
-                                <Link href="/shop">Continue Shopping</Link>
-                            </h5>
-                        ) : (
-                            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                                {showCartItems()}
-                            </div>
-                        )}
-                    </div>
+                <div className="grid lg:grid-cols-12 lg:gap-5 grid-cols-1 gap-0">
+                    {/* Showing Carts */}
+                    <ShowingCarts carts={carts} />
 
                     {/* Order Summary Card */}
                     <div className="col-span-3 sm:col-span-0 md:col-span-0">
@@ -176,10 +112,10 @@ const Cart = () => {
                                 carts.map((product: CartType) => (
                                     <p
                                         className="text-md font-normal text-primary"
-                                        key={product._id}
+                                        key={product?._id}
                                     >
-                                        {product.name} x {product.count} ={" "}
-                                        {`$${product.price * product.count}`}
+                                        {product?.name} x {product?.count} ={" "}
+                                        {`$${product?.price * product?.count}`}
                                     </p>
                                 ))}
                             <hr className="mt-2" />
@@ -192,7 +128,7 @@ const Cart = () => {
                                     <button
                                         className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
                                         disabled={
-                                            !carts.length ||
+                                            !carts?.length ||
                                             loading.onlinePaymentCheckOut
                                         }
                                         onClick={savePaymentOrderToDb}
@@ -205,7 +141,7 @@ const Cart = () => {
                                     <button
                                         className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
                                         disabled={
-                                            !carts.length ||
+                                            !carts?.length ||
                                             loading.cashOnDelivery
                                         }
                                         onClick={saveCashOrderToDb}
@@ -218,7 +154,7 @@ const Cart = () => {
                             ) : (
                                 <button
                                     className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
-                                    disabled={!carts.length}
+                                    disabled={!carts?.length}
                                     onClick={() =>
                                         router.push(
                                             "/auth/login?redirect=/cart"
@@ -236,4 +172,4 @@ const Cart = () => {
     );
 };
 
-export default dynamic(() => Promise.resolve(Cart), { ssr: false });
+export default Cart;

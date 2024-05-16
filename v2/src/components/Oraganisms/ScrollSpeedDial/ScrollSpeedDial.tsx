@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import ShoppingCarts from "../../Carts/ShoppingCarts/ShoppingCarts";
+import ShoppingCarts from "../../Molecules/Cart/ShoppingCarts/ShoppingCarts";
 import CartModal from "../../Modal/FixedModal/CartModal";
 import CompareItemModal from "../../Modal/FixedModal/CompareItemModal";
 import CompareModal from "../../Modal/FixedModal/CompareModal";
