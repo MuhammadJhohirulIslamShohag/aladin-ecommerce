@@ -2,7 +2,7 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
-import StripeCheckout from "@/components/StripeCheckout/StripeCheckout";
+import StripeCheckout from "@/components/Oraganisms/Checkout/StripeCheckout/StripeCheckout";
 import useCheckUser from "@/hooks/useCheckUser";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 

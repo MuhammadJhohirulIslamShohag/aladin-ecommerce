@@ -1,19 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 import useCheckUser from "@/hooks/useCheckUser";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
-import DeliveryAddress from "@/components/Oraganisms/Checkout/DeliveryAddress";
-import OrderSummary from "@/components/Oraganisms/Checkout/OrderSummary";
+import DeliveryAddress from "@/components/Oraganisms/Checkout/Payment/DeliveryAddress";
+import PaymentOrderSummary from "@/components/Oraganisms/Checkout/Payment/PaymentOrderSummary";
 
 import {
     createOrderCashOnDelivery,
     emptyCart,
     getTotalPriceAfterDiscount,
-    getUserShippingAddress,
     saveShippingAddress,
 } from "@/api/user";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
@@ -21,6 +20,7 @@ import { useStoreContext } from "@/contexts/StoreContextProvider";
 import { getUserInfo } from "@/store/user/users";
 import { getCarts } from "@/store/cart/cart";
 import { useGetCartsQuery } from "@/redux/services/cart/cartApiService";
+import { IShippingAddress } from "@/types/user.type";
 
 const Checkout = () => {
     useCheckUser();
@@ -47,28 +47,6 @@ const Checkout = () => {
     // redux api call
     const { data: userCartsData } = useGetCartsQuery(user._id);
     const userCarts = userCartsData?.data;
-
-    useEffect(() => {
-        if (user && user.token) {
-            getUserShippingAddress(user.token).then((res) => {
-                if (res.data.address) {
-                    if (typeof window !== "undefined") {
-                        window.localStorage.setItem(
-                            "shippingAddress",
-                            JSON.stringify(res.data.address)
-                        );
-                    }
-                    dispatch({
-                        type: StoreActionType.ADD_SHIPPING_ADDRESS,
-                        payload: res.data.address,
-                    });
-                    if (res.data.address) {
-                        setIsAddressSave(true);
-                    }
-                }
-            });
-        }
-    }, [user]);
 
     const handleEmptyCart = () => {
         // remove cart window local storage
@@ -115,7 +93,7 @@ const Checkout = () => {
     };
 
     // save address to the database
-    const submitShippingAddress = (data) => {
+    const submitShippingAddress = (data: IShippingAddress) => {
         if (user && user.token) {
             setLoading({
                 ...loading,
@@ -248,7 +226,7 @@ const Checkout = () => {
                     />
 
                     {/* Order Summary Card */}
-                    <OrderSummary
+                    <PaymentOrderSummary
                         carts={carts}
                         cartTotal={userCarts?.[0]?.cartTotal}
                         totalPriceAfterDiscount={totalPriceAfterDiscount}

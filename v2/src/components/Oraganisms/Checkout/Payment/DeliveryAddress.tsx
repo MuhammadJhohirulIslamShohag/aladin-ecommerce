@@ -1,7 +1,7 @@
 import React from "react";
 
-import ShippingAddressForm from "./ShippingAddressForm";
-import CouponForm from "../../Molecules/Form/CouponForm";
+import CouponForm from "../../Form/CouponForm";
+import ShippingAddressForm from "../../Form/ShippingAddressForm";
 
 import { CartType } from "@/types/cart.types";
 

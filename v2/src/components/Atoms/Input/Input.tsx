@@ -1,3 +1,4 @@
+import cn from "@/lib/cn";
 import React, { ChangeEvent } from "react";
 
 interface InputProps {
@@ -5,6 +6,7 @@ interface InputProps {
     name?: string;
     value?: string;
     placeholder?: string;
+    className?: string;
     handleChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -13,6 +15,7 @@ const Input: React.FC<InputProps> = ({
     name = "",
     value = "",
     handleChange,
+    className = "",
     placeholder = "",
 }) => {
     return (
@@ -21,7 +24,10 @@ const Input: React.FC<InputProps> = ({
             name={name}
             value={value}
             onChange={handleChange}
-            className="focus:outline-none shadow py-3 px-4 rounded-md w-full"
+            className={cn(
+                "focus:outline-none shadow py-3 px-4 rounded-md w-full",
+                className
+            )}
             placeholder={placeholder}
             autoFocus
         />

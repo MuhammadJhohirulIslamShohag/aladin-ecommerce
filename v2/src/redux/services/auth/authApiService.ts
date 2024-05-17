@@ -9,7 +9,7 @@ const authApiService = baseApi.injectEndpoints({
                 body: payload,
             }),
         }),
-        userLogin: build.mutation({
+        login: build.mutation({
             query: (payload) => ({
                 url: `/auth/login-user`,
                 method: "POST",
@@ -90,7 +90,7 @@ const authApiService = baseApi.injectEndpoints({
 
 export const {
     useCreateUserMutation,
-    useUserLoginMutation,
+    useLoginMutation,
     useVerifyOTPMutation,
     useForgotPasswordMutation,
     useResetPasswordMutation,

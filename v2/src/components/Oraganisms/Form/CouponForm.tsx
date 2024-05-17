@@ -1,3 +1,4 @@
+"use client"
 import React, { FormEvent } from "react";
 
 import Input from "../../Atoms/Input/Input";

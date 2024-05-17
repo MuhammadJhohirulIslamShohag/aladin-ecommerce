@@ -15,7 +15,7 @@ const CartTable: React.FC<CartTableProps> = ({ carts = [] }) => {
             <table className="w-full text-sm text-left text-gray-500 ">
                 <thead className="text-xs uppercase bg-gray-50 text-gray-900 ">
                     <tr>
-                        <th scope="col" className="px-6 py-3">
+                        <th scope="col" className="px-6 py-3 ">
                             Image
                         </th>
                         <th scope="col" className="px-6 py-3">
@@ -24,10 +24,10 @@ const CartTable: React.FC<CartTableProps> = ({ carts = [] }) => {
                         <th scope="col" className="px-6 py-3">
                             Price
                         </th>
-                        <th scope="col" className="px-6 py-3">
+                        <th scope="col" className="px-6 py-3 text-center">
                             Count
                         </th>
-                        <th scope="col" className="px-6 py-3">
+                        <th scope="col" className="px-6 py-3 text-center">
                             Remove
                         </th>
                     </tr>

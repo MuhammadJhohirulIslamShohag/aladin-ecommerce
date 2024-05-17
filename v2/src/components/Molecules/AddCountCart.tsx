@@ -77,9 +77,9 @@ const AddCountCart: React.FC<AddCountCartProps> = ({
                 <div className="flex flex-col lg:flex-row justify-between">
                     <nav className="flex justify-center items-center text-primary mt-8 lg:mt-0">
                         <Button
-                            label={<BiMinus size={20} className="text-white" />}
+                            label={<BiMinus size={20} className="hover:text-white text-black/90" />}
                             onClick={handleDecrement}
-                            className="p-2 mr-4 inline-block hover:bg-green-300 bg-white/80 hover:text-white rounded-full cursor-pointer transition-all"
+                            className="p-2 mr-4 inline-block hover:bg-green-300 bg-white/80 hover:text-white text-black/90 rounded-full cursor-pointer transition-all"
                         />
 
                         <div className="flex items-center gap-3">
@@ -87,8 +87,8 @@ const AddCountCart: React.FC<AddCountCartProps> = ({
                         </div>
 
                         <Button
-                            label={<BiPlus size={20} className="text-white" />}
-                            className="p-2 ml-4 rounded-full transition-all cursor-pointer inline-block hover:bg-green-300 bg-white/80 hover:text-white"
+                            label={<BiPlus size={20} className="hover:text-white text-black/90" />}
+                            className="p-2 ml-4 rounded-full transition-all cursor-pointer inline-block hover:bg-green-300 text-black/90 bg-white/80 hover:text-white"
                             onClick={handleIncrement}
                         />
                     </nav>

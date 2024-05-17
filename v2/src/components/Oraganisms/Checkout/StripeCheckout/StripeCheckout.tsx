@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { AiOutlineDollar, AiOutlineCheck } from "react-icons/ai";
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
-import { createPaymentIntent } from "@/api/stripe";
-import { StoreActionType } from "@/lib/states/storeReducer/storeReducer.type";
-import { createOrder } from "@/api/user";
 import Link from "next/link";
-import Image from "next/image";
-import classes from "./StripeCheckout.module.css";
+
+import { createPaymentIntent } from "@/api/stripe";
+import { createOrder } from "@/api/user";
 import { StripeCardElementChangeEvent } from "@stripe/stripe-js";
-import { IProduct } from "types/product.type";
+import { IProduct } from "@/types/product.type";
+import { useStoreContext } from "@/contexts/StoreContextProvider";
+import { getUserInfo } from "@/store/user/users";
+import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
+
+import classes from "./StripeCheckout.module.css";
+import ValidateImage from "@/components/Atoms/ValidateImage";
 
 type ProductType = {
     product: IProduct;
     count: number;
-    color: string;
-    size: string;
 };
 const StripeCheckout = () => {
     const [succeeded, setSucceeded] = useState<boolean>(false);
@@ -33,11 +34,12 @@ const StripeCheckout = () => {
 
     // store context
     const { state, dispatch } = useStoreContext();
-    const { user, isCouponed } = state;
+    const user = getUserInfo();
+    const { isCouped } = state;
 
     useEffect(() => {
         if (user && user.token) {
-            createPaymentIntent(user.token, isCouponed).then((res) => {
+            createPaymentIntent(user.token, isCouped).then((res) => {
                 setClientSecret(res.data.clientSecret);
                 // additional response received on successful payment
                 setCartTotal(res.data.cartTotal);
@@ -46,7 +48,7 @@ const StripeCheckout = () => {
                 setProduct(res.data.product);
             });
         }
-    }, [user, isCouponed]);
+    }, [user, isCouped]);
 
     const handleChange = async (event: StripeCardElementChangeEvent) => {
         // Listen for changes in the CardElement
@@ -128,7 +130,7 @@ const StripeCheckout = () => {
         <div className="w-1/2 mx-auto mt-5 sm:w-full md:w-full">
             {!succeeded && (
                 <div>
-                    {isCouponed && totalPriceAfterDiscount !== undefined ? (
+                    {isCouped && totalPriceAfterDiscount !== undefined ? (
                         <p className="text-white bg-success py-2">{`Total after discount: $${totalPriceAfterDiscount}`}</p>
                     ) : (
                         <p className="text-white bg-success py-2">
@@ -141,22 +143,14 @@ const StripeCheckout = () => {
             <div className="w-full bg-white border border-gray-200 rounded-lg shadow my-5">
                 <div className="flex flex-col items-center pb-10 rounded-full">
                     {product &&
-                    product.product.images &&
-                    product.product?.images[0] ? (
-                        <Image
-                            height={200}
-                            width={400}
-                            className="w-80 sm:w-60 h-62 mb-3 rounded-full shadow-lg"
-                            src={product.product.images[0].url}
-                            alt="payment image"
-                        />
-                    ) : (
-                        <img
-                            src="../../../../banner/laptop1Banner.jpg"
-                            alt="payment image"
-                            className="w-80 sm:w-60 h-62 mb-3 rounded-full shadow-lg"
-                        />
-                    )}
+                        product.product.imageURLs &&
+                        product.product?.imageURLs?.[0] && (
+                            <ValidateImage
+                                className="lg:w-80 w-60 h-62 mb-3 rounded-full shadow-lg"
+                                imageUrl={product.product.imageURLs?.[0]}
+                                alt="payment image"
+                            />
+                        )}
 
                     <div className="flex sm:block space-x-3 sm:space-x-0 mt-4 md:mt-6 sm:px-10">
                         <button className="flex transition-all items-center justify-center border-2 border-green-400 px-4 py-2 text-sm font-medium text-center text-white bg-success rounded-lg hover:bg-transparent hover:text-primary focus:ring-4 focus:outline-none focus:ring-green-300 sm:w-full ">

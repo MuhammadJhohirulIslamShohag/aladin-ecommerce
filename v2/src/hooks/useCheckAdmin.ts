@@ -1,10 +1,11 @@
-import { useStoreContext } from "@/lib/contexts/StoreContextProvider";
+"use client";
+
+import { getUserInfo } from "@/store/user/users";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const useCheckAdmin = () => {
-    const { state } = useStoreContext();
-    const { user } = state;
+    const user = getUserInfo();
 
     const router = useRouter();
 

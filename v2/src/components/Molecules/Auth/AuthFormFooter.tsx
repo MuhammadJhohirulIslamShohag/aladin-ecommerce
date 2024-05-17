@@ -1,0 +1,32 @@
+"use client"
+
+import Link from "next/link";
+import React from "react";
+
+
+interface AuthFormFooterProps {
+    href: string;
+    content: string[];
+}
+
+const AuthFormFooter: React.FC<AuthFormFooterProps> = ({ href, content }) => {
+    return (
+        <>
+            {/* Form Footer */}
+            <div className="flex gap-1 w-full max-w-[450px]">
+                <div className="h-[1px] max-w-[120px] w-full bg-textGray mt-[10px]"></div>
+                <h4 className="mb-[25px] text-[14px] text-textGray bg-white whitespace-nowrap flex-1">
+                    {content?.[0]}
+                </h4>
+                <div className="h-[1px] max-w-[120px] w-full bg-textGray mt-[10px]"></div>
+            </div>
+            <Link href={href}>
+                <button className="border-2 px-5 py-2 border-primaryBlack hover:bg-primary font-semibold hover:text-white hover:border-primary rounded-md transition duration-200 w-full">
+                    {content?.[1]}
+                </button>
+            </Link>
+        </>
+    );
+};
+
+export default AuthFormFooter;

@@ -1,116 +1,89 @@
 import React from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+
 import { CartType } from "@/types/cart.types";
-import { IProduct } from "@/types/product.type";
+import { IUser } from "@/types/user.type";
 
 interface OrderSummaryProps {
     carts: CartType[];
-    cartTotal: number;
-    totalPriceAfterDiscount: number;
-    isCashOnDelivery: boolean;
-    products: IProduct[];
-    handleCashOrderDelivery: () => void;
-    setLoading: React.Dispatch<
-        React.SetStateAction<{
-            shippingAddressLoading: boolean;
-            emptyingCartLoading: boolean;
-            processingOrderLoading: boolean;
-            couponLoading: boolean;
-        }>
-    >;
+    getTotalPrice: () => number;
+    user: IUser;
     loading: {
-        shippingAddressLoading: boolean;
-        emptyingCartLoading: boolean;
-        processingOrderLoading: boolean;
-        couponLoading: boolean;
+        onlinePaymentCheckOut: boolean;
+        cashOnDelivery: boolean;
     };
-    handleEmptyCart: () => void;
-    isAddressSave: boolean;
+    savePaymentOrder: () => void;
+    saveCashOrder: () => void;
 }
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({
     carts,
-    cartTotal,
-    totalPriceAfterDiscount,
-    isCashOnDelivery,
-    products,
-    handleCashOrderDelivery,
-    setLoading,
+    getTotalPrice,
+    user,
     loading,
-    handleEmptyCart,
-    isAddressSave,
+    savePaymentOrder,
+    saveCashOrder,
 }) => {
     const router = useRouter();
 
     return (
-        <div className="col-span-5 col-span-0">
-            <div className="bg-gray-100 p-5  rounded-lg lg:mt-16 md:mt-5 mt-5">
+        <div className="lg:col-span-3 col-span-0">
+            <div className="bg-gray-100 p-5  rounded-lg lg:mt-12 md:mt-5 mt-5">
                 <h4 className="text-xl font-semibold text-green-400 mb-3">
                     Order Summary
                 </h4>
                 <h4 className="text-lg font-semibold text-primary">Product</h4>
                 <hr className="mb-2" />
                 {carts &&
-                    carts.map((product: any) => (
+                    carts.map((product: CartType) => (
                         <p
                             className="text-md font-normal text-primary"
-                            key={product._id}
+                            key={product?._id}
                         >
-                            {product.title} x {product.count} ={" "}
-                            {`$${product.price * product.count}`}
+                            {product?.name} x {product?.count} ={" "}
+                            {`$${product?.price * product?.count}`}
                         </p>
                     ))}
                 <hr className="mt-2" />
                 <p className="text-lg font-semibold text-primary">
-                    Total Price = {`$${cartTotal}`}
+                    Total Price = {`$${getTotalPrice()}`}
                 </p>
                 <hr />
-                {totalPriceAfterDiscount > 0 && (
-                    <div className="bg-success mb-2">
-                        <p className="text-lg font-semibold text-primary">
-                            Total Price After Discount : $
-                            {totalPriceAfterDiscount}
-                        </p>
-                    </div>
+                {user ? (
+                    <>
+                        <button
+                            className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                            disabled={
+                                !carts?.length || loading.onlinePaymentCheckOut
+                            }
+                            onClick={savePaymentOrder}
+                        >
+                            {loading.onlinePaymentCheckOut
+                                ? "Processing..."
+                                : "Proceed To Checkout"}
+                        </button>
+                        <br />
+                        <button
+                            className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                            disabled={!carts?.length || loading.cashOnDelivery}
+                            onClick={saveCashOrder}
+                        >
+                            {loading.cashOnDelivery
+                                ? "Processing..."
+                                : "Checkout To Cash On Delivery"}
+                        </button>
+                    </>
+                ) : (
+                    <button
+                        className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                        disabled={!carts?.length}
+                        onClick={() =>
+                            router.push("/auth/login?redirect=/cart")
+                        }
+                    >
+                        Login To Checkout
+                    </button>
                 )}
-
-                <hr />
-
-                <button
-                    className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
-                    disabled={
-                        !isAddressSave ||
-                        products.length < 1 ||
-                        loading.processingOrderLoading
-                    }
-                    onClick={
-                        isCashOnDelivery
-                            ? handleCashOrderDelivery
-                            : () => {
-                                  setLoading({
-                                      ...loading,
-                                      processingOrderLoading: true,
-                                  });
-                                  router.push("/cart/checkout/payment");
-                              }
-                    }
-                >
-                    {loading.processingOrderLoading
-                        ? "Processing..."
-                        : "Place Order"}
-                </button>
-
-                <button
-                    className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
-                    disabled={
-                        products.length < 1 || loading.emptyingCartLoading
-                    }
-                    onClick={handleEmptyCart}
-                >
-                    {loading && loading.emptyingCartLoading
-                        ? "Removing..."
-                        : "Empty Cart"}
-                </button>
             </div>
         </div>
     );

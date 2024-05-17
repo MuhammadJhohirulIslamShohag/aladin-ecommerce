@@ -115,11 +115,11 @@ const CartTableRow: React.FC<CartTableRowProps> = ({ product }) => {
             <td className="text-center px-6 py-4 font-semibold text-gray-900 ">
                 <span className="min-w-max flex">{name}</span>
             </td>
-            <td className="text-center px-6 py-4 font-semibold text-gray-900 ">
+            <td className="px-6 py-4 font-semibold text-gray-900 ">
                 ${price}
             </td>
 
-            <td className="text-center px-6 py-4 font-semibold text-gray-900 ">
+            <td className="text-center px-6 py-4 font-semibold text-gray-900 flex items-center justify-center">
                 <AddCountCart
                     handleDecrement={handleDecrement}
                     handleIncrement={handleIncrement}
@@ -129,10 +129,10 @@ const CartTableRow: React.FC<CartTableRowProps> = ({ product }) => {
             </td>
 
             <td
-                className="text-center cursor-pointer"
+                className="cursor-pointer text-center"
                 onClick={removeCartHandler}
             >
-                <AiOutlineCloseCircle className="text-red-600 inline-block" />
+                <AiOutlineCloseCircle className="text-red-600 inline-block" size={26} />
             </td>
         </tr>
     );

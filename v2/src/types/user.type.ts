@@ -34,5 +34,4 @@ export interface IShippingAddress {
     postCode: string;
     country: string;
     state: string;
-    defaultAddress: boolean;
 }
