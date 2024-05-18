@@ -27,7 +27,7 @@ const FlatProductCard: React.FC<FlatProductCardProps> = ({
     handleWishListProduct,
     handleProductView,
 }) => {
-    const { name, price, discount, imageURLs } = product;
+    const { name, price, discount, imageURLs, slug } = product;
     const discountPrice = Math.ceil(price * (discount / 100));
     const netPrice = Math.ceil(price - discountPrice);
 
@@ -36,7 +36,7 @@ const FlatProductCard: React.FC<FlatProductCardProps> = ({
             <div className="relative group w-full transition xl:py-5 py-7  mx-auto rounded-md bg-white shadow  grid xl:grid-cols-2 grid-cols-1">
                 <div className=" px-5">
                     <div className="relative hover:scale-110 duration-500">
-                        <Link href={`/product/${name}`}>
+                        <Link href={`/products/${slug}`}>
                             <ValidateImage
                                 imageUrl={
                                     imageURLs?.[0] ||
@@ -51,7 +51,7 @@ const FlatProductCard: React.FC<FlatProductCardProps> = ({
                 <div className="relative flex flex-col justify-between ">
                     <Link
                         className="text-secondary mt-2 mb-5"
-                        href="/product/sample-properties-4?pd=66208b55469a7458ab60f8f3"
+                        href={`/products/${slug}`}
                     >
                         <h3 className="font-bold mb-[4px] hover:text-primary duration-300 hover:underline px-5">
                             {name?.length && name?.length > 35

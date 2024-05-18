@@ -1,7 +1,7 @@
 import UserSideBar from "@/components/Dashboard/User/UserSideBar/UserSideBar";
-import Footer from "@/components/Footer/Footer";
 import NavbarMiddle from "@/components/Molecules/Navbar/NavbarMiddle/NavbarMiddle";
 import NavbarTop from "@/components/Molecules/Navbar/NavbarTop/NavbarTop";
+import Footer from "@/components/Oraganisms/Footer/Footer";
 
 const UserLayout = ({ children }: React.PropsWithChildren<{}>) => {
     return (

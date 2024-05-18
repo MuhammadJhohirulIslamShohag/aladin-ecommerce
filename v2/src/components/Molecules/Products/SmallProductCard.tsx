@@ -47,7 +47,7 @@ const SmallProductCard: React.FC<SmallProductCardProps> = ({
             <div className="w-1/2">
                 <Link
                     className="text-secondary mt-2 "
-                    href="/product/sample-properties-4?pd=66208b55469a7458ab60f8f3"
+                    href={`/products/${product?.slug}`}
                 >
                     <h3 className="md:text-lg text-base hover:w-full transition duration-700 ease-in-out mb-[4px] group font-medium relative">
                         <span className="content-wrapper group-hover:bg-[length:100%_1px]">

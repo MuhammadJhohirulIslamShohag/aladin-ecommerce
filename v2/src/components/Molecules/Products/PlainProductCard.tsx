@@ -14,7 +14,7 @@ const PlainProductCard: React.FC<{ data: IProduct }> = ({ data }) => {
         <div className="relative group w-full transition py-3.5 mx-auto bg-white shadow-lg lg:flex grid grid-cols-1 lg:grid-cols-2 lg:h-[85px] xl:h-[85px] border-b-2 border-green-50">
             <div className="overflow-hidden px-5">
                 <div className="relative hover:scale-110 duration-500">
-                    <Link href={`/product/${data?.name}`}>
+                    <Link href={`/products/${data?.slug}`}>
                         <ValidateImage
                             imageUrl={
                                 data?.imageURLs?.[0] ||
@@ -29,7 +29,7 @@ const PlainProductCard: React.FC<{ data: IProduct }> = ({ data }) => {
             <div className="relative">
                 <Link
                     className="text-secondary mt-2 p-"
-                    href="/product/sample-properties-4?pd=66208b55469a7458ab60f8f3"
+                    href={`/products/${data?.slug}`}
                 >
                     <h3 className="font-bold mb-[4px] hover:text-primary duration-300 hover:underline px-5">
                         {data?.name?.length && data?.name?.length > 16

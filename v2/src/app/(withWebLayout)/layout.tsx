@@ -1,4 +1,5 @@
-import Footer from "@/components/Footer/Footer";
+
+import Footer from "@/components/Oraganisms/Footer/Footer";
 import MobileBottomNav from "@/components/Oraganisms/Navbar/MobileBottomNav";
 import Navbar from "@/components/Oraganisms/Navbar/Navbar";
 import ScrollSpeedDial from "@/components/Oraganisms/ScrollSpeedDial/ScrollSpeedDial";

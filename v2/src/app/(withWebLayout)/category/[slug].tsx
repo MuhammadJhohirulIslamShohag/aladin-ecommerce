@@ -1,6 +1,6 @@
-import SectionTitle from "@/components/SectionTitle/SectionTitle";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import ProductCard from "@/components/Molecules/Products/ProductCard";
+import SectionTitle from "@/components/Molecules/SectionTitle";
 
 import { IProduct } from "@/types/product.type";
 import { getSingleCategory } from "@/api/category";

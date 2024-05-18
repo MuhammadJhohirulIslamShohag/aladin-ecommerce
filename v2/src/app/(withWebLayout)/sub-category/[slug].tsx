@@ -1,10 +1,11 @@
-import SectionTitle from "@/components/SectionTitle/SectionTitle";
+
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import ProductCard from "@/components/Molecules/Products/ProductCard";
 
 import { IProduct } from "@/types/product.type";
 import { getProducts } from "@/api/products";
 import { getSubCategory } from "@/api/sub-categories";
+import SectionTitle from "@/components/Molecules/SectionTitle";
 
 const ProductBySubCategory = async ({ params }: { params: { slug: string } }) => {
     const subCategoryData = await getSubCategory(params?.slug);

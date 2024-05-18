@@ -1,12 +1,13 @@
-import CardZoomCarousel from "@/components/Card/CardZoomCarousel";
-import ProductInfo from "@/components/Product/ProductInfo/ProductInfo";
-import SectionTitle from "@/components/SectionTitle/SectionTitle";
-import ProductDetailsTab from "@/components/Product/ProductDetailsTab";
-import Product from "@/components/Product/Product";
+import CardZoomCarousel from "@/components/Molecules/CardZoomCarousel";
+import ProductCard from "@/components/Molecules/Products/ProductCard";
+import ProductInfo from "@/components/Oraganisms/Products/Product/ProductInfo/ProductInfo";
+import ProductDetailsTab from "@/components/Oraganisms/Products/Product/ProductDetailsTab";
+import SectionTitle from "@/components/Molecules/SectionTitle";
 
 import { getSingleProduct, getProducts } from "@/api/products";
 import { IProduct } from "@/types/product.type";
 import { getReviews } from "@/api/review";
+
 
 const ProductDetails = async ({ params }: { params: { slug: string } }) => {
     const productsData = getSingleProduct(params.slug);
@@ -35,7 +36,7 @@ const ProductDetails = async ({ params }: { params: { slug: string } }) => {
                 {relatedProduct &&
                     relatedProduct.length &&
                     relatedProduct.map((product: IProduct) => (
-                        <Product key={product._id} product={product} />
+                        <ProductCard key={product._id} product={product} />
                     ))}
             </div>
         );

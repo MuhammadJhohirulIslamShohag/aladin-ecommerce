@@ -113,7 +113,7 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                 <div className="py-4 relative">
                     <Link
                         className="w-full inline-block"
-                        href={`/product/${removeSpace(name)}`}
+                        href={`/products/${slug}`}
                     >
                         <ValidateImage
                             imageUrl={imageURLs?.[0]}
@@ -180,7 +180,7 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                 <div className="pt-3 px-4 pb-3">
                     <div className="h-[80px]">
                         <Link
-                            href={`/product/${slug}`}
+                            href={`/products/${slug}`}
                             className="text-xs lg:text-[15px] text-primaryBlack font-bold hover:text-primary hover:underline"
                             title={name}
                         >

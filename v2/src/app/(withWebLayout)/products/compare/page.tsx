@@ -1,8 +1,8 @@
+import { Suspense } from "react";
+import Loader from "@/components/Molecules/Loader/Loader";
+import CompareProducts from "@/components/Oraganisms/Products/CompareProducts";
 
 import { getProducts } from "@/api/products";
-import Loader from "@/components/Loader/Loader";
-import CompareProducts from "@/components/Oraganisms/Products/CompareProducts";
-import React, { Suspense } from "react";
 
 const CompareProductsPage = async () => {
     const products = await getProducts({ limit: 0 });

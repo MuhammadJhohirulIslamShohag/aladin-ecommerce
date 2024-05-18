@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { BiEdit } from "react-icons/bi";
 
-import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
+import ProfileEditModal from "@/components/Molecules/Modal/ProfileEditModal/ProfileEditModal";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 import { getUserInfo } from "@/store/user/users";

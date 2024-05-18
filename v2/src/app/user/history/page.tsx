@@ -3,12 +3,13 @@
 import { useState, useEffect } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { getOrdersByUser } from "@/api/user";
-import OrderInvoiceDownload from "@/components/Order/OrderInvoiceDownload";
-import OrderPaymentInfo from "@/components/Order/OrderPaymentInfo";
-import OrderCartInTable from "@/components/Order/OrderCartInTable";
+
+import OrderInvoiceDownload from "@/components/Oraganisms/Order/OrderInvoiceDownload";
+import OrderPaymentInfo from "@/components/Oraganisms/Order/OrderPaymentInfo";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
+import OrderCartInTable from "@/components/Oraganisms/Order/OrderCartInTable";
 
 // import useCheckUser from "@/hooks/useCheckUser";
-import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import { IOrder } from "@/types/order.types";
 import { getUserInfo } from "@/store/user/users";
 import { ICurrentUser } from "@/types/user.type";

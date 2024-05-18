@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import ShoppingCarts from "../../Molecules/Cart/ShoppingCarts/ShoppingCarts";
-import CartModal from "../../Modal/FixedModal/CartModal";
-import CompareItemModal from "../../Modal/FixedModal/CompareItemModal";
-import CompareModal from "../../Modal/FixedModal/CompareModal";
+import CartModal from "../../Molecules/Modal/FixedModal/CartModal";
+import CompareItemModal from "../../Molecules/Modal/FixedModal/CompareItemModal";
+import CompareModal from "../../Molecules/Modal/FixedModal/CompareModal";
 import SpeedDial from "../../Molecules/SpeedDial/SpeedDial";
 
 const ScrollSpeedDial = () => {

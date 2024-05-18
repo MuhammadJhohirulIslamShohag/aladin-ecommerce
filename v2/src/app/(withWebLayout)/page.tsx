@@ -5,22 +5,21 @@ import { getCategories } from "@/api/category";
 import { getProducts } from "@/api/products";
 import { getAllSubCategories } from "@/api/sub-categories";
 
-
-import Loader from "@/components/Loader/Loader";
-import Hero from "@/components/Oraganisms/Home/Hero";
-import FeaturedProducts from "@/components/Oraganisms/Products/FeaturedProducts";
-import NewArrivals from "@/components/Oraganisms/Products/NewArrivals";
-import Services from "@/components/Oraganisms/Services";
-import FlashDeals from "@/components/Oraganisms/Home/FlashDeals";
+import Loader from "@/components/Molecules/Loader/Loader";
+import Advertise from "@/components/Oraganisms/Advertise/Advertise";
 import Blogs from "@/components/Oraganisms/Blogs";
-import TopProducts from "@/components/Oraganisms/Products/TopProducts";
-import TopSellsProduct from "@/components/Oraganisms/Products/TopSellsProduct";
 import Categories from "@/components/Oraganisms/Categories";
-import SubCategories from "@/components/Oraganisms/SubCategories";
+import FlashDeals from "@/components/Oraganisms/Home/FlashDeals";
 import FollowUsSocial from "@/components/Oraganisms/Home/FollowUsSocial";
 import FunFactArea from "@/components/Oraganisms/Home/FunFactArea";
+import Hero from "@/components/Oraganisms/Home/Hero";
 import SmallProductSlider from "@/components/Oraganisms/Home/SmallProductSlider";
-import Advertise from "@/components/Oraganisms/Advertise/Advertise";
+import FeaturedProducts from "@/components/Oraganisms/Products/FeaturedProducts";
+import NewArrivals from "@/components/Oraganisms/Products/NewArrivals";
+import TopProducts from "@/components/Oraganisms/Products/TopProducts";
+import TopSellsProduct from "@/components/Oraganisms/Products/TopSellsProduct";
+import Services from "@/components/Oraganisms/Services";
+import SubCategories from "@/components/Oraganisms/SubCategories";
 
 const Home = async () => {
     // Initiate both requests in parallel
@@ -69,7 +68,10 @@ const Home = async () => {
                     <NewArrivals products={products?.data?.data} />
                 </Suspense>
                 <Suspense fallback={<Loader height={"h-[360px]"} />}>
-                    <SmallProductSlider title="Best Food" products={products?.data?.data} />
+                    <SmallProductSlider
+                        title="Best Food"
+                        products={products?.data?.data}
+                    />
                 </Suspense>
             </div>
 

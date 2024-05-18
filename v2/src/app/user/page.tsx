@@ -1,18 +1,15 @@
-"use client"
+"use client";
 
-import {  useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import { BiEdit } from "react-icons/bi";
 import dynamic from "next/dynamic";
-import { currentUser } from "@/api/auth";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { BiEdit } from "react-icons/bi";
 
 import FormGroup from "@/components/Form/FormGroup";
-import ProfileEditModal from "@/components/Modal/ProfileEditModal/ProfileEditModal";
+import ProfileEditModal from "@/components/Molecules/Modal/ProfileEditModal/ProfileEditModal";
 import useCheckUser from "@/hooks/useCheckUser";
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import { getUserInfo } from "@/store/user/users";
-
 
 type FormValues = {
     newPassword: string;
@@ -21,7 +18,7 @@ const UserAccountPage = () => {
     useCheckUser();
     const [showModal, setShowModal] = useState<boolean>(false);
 
-    const user = getUserInfo()
+    const user = getUserInfo();
 
     const {
         handleSubmit,
@@ -30,7 +27,7 @@ const UserAccountPage = () => {
         formState: { errors, isDirty, isSubmitted },
     } = useForm<FormValues>({
         mode: "onChange",
-    })
+    });
 
     // show model for update profile
     const handleShowModal = () => {
@@ -170,4 +167,3 @@ const UserAccountPage = () => {
 };
 
 export default dynamic(() => Promise.resolve(UserAccountPage), { ssr: false });
-
