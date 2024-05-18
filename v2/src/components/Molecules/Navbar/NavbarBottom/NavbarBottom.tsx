@@ -2,6 +2,7 @@
 import React from "react";
 
 import CategoryBar from "./CategoryBar";
+import MobileNavBar from "./MobileNavBar";
 import NavbarMenu from "./NavbarMenu";
 
 import { IMenuCategory, INavbarMenu } from "@/types/menu.category.type";
@@ -22,7 +23,7 @@ const NavbarBottom: React.FC<NavbarBottomProps> = ({
                     <div className="flex items-center  rtl:space-x-reverse relative pt-2">
                         <CategoryBar categoriesData={categoriesData || []} />
                     </div>
-                    <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                    <div className="lg:flex hidden md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                         <button
                             type="button"
                             className="transition-all duration-300 text-white hover:text-black bg-black hover:bg-white  font-medium  text-sm px-5 py-2.5 text-center "
@@ -30,8 +31,11 @@ const NavbarBottom: React.FC<NavbarBottomProps> = ({
                             Become Seller
                         </button>
                     </div>
-                    <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
+                    <div className="items-center justify-between hidden w-full lg:flex md:w-auto md:order-1">
                         <NavbarMenu data={navbarMenuData || []} />
+                    </div>
+                    <div className="flex items-center  rtl:space-x-reverse relative pt-2">
+                        <MobileNavBar categoriesData={categoriesData || []} />
                     </div>
                 </div>
             </div>

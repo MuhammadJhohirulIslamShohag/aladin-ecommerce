@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
 import Link from "next/link";
+import React, { useState } from "react";
 
-import { FaAngleRight } from "react-icons/fa";
-import { FaBarsStaggered } from "react-icons/fa6";
-import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import { IMenuCategory } from "@/types/menu.category.type";
+import { FaAngleRight } from "react-icons/fa";
+import { FaAngleDown, FaAngleUp, FaBarsStaggered } from "react-icons/fa6";
+import MobileCategoryNav from "./MobileCategoryNav";
 
 interface CategoryBarProps {
     categoriesData: IMenuCategory[];
@@ -20,16 +20,16 @@ const CategoryBar: React.FC<CategoryBarProps> = ({ categoriesData }) => {
             <button
                 onClick={() => setOpenCategory((prev) => !prev)}
                 type="button"
-                className="text-white bg-black font-medium rounded-t-lg text-sm  text-center items-center flex w-[270px] h-[53px] px-5 justify-between cursor-pointer"
+                className="text-white bg-black font-medium rounded-t-lg text-sm  text-center items-center flex lg:w-[270px] md:w-[170px] h-[53px] px-5 justify-between cursor-pointer"
             >
                 <div className="flex items-center gap-2">
-                    <span>
+                    <span className="md:block hidden">
                         <FaBarsStaggered size={17} />
                     </span>
                     <span>All Categories</span>
                 </div>
 
-                <div>
+                <div className="lg:block hidden">
                     {openCategory ? (
                         <FaAngleDown size={17} />
                     ) : (
@@ -40,9 +40,14 @@ const CategoryBar: React.FC<CategoryBarProps> = ({ categoriesData }) => {
             <div
                 className={`z-10 origin-top transition-all ${
                     openCategory ? "scale-100" : "scale-0"
-                }   top-full absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-[270px] `}
+                } top-full absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-[270px] `}
             >
-                <ul className="py-2 text-sm text-gray-700   ">
+                <MobileCategoryNav
+                    categoriesData={categoriesData}
+                    // closeMobileCategory={() => setOpenCategory((prev) => !prev)}
+                    className="lg:hidden block"
+                />
+                <ul className="py-2 text-sm text-gray-700 lg:block hidden">
                     {categoriesData?.map((data, idx) => (
                         <li
                             key={idx}
