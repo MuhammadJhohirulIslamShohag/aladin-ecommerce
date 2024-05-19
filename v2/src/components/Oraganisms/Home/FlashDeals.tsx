@@ -4,6 +4,7 @@ import { MdFlashOn } from "react-icons/md";
 
 import FlashDeal from "@/components/Molecules/Products/FlashDeal";
 import CountDown from "@/components/Molecules/CountDown";
+import SectionTitle from "../../Molecules/SectionTitle";
 
 import { IProduct } from "@/types/product.type";
 
@@ -41,15 +42,15 @@ const FlashDeals = ({ products }: FlashDealsPropsType) => {
                         spaceBetween: 15,
                     },
                     1024: {
-                        slidesPerView: 3,
-                        spaceBetween: 20,
+                        slidesPerView: 4,
+                        spaceBetween: 16,
                     },
                     1200: {
-                        slidesPerView: 4,
-                        spaceBetween: 25,
+                        slidesPerView: 5,
+                        spaceBetween: 16,
                     },
                 }}
-                className="surprising_sales h-[505px] md:h-[478px] sm:h-[462px]"
+                className="surprising_sales lg:h-[505px] md:h-[478px] h-[462px]"
             >
                 <div className="flex flex-wrap pl-1 md:justify-center sm:justify-center">
                     {products?.map((product: IProduct) => (
@@ -73,13 +74,11 @@ const FlashDeals = ({ products }: FlashDealsPropsType) => {
             data-aos-delay="1"
             data-aos-duration="1000"
             data-aos-easing="ease-in-out"
+            className="container"
         >
-            <div className="p-6 lg:flex flex-col items-center justify-between text-white font-black text-2xl uppercase bg-green-300 mb-10 px-6">
-                <h2 className="text-gray-800 text-lg">
-                    Surprising Sells
-                    <MdFlashOn className="inline-block text-gray-700" />
-                </h2>
-                <CountDown date={new Date(2023, 11, 30)} />
+            <div className="flex items-center justify-between container">
+                <SectionTitle title={'Surprising Sells'} className="mb-6" />
+                <CountDown date={new Date(2024, 11, 30)} />
             </div>
             <div className="container">{content}</div>
         </div>

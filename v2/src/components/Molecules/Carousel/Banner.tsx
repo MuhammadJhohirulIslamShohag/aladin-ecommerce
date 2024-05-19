@@ -41,13 +41,13 @@ const Banner = () => {
                             <span className="text-success md:text-xl text-lg mb-3">
                                 20% off Laptop and Desktop
                             </span>
-                            <h2 className="text-5xl sm:text-3xl text-primary w-[34rem] sm:w-64 ">
+                            <h2 className="md:text-5xl text-3xl text-primary md:w-[34rem] w-64 ">
                                 Smartest and Affordable Devices
                             </h2>
                             <Link href="/shop">
                                 <Button
                                     label={"Shop Now"}
-                                    className="mt-10 sm:mt-5"
+                                    className="md:mt-10 mt-5"
                                 />
                             </Link>
                         </div>
@@ -61,16 +61,16 @@ const Banner = () => {
                         className="bg-cover z-20 bg-no-repeat bg-left md:bg-center w-full flex items-center justify-center h-full "
                     >
                         <div className="text-center">
-                            <span className="text-success text-xl sm:text-lg mb-3">
+                            <span className="text-success md:text-xl text-lg mb-3">
                                 20% off Laptop and Desktop
                             </span>
-                            <h2 className="text-5xl sm:text-3xl text-primary w-[34rem] sm:w-64">
+                            <h2 className="md:text-5xl text-3xl text-primary md:w-[34rem] w-64 ">
                                 Smartest and Affordable Devices
                             </h2>
                             <Link href="/shop">
                                 <Button
                                     label={"Shop Now"}
-                                    className="mt-10 sm:mt-5"
+                                    className="md:mt-10 mt-5"
                                 />
                             </Link>
                         </div>

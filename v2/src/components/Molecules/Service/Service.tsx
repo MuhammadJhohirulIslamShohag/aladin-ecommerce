@@ -8,7 +8,7 @@ interface ServiceProps {
 
 const Service = ({ children, name, info }: ServiceProps) => {
     return (
-        <div  className="flex justify-center mb-8 sm:justify-start sm:ml-6">
+        <div  className="flex md:justify-center mb-8 justify-start md:ml-0 ml-6">
             <div className="flex items-center border-r-2 pr-3">
                 {children}
             </div>

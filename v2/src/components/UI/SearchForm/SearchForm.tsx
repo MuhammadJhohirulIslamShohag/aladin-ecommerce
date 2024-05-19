@@ -31,7 +31,7 @@ const SearchForm = ({ className, placeholder }: SearchFormPropType) => {
                 type="text"
                 name="search"
                 value={''}
-                className="bg-primary border-primary text-white text-sm rounded-lg  focus:border-primary block w-full pl-6 p-3 placeholder:text-white sm:placeholder:text-[9px]"
+                className="bg-primary border-primary text-white text-sm rounded-lg  focus:border-primary block w-full pl-6 p-3 placeholder:text-white placeholder:text-[15px]"
                 placeholder={placeholder}
                 onChange={changeSearchHandler}
                 required

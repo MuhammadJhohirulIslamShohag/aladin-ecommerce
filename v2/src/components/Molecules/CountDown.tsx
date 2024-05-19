@@ -30,25 +30,25 @@ const CountDown = ({ date }: { date: Date }) => {
     };
 
     return (
-        <div className="flex items-center gap-2 sm:mt-2">
-            <span className="bg-gray-700 text-white p-1 rounded-md text-3xl sm:text-xl">
+        <div className="flex items-center gap-2">
+            <span className="bg-gray-700 text-white py-1 px-2 rounded-md md:text-2xl text-xl">
                 {remainingTime?.hours.slice(0, 1)}
             </span>
-            <span className="bg-gray-800 text-white p-1 rounded-md text-3xl sm:text-xl">
+            <span className="bg-gray-800 text-white py-1 px-2 rounded-md md:text-2xl text-xl">
                 {remainingTime?.hours.slice(1, 2)}
             </span>
             <b className="text-xl">:</b>
-            <span className="bg-gray-800 text-white p-1 rounded-md text-3xl sm:text-xl">
+            <span className="bg-gray-800 text-white py-1 px-2 rounded-md md:text-2xl text-xl">
                 {remainingTime?.minutes.slice(0, 1)}
             </span>
-            <span className="bg-gray-800 text-white p-1 rounded-md text-3xl sm:text-xl">
+            <span className="bg-gray-800 text-white py-1 px-2 rounded-md md:text-2xl text-xl">
                 {remainingTime?.minutes.slice(1, 2)}
             </span>
             <b className="text-xl">:</b>
-            <span className="bg-gray-800 text-white p-1 rounded-md text-3xl sm:text-xl">
+            <span className="bg-gray-800 text-white py-1 px-2 rounded-md md:text-2xl text-xl">
                 {remainingTime?.seconds.slice(0, 1)}
             </span>
-            <span className="bg-gray-800 text-white p-1 rounded-md text-3xl sm:text-xl">
+            <span className="bg-gray-800 text-white py-1 px-2 rounded-md md:text-2xl text-xl">
                 {remainingTime?.seconds.slice(1, 2)}
             </span>
         </div>

@@ -2,6 +2,7 @@ import React from "react";
 import ComparisonProduct from "../../Molecules/Home/ComparisonProduct";
 import EffectCardsSlider from "../../Molecules/Carousel/EffectCardsSlider";
 import Banner from "../../Molecules/Carousel/Banner";
+
 import { IProduct } from "@/types/product.type";
 
 interface IHeroProps {

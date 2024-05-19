@@ -12,7 +12,7 @@ import "swiper/css/effect-cards";
 
 const EffectCardsSlider: React.FC<Props> = ({ products }) => {
     return (
-        <div className="lg:w-[78%] md:w-[32%] w-[75%] h-full mx-auto">
+        <div className="lg:w-[78%] md:w-[32%] w-[75%] h-full mx-auto md:block hidden">
             {products?.length ? (
                 <Swiper
                     effect={"cards"}

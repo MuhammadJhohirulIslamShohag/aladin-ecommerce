@@ -76,8 +76,11 @@ const Home = async () => {
             <FunFactArea />
 
             <Suspense fallback={<Loader height={"h-[360px]"} />}>
-                <TopSellsProduct products={products?.data?.data} />
-            </Suspense>
+                    <SmallProductSlider
+                        title="Best Clothes"
+                        products={products?.data?.data}
+                    />
+                </Suspense>
             <Suspense fallback={<Loader height={"h-[360px]"} />}>
                 <FeaturedSubCategories />
             </Suspense>
