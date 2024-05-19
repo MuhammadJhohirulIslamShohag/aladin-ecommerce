@@ -72,11 +72,11 @@ const Login = () => {
 
     return (
         <div className="bg-white">
-            <div className="my_container ">
+            <div className="container !w-[69%]">
                 <div className="grid lg:grid-cols-2 grid-cols-1 place-items-center">
                     <LeftAuth />
-                    <div className="mx-auto w-full max-w-[450px] my-8 md:pb-8  px-6 lg:px-0">
-                        <h3 className="text-xl mb-8">Register Account</h3>
+                    <div className="mx-auto w-full max-w-[450px] my-8 py-6 px-7 bg-white/80 shadow-lg rounded-md">
+                       
                         <LoginForm
                             handleLogin={handleLogin}
                             setOpenForgotPasswordModal={
@@ -85,7 +85,7 @@ const Login = () => {
                             isLoading={isLoading}
                         />
                         <AuthFormFooter
-                            href={"/register"}
+                            href={"/auth/register"}
                             content={[
                                 "Don't have an account?",
                                 " Create Your Account",

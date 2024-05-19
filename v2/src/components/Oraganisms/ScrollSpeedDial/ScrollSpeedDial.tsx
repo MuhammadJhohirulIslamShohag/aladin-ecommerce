@@ -12,7 +12,7 @@ const ScrollSpeedDial = () => {
     const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
 
     return (
-        <>
+        <div className="lg:block hidden">
             <SpeedDial />
 
             {/* fixed compare modal */}
@@ -44,7 +44,7 @@ const ScrollSpeedDial = () => {
                     />
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

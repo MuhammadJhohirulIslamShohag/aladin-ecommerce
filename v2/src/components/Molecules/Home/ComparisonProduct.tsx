@@ -114,7 +114,7 @@ const ComparisonProduct: React.FC<ComparisonProductProps> = ({ products }) => {
 
     return (
         <div className="lg:w-full md:w-[50%] w-full gap-y-3">
-            <div className="bg-[#FFE8A1] p-6 rounded-sm">
+            <div className="bg-white/40 shadow-xl p-6 rounded-sm">
                 <p className="text-center font-semibold tracking-wide">
                     Compare Products
                 </p>
@@ -124,7 +124,7 @@ const ComparisonProduct: React.FC<ComparisonProductProps> = ({ products }) => {
                 <form className="mt-2">
                     <div className="relative shadow-sm " ref={comparisonOneRef}>
                         <input
-                            className="w-full py-2 pl-2.5 pr-11 outline-none rounded-md mt-2  overflow-hidden text-[15px] placeholder:text-gray-700 placeholder:font-medium"
+                            className="w-full py-2 pl-2.5 pr-11 outline-none rounded-md mt-2 overflow-hidden text-[15px] placeholder:text-gray-700 placeholder:font-medium"
                             type="text"
                             value={comparisonOneValue?.name}
                             onChange={handleComparisonOneChange}
@@ -156,7 +156,7 @@ const ComparisonProduct: React.FC<ComparisonProductProps> = ({ products }) => {
                         ref={comparisonTwoRef}
                     >
                         <input
-                            className="w-full text-[15px] py-2 pl-2.5 pr-11 outline-none rounded-md mt-2  overflow-hidden placeholder:text-gray-700 placeholder:font-medium"
+                            className="w-full text-[15px] py-2 pl-2.5 pr-11 outline-none rounded-md mt-2 overflow-hidden placeholder:text-gray-700 placeholder:font-medium"
                             type="text"
                             value={comparisonTwoValue?.name}
                             onChange={handleComparisonTwoChange}
@@ -185,7 +185,7 @@ const ComparisonProduct: React.FC<ComparisonProductProps> = ({ products }) => {
                     <button
                         type="button"
                         onClick={handleSendComparisonProduct}
-                        className="btn w-full mt-4 text-[#3749BB] border-2 border-[#3749BB] py-2 text-sm tracking-wide font-semibold rounded-md hover:text-white hover:bg-[#3749BB] transition-all duration-300"
+                        className="btn w-full mt-4 text-green-400 border-2 border-green-400 py-2 text-sm tracking-wide font-semibold rounded-md hover:text-white hover:bg-green-400 transition-all duration-300"
                     >
                         View Comparison
                     </button>

@@ -34,7 +34,7 @@ const NavbarBottom: React.FC<NavbarBottomProps> = ({
                     <div className="items-center justify-between hidden w-full lg:flex md:w-auto md:order-1">
                         <NavbarMenu data={navbarMenuData || []} />
                     </div>
-                    <div className="flex items-center  rtl:space-x-reverse relative pt-2">
+                    <div className="flex items-center lg:hidden block  rtl:space-x-reverse relative pt-2">
                         <MobileNavBar categoriesData={categoriesData || []} />
                     </div>
                 </div>

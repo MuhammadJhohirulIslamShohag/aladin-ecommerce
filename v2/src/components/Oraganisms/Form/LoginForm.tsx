@@ -50,10 +50,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
             />
 
             <div className="my-[25px]">
-                <div className="flex justify-between -mb-6">
-                    <label htmlFor="password" className="text-[13px]">
-                        Password
-                    </label>
+                <div className="flex justify-end -mb-6">
                     <p
                         onClick={() => setOpenForgotPasswordModal(true)}
                         className="text-[13px] text-right text-primary cursor-pointer"
@@ -61,8 +58,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
                         Forgotten Password?
                     </p>
                 </div>
-                <br />
-
                 <ControllerInputGroup
                     control={control}
                     rules={{
@@ -96,7 +91,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     {" "}
                     <button
                         type="button"
-                        className="absolute right-3 top-3"
+                        className="absolute right-3 top-[9px]"
                         onClick={() => setShowPassword(!showPassword)}
                     >
                         {showPassword ? (

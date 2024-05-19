@@ -39,7 +39,7 @@ const ControllerInput: React.FC<ControllerInputProps> = ({
                     {...field}
                     type={type}
                     placeholder={placeholder}
-                    className={cn("input w-full max-w-[450px]", className)}
+                    className={cn("text-gray-800 text-sm rounded-lg  ring-0 block w-full pl-6 p-3  placeholder:text-[13px] placeholder-gray-600  border  focus:outline-offset-0 focus:outline-0 focus:outline-green-400 focus:ring-green-300 shadow-sm bg-white focus:border-success", className)}
                 />
             )}
         />

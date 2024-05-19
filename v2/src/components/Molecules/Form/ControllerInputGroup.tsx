@@ -54,7 +54,7 @@ const ControllerInputGroup = <T extends FieldValues>({
             />
             {children && children}
             {errors && (
-                <p className="text-primary text-md mt-1">{errors?.message}</p>
+                <p className="text-red-500 text-md mt-1">{errors?.message}</p>
             )}
         </div>
     );

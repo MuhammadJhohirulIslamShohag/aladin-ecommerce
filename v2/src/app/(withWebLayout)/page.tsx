@@ -19,7 +19,7 @@ import NewArrivals from "@/components/Oraganisms/Products/NewArrivals";
 import TopProducts from "@/components/Oraganisms/Products/TopProducts";
 import TopSellsProduct from "@/components/Oraganisms/Products/TopSellsProduct";
 import Services from "@/components/Oraganisms/Services";
-import SubCategories from "@/components/Oraganisms/SubCategories";
+import FeaturedSubCategories from "@/components/Oraganisms/Home/FeaturedSubCategories";
 
 const Home = async () => {
     // Initiate both requests in parallel
@@ -48,9 +48,7 @@ const Home = async () => {
                 <Categories data={categories.data?.data} />
             </Suspense>
 
-            <Suspense fallback={<Loader height={"h-[360px]"} />}>
-                <SubCategories data={subCategories.data?.data} />
-            </Suspense>
+           
 
             <Suspense fallback={<Loader height={"h-[360px]"} />}>
                 <FlashDeals products={products?.data?.data} />
@@ -79,6 +77,9 @@ const Home = async () => {
 
             <Suspense fallback={<Loader height={"h-[360px]"} />}>
                 <TopSellsProduct products={products?.data?.data} />
+            </Suspense>
+            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                <FeaturedSubCategories />
             </Suspense>
             <Advertise />
             <Suspense fallback={<Loader height={"h-[450px]"} />}>
