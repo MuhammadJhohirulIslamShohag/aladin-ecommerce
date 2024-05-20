@@ -2,18 +2,21 @@ import SectionTitle from "../../Molecules/SectionTitle";
 import SmallProduct from "../../Molecules/Products/SmallProduct";
 import SecondLevelHeading from "../../Atoms/SecondLevelHeading";
 import { IProduct } from "@/types/product.type";
+import cn from "@/lib/cn";
 
 interface SmallProductSliderProps {
     products: IProduct[];
     title: string;
+    className?: string;
 }
 
 const SmallProductSlider: React.FC<SmallProductSliderProps> = ({
     title = "",
     products = [],
+    className = "",
 }) => {
     return (
-        <div className="my-14 container mx-auto px-6">
+        <div className={cn("container mx-auto px-6", className)}>
             <SectionTitle title={title} />
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
                 <div className="">

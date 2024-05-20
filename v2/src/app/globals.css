@@ -245,12 +245,13 @@
     }
     .featured_products .swiper-button-next,
     .featured_products .swiper-button-prev {
-        margin-top: 184px !important;
+        margin-top: 177px !important;
     }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .featured_products .swiper-button-prev {
         left: 87% !important;
+        margin-top: 177px !important;
     }
 }
 @media only screen and (min-width: 992px) and (max-width: 1200px) {

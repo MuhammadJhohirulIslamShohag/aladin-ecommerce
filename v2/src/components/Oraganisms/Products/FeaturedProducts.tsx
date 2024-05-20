@@ -21,7 +21,7 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
     products = [],
 }) => {
     return (
-        <div>
+        <div className="container">
             <SectionTitle title={"Feature Products"} />
             <Swiper
                 slidesPerView={1}
@@ -50,7 +50,7 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
                         spaceBetween: 16,
                     },
                 }}
-                className="featured_products lg:h-[477px] md:h-[478px] h-[462px]"
+                className="featured_products lg:h-[477px] md:h-[420px] h-[462px]"
             >
                 {products?.map((product: IProduct) => (
                     <SwiperSlide key={product._id}>

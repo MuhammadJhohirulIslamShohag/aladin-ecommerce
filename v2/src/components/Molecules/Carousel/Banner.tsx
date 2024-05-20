@@ -28,7 +28,7 @@ const Banner = () => {
                 }}
                 navigation={true}
                 modules={[Pagination, Navigation, Autoplay]}
-                className="lg:h-[75vh] md:h-[75vh] h-[80vh]"
+                className="lg:h-[76vh] md:h-[75vh] h-[80vh]"
             >
                 <SwiperSlide>
                     <div

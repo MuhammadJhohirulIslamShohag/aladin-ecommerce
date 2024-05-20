@@ -53,17 +53,17 @@ const FlatProductCard: React.FC<FlatProductCardProps> = ({
                         className="text-secondary mt-2 mb-5"
                         href={`/products/${slug}`}
                     >
-                        <h3 className="font-bold mb-[4px] hover:text-primary duration-300 hover:underline px-5">
+                        <h3 className="font-bold text-primary mb-[4px] hover:text-success duration-300 hover:underline px-5">
                             {name?.length && name?.length > 35
                                 ? name.slice(0, 35) + "..."
                                 : name}
                         </h3>
                         <div className="px-5">
                             <div className="flex gap-3">
-                                <span className="text-primary">
+                                <span className="text-success">
                                     ৳ {numberWithCommas(netPrice)}
                                 </span>
-                                <span className="line-through">
+                                <span className="line-through text-primary">
                                     ৳ {numberWithCommas(price)}
                                 </span>
                             </div>
@@ -73,28 +73,28 @@ const FlatProductCard: React.FC<FlatProductCardProps> = ({
                     <div className="flex xl:justify-start justify-center">
                         <div className="flex gap-2 flex-wrap">
                             <Division
-                                className="p-2 hidden lg:block rounded-full shadow-md hover:bg-primary group/edit duration-300 transition cursor-pointer  bg-white text-textPrimary"
+                                className="rounded-full h-8 w-8 flex justify-center items-center shadow-md bg-white hover:bg-primary transition-all duration-500 cursor-pointer hover:text-white  text-textPrimary"
                                 onClick={() => handleAddCart(product)}
                             >
-                                <BsFillCartPlusFill className="text-2xl" />
+                                <BsFillCartPlusFill className="text-lg" />
                             </Division>
                             <Division
-                                className="px-2 rounded-full shadow-md hover:bg-primary group/edit duration-300 transition cursor-pointer  bg-white text-textPrimary flex items-center justify-center"
+                                className="rounded-full h-8 w-8 flex justify-center items-center shadow-md bg-white hover:bg-primary transition-all duration-500 cursor-pointer hover:text-white  text-textPrimary"
                                 onClick={() => handleWishListProduct(product)}
                             >
-                                <FaHeartBroken className={`text-2xl `} />
+                                <FaHeartBroken className={`text-lg `} />
                             </Division>
                             <Division
-                                className="px-3 rounded-full shadow-md hover:bg-primary group/edit duration-300 transition cursor-pointer  bg-white text-textPrimary flex items-center justify-center"
+                                className="rounded-full h-8 w-8 flex justify-center items-center shadow-md bg-white hover:bg-primary transition-all duration-500 cursor-pointer hover:text-white  text-textPrimary"
                                 onClick={() => handleProductView(product)}
                             >
-                                <FaSearch className="text-md" />
+                                <FaSearch className="text-lg" />
                             </Division>
                             <Division
-                                className="px-2 rounded-full shadow-md hover:bg-primary group/edit duration-300 transition cursor-pointer  bg-white text-textPrimary flex items-center justify-center"
+                                className="rounded-full h-8 w-8 flex justify-center items-center shadow-md bg-white hover:bg-primary transition-all duration-500 cursor-pointer hover:text-white  text-textPrimary"
                                 onClick={() => handleCompare(product)}
                             >
-                                <MdCompareArrows className="text-2xl" />
+                                <MdCompareArrows className="text-lg" />
                             </Division>
                         </div>
                     </div>

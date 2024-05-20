@@ -15,13 +15,13 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
     const modifiedTitle = title?.substring(firstIndex);
 
     return (
-        <div className={cn("text-center mb-10 ", className)}>
-            <h2 className="text-4xl relative font-bold uppercase z-20 text-black">
+        <div className={cn("text-center lg:mb-10 md:mb-6 mb-4", className)}>
+            <h2 className="lg:text-4xl md:text-3xl text-2xl relative font-bold uppercase z-20 text-black">
                 <span className="text-green-400 font-extrabold">
                     {title?.split(" ")[0]}
                 </span>{" "}
                 {modifiedTitle}
-                <span className="absolute leading-10 -top-1 left-0 text-black/60 opacity-5 text-6xl w-full">
+                <span className="absolute leading-10 -top-1 left-0 text-black/60 opacity-5 text-6xl lg:text-6xl md:text-4xl text-3xl w-full">
                     {title}
                 </span>
             </h2>

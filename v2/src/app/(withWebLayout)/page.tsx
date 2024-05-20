@@ -17,7 +17,6 @@ import SmallProductSlider from "@/components/Oraganisms/Home/SmallProductSlider"
 import FeaturedProducts from "@/components/Oraganisms/Products/FeaturedProducts";
 import NewArrivals from "@/components/Oraganisms/Products/NewArrivals";
 import TopProducts from "@/components/Oraganisms/Products/TopProducts";
-import TopSellsProduct from "@/components/Oraganisms/Products/TopSellsProduct";
 import Services from "@/components/Oraganisms/Services";
 import FeaturedSubCategories from "@/components/Oraganisms/Home/FeaturedSubCategories";
 
@@ -48,46 +47,48 @@ const Home = async () => {
                 <Categories data={categories.data?.data} />
             </Suspense>
 
-           
-
             <Suspense fallback={<Loader height={"h-[360px]"} />}>
                 <FlashDeals products={products?.data?.data} />
             </Suspense>
-            <div className="container">
-                <Suspense fallback={<Loader height={"h-[360px]"} />}>
-                    <FeaturedProducts products={products?.data?.data} />
-                </Suspense>
 
-                <Suspense fallback={<Loader height={"h-[360px]"} />}>
-                    <TopProducts products={products?.data?.data} />
-                </Suspense>
+            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                <FeaturedProducts products={products?.data?.data} />
+            </Suspense>
 
-                <Suspense fallback={<Loader height={"h-[360px]"} />}>
-                    <NewArrivals products={products?.data?.data} />
-                </Suspense>
-                <Suspense fallback={<Loader height={"h-[360px]"} />}>
-                    <SmallProductSlider
-                        title="Best Food"
-                        products={products?.data?.data}
-                    />
-                </Suspense>
-            </div>
+            <Advertise />
+
+            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                <TopProducts products={products?.data?.data} />
+            </Suspense>
+
+            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                <NewArrivals products={products?.data?.data} />
+            </Suspense>
+
+            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+                <SmallProductSlider
+                    title="Best Food"
+                    products={products?.data?.data}
+                    className="lg:py-8 md:py-16 py-12"
+                />
+            </Suspense>
 
             <FunFactArea />
 
             <Suspense fallback={<Loader height={"h-[360px]"} />}>
-                    <SmallProductSlider
-                        title="Best Clothes"
-                        products={products?.data?.data}
-                    />
-                </Suspense>
-            <Suspense fallback={<Loader height={"h-[360px]"} />}>
-                <FeaturedSubCategories />
+                <SmallProductSlider
+                    title="Best Clothes"
+                    products={products?.data?.data}
+                    className="lg:py-28 md:py-16 py-12 "
+                />
             </Suspense>
-            <Advertise />
+
+            <FeaturedSubCategories />
+
             <Suspense fallback={<Loader height={"h-[450px]"} />}>
                 <Blogs blogs={blogs?.data?.data} />
             </Suspense>
+            
             <Suspense fallback={<Loader height={"h-[450px]"} />}>
                 <FollowUsSocial products={products?.data?.data} />
             </Suspense>

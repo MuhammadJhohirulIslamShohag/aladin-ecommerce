@@ -1,6 +1,5 @@
 "use client";
 
-import SectionTitle from "../../Molecules/SectionTitle";
 import featuredCategoryData from "./../../../data/featuredCategoryData";
 import FeaturedSubCategory from "../../Molecules/Home/FeaturedSubCategory";
 
@@ -12,7 +11,7 @@ import "swiper/css";
 
 const FeaturedSubCategories = () => {
     return (
-        <div className="my-10">
+        <div className="lg:pb-10 md:pb-7 pb-5">
             <Swiper
                 slidesPerView={8}
                 autoplay={{

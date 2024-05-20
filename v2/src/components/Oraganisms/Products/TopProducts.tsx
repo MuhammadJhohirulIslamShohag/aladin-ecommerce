@@ -73,7 +73,7 @@ const TopProducts: React.FC<TopProductsProps> = ({ products }) => {
 
     return (
         <>
-            <div className="py-32">
+            <div className="container">
                 <SectionTitle title={"Top Products"} />
                 <div className="lg:grid grid-cols-12 justify-between gap-6 lg:space-y-0 space-y-7 ">
                     <div className="xl:col-span-9 lg:col-span-7">

@@ -36,7 +36,7 @@ const FollowUsSocial: React.FC<{ products: IProduct[] }> = ({ products }) => {
     };
 
     return (
-        <div>
+        <div className="lg:py-28 md:py-16 py-10">
             <SectionTitle title={"Follow Us On Social"} />
             <div>
                 <Swiper

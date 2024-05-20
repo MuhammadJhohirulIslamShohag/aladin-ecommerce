@@ -65,7 +65,7 @@ const ShoppingCarts: React.FC<ShoppingCartsProps> = ({
         <Transition.Root show={openShoppingCart} as={Fragment}>
             <Dialog
                 as="div"
-                className="relative z-50"
+                className="relative z-[999999]"
                 onClose={setOpenShoppingCart}
             >
                 <Transition.Child

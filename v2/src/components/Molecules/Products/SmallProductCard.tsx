@@ -49,7 +49,7 @@ const SmallProductCard: React.FC<SmallProductCardProps> = ({
                     className="text-secondary mt-2 "
                     href={`/products/${product?.slug}`}
                 >
-                    <h3 className="md:text-lg text-base hover:w-full transition duration-700 ease-in-out mb-[4px] group font-medium relative">
+                    <h3 className="md:text-lg text-base hover:w-full transition duration-700 ease-in-out mb-[4px] group font-medium relative text-primary hover:text-success">
                         <span className="content-wrapper group-hover:bg-[length:100%_1px]">
                             {" "}
                             {product?.name?.length > 16
@@ -59,10 +59,10 @@ const SmallProductCard: React.FC<SmallProductCardProps> = ({
                     </h3>
                     <div className="">
                         <div className="flex gap-3">
-                            <span className="text-primary">
+                            <span className="text-success">
                                 ৳ {numberWithCommas(netPrice)}
                             </span>
-                            <span className="line-through">
+                            <span className="line-through text-primary/90">
                                 ৳ {numberWithCommas(product?.price)}
                             </span>
                         </div>

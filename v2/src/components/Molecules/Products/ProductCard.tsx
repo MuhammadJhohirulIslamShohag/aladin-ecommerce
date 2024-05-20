@@ -181,7 +181,7 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                     <div className="h-[80px]">
                         <Link
                             href={`/products/${slug}`}
-                            className="text-xs lg:text-[15px] text-primaryBlack font-bold hover:text-primary hover:underline"
+                            className="text-xs lg:text-[15px] text-primary font-bold hover:text-success hover:underline"
                             title={name}
                         >
                             {name?.length > 35
@@ -207,14 +207,14 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                     </div>
                 </div>
 
-                {discount > 0 && (
+              
                     <p className="bg-primary w-fit px-2 py-0.5 text-white font-semibold text-xs rounded-r-md absolute top-3 left-0">
                         <span>
                             {numberWithCommas(discountPrice)}৳ Discount on
                             Online Order
                         </span>
                     </p>
-                )}
+               
             </div>
 
             {productView && (

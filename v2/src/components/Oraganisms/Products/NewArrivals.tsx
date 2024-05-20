@@ -73,7 +73,7 @@ const NewArrivals: React.FC<NewArrivalsProps> = ({ products }) => {
 
     return (
         <>
-            <div>
+            <div className="container lg:py-36 md:py-16 py-10">
                 <SectionTitle title={"New Arrivals"} />
                 <div className="lg:grid grid-cols-12 justify-between gap-6 lg:space-y-0 space-y-7 ">
                     <div className="xl:col-span-3 lg:col-span-5 text-white lg:flex hidden justify-center items-center rounded-md py-3 lg:h-full xl:h-[380px]">

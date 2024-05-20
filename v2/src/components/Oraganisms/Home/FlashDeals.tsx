@@ -74,10 +74,10 @@ const FlashDeals = ({ products }: FlashDealsPropsType) => {
             data-aos-delay="1"
             data-aos-duration="1000"
             data-aos-easing="ease-in-out"
-            className="container"
+            className="container mb-12"
         >
-            <div className="flex items-center justify-between container">
-                <SectionTitle title={'Surprising Sells'} className="mb-6" />
+            <div className="flex items-center justify-between lg:mb-3 md:mb-7 mb-7">
+                <SectionTitle title={'Surprising Sells'} className="lg:mb-6 mb-0" />
                 <CountDown date={new Date(2024, 11, 30)} />
             </div>
             <div className="container">{content}</div>
