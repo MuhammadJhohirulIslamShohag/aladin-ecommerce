@@ -7,6 +7,7 @@ import { BsFillHeartFill } from "react-icons/bs";
 import _ from "lodash";
 
 import ValidateImage from "../../Atoms/ValidateImage";
+
 import { IProduct } from "@/types/product.type";
 
 interface WishListProductCardProps {

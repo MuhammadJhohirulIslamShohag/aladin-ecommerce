@@ -1,110 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import React, { startTransition, useState } from "react";
+import React from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { IoIosEye } from "react-icons/io";
 import { MdCompareArrows } from "react-icons/md";
-import toast from "react-hot-toast";
-import _ from "lodash";
 
-import CustomModal from "../../Atoms/Modal/CustomModal";
-import SaveProductModal from "../Modal/SaveProductModal";
-import CompareProductInfo from "./CompareProductInfo";
-import ProductCartPreview from "./ProductCartPreview";
-import ProductView from "./ProductView";
 
 import numberWithCommas from "@/utils/numberWithCommas";
 import ValidateImage from "../../Atoms/ValidateImage";
 import TooltipButton from "../Button/TooltipButton/TooltipButton";
 
 import { IProduct } from "@/types/product.type";
-import { removeSpace } from "@/utils/removeSpace";
-import {
-    getCompareProducts,
-    storeCompareProducts,
-} from "@/store/compare/compare.product";
-import { useStoreContext } from "@/contexts/StoreContextProvider";
-import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
-import {
-    getWishListProducts,
-    storeWishListProducts,
-} from "@/store/wishList/wishList.product";
-import { addToWishList } from "@/api/user";
-import { getUserInfo } from "@/store/user/users";
 
-const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
-    const user = getUserInfo();
-    const { dispatch } = useStoreContext();
+interface ProductCardProps {
+    product: IProduct;
+    handleAddCart: (product: IProduct) => void;
+    handleCompare: (product: IProduct) => void;
+    handleWishListProduct: (product: IProduct) => void;
+    handleProductView: (product: IProduct) => void;
+}
 
+const ProductCard: React.FC<ProductCardProps> = ({
+    product,
+    handleAddCart,
+    handleCompare,
+    handleWishListProduct,
+    handleProductView,
+}) => {
     const { name, price, discount, slug, imageURLs, quantity, _id } = product;
 
     const discountPrice = Math.ceil(price * (discount / 100));
     const netPrice = Math.ceil(price - discountPrice);
-
-    const [modalOpen, setModalOpen] = useState(false);
-    const [productView, setProductView] = useState(false);
-    const [saveProductModalOpen, setSaveProductModalOpen] = useState(false);
-    const [compareModalOpen, setCompareModalOpen] = useState(false);
-
-    const handleAddWishListProduct = async () => {
-        // all wish list products array
-        let wishListProducts = getWishListProducts();
-
-        // added wish list product
-        wishListProducts.push({
-            ...product,
-        });
-        // remove duplicates
-        const uniqueWishListProducts = _.uniqWith(wishListProducts, _.isEqual);
-
-        // set cart object in windows localStorage
-        startTransition(() => {
-            storeWishListProducts(JSON.stringify(uniqueWishListProducts));
-            // added cart in store context
-            dispatch({
-                type: StoreActionType.ADD_TO_WISH,
-                payload: uniqueWishListProducts,
-            });
-        });
-
-        await addToWishList(user?.token, _id).then((res) => {
-            if (res?.data?.success) {
-                toast.success(res?.data?.message, {
-                    duration: 5000,
-                });
-            }
-        });
-    };
-
-    const handleAddCart = () => {
-        setModalOpen((prevState) => !prevState);
-    };
-
-    const handleAddCompareProduct = () => {
-        // create compare products array
-        let compareProducts = getCompareProducts();
-
-        // added compare product
-        compareProducts.push({
-            ...product,
-        });
-        // remove duplicates
-        const uniqueCompareProducts = _.uniqWith(compareProducts, _.isEqual);
-
-        // set cart object in windows localStorage
-        startTransition(() => {
-            storeCompareProducts(JSON.stringify(uniqueCompareProducts));
-            // added cart in store context
-            dispatch({
-                type: StoreActionType.ADD_TO_COMPARE,
-                payload: uniqueCompareProducts,
-            });
-        });
-
-        setCompareModalOpen((prev) => !prev);
-    };
 
     return (
         <>
@@ -130,7 +58,7 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                                 content="Product View"
                             >
                                 <button
-                                    onClick={() => setProductView(!productView)}
+                                    onClick={() => handleProductView(product)}
                                 >
                                     <IoIosEye className={`text-2xl `} />
                                 </button>
@@ -141,7 +69,9 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                                 content="Add to cart"
                             >
                                 {quantity ? (
-                                    <button onClick={() => handleAddCart()}>
+                                    <button
+                                        onClick={() => handleAddCart(product)}
+                                    >
                                         <BsFillCartPlusFill className="text-2xl" />
                                     </button>
                                 ) : (
@@ -160,7 +90,11 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                                 //         : "text-white bg-green-400"
                                 // }`}
                             >
-                                <button onClick={handleAddWishListProduct}>
+                                <button
+                                    onClick={() =>
+                                        handleWishListProduct(product)
+                                    }
+                                >
                                     <AiFillHeart className={`text-2xl `} />
                                 </button>
                             </TooltipButton>
@@ -169,7 +103,7 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                                 content="Add to Compare"
                                 tooltipPlacement="top-end"
                             >
-                                <button onClick={handleAddCompareProduct}>
+                                <button onClick={() => handleCompare(product)}>
                                     <MdCompareArrows className="text-2xl" />
                                 </button>
                             </TooltipButton>
@@ -207,56 +141,13 @@ const ProductCard: React.FC<{ product: IProduct }> = ({ product }) => {
                     </div>
                 </div>
 
-              
-                    <p className="bg-primary w-fit px-2 py-0.5 text-white font-semibold text-xs rounded-r-md absolute top-3 left-0">
-                        <span>
-                            {numberWithCommas(discountPrice)}৳ Discount on
-                            Online Order
-                        </span>
-                    </p>
-               
+                <p className="bg-primary w-fit px-2 py-0.5 text-white font-semibold text-xs rounded-r-md absolute top-3 left-0">
+                    <span>
+                        {numberWithCommas(discountPrice)}৳ Discount on Online
+                        Order
+                    </span>
+                </p>
             </div>
-
-            {productView && (
-                <CustomModal onClose={() => setProductView((prev) => !prev)}>
-                    <ProductView
-                        product={product}
-                        setProductView={setProductView}
-                    />
-                </CustomModal>
-            )}
-            {saveProductModalOpen && (
-                <CustomModal
-                    onClose={() => setSaveProductModalOpen((prev) => !prev)}
-                >
-                    <SaveProductModal
-                        onCloseSaveProductModal={setSaveProductModalOpen}
-                        product={product}
-                        // isProductExist={wishListProduct}
-                        isProductExist={false}
-                    />
-                </CustomModal>
-            )}
-            {modalOpen && (
-                <CustomModal onClose={() => setModalOpen((prev) => !prev)}>
-                    <ProductCartPreview
-                        product={product}
-                        handleClose={() => setModalOpen((prev) => !prev)}
-                    />
-                </CustomModal>
-            )}
-            {compareModalOpen && (
-                <CustomModal
-                    onClose={() => setCompareModalOpen((prev) => !prev)}
-                >
-                    <CompareProductInfo
-                        onCloseCompareModal={() =>
-                            setCompareModalOpen((prev) => !prev)
-                        }
-                        compareProductName={product?.name}
-                    />
-                </CustomModal>
-            )}
         </>
     );
 };

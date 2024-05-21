@@ -114,7 +114,7 @@ const SmallProduct: React.FC<SmallProductProps> = ({ products = [] }) => {
                     />
                 </CustomModal>
             )}
-            {compareModal?.open && (
+            {compareModal?.open && compareModal?.data && (
                 <CustomModal
                     onClose={() =>
                         setCompareModal((prev) => ({
@@ -132,7 +132,7 @@ const SmallProduct: React.FC<SmallProductProps> = ({ products = [] }) => {
                                 data: null,
                             }))
                         }
-                        compareProductName={compareModal?.data?.name as string}
+                        compareProduct={compareModal?.data}
                     />
                 </CustomModal>
             )}

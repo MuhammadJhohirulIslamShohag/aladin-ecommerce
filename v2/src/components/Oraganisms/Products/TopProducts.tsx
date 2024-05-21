@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import React, { startTransition, useState } from "react";
+import _ from "lodash";
 import toast from "react-hot-toast";
 
 import FlatProductCard from "../../Molecules/Products/FlatProductCard";
@@ -19,6 +20,14 @@ import { Grid, Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/navigation";
+import { getUserInfo } from "@/store/user/users";
+import { useStoreContext } from "@/contexts/StoreContextProvider";
+import {
+    getWishListProducts,
+    storeWishListProducts,
+} from "@/store/wishList/wishList.product";
+import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
+import { addToWishList } from "@/api/user";
 
 interface TopProductsProps {
     products: IProduct[];
@@ -30,6 +39,9 @@ interface IModalState {
 }
 
 const TopProducts: React.FC<TopProductsProps> = ({ products }) => {
+    const user = getUserInfo();
+    const { dispatch } = useStoreContext();
+
     const [cartModal, setCartModal] = useState<IModalState>({
         open: false,
         data: null,
@@ -67,7 +79,34 @@ const TopProducts: React.FC<TopProductsProps> = ({ products }) => {
         }));
     };
 
-    const handleWishListProduct = (product: IProduct) => {
+    const handleWishListProduct = async (product: IProduct) => {
+        // all wish list products array
+        let wishListProducts = getWishListProducts();
+
+        // added wish list product
+        wishListProducts.push({
+            ...product,
+        });
+        // remove duplicates
+        const uniqueWishListProducts = _.uniqWith(wishListProducts, _.isEqual);
+
+        // set cart object in windows localStorage
+        startTransition(() => {
+            storeWishListProducts(JSON.stringify(uniqueWishListProducts));
+            // added cart in store context
+            dispatch({
+                type: StoreActionType.ADD_TO_WISH,
+                payload: uniqueWishListProducts,
+            });
+        });
+
+        await addToWishList(user?.token, product?._id).then((res) => {
+            if (res?.data?.success) {
+                toast.success(res?.data?.message, {
+                    duration: 5000,
+                });
+            }
+        });
         toast.success(`Added Product Wish List`);
     };
 
@@ -149,7 +188,14 @@ const TopProducts: React.FC<TopProductsProps> = ({ products }) => {
                     </div>
                     <div className="xl:col-span-3 lg:col-span-5  text-white lg:flex hidden justify-center items-center  rounded-md py-3 lg:h-full xl:h-[380px]">
                         {products?.slice(0, 1)?.map((product) => (
-                            <ProductCard key={product._id} product={product} />
+                            <ProductCard
+                                key={product._id}
+                                product={product}
+                                handleAddCart={handleAddCart}
+                                handleCompare={handleCompare}
+                                handleWishListProduct={handleWishListProduct}
+                                handleProductView={handleProductView}
+                            />
                         ))}
                     </div>
                 </div>
@@ -194,7 +240,7 @@ const TopProducts: React.FC<TopProductsProps> = ({ products }) => {
                                 data: null,
                             }))
                         }
-                        compareProductName={compareModal?.data?.name}
+                        compareProduct={compareModal?.data}
                     />
                 </CustomModal>
             )}
