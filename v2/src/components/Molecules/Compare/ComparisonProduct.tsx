@@ -1,11 +1,17 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, startTransition } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 import { IProduct } from "@/types/product.type";
+import {
+    removeCompareProducts,
+    storeCompareProducts,
+} from "@/store/compare/compare.product";
+import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
+import { useStoreContext } from "@/contexts/StoreContextProvider";
 
 interface ComparisonProductProps {
     products: IProduct[];
@@ -30,8 +36,8 @@ const ComparisonProduct: React.FC<ComparisonProductProps> = ({ products }) => {
     const [isComparisonOneFocused, setIsComparisonOneFocused] = useState(false);
     const [isComparisonTwoFocused, setIsComparisonTwoFocused] = useState(false);
 
-    // const dispatch = useDispatch();
     const router = useRouter();
+    const { dispatch } = useStoreContext();
 
     const comparisonOneRef = useRef<HTMLDivElement>(null);
     const comparisonTwoRef = useRef<HTMLDivElement>(null);
@@ -69,7 +75,6 @@ const ComparisonProduct: React.FC<ComparisonProductProps> = ({ products }) => {
                 product: product,
                 name: product.name,
             }));
-            // dispatch(addToCompare({ ...product }));
             setIsComparisonOneFocused(false);
         } else if (inputField === 2) {
             setComparisonTwoValue((prev) => ({
@@ -77,14 +82,30 @@ const ComparisonProduct: React.FC<ComparisonProductProps> = ({ products }) => {
                 product: product,
                 name: product.name,
             }));
-            // dispatch(addToCompare({ ...product }));
             setIsComparisonTwoFocused(false);
         }
     };
 
     const handleSendComparisonProduct = () => {
         if (comparisonOneValue?.name && comparisonTwoValue.name) {
-            router.push("/products/compare", { scroll: false });
+            // create compare products array
+            removeCompareProducts();
+
+            const uniqueCompareProducts = [
+                { ...comparisonOneValue.product },
+                { ...comparisonTwoValue.product },
+            ];
+
+            // set cart object in windows localStorage
+            startTransition(() => {
+                storeCompareProducts(JSON.stringify(uniqueCompareProducts));
+                // added cart in store context
+                dispatch({
+                    type: StoreActionType.ADD_TO_COMPARE,
+                    payload: uniqueCompareProducts,
+                });
+            });
+            router.push("/products/compare", { scroll: true });
         } else {
             toast.error("Please do not empty any comparison input field!");
         }

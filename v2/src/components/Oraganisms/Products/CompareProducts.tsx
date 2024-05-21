@@ -1,14 +1,14 @@
-"use client"
+"use client";
 import { useOptimistic } from "react";
 
-import ComparisonProduct from "../../Molecules/Home/ComparisonProduct";
 import CompareProductTop from "../../Molecules/Compare/CompareProductTop";
+import ComparisonProduct from "../../Molecules/Compare/ComparisonProduct";
 import ComparisonSpecification from "../../Molecules/Compare/ComparisonSpecification";
 import SectionTitle from "../../Molecules/SectionTitle";
 
-import { compareProducts } from "../../../utils/compareProducts";
-import { CompareProduct, IProduct, RootProperty } from "@/types/product.type";
 import { getCompareProducts } from "@/store/compare/compare.product";
+import { CompareProduct, IProduct, RootProperty } from "@/types/product.type";
+import { compareProducts } from "../../../utils/compareProducts";
 
 interface CompareProductsProps {
     products: IProduct[];
@@ -91,10 +91,10 @@ const CompareProducts: React.FC<CompareProductsProps> = ({ products }) => {
                         </div>
                     )}
                 </div>
-               <ComparisonSpecification
+                <ComparisonSpecification
                     rootPropertiesArray={rootProperties?.rootPropertiesArray}
                     categoryProductLists={rootProperties?.categoryProductLists}
-                /> 
+                />
             </div>
         </div>
     );

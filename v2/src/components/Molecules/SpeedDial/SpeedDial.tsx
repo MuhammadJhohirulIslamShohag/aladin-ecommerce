@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { FaRegHeart } from "react-icons/fa";
 import { PiDesktopTower } from "react-icons/pi";
-import Link from "next/link";
 
 import { useStoreContext } from "@/contexts/StoreContextProvider";
 

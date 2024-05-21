@@ -15,6 +15,6 @@ export const getWishListProducts = () => {
     }
 };
 
-export const removeWishListProduct = (key: string) => {
-    return localStorage.removeItem(key);
+export const removeWishListProduct = () => {
+    return localStorage.removeItem(wishListProductKey);
 };

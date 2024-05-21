@@ -10,7 +10,7 @@ interface NavbarMenuProps {
 
 const NavbarMenu: React.FC<NavbarMenuProps> = ({ data }) => {
     return (
-        <ul className="flex p-4 space-x-10">
+        <ul className="flex p-4 space-x-8">
             {data?.map((navbar) => (
                 <li key={navbar.title}>
                     <Link

@@ -212,11 +212,16 @@ export const navbarBottomData = [
         path: "/about",
     },
     {
+        title: "Shop",
+        path: "/shop",
+    },
+    {
         title: "Blog",
         path: "/blog",
     },
     {
-        title: "Shop",
-        path: "/shop",
+        title: "Contact",
+        path: "/contact",
     },
+    
 ];

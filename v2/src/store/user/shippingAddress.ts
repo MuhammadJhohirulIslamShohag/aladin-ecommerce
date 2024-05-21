@@ -15,6 +15,6 @@ export const getShippingAddress = () => {
     }
 };
 
-export const removeShippingAddress = (key: string) => {
-    return localStorage.removeItem(key);
+export const removeShippingAddress = () => {
+    return localStorage.removeItem(shippingAddressKey);
 };

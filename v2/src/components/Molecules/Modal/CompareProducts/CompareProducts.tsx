@@ -1,6 +1,6 @@
 "use client";
-import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
+import Link from "next/link";
 import { Fragment, startTransition, useOptimistic } from "react";
 
 import CompareProduct from "./CompareProduct";
@@ -10,6 +10,7 @@ import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
 import {
     getCompareProducts,
     storeCompareProducts,
+    removeCompareProducts
 } from "@/store/compare/compare.product";
 import { IProduct } from "@/types/product.type";
 
@@ -56,7 +57,7 @@ const CompareProducts: React.FC<CompareProductProps> = ({
     const removeAllCompareProduct = () => {
         // set undeleted compare products into the window local storage
         startTransition(() => {
-            storeCompareProducts(JSON.stringify([]));
+            removeCompareProducts();
             setRemoveComProductOptimistic([]);
             // store store context
             dispatch({

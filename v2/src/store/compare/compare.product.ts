@@ -15,6 +15,6 @@ export const getCompareProducts = () => {
     }
 };
 
-export const removeCompareProduct = (key: string) => {
-    return localStorage.removeItem(key);
+export const removeCompareProducts = () => {
+    return localStorage.removeItem(compareProductKey);
 };

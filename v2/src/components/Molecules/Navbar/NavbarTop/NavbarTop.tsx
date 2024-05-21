@@ -5,13 +5,16 @@ import { CgProfile } from "react-icons/cg";
 import { FaGift } from "react-icons/fa";
 import Typewriter from "typewriter-effect";
 
+import DropdownListItem from "../../DropdownListItem";
+
+import { getUserInfo } from "@/store/user/users";
+
 const NavbarTop: React.FC = (): JSX.Element => {
-    const [toggleDropdown, setToggleDropdown] = useState<boolean>(true);
-    // const { state, logOut } = useStoreContext();
-    // const { user } = state;
-    const user = null;
+    const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
+    const user = getUserInfo();
 
     const handleLogOut = () => {};
+
     return (
         <div className="border-b-[1px] border-b-slate-700 lg:block hidden">
             <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2">
@@ -36,8 +39,8 @@ const NavbarTop: React.FC = (): JSX.Element => {
 
                         <li className="relative">
                             <label
-                                className={`text-primary ${
-                                    toggleDropdown ? "" : "text-success"
+                                className={`${
+                                    toggleDropdown ? "text-success" : "text-primary"
                                 } hover:text-success transition ease-in-out delay-15 py-2 cursor-pointer text-center inline-flex items-center relative`}
                                 onClick={() =>
                                     setToggleDropdown(!toggleDropdown)
@@ -47,48 +50,48 @@ const NavbarTop: React.FC = (): JSX.Element => {
                                 <AiFillCaretDown className="ml-1 mt-1" />
                             </label>
                             <ul
-                                className={`${
-                                    toggleDropdown ? "hidden" : ""
-                                } absolute z-10 shadow bg-base-100 rounded-box w-52`}
+                                className={`z-10 origin-top transition-all ${
+                                    toggleDropdown ? "scale-100" : "scale-0"
+                                } absolute shadow bg-white rounded-box w-52`}
                             >
-                                {/* {user && user.role === "admin" && (
-                                        <DropdownListItem
-                                            link="/dashboard/admin"
-                                            className="text-primary hover:text-success"
-                                        >
-                                            Admin Dashboard
-                                        </DropdownListItem>
-                                    )} */}
-
-                                {/* <DropdownListItem
-                                        link="/dashboard/user/profile"
-                                        className="block transition-all px-4 py-2 hover:bg-success/90 hover:text-white "
-                                    >
-                                        Profile
-                                    </DropdownListItem>
-
+                                {user && user.role === "admin" && (
                                     <DropdownListItem
-                                        link="/cart/checkout"
+                                        link="/admin"
+                                        className="text-primary hover:text-success"
+                                    >
+                                        Admin Dashboard
+                                    </DropdownListItem>
+                                )}
+
+                                <DropdownListItem
+                                    link="/user/profile"
+                                    className="block transition-all px-4 py-2 hover:bg-success/90 hover:text-white "
+                                >
+                                    Profile
+                                </DropdownListItem>
+
+                                <DropdownListItem
+                                    link="/cart/checkout"
+                                    className="block transition-all px-4 py-2 hover:bg-success/90 hover:text-white"
+                                >
+                                    Check Out
+                                </DropdownListItem>
+
+                                {user !== null && user?.email ? (
+                                    <li
+                                        onClick={handleLogOut}
+                                        className="text-primary hover:text-success"
+                                    >
+                                        <span>LogOut</span>
+                                    </li>
+                                ) : (
+                                    <DropdownListItem
+                                        link="/auth/login"
                                         className="block transition-all px-4 py-2 hover:bg-success/90 hover:text-white"
                                     >
-                                        Check Out
-                                    </DropdownListItem> */}
-
-                                {/* {user !== null && user?.email ? (
-                                        <li
-                                            onClick={handleLogOut}
-                                            className="text-primary hover:text-success"
-                                        >
-                                            <span>LogOut</span>
-                                        </li>
-                                    ) : (
-                                        <DropdownListItem
-                                            link="/auth/login"
-                                            className="text-primary hover:text-success"
-                                        >
-                                            Login
-                                        </DropdownListItem>
-                                    )} */}
+                                        Login
+                                    </DropdownListItem>
+                                )}
                             </ul>
                         </li>
                     </ul>

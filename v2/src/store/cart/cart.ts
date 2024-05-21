@@ -15,6 +15,6 @@ export const getCarts = () => {
     }
 };
 
-export const removeCart = (key: string) => {
-    return localStorage.removeItem(key);
+export const removeCart = () => {
+    return localStorage.removeItem(cartKey);
 };
