@@ -1,13 +1,13 @@
 export interface LoginFormValues {
     userInfo: object;
     accessToken: string;
-    phoneOrEmail: string;
+    email: string;
     password: string;
 }
 
 export interface RegisterFormValues {
     name: string;
-    phoneOrEmail: string;
+    email: string;
     password: string;
     confirmPassword: string;
 }

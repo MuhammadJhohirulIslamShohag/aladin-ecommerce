@@ -1,5 +1,7 @@
+"use client";
+
 import React from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { CartType } from "@/types/cart.types";
 import { IProduct } from "@/types/product.type";
 
@@ -41,7 +43,7 @@ const PaymentOrderSummary: React.FC<OrderSummaryProps> = ({
     isAddressSave,
 }) => {
     const router = useRouter();
-
+ 
     return (
         <div className="col-span-5 col-span-0">
             <div className="bg-gray-100 p-5  rounded-lg lg:mt-16 md:mt-5 mt-5">
@@ -51,13 +53,13 @@ const PaymentOrderSummary: React.FC<OrderSummaryProps> = ({
                 <h4 className="text-lg font-semibold text-primary">Product</h4>
                 <hr className="mb-2" />
                 {carts &&
-                    carts.map((product: any) => (
+                    carts?.map((product: CartType) => (
                         <p
                             className="text-md font-normal text-primary"
-                            key={product._id}
+                            key={product?._id}
                         >
-                            {product.title} x {product.count} ={" "}
-                            {`$${product.price * product.count}`}
+                            {product?.name} x {product?.count} ={" "}
+                            {`$${product?.price * product?.count}`}
                         </p>
                     ))}
                 <hr className="mt-2" />
@@ -74,13 +76,11 @@ const PaymentOrderSummary: React.FC<OrderSummaryProps> = ({
                     </div>
                 )}
 
-                <hr />
-
                 <button
-                    className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                    className="border-2 px-5 py-2 border-black hover:bg-primary font-semibold hover:text-white rounded-md transition-all duration-500 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary mt-5 "
                     disabled={
                         !isAddressSave ||
-                        products.length < 1 ||
+                        products?.length < 1 ||
                         loading.processingOrderLoading
                     }
                     onClick={
@@ -95,19 +95,19 @@ const PaymentOrderSummary: React.FC<OrderSummaryProps> = ({
                               }
                     }
                 >
-                    {loading.processingOrderLoading
+                    {loading?.processingOrderLoading
                         ? "Processing..."
                         : "Place Order"}
                 </button>
-
+                <br />
                 <button
-                    className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                    className="border-2 px-5 py-2 border-black hover:bg-primary font-semibold hover:text-white rounded-md transition-all duration-500 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary mt-2"
                     disabled={
-                        products.length < 1 || loading.emptyingCartLoading
+                        products?.length < 1 || loading?.emptyingCartLoading
                     }
                     onClick={handleEmptyCart}
                 >
-                    {loading && loading.emptyingCartLoading
+                    {loading && loading?.emptyingCartLoading
                         ? "Removing..."
                         : "Empty Cart"}
                 </button>

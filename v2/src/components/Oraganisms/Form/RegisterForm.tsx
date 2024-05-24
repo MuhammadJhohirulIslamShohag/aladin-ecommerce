@@ -8,7 +8,7 @@ import { FaRegEyeSlash } from "react-icons/fa";
 
 import ControllerInputGroup from "../../Molecules/Form/ControllerInputGroup";
 
-import { isEmailValidOrPhone } from "@/utils/isEmailValidOrPhone";
+import { validEmailCheckRegex } from "@/utils/isEmailValidOrPhone";
 import { RegisterFormValues } from "@/types/auth.type";
 
 interface RegisterFormProps {
@@ -44,18 +44,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             <ControllerInputGroup
                 control={control}
                 rules={{
-                    required: "Phone/Email is required!",
+                    required: "Email is required!",
                     validate: {
                         validEmail: (value) =>
-                            isEmailValidOrPhone(value) ||
-                            "Invalid email address/phone",
+                            validEmailCheckRegex(value) ||
+                            "Invalid Email Address",
                     },
                 }}
-                labelName={"Phone / E-Mail"}
-                inputType="text"
-                inputName={"phoneOrEmail"}
-                placeholder="Phone / E-Mail"
-                errors={errors.phoneOrEmail}
+                labelName={"E-Mail"}
+                inputType="email"
+                inputName={"email"}
+                placeholder="E-Mail"
+                errors={errors.email}
                 classNameGroup="mb-4"
             />
             <ControllerInputGroup

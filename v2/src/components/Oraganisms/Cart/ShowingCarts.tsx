@@ -12,14 +12,14 @@ interface ShowingCartsProps {
 const ShowingCarts: React.FC<ShowingCartsProps> = ({ carts }) => {
     return (
         <div className="lg:col-span-9 col-span-0">
-            <h4 className="text-xl mb-5 font-semibold text-left text-green-500 bg-white">
+            <h4 className="text-xl mb-5 font-semibold text-left text-green-500 bg-white rounded-sm py-2 px-3">
                 Shopping Cart {carts && carts.length}{" "}
                 {carts && carts.length > 1 ? "Products" : "Product"}
             </h4>
 
             {/* Show Cart Table*/}
             {!carts.length ? (
-                <h5 className="text-xl mb-5 font-semibold text-left text-primary bg-white">
+                <h5 className="text-xl mb-5 font-semibold text-center text-primary">
                     No Cart Yet <Link href="/shop">Continue Shopping</Link>
                 </h5>
             ) : (

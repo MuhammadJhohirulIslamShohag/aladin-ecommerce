@@ -18,14 +18,11 @@ const userApiService = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["Users"],
         }),
-        updateUserAddress: build.mutation({
-            query: ({ data, token }) => ({
-                url: `users/update-shipping-address`,
+        updateUser: build.mutation({
+            query: ({data, id}) => ({
+                url: `users/${id}`,
                 method: "PATCH",
-                body: data,
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                body: data
             }),
             invalidatesTags: ["Users"],
         }),
@@ -36,5 +33,5 @@ const userApiService = baseApi.injectEndpoints({
 export const {
     useGetSingleUserQuery,
     useDeleteUserAddressMutation,
-    useUpdateUserAddressMutation,
+    useUpdateUserMutation,
 } = userApiService;

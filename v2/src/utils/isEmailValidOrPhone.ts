@@ -8,5 +8,5 @@ export const isEmailValidOrPhone = (value: string): boolean => {
 };
 
 export const validEmailCheckRegex = (value: string): boolean => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(value);
 };

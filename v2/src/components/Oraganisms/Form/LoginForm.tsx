@@ -7,7 +7,7 @@ import { FaRegEyeSlash } from "react-icons/fa6";
 
 import ControllerInputGroup from "@/components/Molecules/Form/ControllerInputGroup";
 
-import { isEmailValidOrPhone } from "@/utils/isEmailValidOrPhone";
+import { validEmailCheckRegex } from "@/utils/isEmailValidOrPhone";
 import { LoginFormValues } from "@/types/auth.type";
 
 interface LoginFormProps {
@@ -34,18 +34,18 @@ const LoginForm: React.FC<LoginFormProps> = ({
             <ControllerInputGroup
                 control={control}
                 rules={{
-                    required: "Phone/Email is required!",
+                    required: "Email is required!",
                     validate: {
                         validEmail: (value) =>
-                            isEmailValidOrPhone(value) ||
-                            "Invalid email address/phone",
+                            validEmailCheckRegex(value) ||
+                            "Invalid Email Address",
                     },
                 }}
-                labelName={"Phone / E-Mail"}
-                inputType="text"
-                inputName={"phoneOrEmail"}
-                placeholder="Phone / E-Mail"
-                errors={errors.phoneOrEmail}
+                labelName={"E-Mail"}
+                inputType="email"
+                inputName={"email"}
+                placeholder="E-Mail"
+                errors={errors.email}
                 classNameGroup="mb-4"
             />
 
@@ -91,7 +91,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     {" "}
                     <button
                         type="button"
-                        className="absolute right-3 top-[9px]"
+                        className="absolute right-3 top-[30%]"
                         onClick={() => setShowPassword(!showPassword)}
                     >
                         {showPassword ? (

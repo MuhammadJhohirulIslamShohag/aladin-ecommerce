@@ -13,7 +13,7 @@ const ShippingAddressForm = ({ loading, submitShippingAddress }: any) => {
     } = useForm<IShippingAddress>();
 
     return (
-        <form onSubmit={handleSubmit(submitShippingAddress)}>
+        <form onSubmit={handleSubmit(submitShippingAddress)} className="bg-white p-5 rounded-sm">
             <div>
                 <RegisterInputGroup
                     register={register}
@@ -113,7 +113,7 @@ const ShippingAddressForm = ({ loading, submitShippingAddress }: any) => {
 
             <button
                 type="submit"
-                className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
+                className="border-2 px-5 py-2 border-black hover:bg-primary font-semibold hover:text-white rounded-md transition-all duration-500 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary mt-2"
                 disabled={loading}
             >
                 {loading ? "Saving..." : "Save"}

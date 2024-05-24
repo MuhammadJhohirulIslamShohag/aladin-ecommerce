@@ -1,18 +1,21 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { AiOutlineDollar, AiOutlineCheck } from "react-icons/ai";
 import Link from "next/link";
 
-import { createPaymentIntent } from "@/api/stripe";
-import { createOrder } from "@/api/user";
+import classes from "./StripeCheckout.module.css";
+import ValidateImage from "@/components/Atoms/ValidateImage";
+
 import { StripeCardElementChangeEvent } from "@stripe/stripe-js";
 import { IProduct } from "@/types/product.type";
 import { useStoreContext } from "@/contexts/StoreContextProvider";
 import { getUserInfo } from "@/store/user/users";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
-
-import classes from "./StripeCheckout.module.css";
-import ValidateImage from "@/components/Atoms/ValidateImage";
+import { useAddOrderMutation } from "@/redux/services/order/orderApiService";
+import { removeCart } from "@/store/cart/cart";
+import { useStripePaymentMutation } from "@/redux/services/payment/paymentApiService";
 
 type ProductType = {
     product: IProduct;
@@ -24,7 +27,7 @@ const StripeCheckout = () => {
     const [processing, setProcessing] = useState<boolean>(false);
     const [disabled, setDisabled] = useState(true);
     const [clientSecret, setClientSecret] = useState<string>("");
-    const [product, setProduct] = useState<ProductType>();
+    const [product, setProduct] = useState<ProductType[]>([]);
     const [cartTotal, setCartTotal] = useState<number>(0);
     const [totalPriceAfterDiscount, setTotalPriceAfterDiscount] =
         useState<number>(0);
@@ -32,23 +35,30 @@ const StripeCheckout = () => {
     const stripe = useStripe();
     const elements = useElements();
 
+    // redux api call
+    const [addOrder] = useAddOrderMutation();
+    const [stripePayment] = useStripePaymentMutation();
+
     // store context
     const { state, dispatch } = useStoreContext();
     const user = getUserInfo();
     const { isCouped } = state;
 
     useEffect(() => {
-        if (user && user.token) {
-            createPaymentIntent(user.token, isCouped).then((res) => {
-                setClientSecret(res.data.clientSecret);
-                // additional response received on successful payment
-                setCartTotal(res.data.cartTotal);
-                setTotalPriceAfterDiscount(res.data.totalPriceAfterDiscount);
-                setPayable(res.data.payable);
-                setProduct(res.data.product);
+        if (user && user?.token) {
+            stripePayment({ isCouped }).then((res) => {
+                if ("data" in res && res.data && res.data?.success) {
+                    const data = res?.data?.data;
+                    // additional response received on successful payment
+                    setClientSecret(data.clientSecret);
+                    setCartTotal(data.cartTotal);
+                    setTotalPriceAfterDiscount(data.totalPriceAfterDiscount);
+                    setPayable(data.payable);
+                    setProduct(data.product);
+                }
             });
         }
-    }, [user, isCouped]);
+    }, []);
 
     const handleChange = async (event: StripeCardElementChangeEvent) => {
         // Listen for changes in the CardElement
@@ -97,37 +107,34 @@ const StripeCheckout = () => {
                     paymentIntents: payload,
                     paymentBy: "Stripe",
                 };
-                createOrder(paymentInfoObject, user!.token)
-                    .then((res) => {})
-                    .catch((error) => {
-                        console.log(error);
-                    });
+                const result = await addOrder(paymentInfoObject);
 
-                // reset carts from window local storage
-                if (typeof window !== "undefined") {
-                    if (window.localStorage.getItem("carts")) {
-                        window.localStorage.removeItem("carts");
-                    }
+                // check if the request was successful
+                if ("data" in result && result.data && result.data?.success) {
+                    // reset carts from window local storage
+                    removeCart();
+                    // reset carts from store context
+                    dispatch({
+                        type: StoreActionType.ADD_TO_CART,
+                        payload: [],
+                    });
+                    // reset coupon from store context
+                    dispatch({
+                        type: StoreActionType.ADD_COUPON,
+                        payload: false,
+                    });
+                    setError("");
+                    setProcessing(false);
+                    setSucceeded(true);
+                } else {
+                    setProcessing(false);
                 }
-                // reset carts from store context
-                dispatch({
-                    type: StoreActionType.ADD_TO_CART,
-                    payload: [],
-                });
-                // reset coupon from store context
-                dispatch({
-                    type: StoreActionType.ADD_COUPON,
-                    payload: false,
-                });
-                setError("");
-                setProcessing(false);
-                setSucceeded(true);
             }
         }
     };
 
     return (
-        <div className="w-1/2 mx-auto mt-5 sm:w-full md:w-full">
+        <div className="lg:w-1/2 mx-auto mt-5 w-full pb-24">
             {!succeeded && (
                 <div>
                     {isCouped && totalPriceAfterDiscount !== undefined ? (
@@ -140,18 +147,19 @@ const StripeCheckout = () => {
                 </div>
             )}
 
-            <div className="w-full bg-white border border-gray-200 rounded-lg shadow my-5">
+            <div className="w-full pt-4 bg-white border border-gray-200 rounded-lg shadow my-5">
                 <div className="flex flex-col items-center pb-10 rounded-full">
-                    {product &&
-                        product.product.imageURLs &&
-                        product.product?.imageURLs?.[0] && (
-                            <ValidateImage
-                                className="lg:w-80 w-60 h-62 mb-3 rounded-full shadow-lg"
-                                imageUrl={product.product.imageURLs?.[0]}
-                                alt="payment image"
-                            />
-                        )}
-
+                    <div className="flex gap-2">
+                        {product &&
+                            product?.map((product, idx) => (
+                                <ValidateImage
+                                    key={idx}
+                                    className="lg:w-16 w-10 h-16 mb-3 rounded-full shadow-lg"
+                                    imageUrl={product?.product?.imageURLs?.[0]}
+                                    alt="payment image"
+                                />
+                            ))}
+                    </div>
                     <div className="flex sm:block space-x-3 sm:space-x-0 mt-4 md:mt-6 sm:px-10">
                         <button className="flex transition-all items-center justify-center border-2 border-green-400 px-4 py-2 text-sm font-medium text-center text-white bg-success rounded-lg hover:bg-transparent hover:text-primary focus:ring-4 focus:outline-none focus:ring-green-300 sm:w-full ">
                             {" "}

@@ -8,7 +8,8 @@ import RegisterVerifyModalForm from "@/components/Oraganisms/Form/RegisterVerify
 import AuthFormFooter from "@/components/Molecules/Auth/AuthFormFooter";
 import RegisterForm from "@/components/Oraganisms/Form/RegisterForm";
 
-import { useCreateUserMutation } from "@/redux/services/auth/authApiService";
+import { storeUserInfo } from "@/store/user/users";
+import { useRegisterMutation } from "@/redux/services/auth/authApiService";
 import { RegisterFormValues } from "@/types/auth.type";
 
 const Register = () => {
@@ -16,60 +17,32 @@ const Register = () => {
     const [openVerifyModal, setOpenVerifyModal] = useState(false);
 
     // create user redux
-    const [createUser, { isLoading }] = useCreateUserMutation();
+    const [register, { isLoading }] = useRegisterMutation();
 
-    const handleRegister = (data: RegisterFormValues) => {
+    const handleRegister = async (data: RegisterFormValues) => {
         //check confirm password matched or not
         if (data?.password !== data?.confirmPassword) {
             return toast.error("confirm password not match");
         }
 
-        // create user object
-        let createUserData;
+        const result = await register({ ...data });
 
-        if (data?.phoneOrEmail.startsWith("+")) {
-            setVerifiedByData(data?.phoneOrEmail);
-            createUserData = {
-                phone: data.phoneOrEmail,
-                name: data?.name,
-                password: data?.password,
-                location: "Dhaka1",
-                role: "user",
-                provider: "phone",
-            };
-        } else if (data?.phoneOrEmail.startsWith("01")) {
-            setVerifiedByData(data?.phoneOrEmail);
-            createUserData = {
-                ...data,
-                name: data?.name,
-                password: data?.password,
-                location: "Dhaka1",
-                role: "user",
-                provider: "phone",
-            };
+        // check if the request was successful
+        if ("data" in result && result.data && result.data?.success) {
+            const data = result.data?.data;
+            storeUserInfo(
+                JSON.stringify({
+                    user: data.user,
+                    token: data.token,
+                })
+            );
+            toast.success(result?.data?.message, {
+                duration: 5000,
+            });
+            setOpenVerifyModal(true);
         } else {
-            setVerifiedByData(data?.phoneOrEmail);
-            createUserData = {
-                name: data?.name,
-                email: data?.phoneOrEmail,
-                password: data?.password,
-                location: "Dhaka1",
-                role: "user",
-                provider: "email",
-            };
+            toast.error("Register Failed!");
         }
-
-        createUser(createUserData).then((res) => {
-            // check if the request was successful
-            if ("data" in res && res.data && res.data?.success) {
-                toast.success(res?.data?.message, {
-                    duration: 5000,
-                });
-                setOpenVerifyModal(true);
-            } else {
-                toast.error("Register Failed!");
-            }
-        });
     };
 
     return (

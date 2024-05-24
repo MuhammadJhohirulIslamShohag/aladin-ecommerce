@@ -52,7 +52,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
                 {user ? (
                     <>
                         <button
-                            className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                            className="border-2 px-5 py-2 border-black hover:bg-primary font-semibold hover:text-white rounded-md transition-all duration-500 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary mt-5"
                             disabled={
                                 !carts?.length || loading.onlinePaymentCheckOut
                             }
@@ -64,7 +64,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
                         </button>
                         <br />
                         <button
-                            className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                            className="border-2 px-5 py-2 border-black hover:bg-primary font-semibold hover:text-white rounded-md transition-all duration-500 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary mt-2"
                             disabled={!carts?.length || loading.cashOnDelivery}
                             onClick={saveCashOrder}
                         >
@@ -75,7 +75,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
                     </>
                 ) : (
                     <button
-                        className="btn hover:bg-transparent hover:text-primary text-white btn-primary mt-2 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary"
+                        className="border-2 px-5 py-2 border-black hover:bg-primary font-semibold hover:text-white rounded-md transition-all duration-500 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary mt-5 "
                         disabled={!carts?.length}
                         onClick={() =>
                             router.push("/auth/login?redirect=/cart")

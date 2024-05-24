@@ -29,35 +29,22 @@ const Login = () => {
     const search = searchParams.get("search");
 
     useEffect(() => {
-        if (user) {
+        if (user?.user) {
             router.push("/");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
 
     const handleLogin = async (data: LoginFormValues) => {
-        let loginObject = {};
-        if (data.phoneOrEmail.startsWith("+")) {
-            loginObject = {
-                phone: data.phoneOrEmail,
-                password: data.password,
-            };
-        } else {
-            loginObject = {
-                email: data.phoneOrEmail,
-                password: data.password,
-            };
-        }
-
-        const result = await login(loginObject);
+        const result = await login({...data});
 
         // check if the request was successful
         if ("data" in result && result.data && result.data?.success) {
-            router.push("/account");
+            const data = result.data?.data
             storeUserInfo(
                 JSON.stringify({
-                    user: data.userInfo,
-                    token: data.accessToken,
+                    user: data.user,
+                    token: data.token,
                 })
             );
             if (typeof search === "string") {

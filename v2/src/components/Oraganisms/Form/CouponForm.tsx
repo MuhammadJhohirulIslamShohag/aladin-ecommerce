@@ -34,7 +34,7 @@ const CouponForm: React.FC<CouponFormProps> = ({
                 />
             </div>
             <button
-                className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
+                className="border-2 px-5 py-2 border-black hover:bg-primary font-semibold hover:text-white rounded-md transition-all duration-500 w-full disabled:opacity-75 disabled:border-2 disabled:border-primary mt-2"
                 disabled={carts.length === 0 || loading}
             >
                 {loading ? "Saving..." : "Save"}

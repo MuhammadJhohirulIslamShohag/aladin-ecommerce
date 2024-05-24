@@ -26,7 +26,7 @@ const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
 }) => {
     return (
         <div className="lg:col-span-7 col-span-0">
-            <h4 className="text-xl mb-5 font-semibold text-left text-green-500 bg-white">
+            <h4 className="text-xl mb-5 py-2 px-3 rounded-sm font-semibold text-left text-green-500 bg-white">
                 Delivery Address
             </h4>
 

@@ -7,13 +7,16 @@ import Typewriter from "typewriter-effect";
 
 import DropdownListItem from "../../DropdownListItem";
 
-import { getUserInfo } from "@/store/user/users";
+import { getUserInfo, removeUserInfo } from "@/store/user/users";
+import Link from "next/link";
 
 const NavbarTop: React.FC = (): JSX.Element => {
     const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
     const user = getUserInfo();
 
-    const handleLogOut = () => {};
+    const handleLogOut = () => {
+        removeUserInfo();
+    };
 
     return (
         <div className="border-b-[1px] border-b-slate-700 lg:block hidden">
@@ -37,63 +40,63 @@ const NavbarTop: React.FC = (): JSX.Element => {
                             Gift Certificates
                         </li>
 
-                        <li className="relative">
-                            <label
-                                className={`${
-                                    toggleDropdown ? "text-success" : "text-primary"
-                                } hover:text-success transition ease-in-out delay-15 py-2 cursor-pointer text-center inline-flex items-center relative`}
-                                onClick={() =>
-                                    setToggleDropdown(!toggleDropdown)
-                                }
-                            >
-                                <CgProfile className="mr-1" /> My Account{" "}
-                                <AiFillCaretDown className="ml-1 mt-1" />
-                            </label>
-                            <ul
-                                className={`z-10 origin-top transition-all ${
-                                    toggleDropdown ? "scale-100" : "scale-0"
-                                } absolute shadow bg-white rounded-box w-52`}
-                            >
-                                {user && user.role === "admin" && (
+                        {user?.user ? (
+                            <li className="relative">
+                                <label
+                                    className={`${
+                                        toggleDropdown
+                                            ? "text-success"
+                                            : "text-primary"
+                                    } hover:text-success transition ease-in-out delay-15 py-2 cursor-pointer text-center inline-flex items-center relative`}
+                                    onClick={() =>
+                                        setToggleDropdown(!toggleDropdown)
+                                    }
+                                >
+                                    <CgProfile className="mr-1" /> My Account{" "}
+                                    <AiFillCaretDown className="ml-1 mt-1" />
+                                </label>
+                                <ul
+                                    className={`z-10 origin-top transition-all ${
+                                        toggleDropdown ? "scale-100" : "scale-0"
+                                    } absolute shadow bg-white rounded-box w-52`}
+                                >
+                                    {user && user.role === "admin" && (
+                                        <DropdownListItem
+                                            link="/admin"
+                                            className="text-primary hover:text-success"
+                                        >
+                                            Admin Dashboard
+                                        </DropdownListItem>
+                                    )}
+
                                     <DropdownListItem
-                                        link="/admin"
-                                        className="text-primary hover:text-success"
+                                        link="/user/profile"
+                                        className="block transition-all px-4 py-2 hover:bg-success/90 hover:text-white "
                                     >
-                                        Admin Dashboard
+                                        Profile
                                     </DropdownListItem>
-                                )}
 
-                                <DropdownListItem
-                                    link="/user/profile"
-                                    className="block transition-all px-4 py-2 hover:bg-success/90 hover:text-white "
-                                >
-                                    Profile
-                                </DropdownListItem>
+                                    <DropdownListItem
+                                        link="/cart/checkout"
+                                        className="block transition-all px-4 py-2 hover:bg-success/90 hover:text-white"
+                                    >
+                                        Check Out
+                                    </DropdownListItem>
 
-                                <DropdownListItem
-                                    link="/cart/checkout"
-                                    className="block transition-all px-4 py-2 hover:bg-success/90 hover:text-white"
-                                >
-                                    Check Out
-                                </DropdownListItem>
-
-                                {user !== null && user?.email ? (
                                     <li
                                         onClick={handleLogOut}
-                                        className="text-primary hover:text-success"
+                                        className="block transition-all px-4 py-2 hover:bg-success/90 hover:text-white cursor-pointer"
                                     >
                                         <span>LogOut</span>
                                     </li>
-                                ) : (
-                                    <DropdownListItem
-                                        link="/auth/login"
-                                        className="block transition-all px-4 py-2 hover:bg-success/90 hover:text-white"
-                                    >
-                                        Login
-                                    </DropdownListItem>
-                                )}
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
+                        ) : (
+                            <li className="relative py-2">
+                                <Link className=" hover:text-success/90 cursor-pointer transition-all" href={"/auth/login"}>Login</Link> Or{" "}
+                                <Link className="  hover:text-success/90 cursor-pointer transition-all" href={"/auth/register"}>Register</Link>
+                            </li>
+                        )}
                     </ul>
                 </div>
             </div>
