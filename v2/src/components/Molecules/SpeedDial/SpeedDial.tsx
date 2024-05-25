@@ -23,7 +23,7 @@ const SpeedDial = () => {
                 }}`}
             >
                 {/* Pc Builder */}
-                <Link href={"/pc_builder"}>
+                <Link href={"/pc-builder"}>
                 <div className="hidden md:block shadow-2xl shadow-black  group cursor-pointer  transition-all relative hover:border-green-400 rounded-md w-[60px]">
                     <div className="bg-black flex justify-center items-center flex-col px-1 py-1 border-2 transition-all border-white hover:bg-green-400 hover:border-green-400 rounded-md">
                     <PiDesktopTower size={30} color="white" />
@@ -50,16 +50,15 @@ const SpeedDial = () => {
             >
                 <svg
                     className="w-5 h-5 transition-transform group-hover:rotate-45"
-                    aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 18 18"
                 >
                     <path
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M9 1v16M1 9h16"
                     />
                 </svg>

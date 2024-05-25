@@ -209,7 +209,7 @@ export const navbarBottomData = [
     },
     {
         title: "About",
-        path: "/about",
+        path: "/about-us",
     },
     {
         title: "Shop",
@@ -221,7 +221,7 @@ export const navbarBottomData = [
     },
     {
         title: "Contact",
-        path: "/contact",
+        path: "/contact-us",
     },
     
 ];

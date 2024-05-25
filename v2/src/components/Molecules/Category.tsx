@@ -3,10 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Category = ({ category }: { category: ICategory }) => {
-    const { _id, name, imageURL } = category;
+    const { name, imageURL } = category;
     
     return (
-        <Link href={`/category/${_id}`} className="group transition-all">
+        <Link href={`/category/${name}`} className="group transition-all">
             <div className="max-w-sm cursor-pointer bg-white border border-gray-200 rounded-lg drop-shadow-xl p-4 h-[420px]">
                 <div className="flex justify-between mb-3">
                     <h3 className="text-2xl text-gray-800 font-semibold">

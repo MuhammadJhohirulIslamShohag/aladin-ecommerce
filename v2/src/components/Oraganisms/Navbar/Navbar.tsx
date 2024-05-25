@@ -1,7 +1,8 @@
 import React from "react";
-
+import dynamic from 'next/dynamic'
 import NavbarMiddle from "../../Molecules/Navbar/NavbarMiddle/NavbarMiddle";
-import NavbarTop from "../../Molecules/Navbar/NavbarTop/NavbarTop";
+const NavbarTop = dynamic(() => import('../../Molecules/Navbar/NavbarTop/NavbarTop'), { ssr: false })
+// import NavbarTop from "../../Molecules/Navbar/NavbarTop/NavbarTop";
 import NavbarBottom from "../../Molecules/Navbar/NavbarBottom/NavbarBottom";
 
 import { categoriesData, navbarBottomData } from "@/data/categories";

@@ -57,22 +57,22 @@ const CategoryBar: React.FC<CategoryBarProps> = ({ categoriesData }) => {
                                 <span className="transition-all duration-300 group-hover:text-white">
                                     {data?.category}
                                 </span>
-                                <span>
-                                    <FaAngleRight className="transition-all duration-300 group-hover:text-white" />
-                                </span>
-                                <ul className="left-full absolute hidden text-sm text-gray-700 group-hover:block bg-white w-[270px] top-0 shadow rounded-t-lg pt-2">
-                                    {data?.menu?.map((data, idx) => (
-                                        <li key={idx}>
-                                            {" "}
-                                            <Link href={`/${data?.title}`}>
-                                                <span className="transition-all duration-300 group-hover/subMenu:text-white">
-                                                    {data?.title}
-                                                </span>
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
                             </Link>
+                            <span>
+                                <FaAngleRight className="transition-all duration-300 group-hover:text-white" />
+                            </span>
+                            <ul className="left-full absolute hidden text-sm text-gray-700 group-hover:block bg-white w-[270px] top-0 shadow rounded-t-lg pt-2">
+                                {data?.menu?.map((data, idx) => (
+                                    <li key={idx} className="px-4 py-2 hover:bg-green-400 transition-all duration-300 group relative">
+                                        {" "}
+                                        <Link href={`/${data?.title}`}>
+                                            <span className="transition-all duration-300 group-hover/subMenu:text-white">
+                                                {data?.title}
+                                            </span>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
                         </li>
                     ))}
                 </ul>

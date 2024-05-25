@@ -42,7 +42,7 @@ const NavbarTop: React.FC = (): JSX.Element => {
 
                         {user?.user ? (
                             <li className="relative">
-                                <label
+                                <span
                                     className={`${
                                         toggleDropdown
                                             ? "text-success"
@@ -54,7 +54,7 @@ const NavbarTop: React.FC = (): JSX.Element => {
                                 >
                                     <CgProfile className="mr-1" /> My Account{" "}
                                     <AiFillCaretDown className="ml-1 mt-1" />
-                                </label>
+                                </span>
                                 <ul
                                     className={`z-10 origin-top transition-all ${
                                         toggleDropdown ? "scale-100" : "scale-0"
