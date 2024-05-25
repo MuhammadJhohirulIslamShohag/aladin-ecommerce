@@ -7,6 +7,10 @@ import { Tab } from "@headlessui/react";
 import { IProduct } from "@/types/product.type";
 import { getUserInfo } from "@/store/user/users";
 import { IReview } from "@/types/review.types";
+import {
+    useAddReviewMutation,
+    useUpdateReviewMutation,
+} from "@/redux/services/review/reviewApiService";
 
 import ProductDescription from "./ProductDescription/ProductDescription";
 import ProductReview from "./ProductReview/ProductReview";
@@ -26,8 +30,18 @@ const ProductDetailsTab = ({
     const user = getUserInfo();
     const router = useRouter();
 
+    const [addReview] = useAddReviewMutation();
+    const [updateReview] = useUpdateReviewMutation();
+
     const handleReviewShowModal = () => {
-        if (user && user?.email) {
+        if (user && user?.user?.email) {
+            const existingUserRatingObject = reviewProducts?.find(
+                (rating) => rating?.userId === user?.user?._id
+            );
+            if (existingUserRatingObject) {
+                setStar(existingUserRatingObject?.rating);
+                setComment(existingUserRatingObject?.comment);
+            }
             setShowReviewModal((prev) => !prev);
             return;
         }
@@ -41,27 +55,53 @@ const ProductDetailsTab = ({
     const handleReviewSubmit = async (
         event: React.FormEvent<HTMLFormElement>
     ) => {
-        try {
-            event.preventDefault();
+        event.preventDefault();
+        const existingUserRatingObject = reviewProducts?.find(
+            (rating) => rating?.userId === user?.user?._id
+        );
+        if (existingUserRatingObject) {
+            const updateReviewObject = {
+                payload: {
+                    comment: comment,
+                    productId: product?._id,
+                    userId: user?.user?._id,
+                    rating: star,
+                },
+                id: existingUserRatingObject?._id,
+            };
+            updateReview(updateReviewObject)
+                .then((res) => {
+                    if ("data" in res && res.data && res.data?.success) {
+                        toast.success("Update Review Successfully!");
+                        setShowReviewModal((prev) => !prev);
+                        setComment("");
+                        setStar(0);
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
             const reviewObject = {
                 comment: comment,
-                star: star,
+                productId: product?._id,
+                userId: user?.user?._id,
+                rating: star,
             };
-            // if (user && user.token) {
-            //     productRating(user.token, _id, reviewObject)
-            //         .then((res) => {
-            //             refreshData();
-            //         })
-            //         .catch((error) => {
-            //             console.log(error);
-            //         });
-            // }
-            setComment("");
-        } catch (error) {
-            if (error instanceof Error) {
-                toast.error(error.message);
-            }
+            addReview(reviewObject)
+                .then((res) => {
+                    if ("data" in res && res.data && res.data?.success) {
+                        toast.success("Added Review Successfully!");
+                        setShowReviewModal((prev) => !prev);
+                        setComment("");
+                        setStar(0);
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
+      
     };
 
     return (
@@ -75,8 +115,8 @@ const ProductDetailsTab = ({
                                     <button
                                         className={
                                             selected
-                                                ? "bg-white text-primary px-10 rounded-none py-3 border-2 border-primary sm:px-5"
-                                                : "btn hover:bg-white hover:text-primary border-0 rounded-none text-white btn-primary px-10 sm:px-5"
+                                                ? "bg-white text-primary md:px-10 rounded-none py-3 border-2 border-primary px-5 transition-all"
+                                                : " hover:bg-white hover:text-primary border-0 rounded-none text-white  md:px-10 px-5 transition-all"
                                         }
                                     >
                                         {tabList}

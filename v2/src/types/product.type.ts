@@ -14,7 +14,7 @@ export interface IProduct {
     discount: number;
     keyFeatures: { [key: string]: React.ReactNode }[];
     category: ICategory;
-    subCategory: ISubCategory[];
+    subCategories: ISubCategory[];
     quantity: number;
     sold: number;
     imageURLs: [string];

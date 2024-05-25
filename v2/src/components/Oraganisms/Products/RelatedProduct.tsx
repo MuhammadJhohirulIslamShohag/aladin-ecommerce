@@ -9,7 +9,7 @@ import CustomModal from "../../Atoms/Modal/CustomModal";
 import CompareProductInfo from "../../Molecules/Products/CompareProductInfo";
 import ProductCartPreview from "../../Molecules/Products/ProductCartPreview";
 import ProductView from "../../Molecules/Products/ProductView";
-import SectionTitle from "../../Molecules/SectionTitle";
+
 
 import { IProduct } from "@/types/product.type";
 import { getUserInfo } from "@/store/user/users";
@@ -20,11 +20,11 @@ import {
 } from "@/store/wishList/wishList.product";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
 import { addToWishList } from "@/api/user";
+import cn from "@/lib/cn";
 
-interface NewArrivalsProps {
+interface RelatedProductProps {
     products: IProduct[];
-    title: string;
-    name: string;
+    className: string;
 }
 
 interface IModalState {
@@ -32,10 +32,9 @@ interface IModalState {
     data: IProduct | null;
 }
 
-const ProductByCategory: React.FC<NewArrivalsProps> = ({
-    products,
-    name,
-    title,
+const RelatedProduct: React.FC<RelatedProductProps> = ({
+    products = [],
+    className = "",
 }) => {
     const user = getUserInfo();
     const { dispatch } = useStoreContext();
@@ -110,30 +109,24 @@ const ProductByCategory: React.FC<NewArrivalsProps> = ({
 
     return (
         <>
-            <div className="container mx-auto px-6 mt-10">
-                <SectionTitle title={title} />
-
-                {products && products?.length < 1 ? (
-                    <div className="h-80 flex items-center justify-center">
-                        <p className="text-center text-xl text-primary capitalize ">
-                            No Product Found By The {name}
-                        </p>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-8 gap-4 px-2 lg:px-0">
-                        {products?.map((product: IProduct) => (
-                            <ProductCard
-                                key={product._id}
-                                handleAddCart={handleAddCart}
-                                handleCompare={handleCompare}
-                                handleWishListProduct={handleWishListProduct}
-                                handleProductView={handleProductView}
-                                product={product}
-                            />
-                        ))}
-                    </div>
+            <div
+                className={cn(
+                    "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-8 gap-4 px-2 lg:px-0",
+                    className
                 )}
+            >
+                {products?.map((product: IProduct) => (
+                    <ProductCard
+                        key={product._id}
+                        handleAddCart={handleAddCart}
+                        handleCompare={handleCompare}
+                        handleWishListProduct={handleWishListProduct}
+                        handleProductView={handleProductView}
+                        product={product}
+                    />
+                ))}
             </div>
+
             {cartModal?.open && cartModal?.data && (
                 <CustomModal
                     onClose={() =>
@@ -205,4 +198,4 @@ const ProductByCategory: React.FC<NewArrivalsProps> = ({
     );
 };
 
-export default ProductByCategory;
+export default RelatedProduct;

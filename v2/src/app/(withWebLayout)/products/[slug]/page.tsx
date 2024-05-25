@@ -1,13 +1,11 @@
 import CardZoomCarousel from "@/components/Molecules/CardZoomCarousel";
-import ProductCard from "@/components/Molecules/Products/ProductCard";
 import ProductInfo from "@/components/Oraganisms/Products/Product/ProductInfo/ProductInfo";
 import ProductDetailsTab from "@/components/Oraganisms/Products/Product/ProductDetailsTab";
 import SectionTitle from "@/components/Molecules/SectionTitle";
+import RelatedProduct from "@/components/Oraganisms/Products/RelatedProduct";
 
 import { getSingleProduct, getProducts } from "@/api/products";
-import { IProduct } from "@/types/product.type";
 import { getReviews } from "@/api/review";
-
 
 const ProductDetails = async ({ params }: { params: { slug: string } }) => {
     const productsData = getSingleProduct(params.slug);
@@ -18,7 +16,7 @@ const ProductDetails = async ({ params }: { params: { slug: string } }) => {
     const { name, imageURLs, _id, slug, category } = product?.data?.data;
 
     const relatedProductData = await getProducts({
-        ["category.categoryId"]: category?.categoryId,
+        ["category.name"]: category?.name,
         limit: 3,
     });
 
@@ -32,13 +30,10 @@ const ProductDetails = async ({ params }: { params: { slug: string } }) => {
 
     if (relatedProduct.length) {
         content = (
-            <div className="grid mt-5 gap-5 lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
-                {relatedProduct &&
-                    relatedProduct.length &&
-                    relatedProduct.map((product: IProduct) => (
-                        <ProductCard key={product._id} product={product} />
-                    ))}
-            </div>
+            <RelatedProduct
+                products={relatedProduct}
+                className="grid mt-5 gap-5 lg:grid-cols-5 md:grid-cols-2 grid-cols-1"
+            />
         );
     }
 

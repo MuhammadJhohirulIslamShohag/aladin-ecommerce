@@ -1,4 +1,7 @@
+"use client"
+
 import React from "react";
+import parse from 'html-react-parser';
 import { Tab } from "@headlessui/react";
 import { IProduct } from "@/types/product.type";
 
@@ -16,7 +19,7 @@ const ProductDescription = ({ product }: { product: IProduct }) => {
             <ProductDescriptionItem name="Shipping" value={shipping} />
             <ProductDescriptionItem
                 name="Description"
-                description={description}
+                description={<>{description ? parse(description): "No Info"}</>}
             />
         </Tab.Panel>
     );

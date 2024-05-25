@@ -3,14 +3,13 @@
 import { RadioGroup } from "@headlessui/react";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
-import { startTransition, useState } from "react";
+import { startTransition, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { BsFillHeartFill, BsHandbagFill } from "react-icons/bs";
 
 import CustomButton from "@/components/UI/CustomButton/CustomButton";
 import ProductDescriptionItem from "../../../../Molecules/Products/Product/ProductDescription/ProductDescriptionItem";
-import AvgRating  from "../../../../Molecules/Products/AvgRating";
-
+import AvgRating from "../../../../Molecules/Products/AvgRating";
 
 import { useStoreContext } from "@/contexts/StoreContextProvider";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
@@ -20,6 +19,11 @@ import { CartType } from "@/types/cart.types";
 import { IColor } from "@/types/color.types";
 import { IProduct } from "@/types/product.type";
 import { IReview } from "@/types/review.types";
+import {
+    useAddWishlistMutation,
+    useRemoveWishListMutation,
+} from "@/redux/services/wishlist/wishListApiService";
+import { useGetSingleUserQuery } from "@/redux/services/user/userApiService";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
@@ -46,56 +50,31 @@ const ProductInfo = ({
         discount,
         shipping,
         brand,
-        subCategory,
+        subCategories,
         slug,
         _id,
     } = product;
 
     const { state, dispatch } = useStoreContext();
 
-    // useEffect(() => {
-    //     if (user && user.token) {
-    //         getWishList(user.token, _id).then((res) => {
-    //             if (res.data.wishList.length > 0) {
-    //                 setHeartFillIcon(true);
-    //             }
-    //         });
-    //     }
-    // }, [user, _id]);
+    const { data: userInfo } = useGetSingleUserQuery(user?.user?._id);
+    const [addWishlist] = useAddWishlistMutation();
+    const [removeWishList] = useRemoveWishListMutation();
 
-    // useEffect(() => {
-    //     if (carts.length) {
-    //         for (let i = 0; i < carts.length; i++) {
-    //             if (carts[i]._id === _id) {
-    //                 if (carts[i].color) {
-    //                     setSelectedColor(carts[i]?.color);
-    //                 }
-    //                 if (carts[i].size) {
-    //                     setSelectedSize(carts[i]?.size);
-    //                 }
-    //             }
-    //         }
-    //     } else {
-    //         setSelectedColor("");
-    //         setSelectedSize("");
-    //     }
-    // }, [_id, carts]);
-
-    // useEffect(() => {
-    //     if (user) {
-    //         const existingUserRatingObject = product.ratings.find(
-    //             (rating) => rating.postedBy._id === user._id
-    //         );
-    //         if (existingUserRatingObject) {
-    //             setStar(existingUserRatingObject.star);
-    //             setComment(existingUserRatingObject.comment);
-    //         }
-    //     }
-    // }, []);
+    const existingWishList = userInfo?.data?.data?.wishLists.find(
+        (wishList: { productId: string }) => wishList.productId === _id
+    );
 
     const isAddToCart = state?.carts?.filter(
         (cart: CartType) => cart._id === _id
     );
+
+    useEffect(() => {
+        if (existingWishList) {
+            setHeartFillIcon(true)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleAddCart = () => {
         if (isAddToCart?.length <= 0) {
@@ -137,21 +116,25 @@ const ProductInfo = ({
     };
 
     const handleAddToWishList = () => {
-        // if (user && user.token) {
-        //     if (heartFillIcon) {
-        //         removeWishList(user.token, _id).then((res) => {
-        //             setHeartFillIcon(false);
-        //             toast.error("Product Removed To The WishList");
-        //         });
-        //     } else {
-        //         addToWishList(user.token, _id, true).then((res) => {
-        //             setHeartFillIcon(true);
-        //             toast.success("Product Added To The WishList");
-        //         });
-        //     }
-        // } else {
-        //     router.push(`/auth/login?redirect=/products/${slug}`);
-        // }
+        if (user && user?.token) {
+            if (heartFillIcon) {
+                removeWishList(_id).then((res) => {
+                    if ("data" in res && res.data && res.data?.success) {
+                        setHeartFillIcon(false);
+                        toast.error("Product Removed To The WishList");
+                    }
+                });
+            } else {
+                addWishlist(_id).then((res) => {
+                    if ("data" in res && res.data && res.data?.success) {
+                        setHeartFillIcon(true);
+                        toast.success("Product Added To The WishList");
+                    }
+                });
+            }
+        } else {
+            router.push(`/auth/login?redirect=/products/${slug}`);
+        }
     };
 
     return (
@@ -188,12 +171,7 @@ const ProductInfo = ({
                     <ProductDescriptionItem
                         isBorderClassName={true}
                         name="Sub Category"
-                        value={subCategory}
-                    />
-                    <ProductDescriptionItem
-                        isBorderClassName={true}
-                        name="Shipping"
-                        value={shipping}
+                        value={subCategories}
                     />
                 </div>
 
@@ -311,7 +289,7 @@ const ProductInfo = ({
                                     : "Add To Cart"}
                             </span>
                         </CustomButton>
-                        {heartFillIcon ? (
+                        {existingWishList ? (
                             <CustomButton
                                 buttonType="button"
                                 className="lg:mt-10 md:mt-10 mt-0 w-full"

@@ -6,7 +6,7 @@ import React from "react";
 type ProductDescriptionItemPropsType = {
     name: string;
     value?: string | number | any;
-    description?: string;
+    description?: string | React.ReactNode |  undefined;
     isBorderClassName?: boolean;
 };
 const ProductDescriptionItem = ({
@@ -46,7 +46,7 @@ const ProductDescriptionItem = ({
             ) : (
                 <div className="mt-3 p-2">
                     <h4 className="text-primary text-lg">{name}:</h4>
-                    <p className="text-primary mt-1">{description}</p>
+                    <p className="text-primary mt-1">{description ? description: "No Info"}</p>
                 </div>
             )}
         </>
