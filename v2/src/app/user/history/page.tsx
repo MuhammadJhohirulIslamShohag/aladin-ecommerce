@@ -16,6 +16,7 @@ const History = () => {
 
     const queryParams = new URLSearchParams({
         orderedBy: user?.user?._id,
+        populate:"products.product,orderedBy"
     });
 
     // redux api call
