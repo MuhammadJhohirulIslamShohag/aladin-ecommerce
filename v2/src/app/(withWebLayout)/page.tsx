@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import { getListOfBlogs } from "@/api/blog";
 import { getCategories } from "@/api/category";
-import { getProducts } from "@/api/products";
+import { getProductsByFilter } from "@/api/products";
 import { getAllSubCategories } from "@/api/sub-categories";
 
 import Loader from "@/components/Molecules/Loader/Loader";
@@ -23,7 +23,7 @@ import FeaturedSubCategories from "@/components/Oraganisms/Home/FeaturedSubCateg
 const Home = async () => {
     // Initiate both requests in parallel
     const blogsData = getListOfBlogs({ limit: 3 });
-    const productsData = getProducts({ limit: 0 });
+    const productsData = getProductsByFilter({ limit: 0 });
     const categoriesData = getCategories({ limit: 4 });
     const subCategoriesData = getAllSubCategories({ limit: 4 });
 

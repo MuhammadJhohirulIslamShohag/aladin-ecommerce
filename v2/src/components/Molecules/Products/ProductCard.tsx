@@ -7,12 +7,12 @@ import { BsFillCartPlusFill } from "react-icons/bs";
 import { IoIosEye } from "react-icons/io";
 import { MdCompareArrows } from "react-icons/md";
 
-
 import numberWithCommas from "@/utils/numberWithCommas";
 import ValidateImage from "../../Atoms/ValidateImage";
 import TooltipButton from "../Button/TooltipButton/TooltipButton";
 
 import { IProduct } from "@/types/product.type";
+import AvgRating from "./AvgRating";
 
 interface ProductCardProps {
     product: IProduct;
@@ -29,7 +29,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
     handleWishListProduct,
     handleProductView,
 }) => {
-    const { name, price, discount, slug, imageURLs, quantity, _id } = product;
+    const {
+        name,
+        price,
+        discount,
+        slug,
+        imageURLs,
+        quantity,
+        _id,
+        averageRating,
+        ratingLength,
+    } = product;
 
     const discountPrice = Math.ceil(price * (discount / 100));
     const netPrice = Math.ceil(price - discountPrice);
@@ -122,7 +132,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
                                 ? name.slice(0, 35) + "..."
                                 : name}
                         </Link>
-                        <>
+
+                        <div className="flex items-center ">
                             {discount ? (
                                 <div className="flex items-center gap-3">
                                     <p className="text-lg text-primary font-bold">
@@ -137,7 +148,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
                                     {numberWithCommas(price)}৳
                                 </p>
                             )}
-                        </>
+                        </div>
+                        <AvgRating
+                            product={[]}
+                            isHomeReviewShow
+                            avgReview={averageRating}
+                            reviewLen={ratingLength}
+                        />
                     </div>
                 </div>
 

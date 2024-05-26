@@ -7,15 +7,18 @@ type AvgRatingPropType = {
     product: IReview[];
     isTotalReviewRating?: boolean;
     isHomeReviewShow?: boolean;
+    avgReview?: number;
+    reviewLen?: number;
 };
 export const AvgRating = ({
     product,
     isTotalReviewRating = false,
     isHomeReviewShow = false,
+    avgReview = 0,
+    reviewLen = 0,
 }: AvgRatingPropType) => {
-    console.log( product, "product")
-    let avgRating: number | undefined;
-    let length: number | undefined;
+    let avgRating: number | undefined = avgReview;
+    let length: number | undefined = reviewLen;
     if (product && product?.length) {
         let total: number[] = [];
         product?.forEach((rating: any) => total.push(rating.rating));
@@ -24,8 +27,8 @@ export const AvgRating = ({
         avgRating = (totalReducer * 5) / highest;
         length = product?.length;
     } else {
-        avgRating = 0;
-        length = 0;
+        avgRating = avgReview;
+        length = reviewLen;
     }
 
     return (

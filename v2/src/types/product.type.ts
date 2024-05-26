@@ -22,6 +22,8 @@ export interface IProduct {
     colors: IColor[];
     sizes: ISize[];
     brand: IBrand;
+    averageRating: number;
+    ratingLength: number;
     updatedAt: Date;
     __v: number;
 }
