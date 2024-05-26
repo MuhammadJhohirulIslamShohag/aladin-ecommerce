@@ -20,8 +20,6 @@ const Address = () => {
     const user = getUserInfo();
     const address = user?.user?.shippingAddress;
 
-    console.log(address, "address", user)
-
     const [updateUser, { isLoading }] = useUpdateUserMutation();
 
     // show model for update profile
@@ -38,14 +36,6 @@ const Address = () => {
                 },
                 id: user?.user?._id,
             });
-
-            console.log({
-                user: {
-                    ...user?.user,
-                    shippingAddress: data,
-                },
-                ...user  
-            },"data")
 
             const updatedUser = {
                 ...user?.user,
