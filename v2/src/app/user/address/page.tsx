@@ -55,8 +55,8 @@ const Address = () => {
                     type: StoreActionType.ADD_SHIPPING_ADDRESS,
                     payload: data,
                 });
-                toast.success("Save Address!");
                 handleShowModal()
+                toast.success("Save Address!");
             } else {
                 toast.error("Failed To Save Address!");
             }
