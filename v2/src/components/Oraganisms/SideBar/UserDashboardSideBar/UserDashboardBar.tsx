@@ -1,8 +1,9 @@
 "use client"
-import SideBarItem from "./SideBarItem";
 import { MdManageAccounts, MdOutlineSyncProblem } from "react-icons/md";
 import { DiSublime } from "react-icons/di";
 import { RiArrowGoBackLine } from "react-icons/ri";
+
+import SideBarItem from "../../../Molecules/SideBar/UserSideBar/SideBarItem";
 
 const UserDashboardBar = () => {
 

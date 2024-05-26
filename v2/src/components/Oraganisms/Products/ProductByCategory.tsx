@@ -2,6 +2,7 @@
 
 import React, { startTransition, useState } from "react";
 import toast from "react-hot-toast";
+import { useRouter,usePathname  } from "next/navigation";
 import _ from "lodash";
 
 import ProductCard from "@/components/Molecules/Products/ProductCard";
@@ -19,7 +20,7 @@ import {
     storeWishListProducts,
 } from "@/store/wishList/wishList.product";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
-import { addToWishList } from "@/api/user";
+import { useAddWishlistMutation } from "@/redux/services/wishlist/wishListApiService";
 
 interface NewArrivalsProps {
     products: IProduct[];
@@ -39,6 +40,11 @@ const ProductByCategory: React.FC<NewArrivalsProps> = ({
 }) => {
     const user = getUserInfo();
     const { dispatch } = useStoreContext();
+    const router = useRouter();
+    const pathname = usePathname()
+
+    // redux api call
+    const [addWishList] = useAddWishlistMutation();
 
     const [cartModal, setCartModal] = useState<IModalState>({
         open: false,
@@ -78,34 +84,41 @@ const ProductByCategory: React.FC<NewArrivalsProps> = ({
     };
 
     const handleWishListProduct = async (product: IProduct) => {
-        // all wish list products array
-        let wishListProducts = getWishListProducts();
+        if (user?.user) {
+            // all wish list products array
+            let wishListProducts = getWishListProducts();
 
-        // added wish list product
-        wishListProducts.push({
-            ...product,
-        });
-        // remove duplicates
-        const uniqueWishListProducts = _.uniqWith(wishListProducts, _.isEqual);
-
-        // set cart object in windows localStorage
-        startTransition(() => {
-            storeWishListProducts(JSON.stringify(uniqueWishListProducts));
-            // added cart in store context
-            dispatch({
-                type: StoreActionType.ADD_TO_WISH,
-                payload: uniqueWishListProducts,
+            // added wish list product
+            wishListProducts.push({
+                ...product,
             });
-        });
+            // remove duplicates
+            const uniqueWishListProducts = _.uniqWith(
+                wishListProducts,
+                _.isEqual
+            );
 
-        await addToWishList(user?.token, product?._id).then((res) => {
-            if (res?.data?.success) {
-                toast.success(res?.data?.message, {
-                    duration: 5000,
+            // set cart object in windows localStorage
+            startTransition(() => {
+                storeWishListProducts(JSON.stringify(uniqueWishListProducts));
+                // added cart in store context
+                dispatch({
+                    type: StoreActionType.ADD_TO_WISH,
+                    payload: uniqueWishListProducts,
                 });
-            }
-        });
-        toast.success(`Added Product Wish List`);
+            });
+
+            await addWishList(product?._id).then((res) => {
+                if ("data" in res && res.data && res.data?.success) {
+                    toast.success("Wish-List is Added!");
+                } else {
+                    toast.error("Failed To Add Wish-List!");
+                }
+            });
+            toast.success(`Added Product Wish List`);
+        }else{
+            return router.push(`/auth/login?redirect=${pathname}`);
+        }
     };
 
     return (

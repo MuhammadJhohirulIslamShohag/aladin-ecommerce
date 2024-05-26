@@ -21,7 +21,7 @@ const WishListProductCard: React.FC<WishListProductCardProps> = ({
     handleAddCart,
     handleWishListProduct,
 }) => {
-    const { name, price, discount, imageURLs, description } = product;
+    const { name, price, discount, imageURLs } = product;
 
     return (
         <>
@@ -69,11 +69,6 @@ const WishListProductCard: React.FC<WishListProductCardProps> = ({
                         </h3>
                     </Link>
 
-                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                        {description?.length > 90
-                            ? `${description.slice(0, 90)} ...`
-                            : description}
-                    </p>
                     <div className="flex items-center gap-2 top-2 mb-1">
                         <span className="font-bold text-gray-700">
                             USD {(price - (price * discount) / 100).toFixed(2)}{" "}

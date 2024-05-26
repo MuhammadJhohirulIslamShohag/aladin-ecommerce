@@ -19,10 +19,18 @@ const userApiService = baseApi.injectEndpoints({
             invalidatesTags: ["Users"],
         }),
         updateUser: build.mutation({
-            query: ({data, id}) => ({
+            query: ({ data, id }) => ({
                 url: `users/${id}`,
                 method: "PATCH",
-                body: data
+                body: data,
+            }),
+            invalidatesTags: ["Users"],
+        }),
+        uploadProfileImage: build.mutation({
+            query: (payload) => ({
+                url: `users/upload-profile-image`,
+                method: "PATCH",
+                body: payload,
             }),
             invalidatesTags: ["Users"],
         }),
@@ -34,4 +42,5 @@ export const {
     useGetSingleUserQuery,
     useDeleteUserAddressMutation,
     useUpdateUserMutation,
+    useUploadProfileImageMutation,
 } = userApiService;

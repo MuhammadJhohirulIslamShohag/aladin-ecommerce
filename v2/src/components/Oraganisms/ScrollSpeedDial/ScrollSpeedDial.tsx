@@ -1,12 +1,13 @@
 "use client";
 
+import dynamic from 'next/dynamic'
 import { useState } from "react";
 
 import ShoppingCarts from "../../Molecules/Cart/ShoppingCarts/ShoppingCarts";
 import CartModal from "../../Molecules/Modal/FixedModal/CartModal";
 import CompareModal from "../../Molecules/Modal/FixedModal/CompareModal";
-import SpeedDial from "../../Molecules/SpeedDial/SpeedDial";
 import CompareProducts from "../../Molecules/Modal/CompareProducts/CompareProducts";
+const SpeedDial = dynamic(() => import('../../Molecules/SpeedDial/SpeedDial'))
 
 const ScrollSpeedDial = () => {
     const [isCartDetailsModalOpen, setIsCartDetailsModalOpen] = useState(false);

@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import SideBarItem from "./SideBarItem";
+import SideBarItem from "../../../Molecules/SideBar/UserSideBar/SideBarItem";
 import { MdManageAccounts, MdOutlineSyncProblem } from "react-icons/md";
 import { DiSublime } from "react-icons/di";
 

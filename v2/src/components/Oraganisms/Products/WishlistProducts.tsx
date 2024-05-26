@@ -14,8 +14,8 @@ import { useStoreContext } from "@/contexts/StoreContextProvider";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
 import { IProduct } from "@/types/product.type";
 import { getUserInfo } from "@/store/user/users";
-import { removeWishList } from "@/api/user";
 import { getWishListProducts } from "@/store/wishList/wishList.product";
+import { useRemoveWishListMutation } from "@/redux/services/wishlist/wishListApiService";
 
 // interface WishlistProductProps {
 //     products: IProduct[];
@@ -31,6 +31,9 @@ const WishlistProduct = () => {
     const wishListFromLocalStorage = getWishListProducts();
     const { dispatch } = useStoreContext();
 
+    // redux api call
+    const [removeWishList] = useRemoveWishListMutation();
+
     const wishListProductsData = user?.wishLists?.length
         ? user?.wishLists
         : wishListFromLocalStorage;
@@ -40,18 +43,19 @@ const WishlistProduct = () => {
         data: null,
     });
 
-    const [wishListProductsOptimistic, setRemoveWishListOptimistic] = useOptimistic(
-        wishListProductsData,
-        (state: IProduct[], newState: string) => {
-            return state.filter(
-                (product: IProduct) => product._id !== newState
-            );
-        }
-    );
+    const [wishListProductsOptimistic, setRemoveWishListOptimistic] =
+        useOptimistic(
+            wishListProductsData,
+            (state: IProduct[], newState: string) => {
+                return state.filter(
+                    (product: IProduct) => product._id !== newState
+                );
+            }
+        );
 
     const handleRemovedToWishList = async (productId: string) => {
         let wishLists: IProduct[] = wishListProductsData?.filter(
-            (product:any) => product._id !== productId
+            (product: any) => product._id !== productId
         );
         // set undeleted wish list into the window local storage
         startTransition(() => {
@@ -64,8 +68,12 @@ const WishlistProduct = () => {
             });
         });
         if (user && user?.token) {
-            await removeWishList(user.token, productId).then((res) => {
-                toast.error("Wish-List is Removed!");
+            await removeWishList(productId).then((res) => {
+                if ("data" in res && res.data && res.data?.success) {
+                    toast.success("Wish-List is Removed!");
+                } else {
+                    toast.error("Failed To Remove Wish-List!");
+                }
             });
         }
     };
