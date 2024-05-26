@@ -1,7 +1,15 @@
+"use client";
+
 import React from "react";
+
+import { IOrder } from "@/types/order.types";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 
-const OrderCartInTable = ({ order }: any) => {
+interface OrderCartInTableProps {
+    order: IOrder;
+}
+
+const OrderCartInTable = ({ order }: OrderCartInTableProps) => {
     return (
         <div className="relative overflow-x-auto sm:rounded-lg scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100">
             <table className="w-full text-sm text-left text-gray-500 ">
@@ -25,8 +33,8 @@ const OrderCartInTable = ({ order }: any) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {order.products &&
-                        order.products.map((item: any) => (
+                    {order?.products &&
+                        order?.products.map((item: any) => (
                             <tr
                                 key={item._id}
                                 className="bg-white border-b hover:bg-gray-50 "

@@ -1,6 +1,16 @@
-import React from "react";
+"use client";
 
-const OrderPaymentInfo = ({ order, showStatus = true }: any) => {
+import React from "react";
+import { IOrder } from "@/types/order.types";
+
+interface OrderPaymentInfoProps {
+    order: IOrder;
+    showStatus?: boolean;
+}
+const OrderPaymentInfo: React.FC<OrderPaymentInfoProps> = ({
+    order,
+    showStatus = true,
+}) => {
     const { orderStatus } = order;
     const { id, amount, currency, created, payment_method_types, status } =
         order.paymentIntents;

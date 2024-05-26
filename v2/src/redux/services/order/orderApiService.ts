@@ -26,6 +26,11 @@ const orderApiService = baseApi.injectEndpoints({
                 headers: { "Content-Type": "application/json" },
             }),
         }),
+        getOrders: build.query({
+            query: ({ queryParams = null }) => ({
+                url: `orders${queryParams ? `?${queryParams}` : ""}`,
+            }),
+        }),
         getSingleOrder: build.query({
             query: (id) => ({
                 method: "GET",
@@ -38,7 +43,8 @@ const orderApiService = baseApi.injectEndpoints({
 
 export const {
     useAddOrderMutation,
+    useGetOrdersQuery,
     useGetSingleOrderQuery,
     useCashOrderDeliveryMutation,
-    useGetTotalPriceAfterDiscountMutation
+    useGetTotalPriceAfterDiscountMutation,
 } = orderApiService;

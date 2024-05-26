@@ -1,99 +1,36 @@
-import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+"use client";
 
-import FormGroup from "@/components/Form/FormGroup";
+import CustomModal from "@/components/Atoms/Modal/CustomModal";
+import RegisterInputGroup from "../../Form/RegisterInputGroup";
+import FormTextAreaGroup from "../../Form/FormTextAreaGroup";
 
-import { createOrUpdateUser } from "@/api/auth";
-import { useStoreContext } from "@/contexts/StoreContextProvider";
-import { IProfile } from "@/types/profile.types";
+import { useForm } from "react-hook-form";
+import { IProfileFormValue } from "@/types/auth.type";
 
-type ProfileEditModalPropType = {
+type ProfileEditModalProp = {
     title: string;
     closeModal: () => void;
-    values: IProfile;
-    isAddressProfile?: boolean;
-};
-type FormProfileValues = {
-    username?: string;
-    fullName?: string;
-    email?: string;
-    address?: string;
-    city?: string;
-    postalCode?: string;
-    country?: string;
+    handleProfileEditSubmit: (data: IProfileFormValue) => Promise<void>;
 };
 
-const ProfileEditModal = (props: ProfileEditModalPropType) => {
-    const {
-        closeModal,
-        values,
-        title,
-        isAddressProfile = false,
-    } = props;
-    const { dispatch } = useStoreContext();
+const ProfileEditModal: React.FC<ProfileEditModalProp> = ({
+    handleProfileEditSubmit,
+    closeModal,
+    title,
+}) => {
+   
     const {
         handleSubmit,
         register,
         reset,
         formState: { errors, isSubmitted },
-    } = useForm<FormProfileValues>({
+    } = useForm<IProfileFormValue>({
         mode: "onChange",
     });
 
-    const handleEditSubmit: SubmitHandler<FormProfileValues> = (data) => {
-        let userObject: any = null;
-        if (!isAddressProfile) {
-            userObject = {
-                fullName: data.fullName!,
-                email: data.email!,
-            };
-        } else {
-            userObject = {
-                address: {
-                    email: values!.email,
-                    username: data.username!,
-                    address: data.address!,
-                    city: data.city!,
-                    postalCode: data.postalCode!,
-                    country: data.country!,
-                },
-            };
-        }
-        if (userObject || userObject.address) {
-            createOrUpdateUser(values.token, userObject!)
-                .then((res) => {
-                    if (!isAddressProfile) {
-                        toast.success("Profile Update Successfully!");
-                    } else {
-                        toast.success("Address Update Successfully!");
-                    }
-                    reset();
-                    // dispatch({
-                    //     type: StoreActionType.LOGGED_IN_USER,
-                    //     payload: {
-                    //         fullName: res.data.fullName,
-                    //         email: res.data.email,
-                    //         token: values!.token,
-                    //         image: res.data.image.url,
-                    //         _id: res.data._id,
-                    //     },
-                    // });
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-                .finally(() => {
-                    reset();
-                });
-        }
-    };
-
-
     return (
         <>
-            <div
-                className={`fixed z-50 flex justify-center items-center w-full p-4 overflow-x-hidden overflow-y-auto inset-0 h-modal h-full`}
-            >
+            <CustomModal onClose={() => closeModal()}>
                 <div className="relative w-full h-full max-w-2xl md:h-auto">
                     <div className="relative bg-white rounded-lg drop-shadow-2xl">
                         <div className="flex items-start justify-between p-4 border-b rounded-t ">
@@ -123,97 +60,47 @@ const ProfileEditModal = (props: ProfileEditModalPropType) => {
                         </div>
 
                         <div className="p-6 space-y-6">
-                            <form onSubmit={handleSubmit(handleEditSubmit)}>
-                                {!isAddressProfile ? (
-                                    <>
-                                        <FormGroup
-                                            register={register}
-                                            inputName={"fullName"}
-                                            labelName={"FullName"}
-                                            errorField={errors.fullName}
-                                            isDefaultValue
-                                            defaultValue={values.fullName}
-                                            inputType={"text"}
-                                            placeholder={"Enter Your FullName"}
-                                            required="Please Enter Your FullName"
-                                        />
-                                        <FormGroup
-                                            register={register}
-                                            inputName={"email"}
-                                            labelName={"Email"}
-                                            isDefaultValue
-                                            defaultValue={values.email}
-                                            errorField={errors.email}
-                                            inputType={"text"}
-                                            placeholder={"Enter Your Email"}
-                                            required="Please Enter Your Email"
-                                        />
-                                    </>
-                                ) : (
-                                    <>
-                                        <FormGroup
-                                            register={register}
-                                            inputName={"username"}
-                                            labelName={"Username"}
-                                            errorField={errors.username}
-                                            isDefaultValue
-                                            defaultValue={values.username}
-                                            inputType={"text"}
-                                            placeholder={"Enter Your Username"}
-                                            required="Please Enter Your Username"
-                                        />
-                                        <FormGroup
-                                            register={register}
-                                            inputName={"address"}
-                                            labelName={"Address"}
-                                            errorField={errors.address}
-                                            isDefaultValue
-                                            defaultValue={values.address}
-                                            inputType={"text"}
-                                            placeholder={"Enter Your Address"}
-                                            required="Please Enter Your Address"
-                                        />
-                                        <FormGroup
-                                            register={register}
-                                            inputName={"country"}
-                                            labelName={"Country"}
-                                            isDefaultValue
-                                            defaultValue={values.country}
-                                            errorField={errors.country}
-                                            inputType={"text"}
-                                            placeholder={"Enter Your Country"}
-                                            required="Please Enter Your Country"
-                                        />
-                                        <FormGroup
-                                            register={register}
-                                            inputName={"city"}
-                                            labelName={"City"}
-                                            isDefaultValue
-                                            defaultValue={values.city}
-                                            errorField={errors.city}
-                                            inputType={"text"}
-                                            placeholder={"Enter Your City"}
-                                            required="Please Enter Your City"
-                                        />
-                                        <FormGroup
-                                            register={register}
-                                            inputName={"postalCode"}
-                                            labelName={"Postal Code"}
-                                            isDefaultValue
-                                            defaultValue={values.postalCode}
-                                            errorField={errors.postalCode}
-                                            inputType={"text"}
-                                            placeholder={
-                                                "Enter Your Postal Code"
-                                            }
-                                            required="Please Enter Your Postal Code"
-                                        />
-                                    </>
-                                )}
+                            <form
+                                onSubmit={handleSubmit(handleProfileEditSubmit)}
+                            >
+                                <div>
+                                    <RegisterInputGroup
+                                        register={register}
+                                        inputName={"fullName"}
+                                        labelName={"Full Name"}
+                                        errorMessage="Please Enter Your Full Name"
+                                        errors={errors.fullName}
+                                        inputType={"text"}
+                                        placeholder={
+                                            "Please Enter Your Full Name"
+                                        }
+                                    />
+                                </div>
+                                <div>
+                                    <RegisterInputGroup
+                                        register={register}
+                                        inputName={"email"}
+                                        labelName={"Email"}
+                                        errorMessage="Please Enter Your Email"
+                                        errors={errors.email}
+                                        inputType={"email"}
+                                        placeholder={"Please Enter Your Email"}
+                                    />
+                                </div>
+                                <div>
+                                    <FormTextAreaGroup
+                                        register={register}
+                                        inputName={"about"}
+                                        labelName={"About Us"}
+                                        errorMessage="Please Enter About Us"
+                                        errors={errors.about}
+                                        placeholder={"Please Enter About Us"}
+                                    />
+                                </div>
 
                                 <button
                                     type="submit"
-                                    className="btn block hover:bg-transparent hover:text-primary text-white btn-primary disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
+                                    className="px-3 py-2 block hover:bg-transparent hover:text-primary text-white disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
                                     disabled={isSubmitted}
                                 >
                                     {isSubmitted ? "Loading" : "Submit"}
@@ -222,7 +109,7 @@ const ProfileEditModal = (props: ProfileEditModalPropType) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </CustomModal>
         </>
     );
 };

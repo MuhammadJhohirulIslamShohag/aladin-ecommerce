@@ -1,17 +1,15 @@
-import { IProduct } from "types/product.type";
-import { ICustomers } from "./customers.type";
+import { IProduct } from "./product.type";
+import { IUser } from "./user.type";
 
 export interface IOrder {
     _id: string;
     products: {
         product: IProduct;
         count: number;
-        color: string;
-        size: string;
     }[];
     paymentIntents: any;
     orderStatus: string;
-    orderedBy: any;
+    orderedBy: IUser;
     paymentBy?: string;
     createdAt: Date;
     updatedAt: Date;

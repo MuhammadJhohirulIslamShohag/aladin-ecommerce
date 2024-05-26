@@ -1,9 +1,16 @@
+"use client"
+
 import React from "react";
 import { Document, Page, Text, StyleSheet, View } from "@react-pdf/renderer";
 import { IOrder } from "@/types/order.types";
 
+interface OrderInvoiceDownloadProps {
+    order: IOrder;
+}
 
-const OrderInvoiceDownload = ({ order }: { order: IOrder }) => {
+const OrderInvoiceDownload: React.FC<OrderInvoiceDownloadProps> = ({
+    order,
+}) => {
     return (
         <Document>
             <Page size="A4" style={styles.body}>
@@ -15,7 +22,7 @@ const OrderInvoiceDownload = ({ order }: { order: IOrder }) => {
                 <Text style={styles.subtitle}>Order Summary</Text>
                 <View style={styles.table}>
                     <View style={[styles.row, styles.header]}>
-                        <Text style={[styles.tableCell]}>Title</Text>
+                        <Text style={[styles.tableCell]}>Name</Text>
                         <Text style={[styles.tableCell]}>Price</Text>
                         <Text style={[styles.tableCell]}>Quantity</Text>
                     </View>
@@ -27,7 +34,7 @@ const OrderInvoiceDownload = ({ order }: { order: IOrder }) => {
                                     key={product.product?._id}
                                 >
                                     <Text style={[styles.cell]}>
-                                        {product.product?.title}
+                                        {product.product?.name}
                                     </Text>
                                     <Text style={[styles.cell]}>
                                         {product?.product?.price}

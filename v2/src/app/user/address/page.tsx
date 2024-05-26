@@ -2,26 +2,62 @@
 
 import { useState } from "react";
 import { BiEdit } from "react-icons/bi";
+import toast from "react-hot-toast";
 
-import ProfileEditModal from "@/components/Molecules/Modal/ProfileEditModal/ProfileEditModal";
-import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
+import AddressEditModal from "@/components/Molecules/Modal/AddressEditModal/AddressEditModal";
 
-import { getUserInfo } from "@/store/user/users";
+import { getUserInfo, storeUserInfo } from "@/store/user/users";
+import { IAddressFormValue } from "@/types/auth.type";
+import { useUpdateUserMutation } from "@/redux/services/user/userApiService";
+import { storeShippingAddress } from "@/store/user/shippingAddress";
+import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
+import { useStoreContext } from "@/contexts/StoreContextProvider";
 
 const Address = () => {
-    const user = getUserInfo();
     const [showModal, setShowModal] = useState<boolean>(false);
+    
+    const { dispatch } = useStoreContext();
+    const user = getUserInfo();
+    const address = user?.user?.shippingAddress;
+
+    const [updateUser, { isLoading }] = useUpdateUserMutation();
 
     // show model for update profile
     const handleShowModal = () => {
         setShowModal((prev) => !prev);
     };
+
+    // save address to the database
+    const handleAddressEditSubmit = async (data: IAddressFormValue) => {
+        if (user && user.token) {
+            const result = await updateUser({
+                data: {
+                    shippingAddress: { ...data },
+                },
+                id: user?.user?._id,
+            });
+
+            // check if the request was successful
+            if ("data" in result && result.data && result.data?.success) {
+                storeUserInfo(
+                    JSON.stringify({
+                        ...user?.user,
+                        shippingAddress: { ...data },
+                    })
+                );
+                storeShippingAddress(JSON.stringify(data));
+                dispatch({
+                    type: StoreActionType.ADD_SHIPPING_ADDRESS,
+                    payload: data,
+                });
+                toast.success("Save Address!");
+            } else {
+                toast.error("Failed To Save Address!");
+            }
+        }
+    };
     return (
         <>
-            <HeadSeo
-                title={"Address"}
-                content="Aladin Industries Ltd. Providing reliable products since 2022"
-            />
             <div>
                 <h2 className="text-black text-md font-semibold mb-0 text-center">
                     My Address
@@ -34,31 +70,39 @@ const Address = () => {
                     >
                         <BiEdit />
                     </span>
-                    {showModal && (
-                        <ProfileEditModal
-                            closeModal={handleShowModal}
-                            values={user}
-                            title="Address Information Update"
-                            isAddressProfile
-                        />
-                    )}
                 </div>
                 <div>
                     <ul>
                         <li className="flex gap-1">
                             <p className="text-black text-md font-semibold mb-0">
-                                User Name:
+                                First Name:
                             </p>
                             <p className="text-black inline-block">
-                                {user?.username}
+                                {user?.firstName}
+                            </p>
+                        </li>
+                        <li className="flex gap-1">
+                            <p className="text-black text-md font-semibold mb-0">
+                                Last Name:
+                            </p>
+                            <p className="text-black inline-block">
+                                {user?.lastName}
                             </p>
                         </li>
                         <li className="mt-2 flex gap-1">
                             <p className="text-black mb-0 text-md font-semibold">
-                                Address:
+                                Address 1:
                             </p>
                             <p className="text-black inline-block">
-                                {user?.address}
+                                {address?.address1}
+                            </p>
+                        </li>
+                        <li className="mt-2 flex gap-1">
+                            <p className="text-black mb-0 text-md font-semibold">
+                                Address 2:
+                            </p>
+                            <p className="text-black inline-block">
+                                {address?.address2}
                             </p>
                         </li>
                         <li className="mt-2 flex gap-1">
@@ -66,7 +110,7 @@ const Address = () => {
                                 City:
                             </p>
                             <p className="text-black inline-block">
-                                {user?.city}
+                                {address?.city}
                             </p>
                         </li>
                         <li className="mt-2 flex gap-1">
@@ -74,12 +118,37 @@ const Address = () => {
                                 Country:
                             </p>
                             <p className="text-black inline-block">
-                                {user?.country}
+                                {address?.country}
+                            </p>
+                        </li>
+                        <li className="mt-2 flex gap-1">
+                            <p className="text-black mb-0 text-md font-semibold">
+                                Post Code:
+                            </p>
+                            <p className="text-black inline-block">
+                                {address?.postCode}
+                            </p>
+                        </li>
+                        <li className="mt-2 flex gap-1">
+                            <p className="text-black mb-0 text-md font-semibold">
+                                State:
+                            </p>
+                            <p className="text-black inline-block">
+                                {address?.state}
                             </p>
                         </li>
                     </ul>
                 </div>
             </div>
+
+            {showModal && (
+                <AddressEditModal
+                    loading={isLoading}
+                    closeModal={handleShowModal}
+                    title="Address Information Update"
+                    handleAddressEditSubmit={handleAddressEditSubmit}
+                />
+            )}
         </>
     );
 };

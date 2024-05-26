@@ -20,7 +20,7 @@ import {
     useGetTotalPriceAfterDiscountMutation,
 } from "@/redux/services/order/orderApiService";
 import { getCarts, removeCart } from "@/store/cart/cart";
-import { getUserInfo } from "@/store/user/users";
+import { getUserInfo, storeUserInfo } from "@/store/user/users";
 import { IShippingAddress } from "@/types/user.type";
 import { useUpdateUserMutation } from "@/redux/services/user/userApiService";
 import { storeShippingAddress } from "@/store/user/shippingAddress";
@@ -115,6 +115,12 @@ const Checkout = () => {
 
             // check if the request was successful
             if ("data" in result && result.data && result.data?.success) {
+                storeUserInfo(
+                    JSON.stringify({
+                        ...user?.user,
+                        shippingAddress: { ...data },
+                    })
+                );
                 setIsAddressSave(true);
                 storeShippingAddress(JSON.stringify(data));
                 dispatch({

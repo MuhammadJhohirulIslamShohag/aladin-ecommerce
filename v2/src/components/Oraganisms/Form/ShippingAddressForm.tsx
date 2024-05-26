@@ -1,19 +1,62 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+
 import RegisterInputGroup from "../../Molecules/Form/RegisterInputGroup";
 import { IShippingAddress } from "@/types/user.type";
+import { getUserInfo } from "@/store/user/users";
 
-const ShippingAddressForm = ({ loading, submitShippingAddress }: any) => {
+interface ShippingAddressFormProps {
+    loading: boolean;
+    submitShippingAddress: (data: IShippingAddress) => Promise<void>;
+}
+
+const ShippingAddressForm: React.FC<ShippingAddressFormProps> = ({
+    loading,
+    submitShippingAddress,
+}) => {
+    const user = getUserInfo();
+    const address = user?.user?.shippingAddress;
+
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
-    } = useForm<IShippingAddress>();
+    } = useForm<IShippingAddress>({
+        defaultValues: {
+            firstName: "",
+            lastName: "",
+            address1: "",
+            address2: "",
+            country: "",
+            city: "",
+            state: "",
+            postCode: "",
+        },
+    });
+
+    useEffect(() => {
+        if (address) {
+            reset({
+                firstName: address?.firstName,
+                lastName: address?.lastName,
+                address1: address?.address1,
+                address2: address?.address2,
+                country: address?.country,
+                city: address?.city,
+                state: address?.state,
+                postCode: address?.postCode,
+            });
+        }
+    }, []);
 
     return (
-        <form onSubmit={handleSubmit(submitShippingAddress)} className="bg-white p-5 rounded-sm">
+        <form
+            onSubmit={handleSubmit(submitShippingAddress)}
+            className="bg-white p-5 rounded-sm"
+        >
             <div>
                 <RegisterInputGroup
                     register={register}
@@ -35,6 +78,18 @@ const ShippingAddressForm = ({ loading, submitShippingAddress }: any) => {
                     inputType={"text"}
                     placeholder={"Enter Your Last Name"}
                     errorMessage={"Last Name Is Required!"}
+                    className={"drop-shadow-md"}
+                />
+            </div>
+            <div>
+                <RegisterInputGroup
+                    register={register}
+                    inputName={"phoneNumber"}
+                    labelName={"Phone Number"}
+                    errors={errors.phoneNumber}
+                    inputType={"tel"}
+                    placeholder={"Enter Your Phone Number"}
+                    errorMessage={"Phone Number Is Required!"}
                     className={"drop-shadow-md"}
                 />
             </div>
