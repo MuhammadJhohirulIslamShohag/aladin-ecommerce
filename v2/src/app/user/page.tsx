@@ -19,6 +19,7 @@ const UserAccountPage = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
 
     const user = getUserInfo();
+    const userInfo = user?.user
 
     // redux api call
     const [updateUser] = useUpdateUserMutation();
@@ -33,15 +34,17 @@ const UserAccountPage = () => {
             ...data,
         });
 
+        const updatedUser = {
+            ...user?.user,
+            ...data,
+        };
+
         // check if the request was successful
         if ("data" in result && result.data && result.data?.success) {
-            storeUserInfo(
-                JSON.stringify({
-                    ...user?.user,
-                    ...data,
-                })
-            );
-            console.log(result.data, "result.data");
+            storeUserInfo(JSON.stringify({
+                user: updatedUser,
+                token: user?.token  
+            }))
             toast.success("Profile Update Successfully!");
         } else {
             toast.error("Profile Update Failed!");
@@ -50,20 +53,12 @@ const UserAccountPage = () => {
 
     return (
         <>
-            <div>
-                <h2 className="text-black text-md font-semibold mb-4">
+            <div className="mt-4">
+                <h2 className="text-black text-xl font-semibold mb-4">
                     My Profile
                 </h2>
                 <div className="grid lg:grid-cols-8 grid-cols-1 ">
-                    <div className="col-span-2 md:flex md:flex-col md:items-center flex flex-col items-center">
-                        {/* <FileUpload
-                            values={user}
-                            setValues={setValues}
-                            setLoading={setLoadingForUpdateProfileImg}
-                            loading={loadingForUpdateProfileImg}
-                        /> */}
-                    </div>
-                    <div className="col-span-6 lg:m-auto p-4 m-0">
+                    <div className="col-span-6 p-4 m-0">
                         <div className="relative flex justify-end items-center">
                             <span
                                 className="text-green-500 text-md hover:text-black transition-all cursor-pointer"
@@ -78,10 +73,10 @@ const UserAccountPage = () => {
                             <ul>
                                 <li>
                                     <p className="text-black text-md font-semibold mb-0">
-                                        Full name:
+                                        Name:
                                     </p>
                                     <span className="text-black mt-1 inline-block">
-                                        {user?.fullName}
+                                        {userInfo?.name}
                                     </span>
                                 </li>
                                 <li className="mt-2">
@@ -89,7 +84,7 @@ const UserAccountPage = () => {
                                         Email address:
                                     </p>
                                     <span className="text-black mt-1 inline-block break-all">
-                                        {user?.email}
+                                        {userInfo?.email}
                                     </span>
                                 </li>
                                 <li className="mt-2">
@@ -106,7 +101,7 @@ const UserAccountPage = () => {
                 </div>
                 <div className="mt-5">
                     <div className="">
-                        <h4 className="text-black text-md font-semibold text-center mt-4 mb-3">
+                        <h4 className="text-black text-xl font-semibold text-center mt-4 mb-3">
                             Update Password
                         </h4>
 

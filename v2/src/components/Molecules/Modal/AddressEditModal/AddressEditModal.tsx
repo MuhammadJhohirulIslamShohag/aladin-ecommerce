@@ -21,7 +21,7 @@ const AddressEditModal: React.FC<AddressEditModalProp> = ({
     return (
         <>
             <CustomModal onClose={() => closeModal()}>
-                <div className="relative w-full h-full max-w-2xl md:h-auto">
+                <div className="relative w-full h-full max-w-2xl mt-20">
                     <div className="relative bg-white rounded-lg drop-shadow-2xl">
                         <div className="flex items-start justify-between p-4 border-b rounded-t ">
                             <h3 className="md:text-xl text-lg font-semibold text-gray-900">
@@ -49,7 +49,7 @@ const AddressEditModal: React.FC<AddressEditModalProp> = ({
                             </button>
                         </div>
 
-                        <div className="p-6 space-y-6">
+                        <div className="px-6 space-y-6 md:h-[400px] overflow-y-scroll ">
                             <ShippingAddressForm
                                 loading={loading}
                                 submitShippingAddress={handleAddressEditSubmit}

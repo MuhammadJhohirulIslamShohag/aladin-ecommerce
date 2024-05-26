@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import RegisterInputGroup from "@/components/Molecules/Form/RegisterInputGroup";
+
 import { IUpdatePasswordFormValue } from "@/types/auth.type";
 import { useChangePasswordMutation } from "@/redux/services/auth/authApiService";
 import { getUserInfo } from "@/store/user/users";
@@ -103,7 +104,7 @@ const UpdatePasswordForm = () => {
             />
             <button
                 type="submit"
-                className="block hover:bg-transparent px-3 py-2 hover:text-primary text-white disabled:opacity-75 disabled:border-2 disabled:border-primary disabled:text-primary mt-2"
+                className="border-2 px-5 py-2 border-primary text-white bg-primary hover:opacity-80 font-semibold hover:text-white  rounded-md transition duration-200 w-full max-w-[450px] disabled:cursor-wait"
                 disabled={isSubmitted || !isDirty}
             >
                 {isSubmitted ? "Loading..." : "Submit"}

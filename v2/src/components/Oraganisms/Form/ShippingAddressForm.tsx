@@ -34,6 +34,7 @@ const ShippingAddressForm: React.FC<ShippingAddressFormProps> = ({
             city: "",
             state: "",
             postCode: "",
+            phoneNumber: "",
         },
     });
 
@@ -48,6 +49,7 @@ const ShippingAddressForm: React.FC<ShippingAddressFormProps> = ({
                 city: address?.city,
                 state: address?.state,
                 postCode: address?.postCode,
+                phoneNumber: address?.phoneNumber,
             });
         }
     }, []);
