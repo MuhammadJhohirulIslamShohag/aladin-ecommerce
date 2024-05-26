@@ -24,13 +24,11 @@ const AddCountCart: React.FC<AddCountCartProps> = ({
             {isForAddCart && (
                 <div className="mt-6 flex flex-wrap items-center gap-4">
                     <div className="flex items-center w-fit h-[40px] gap-2 rounded-sm">
-                        {/* button */}
-                        <input
-                            type="number"
-                            value={quantity}
-                            className="w-6 rounded-l-lg bg-black/60 h-full outline-none text-center text-white font-semibold"
-                            readOnly
-                        />
+                        <div
+                            className={`rounded-l-lg cursor-pointer bg-black/60 hover:bg-gray-100 h-full flex items-center px-2 text-white`}
+                        >
+                            {quantity}
+                        </div>
                         <div className="space-y-1">
                             <div
                                 onClick={handleDecrement}
@@ -43,7 +41,6 @@ const AddCountCart: React.FC<AddCountCartProps> = ({
                                 <BiMinus size={20} className="text-white" />
                             </div>
 
-                            {/* button */}
                             <div
                                 onClick={handleIncrement}
                                 className={`rounded-b-lg cursor-pointer bg-black/60 hover:bg-gray-100 h-full flex items-center px-2 ${
@@ -77,7 +74,12 @@ const AddCountCart: React.FC<AddCountCartProps> = ({
                 <div className="flex flex-col lg:flex-row justify-between">
                     <nav className="flex justify-center items-center text-primary mt-8 lg:mt-0">
                         <Button
-                            label={<BiMinus size={20} className="hover:text-white text-black/90" />}
+                            label={
+                                <BiMinus
+                                    size={20}
+                                    className="hover:text-white text-black/90"
+                                />
+                            }
                             onClick={handleDecrement}
                             className="p-2 mr-4 inline-block hover:bg-green-300 bg-white/80 hover:text-white text-black/90 rounded-full cursor-pointer transition-all"
                         />
@@ -87,7 +89,12 @@ const AddCountCart: React.FC<AddCountCartProps> = ({
                         </div>
 
                         <Button
-                            label={<BiPlus size={20} className="hover:text-white text-black/90" />}
+                            label={
+                                <BiPlus
+                                    size={20}
+                                    className="hover:text-white text-black/90"
+                                />
+                            }
                             className="p-2 ml-4 rounded-full transition-all cursor-pointer inline-block hover:bg-green-300 text-black/90 bg-white/80 hover:text-white"
                             onClick={handleIncrement}
                         />

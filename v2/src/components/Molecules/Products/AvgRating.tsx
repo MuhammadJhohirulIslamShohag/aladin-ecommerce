@@ -1,5 +1,6 @@
 "use client";
 
+import cn from "@/lib/cn";
 import { IReview } from "@/types/review.types";
 import { BsFillStarFill } from "react-icons/bs";
 
@@ -8,6 +9,7 @@ type AvgRatingPropType = {
     isTotalReviewRating?: boolean;
     isHomeReviewShow?: boolean;
     avgReview?: number;
+    className?: string;
     reviewLen?: number;
 };
 export const AvgRating = ({
@@ -16,6 +18,7 @@ export const AvgRating = ({
     isHomeReviewShow = false,
     avgReview = 0,
     reviewLen = 0,
+    className = "",
 }: AvgRatingPropType) => {
     let avgRating: number | undefined = avgReview;
     let length: number | undefined = reviewLen;
@@ -35,7 +38,9 @@ export const AvgRating = ({
         <>
             {isHomeReviewShow ? (
                 <div className="mt-1">
-                    <div className="flex items-center flex-col">
+                    <div
+                        className={cn("flex items-center flex-col", className)}
+                    >
                         <div className="flex items-center relative">
                             {avgRating ? (
                                 [0, 1, 2, 3, 4].map((rating: number) => (
@@ -92,7 +97,9 @@ export const AvgRating = ({
                 </div>
             ) : (
                 <div className="mt-1">
-                    <div className="flex items-center flex-col">
+                    <div
+                        className={cn("flex items-center flex-col", className)}
+                    >
                         <h3 className="text-orange-400 text-7xl font-extrabold">
                             {avgRating && avgRating}
                         </h3>

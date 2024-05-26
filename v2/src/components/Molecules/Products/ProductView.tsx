@@ -14,6 +14,7 @@ import { IProduct } from "@/types/product.type";
 import { getCarts, storeCart } from "@/store/cart/cart";
 import { useStoreContext } from "@/contexts/StoreContextProvider";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
+import AvgRating from "./AvgRating";
 
 interface ProductViewProps {
     product: IProduct;
@@ -34,6 +35,8 @@ const ProductView: React.FC<ProductViewProps> = ({
         name,
         imageURLs,
         _id,
+        averageRating,
+        ratingLength,
         keyFeatures,
         quantity: productQuantity,
         price,
@@ -121,6 +124,16 @@ const ProductView: React.FC<ProductViewProps> = ({
                         <h2 className="text-lg text-red-500 font-semibold mb-2">
                             ${netPrice}
                         </h2>
+
+                        <div className="mt-2">
+                            <AvgRating
+                                product={[]}
+                                className="items-start"
+                                isHomeReviewShow
+                                avgReview={averageRating}
+                                reviewLen={ratingLength}
+                            />
+                        </div>
                     </div>
 
                     <div className="mt-2 ">
