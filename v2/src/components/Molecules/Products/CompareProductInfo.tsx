@@ -77,7 +77,10 @@ const CompareProductInfo: React.FC<CompareProductInfoProps> = ({
                     </button>
 
                     <Link href="/products/compare">
-                        <button className="text-white py-2 px-4 bg-primary font-medium rounded">
+                        <button
+                            onClick={handleAddCompareProduct}
+                            className="text-white py-2 px-4 bg-primary font-medium rounded"
+                        >
                             Compare Now
                         </button>
                     </Link>

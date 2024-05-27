@@ -10,9 +10,9 @@ import { MdCompareArrows } from "react-icons/md";
 import numberWithCommas from "@/utils/numberWithCommas";
 import ValidateImage from "../../Atoms/ValidateImage";
 import TooltipButton from "../Button/TooltipButton/TooltipButton";
+import AvgRating from "./AvgRating";
 
 import { IProduct } from "@/types/product.type";
-import AvgRating from "./AvgRating";
 
 interface ProductCardProps {
     product: IProduct;
@@ -36,7 +36,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
         slug,
         imageURLs,
         quantity,
-        _id,
         averageRating,
         ratingLength,
     } = product;

@@ -24,25 +24,25 @@ const SpeedDial = () => {
             >
                 {/* Pc Builder */}
                 <Link href={"/pc-builder"}>
-                <div className="hidden md:block shadow-2xl shadow-black  group cursor-pointer  transition-all relative hover:border-green-400 rounded-md w-[60px]">
-                    <div className="bg-black flex justify-center items-center flex-col px-1 py-1 border-2 transition-all border-white hover:bg-green-400 hover:border-green-400 rounded-md">
-                    <PiDesktopTower size={30} color="white" />
-                    <p className="text-white text-[9px]">PC Build</p>
+                    <div className="hidden md:block shadow-2xl shadow-black  group cursor-pointer  transition-all relative hover:border-green-400 rounded-md w-[60px]">
+                        <div className="bg-black flex justify-center items-center flex-col px-1 py-1 border-2 transition-all border-white hover:bg-green-400 hover:border-green-400 rounded-md">
+                            <PiDesktopTower size={30} color="white" />
+                            <p className="text-white text-[9px]">PC Build</p>
+                        </div>
                     </div>
-                   
-                </div>
-                   
                 </Link>
 
-                <div className="hidden md:block shadow-2xl shadow-black  group cursor-pointer  transition-all relative rounded-md w-[60px]">
-                    <div className="bg-black flex justify-center items-center flex-col px-1 py-1 border-2 transition-all border-white hover:bg-green-400 hover:border-green-400 rounded-md">
-                        <FaRegHeart size={28} color="white" />
-                        <p className="text-white text-[9px]">WishList</p>
+                <Link href={"/products/wish-list"}>
+                    <div className="hidden md:block shadow-2xl shadow-black  group cursor-pointer  transition-all relative rounded-md w-[60px]">
+                        <div className="bg-black flex justify-center items-center flex-col px-1 py-1 border-2 transition-all border-white hover:bg-green-400 hover:border-green-400 rounded-md">
+                            <FaRegHeart size={28} color="white" />
+                            <p className="text-white text-[9px]">WishList</p>
+                        </div>
+                        <span className="absolute -top-3 -right-2 bg-green-400 group-hover:bg-black transition-all px-1.5 py-0.5 rounded-full text-sm text-white font-bold">
+                            {state?.wishLists?.length ?? 0}
+                        </span>
                     </div>
-                    <span className="absolute -top-3 -right-2 bg-green-400 group-hover:bg-black transition-all px-1.5 py-0.5 rounded-full text-sm text-white font-bold">
-                        {state?.wishLists?.length ?? 0}
-                    </span>
-                </div>
+                </Link>
             </div>
             <button
                 onMouseOver={() => setIsHovered(true)}

@@ -2,7 +2,7 @@ import { CompareProduct, IProduct, RootProperty } from "@/types/product.type";
 
 
 export const compareProducts = (
-    compareProductsArr: IProduct[] = []
+    compareProductsArr: any[] = []
 ): {
     rootPropertiesArray: RootProperty[];
     categoryProductLists: CompareProduct[][];
@@ -44,7 +44,7 @@ export const compareProducts = (
                 firstProduct.hasOwnProperty(key) &&
                 !excludedProperties.includes(key)
             ) {
-                rootPropertiesArray.push(key);
+                rootPropertiesArray.push(key as any);
             }
         }
     }
@@ -58,8 +58,8 @@ export const compareProducts = (
                 product.hasOwnProperty(key) &&
                 !excludedProperties.includes(key)
             ) {
-                if (rootPropertiesArray.includes(key)) {
-                    productValues.push(product[key]);
+                if (rootPropertiesArray.includes(key as any)) {
+                    productValues.push(product[key] );
                 }
             }
         }

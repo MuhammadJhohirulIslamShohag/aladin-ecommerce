@@ -34,7 +34,7 @@ const AddCountCart: React.FC<AddCountCartProps> = ({
                         <div className="space-y-1">
                             <div
                                 onClick={handleDecrement}
-                                className={`rounded-t-lg cursor-pointer bg-black/60 hover:bg-black/60 h-full flex items-center px-2 ${
+                                className={`rounded-t-lg cursor-pointer bg-black/60 hover:bg-black/50 h-full flex items-center px-2 ${
                                     quantity === 1
                                         ? "opacity-50 cursor-not-allowed"
                                         : ""
@@ -45,7 +45,7 @@ const AddCountCart: React.FC<AddCountCartProps> = ({
 
                             <div
                                 onClick={handleIncrement}
-                                className={`rounded-b-lg cursor-pointer bg-black/60 hover:bg-gray-100 h-full flex items-center px-2 ${
+                                className={`rounded-b-lg cursor-pointer bg-black/60 hover:bg-black/50 h-full flex items-center px-2 ${
                                     quantity === 79
                                         ? "opacity-50 cursor-not-allowed"
                                         : ""

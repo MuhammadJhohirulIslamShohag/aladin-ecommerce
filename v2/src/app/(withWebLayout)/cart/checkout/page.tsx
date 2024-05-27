@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 import DeliveryAddress from "@/components/Oraganisms/Checkout/Payment/DeliveryAddress";
 import PaymentOrderSummary from "@/components/Oraganisms/Checkout/Payment/PaymentOrderSummary";
 import useCheckUser from "@/hooks/useCheckUser";
-import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 import { useStoreContext } from "@/contexts/StoreContextProvider";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
@@ -24,11 +23,10 @@ import { getUserInfo, storeUserInfo } from "@/store/user/users";
 import { IShippingAddress } from "@/types/user.type";
 import { useUpdateUserMutation } from "@/redux/services/user/userApiService";
 import { storeShippingAddress } from "@/store/user/shippingAddress";
+import { checkEveryPropertiesHasValue } from "@/utils/checkObjectProValues";
 
 const Checkout = () => {
     useCheckUser();
-
-    const [isAddressSave, setIsAddressSave] = useState<boolean>(false);
     const [couponName, setCouponName] = useState<string>("");
     const [inValidCouponName, setInValidCouponName] = useState<string>("");
     const [totalPriceAfterDiscount, setTotalPriceAfterDiscount] =
@@ -43,6 +41,10 @@ const Checkout = () => {
     const user = getUserInfo();
     const carts = getCarts();
     const router = useRouter();
+
+    const isAddressSave = checkEveryPropertiesHasValue(
+        user?.user?.shippingAddress
+    );
 
     const { state, dispatch } = useStoreContext();
     const { isCashOnDelivery, isCouped } = state;
@@ -64,7 +66,7 @@ const Checkout = () => {
                 ...loading,
                 emptyingCartLoading: true,
             });
-            const result = await deleteCart(user?.user._id);
+            const result = await deleteCart(user?.user?._id);
 
             // check if the request was successful
             if ("data" in result && result.data && result.data?.success) {
@@ -108,7 +110,7 @@ const Checkout = () => {
             });
             const result = await updateUser({
                 data: {
-                    shippingAddress:  {...data}
+                    shippingAddress: { ...data },
                 },
                 id: user?.user?._id,
             });
@@ -121,7 +123,6 @@ const Checkout = () => {
                         shippingAddress: { ...data },
                     })
                 );
-                setIsAddressSave(true);
                 storeShippingAddress(JSON.stringify(data));
                 dispatch({
                     type: StoreActionType.ADD_SHIPPING_ADDRESS,
@@ -221,11 +222,6 @@ const Checkout = () => {
     };
     return (
         <>
-            <HeadSeo
-                title="Checkout"
-                content="Aladin Industries Ltd. Providing reliable products since 2022"
-            />
-
             <div className="container mt-10 px-40 pb-24">
                 <div className="grid lg:grid-cols-12 lg:gap-16 grid-cols-1 gap-0 md:grid-cols-1">
                     <DeliveryAddress

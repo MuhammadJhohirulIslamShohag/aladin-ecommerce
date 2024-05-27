@@ -16,7 +16,7 @@ interface IShopInitialState {
     pageNumber: number;
 }
 
-type TShopAction = {
+export type TShopAction = {
     type: "SET_SHOP_STATE" | "CLEAR_SHOP_STATE";
     payload?: Partial<IShopInitialState>;
 };

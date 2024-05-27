@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
@@ -26,7 +26,9 @@ const Login = () => {
     const router = useRouter();
 
     const searchParams = useSearchParams();
-    const search = searchParams.get("search");
+    const search = searchParams.get("redirect");
+
+    console.log(search, "search", searchParams);
 
     useEffect(() => {
         if (user?.user) {
@@ -36,11 +38,11 @@ const Login = () => {
     }, [user]);
 
     const handleLogin = async (data: LoginFormValues) => {
-        const result = await login({...data});
+        const result = await login({ ...data });
 
         // check if the request was successful
         if ("data" in result && result.data && result.data?.success) {
-            const data = result.data?.data
+            const data = result.data?.data;
             storeUserInfo(
                 JSON.stringify({
                     user: data.user,
@@ -58,26 +60,27 @@ const Login = () => {
     };
 
     return (
-        <div className="bg-white">
-            <div className="container !w-[69%]">
-                <div className="grid lg:grid-cols-2 grid-cols-1 place-items-center">
-                    <LeftAuth />
-                    <div className="mx-auto w-full max-w-[450px] my-8 py-6 px-7 bg-white/80 shadow-lg rounded-md">
-                       
-                        <LoginForm
-                            handleLogin={handleLogin}
-                            setOpenForgotPasswordModal={
-                                setOpenForgotPasswordModal
-                            }
-                            isLoading={isLoading}
-                        />
-                        <AuthFormFooter
-                            href={"/auth/register"}
-                            content={[
-                                "Don't have an account?",
-                                " Create Your Account",
-                            ]}
-                        />
+        <Suspense fallback={<div>Loading...</div>}>
+            <div className="bg-white">
+                <div className="container md:!w-[69%]">
+                    <div className="grid lg:grid-cols-2 grid-cols-1 place-items-center">
+                        <LeftAuth />
+                        <div className="mx-auto w-full max-w-[450px] my-8 py-6 px-7 bg-white/80 shadow-lg rounded-md">
+                            <LoginForm
+                                handleLogin={handleLogin}
+                                setOpenForgotPasswordModal={
+                                    setOpenForgotPasswordModal
+                                }
+                                isLoading={isLoading}
+                            />
+                            <AuthFormFooter
+                                href={"/auth/register"}
+                                content={[
+                                    "Don't have an account?",
+                                    " Create Your Account",
+                                ]}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,7 +97,7 @@ const Login = () => {
                     setOpenResendOTPModal={setOpenResendOTPModal}
                 />
             )}
-        </div>
+        </Suspense>
     );
 };
 

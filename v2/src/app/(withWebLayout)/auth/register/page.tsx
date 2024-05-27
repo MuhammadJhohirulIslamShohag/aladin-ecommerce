@@ -47,7 +47,7 @@ const Register = () => {
 
     return (
         <>
-            <div className="container !w-[69%]">
+            <div className="container md:!w-[69%]">
                 <div className="grid lg:grid-cols-2 grid-cols-1 place-items-center">
                     <LeftAuth />
                     <div className="mx-auto w-full max-w-[450px] my-8 py-6 px-7 bg-white/80 shadow-lg rounded-md">

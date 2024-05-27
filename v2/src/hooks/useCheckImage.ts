@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 const useCheckImage = (imageUrl: string): boolean => {

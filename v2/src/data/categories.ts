@@ -217,7 +217,7 @@ export const navbarBottomData = [
     },
     {
         title: "Blog",
-        path: "/blog",
+        path: "/blogs",
     },
     {
         title: "Contact",

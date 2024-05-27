@@ -90,7 +90,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                 {" "}
                 <button
                     type="button"
-                    className="absolute right-3 top-3"
+                    className="absolute right-3 top-[55%]"
                     onClick={() => setShowPassword(!showPassword)}
                 >
                     {showPassword ? (
@@ -134,7 +134,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             >
                 <button
                     type="button"
-                    className="absolute right-3 top-3"
+                    className="absolute right-3 top-[55%]"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
                     {showConfirmPassword ? (

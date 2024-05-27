@@ -33,13 +33,13 @@ const ConfirmCartModal: React.FC<ConfirmCartModalProps> = ({
                 </div>
 
                 <div className="flex gap-3">
-                    <Link href="/checkout/cart">
+                    <Link href="/cart">
                         <Button
                             label={"View Cart"}
-                            className="text-white py-2 px-4 bg-black font-medium rounded  hover:bg-green-400 border-2 border-transparent"
+                            className="text-white py-2 px-4 bg-black font-medium rounded hover:bg-green-400 border-2 border-transparent"
                         />
                     </Link>
-                    <Link href="/checkout/onepagecheckout">
+                    <Link href="/cart/checkout">
                         <Button
                             label={"Confirm Order"}
                             className="border-2 py-2 px-4 border-black rounded font-medium hover:bg-black hover:text-white transition-all duration-400"

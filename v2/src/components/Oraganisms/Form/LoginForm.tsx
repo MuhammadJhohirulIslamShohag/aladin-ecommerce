@@ -91,7 +91,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     {" "}
                     <button
                         type="button"
-                        className="absolute right-3 top-[30%]"
+                        className="absolute right-3 top-[55%]"
                         onClick={() => setShowPassword(!showPassword)}
                     >
                         {showPassword ? (

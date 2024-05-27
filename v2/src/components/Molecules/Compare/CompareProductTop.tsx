@@ -49,7 +49,7 @@ const CompareProductTop: React.FC<CompareProductTopProps> = ({
 
     return (
         <div key={compareProduct?._id} className={cn("w-full", className)}>
-            <Link href={`/product/${removeSpace(compareProduct?.name)}`}>
+            <Link href={`/products/${removeSpace(compareProduct?.slug)}`}>
                 <ValidateImage
                     className="mt-6 w-[228px] h-[228px] m-auto object-cover"
                     imageUrl={compareProduct?.imageURLs?.[0]}
@@ -57,7 +57,7 @@ const CompareProductTop: React.FC<CompareProductTopProps> = ({
                 />
             </Link>
             <h1 className="mt-2 text-center text-black font-bold capitalize cursor-pointer text-xs lg:text-[15px] hover:text-primary hover:underline">
-                <Link href={`/product/${removeSpace(compareProduct?.name)}`}>
+                <Link href={`/products/${removeSpace(compareProduct?.slug)}`}>
                     {compareProduct?.name}
                 </Link>
             </h1>
