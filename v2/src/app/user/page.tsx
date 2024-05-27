@@ -13,16 +13,15 @@ import { getUserInfo, storeUserInfo } from "@/store/user/users";
 import { useUpdateUserMutation } from "@/redux/services/user/userApiService";
 import { IProfileFormValue } from "@/types/auth.type";
 
-
 const UserAccountPage = () => {
     useCheckUser();
     const [showModal, setShowModal] = useState<boolean>(false);
 
     const user = getUserInfo();
-    const userInfo = user?.user
+    const userInfo = user?.user;
 
     // redux api call
-    const [updateUser] = useUpdateUserMutation();
+    const [updateUser, { isLoading }] = useUpdateUserMutation();
 
     // show model for update profile
     const handleShowModal = () => {
@@ -41,10 +40,12 @@ const UserAccountPage = () => {
 
         // check if the request was successful
         if ("data" in result && result.data && result.data?.success) {
-            storeUserInfo(JSON.stringify({
-                user: updatedUser,
-                token: user?.token  
-            }))
+            storeUserInfo(
+                JSON.stringify({
+                    user: updatedUser,
+                    token: user?.token,
+                })
+            );
             toast.success("Profile Update Successfully!");
         } else {
             toast.error("Profile Update Failed!");
@@ -112,6 +113,7 @@ const UserAccountPage = () => {
 
             {showModal && (
                 <ProfileEditModal
+                    isLoading={isLoading}
                     closeModal={handleShowModal}
                     handleProfileEditSubmit={handleProfileEditSubmit}
                     title="Profile Information Update"

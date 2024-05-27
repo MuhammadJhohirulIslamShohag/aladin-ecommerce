@@ -52,7 +52,8 @@ const ShippingAddressForm: React.FC<ShippingAddressFormProps> = ({
                 phoneNumber: address?.phoneNumber,
             });
         }
-    }, [address, reset]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [reset]);
 
     return (
         <form

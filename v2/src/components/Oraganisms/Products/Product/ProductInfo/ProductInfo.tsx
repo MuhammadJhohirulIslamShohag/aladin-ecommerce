@@ -1,11 +1,11 @@
 "use client";
 
-import { RadioGroup } from "@headlessui/react";
-import _ from "lodash";
-import { useRouter } from "next/navigation";
 import { startTransition, useState, useEffect } from "react";
-import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { RadioGroup } from "@headlessui/react";
 import { BsFillHeartFill, BsHandbagFill } from "react-icons/bs";
+import toast from "react-hot-toast";
+import _ from "lodash";
 
 import CustomButton from "@/components/Molecules/Button/CustomButton/CustomButton";
 import ProductDescriptionItem from "../../../../Molecules/Products/Product/ProductDescription/ProductDescriptionItem";
@@ -24,6 +24,10 @@ import {
     useRemoveWishListMutation,
 } from "@/redux/services/wishlist/wishListApiService";
 import { useGetSingleUserQuery } from "@/redux/services/user/userApiService";
+import {
+    getWishListProducts,
+    storeWishListProducts,
+} from "@/store/wishList/wishList.product";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
@@ -48,7 +52,6 @@ const ProductInfo = ({
         price,
         category,
         discount,
-        shipping,
         brand,
         subCategories,
         slug,
@@ -71,7 +74,7 @@ const ProductInfo = ({
 
     useEffect(() => {
         if (existingWishList) {
-            setHeartFillIcon(true)
+            setHeartFillIcon(true);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -79,12 +82,6 @@ const ProductInfo = ({
     const handleAddCart = () => {
         if (isAddToCart?.length <= 0) {
             let carts = getCarts();
-            if (selectedColor === "") {
-                return toast.error("Select The Color");
-            }
-            if (selectedSize === "") {
-                return toast.error("Select The Size");
-            }
 
             // push carts into carts array
             carts.push({
@@ -117,7 +114,32 @@ const ProductInfo = ({
 
     const handleAddToWishList = () => {
         if (user && user?.token) {
+            // all wish list products array
+            let wishListProducts = getWishListProducts();
+
+            // added wish list product
+            wishListProducts.push({
+                ...product,
+            });
+            // remove duplicates
+            const uniqueWishListProducts = _.uniqWith(
+                wishListProducts,
+                _.isEqual
+            );
+
             if (heartFillIcon) {
+                // set cart object in windows localStorage
+                startTransition(() => {
+                    const filterProducts = wishListProducts?.filter(
+                        (data: IProduct) => data?._id !== product?._id
+                    );
+                    storeWishListProducts(JSON.stringify(filterProducts));
+                    // added cart in store context
+                    dispatch({
+                        type: StoreActionType.ADD_TO_WISH,
+                        payload: filterProducts,
+                    });
+                });
                 removeWishList(_id).then((res) => {
                     if ("data" in res && res.data && res.data?.success) {
                         setHeartFillIcon(false);
@@ -125,6 +147,17 @@ const ProductInfo = ({
                     }
                 });
             } else {
+                // set cart object in windows localStorage
+                startTransition(() => {
+                    storeWishListProducts(
+                        JSON.stringify(uniqueWishListProducts)
+                    );
+                    // added cart in store context
+                    dispatch({
+                        type: StoreActionType.ADD_TO_WISH,
+                        payload: uniqueWishListProducts,
+                    });
+                });
                 addWishlist(_id).then((res) => {
                     if ("data" in res && res.data && res.data?.success) {
                         setHeartFillIcon(true);

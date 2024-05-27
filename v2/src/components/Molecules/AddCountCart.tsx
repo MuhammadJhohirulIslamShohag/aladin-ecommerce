@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import Button from "../Atoms/Button/Button";
@@ -27,7 +27,7 @@ const AddCountCart: React.FC<AddCountCartProps> = ({
                 <div className="mt-6 flex flex-wrap items-center gap-4">
                     <div className="flex items-center w-fit h-[40px] gap-2 rounded-sm">
                         <div
-                            className={`rounded-l-lg cursor-pointer bg-black/60 hover:bg-gray-100 h-full flex items-center px-2 text-white`}
+                            className={`rounded-l-lg cursor-pointer bg-black/60 hover:bg-black/50 h-full flex items-center px-2 text-white`}
                         >
                             {quantity}
                         </div>

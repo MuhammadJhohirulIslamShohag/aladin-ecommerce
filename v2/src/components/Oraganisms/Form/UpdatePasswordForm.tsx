@@ -13,13 +13,13 @@ import { getUserInfo } from "@/store/user/users";
 const UpdatePasswordForm = () => {
     const user = getUserInfo();
     // redux api call
-    const [changePassword] = useChangePasswordMutation();
+    const [changePassword, { isLoading }] = useChangePasswordMutation();
 
     const {
         handleSubmit,
         register,
         reset,
-        formState: { errors, isDirty, isSubmitted },
+        formState: { errors },
     } = useForm<IUpdatePasswordFormValue>({
         mode: "onChange",
     });
@@ -104,10 +104,10 @@ const UpdatePasswordForm = () => {
             />
             <button
                 type="submit"
-                className="border-2 px-5 py-2 border-primary text-white bg-primary hover:opacity-80 font-semibold hover:text-white  rounded-md transition duration-200 w-full max-w-[450px] disabled:cursor-wait"
-                disabled={isSubmitted || !isDirty}
+                className="border-2 px-3 py-2 border-primary text-white bg-primary hover:opacity-80 font-semibold hover:text-white  rounded-md transition duration-200  disabled:cursor-wait"
+                disabled={isLoading}
             >
-                {isSubmitted ? "Loading..." : "Submit"}
+                {isLoading ? "Loading..." : "Update"}
             </button>
         </form>
     );

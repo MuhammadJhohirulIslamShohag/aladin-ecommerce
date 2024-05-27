@@ -11,7 +11,7 @@ import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
 import {
     getCompareProducts,
     storeCompareProducts,
-    removeCompareProducts
+    removeCompareProducts,
 } from "@/store/compare/compare.product";
 import { IProduct } from "@/types/product.type";
 
@@ -197,6 +197,11 @@ const CompareProducts: React.FC<CompareProductProps> = ({
                                             <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                                                 <div className="mt-6">
                                                     <Link
+                                                        onClick={() =>
+                                                            setIsCompareModalOpen(
+                                                                false
+                                                            )
+                                                        }
                                                         href="/products/compare"
                                                         className="flex transition-all items-center justify-center rounded-md border border-primary bg-primary px-6 py-3 sm:py-2 text-base font-medium text-white shadow-sm hover:bg-transparent hover:text-primary"
                                                     >

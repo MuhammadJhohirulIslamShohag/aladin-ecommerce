@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 
 import SearchForm from "@/components/Molecules/Form/LocalSearch/SearchForm/SearchForm";
@@ -39,8 +39,8 @@ const NavbarMiddle: React.FC = (): JSX.Element => {
                 <div>
                     <div className="flex justify-end">
                         <ul className="flex items-center">
-                            <Link href="/products/wish-lists">
-                                <li className="py-3 ml-[5px] px-3 rounded-lg border-2 border-secondary hover:bg-transparent hover:text-primary text-white bg-success transition ease-in-out delay-15 cursor-pointer relative">
+                            <Link href="/products/wish-list">
+                                <li className="py-3 ml-[5px] px-3 rounded-lg border-2 border-secondary hover:bg-transparent hover:text-primary text-white bg-success hover:border-primary transition ease-in-out delay-15 cursor-pointer relative">
                                     <FaHeart />
                                     <div
                                         suppressHydrationWarning
@@ -53,7 +53,7 @@ const NavbarMiddle: React.FC = (): JSX.Element => {
 
                             <li
                                 onClick={handleShoppingCart}
-                                className="relative py-3 px-3 rounded-lg ml-[5px] border-2 border-secondary hover:bg-transparent hover:text-primary  text-white bg-success transition ease-in-out delay-15 cursor-pointer"
+                                className="relative py-3 px-3 rounded-lg ml-[5px] border-2 border-secondary hover:bg-transparent hover:text-primary  text-white hover:border-primary bg-success transition ease-in-out delay-15 cursor-pointer"
                             >
                                 <FaShoppingCart />
                                 <div

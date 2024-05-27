@@ -20,7 +20,6 @@ const ShoppingCarts: React.FC<ShoppingCartsProps> = ({
     openShoppingCart,
     setOpenShoppingCart,
 }) => {
-
     let allCart = getCarts();
     const { dispatch } = useStoreContext();
 
@@ -193,6 +192,11 @@ const ShoppingCarts: React.FC<ShoppingCartsProps> = ({
                                                 </div>
                                                 <div className="mt-6">
                                                     <Link
+                                                        onClick={() =>
+                                                            setOpenShoppingCart(
+                                                                false
+                                                            )
+                                                        }
                                                         href="/cart"
                                                         className="flex transition-all items-center justify-center rounded-md border border-primary bg-primary px-6 py-3 sm:py-2 text-base font-medium text-white shadow-sm hover:bg-transparent hover:text-primary"
                                                     >
