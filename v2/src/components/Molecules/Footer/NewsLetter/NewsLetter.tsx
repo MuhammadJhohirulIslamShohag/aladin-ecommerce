@@ -1,3 +1,5 @@
+"use client"
+
 import Image from 'next/image'
 import { BsFillSendFill } from "react-icons/bs";
 

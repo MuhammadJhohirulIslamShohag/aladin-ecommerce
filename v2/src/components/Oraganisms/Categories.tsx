@@ -1,3 +1,5 @@
+"use client"
+
 import Category from "../Molecules/Category";
 import { ICategory } from "@/types/category.type";
 

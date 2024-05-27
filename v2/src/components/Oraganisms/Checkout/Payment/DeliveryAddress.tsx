@@ -1,12 +1,15 @@
+"use client";
+
 import React from "react";
 
 import CouponForm from "../../Form/CouponForm";
 import ShippingAddressForm from "../../Form/ShippingAddressForm";
 
 import { CartType } from "@/types/cart.types";
+import { IShippingAddress } from "@/types/user.type";
 
 interface DeliveryAddressProps {
-    submitShippingAddress: (data: any) => void;
+    submitShippingAddress: (data: IShippingAddress) => Promise<void>;
     inValidCouponName: string | null;
     handleCouponSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
     couponName: string;
@@ -32,6 +35,7 @@ const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
 
             {/* Shipping Address Form*/}
             <ShippingAddressForm
+                loading={false}
                 submitShippingAddress={submitShippingAddress}
             />
             <hr className="my-4" />

@@ -1,3 +1,5 @@
+"use client"
+
 import footerData from '@/data/footer';
 import Link from 'next/link'
 import { MdCall, MdLocationOn } from "react-icons/md";

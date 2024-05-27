@@ -1,3 +1,5 @@
+"use client"
+
 import SectionTitle from "../../Molecules/SectionTitle";
 import SmallProduct from "../../Molecules/Products/SmallProduct";
 import SecondLevelHeading from "../../Atoms/SecondLevelHeading";

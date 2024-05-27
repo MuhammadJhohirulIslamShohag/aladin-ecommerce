@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 

@@ -1,3 +1,5 @@
+"use client"
+
 const LocalSearch = ({ keyword, setKeyword, placeholder }: any) => {
     const handleKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();

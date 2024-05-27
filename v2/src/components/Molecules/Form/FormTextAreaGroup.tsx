@@ -1,3 +1,5 @@
+"use client";
+
 import TextArea from "../../Atoms/Input/TextArea";
 import Label from "../../Atoms/Input/Label";
 import {

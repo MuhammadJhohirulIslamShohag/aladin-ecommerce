@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import Ratings from 'react-star-ratings';
 

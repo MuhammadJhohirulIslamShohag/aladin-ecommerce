@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState, useEffect, useCallback } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import toast from "react-hot-toast";

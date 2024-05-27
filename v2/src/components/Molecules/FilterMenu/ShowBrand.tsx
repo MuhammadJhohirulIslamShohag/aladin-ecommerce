@@ -1,3 +1,5 @@
+"use client"
+
 import { IBrand } from "@/types/brand.types";
 import React from "react";
 import CheckBox from "../../Atoms/Input/CheckBox";

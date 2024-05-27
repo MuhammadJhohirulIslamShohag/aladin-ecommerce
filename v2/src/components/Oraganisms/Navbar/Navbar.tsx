@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import dynamic from 'next/dynamic'
 import NavbarMiddle from "../../Molecules/Navbar/NavbarMiddle/NavbarMiddle";

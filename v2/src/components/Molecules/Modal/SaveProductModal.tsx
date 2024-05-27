@@ -1,3 +1,5 @@
+"use client"
+
 import { IProduct } from "@/types/product.type";
 import Link from "next/link";
 import { FaCheck, FaWindowClose } from "react-icons/fa";

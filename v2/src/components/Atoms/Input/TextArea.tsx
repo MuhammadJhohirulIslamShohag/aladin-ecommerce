@@ -1,6 +1,7 @@
+"use client"
+
 import { UseFormRegister, FieldValues, Path, FieldError } from "react-hook-form";
 import cn from "@/lib/cn";
-
 
 interface TextAreaProps<T extends FieldValues> {
     placeholder?: string;
