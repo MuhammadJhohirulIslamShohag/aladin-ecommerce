@@ -1,27 +1,31 @@
-'use client'
+"use client";
 import React from "react";
 import { FaSearch } from "react-icons/fa";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
+
+import { useStoreContext } from "@/contexts/StoreContextProvider";
+import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
 
 type SearchFormPropType = {
     className: string;
     placeholder: string;
 };
 const SearchForm = ({ className, placeholder }: SearchFormPropType) => {
-    // const { state, dispatch } = useStoreContext();
-    // const { text } = state;
+    const { state, dispatch } = useStoreContext();
+    const { text } = state;
     const router = useRouter();
 
     const changeSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // dispatch({
-        //     type: StoreActionType.SEARCH_FILTER_VALUE,
-        //     payload: e.target.value,
-        // });
+        dispatch({
+            type: StoreActionType.SEARCH_FILTER_VALUE,
+            payload: e.target.value,
+        });
     };
     const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // router.push(`/shop?${text}`);
+        router.push(`/shop?${text}`);
     };
+
     return (
         <form
             className={`items-center ${className} sm:w-11/12 relative`}
@@ -30,7 +34,7 @@ const SearchForm = ({ className, placeholder }: SearchFormPropType) => {
             <input
                 type="text"
                 name="search"
-                value={''}
+                value={""}
                 className="bg-primary border-primary text-white text-sm rounded-lg  focus:border-primary block w-full pl-6 p-3 placeholder:text-white placeholder:text-[15px]"
                 placeholder={placeholder}
                 onChange={changeSearchHandler}

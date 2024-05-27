@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 
-import SearchForm from "@/components/UI/SearchForm/SearchForm";
+import SearchForm from "@/components/Molecules/Form/LocalSearch/SearchForm/SearchForm";
 import ShoppingCarts from "../../Cart/ShoppingCarts/ShoppingCarts";
 
 import { useStoreContext } from "@/contexts/StoreContextProvider";

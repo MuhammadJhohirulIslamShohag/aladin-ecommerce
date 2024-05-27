@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import ReactSlider, { ReactSliderProps } from "react-slider";
 
@@ -13,6 +15,7 @@ const RangeSlider = <T extends number | readonly number[]>(
             renderThumb={(props, state) => (
                 <div
                     {...props}
+                    key={1}
                     className={cn({
                         "h-full": !isVertical,
                         "w-full": isVertical,
@@ -35,6 +38,7 @@ const RangeSlider = <T extends number | readonly number[]>(
                 return (
                     <div
                         {...props}
+                        key={2}
                         className={cn({
                             "h-1/4 top-1/2 -translate-y-1/2": !isVertical,
                             "w-1/4 left-1/2 -translate-x-1/2": isVertical,
@@ -51,6 +55,7 @@ const RangeSlider = <T extends number | readonly number[]>(
                 return (
                     <div
                         {...props}
+                        key={4}
                         className={cn({
                             "top-1/2 -translate-y-1/2": !isVertical,
                             "left-1/2 -translate-x-1/2": isVertical,

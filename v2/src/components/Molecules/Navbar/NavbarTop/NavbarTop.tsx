@@ -70,7 +70,7 @@ const NavbarTop: React.FC = (): JSX.Element => {
                                     )}
 
                                     <DropdownListItem
-                                        link="/user/profile"
+                                        link="/user"
                                         className="block transition-all px-4 py-2 hover:bg-success/90 hover:text-white "
                                     >
                                         Profile

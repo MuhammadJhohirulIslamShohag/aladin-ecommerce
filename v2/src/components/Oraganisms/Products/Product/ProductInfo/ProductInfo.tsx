@@ -7,7 +7,7 @@ import { startTransition, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { BsFillHeartFill, BsHandbagFill } from "react-icons/bs";
 
-import CustomButton from "@/components/UI/CustomButton/CustomButton";
+import CustomButton from "@/components/Molecules/Button/CustomButton/CustomButton";
 import ProductDescriptionItem from "../../../../Molecules/Products/Product/ProductDescription/ProductDescriptionItem";
 import AvgRating from "../../../../Molecules/Products/AvgRating";
 

@@ -447,16 +447,18 @@ const Shop = () => {
                                         </div>
                                     )}
                                 </div>
-
-                                <div className="mt-5">
-                                    <Pagination
-                                        pages={
-                                            productsInfo?.meta?.totalPage || 10
-                                        }
-                                        page={pageNumber}
-                                        setPage={handlePageSet}
-                                    />
-                                </div>
+                                {productsInfo?.meta?.totalItems > 0 && (
+                                    <div className="mt-5">
+                                        <Pagination
+                                            pages={
+                                                productsInfo?.meta?.totalPage ||
+                                                10
+                                            }
+                                            page={pageNumber}
+                                            setPage={handlePageSet}
+                                        />
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </section>
