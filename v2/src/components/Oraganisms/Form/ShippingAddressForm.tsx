@@ -52,7 +52,7 @@ const ShippingAddressForm: React.FC<ShippingAddressFormProps> = ({
                 phoneNumber: address?.phoneNumber,
             });
         }
-    }, []);
+    }, [address, reset]);
 
     return (
         <form
