@@ -17,7 +17,7 @@ const FilterMobileMenuItem = ({
             <h3 className="-my-3 flow-root">
                 <button
                     type="button"
-                    className="flex w-full transition-all items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-green-500"
+                    className="flex w-full transition-all items-center justify-between bg-white py-3 px-2 text-sm text-gray-400 hover:text-green-500"
                     onClick={() => setOpenFilterMenuItem(!openFilterMenuItem)}
                 >
                     <span className="font-medium text-gray-900">

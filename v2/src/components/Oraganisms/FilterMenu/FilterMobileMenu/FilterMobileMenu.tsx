@@ -14,7 +14,7 @@ type FilterMenuType = {
     showCategories: JSX.Element;
     showRange: JSX.Element;
     openFilterMobileMenu: boolean;
-    setOpenFilterMobileMenu: React.Dispatch<React.SetStateAction<boolean>>;
+    setOpenFilterMobileMenu: () => void;
 };
 const FilterMobileMenu = ({
     checkboxColor,
@@ -28,7 +28,7 @@ const FilterMobileMenu = ({
     setOpenFilterMobileMenu,
 }: FilterMenuType) => {
     return (
-        <Transition.Root show={openFilterMobileMenu} as={Fragment}>
+        <Transition.Root show={openFilterMobileMenu ? openFilterMobileMenu : false} as={Fragment}>
             <Dialog
                 as="div"
                 className="relative z-40 lg:hidden"
@@ -64,9 +64,7 @@ const FilterMobileMenu = ({
                                 <button
                                     type="button"
                                     className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:text-green-400"
-                                    onClick={() =>
-                                        setOpenFilterMobileMenu(false)
-                                    }
+                                    onClick={setOpenFilterMobileMenu}
                                 >
                                     <span className="sr-only">Close menu</span>
                                     <svg

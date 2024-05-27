@@ -4,12 +4,12 @@ import SortingMenuItem from "../Atoms/SortingMenuItem";
 
 type SortingMenuType = {
     openSortingMenu: boolean;
-    setOpenSortingMenu: React.Dispatch<React.SetStateAction<boolean>>;
-    setGridColumn: React.Dispatch<React.SetStateAction<boolean>>;
+    setOpenSortingMenu: () => void;
+    setGridColumn: () => void;
     gridColumn: boolean;
-    handleSortingProducts: (sort: string, order: number | string) => void;
+    handleSortingProducts: (sort: string, order: string) => void;
     openFilterMobileMenu: boolean;
-    setOpenFilterMobileMenu: React.Dispatch<React.SetStateAction<boolean>>;
+    setOpenFilterMobileMenu: () => void;
 };
 const SortingMenu = ({
     openSortingMenu,
@@ -27,7 +27,7 @@ const SortingMenu = ({
                     <button
                         type="button"
                         className="group inline-flex justify-center text-sm transition-all font-medium text-gray-700 hover:text-green-500"
-                        onClick={() => setOpenSortingMenu(!openSortingMenu)}
+                        onClick={setOpenSortingMenu}
                     >
                         Sort
                         <svg
@@ -52,26 +52,26 @@ const SortingMenu = ({
                             <SortingMenuItem
                                 sortingMenuItemName={"Most Popular"}
                                 handleSortingProducts={handleSortingProducts}
-                                sort={"-sold"}
+                                sort={"sold"}
                                 order={"desc"}
                             />
                             <SortingMenuItem
                                 sortingMenuItemName={"Newest"}
                                 handleSortingProducts={handleSortingProducts}
-                                sort={"-createdAt"}
+                                sort={"createdAt"}
                                 order={"desc"}
                             />
                             <SortingMenuItem
                                 sortingMenuItemName={"Price: Low to High"}
                                 handleSortingProducts={handleSortingProducts}
                                 sort={"price"}
-                                order={1}
+                                order={"asc"}
                             />
                             <SortingMenuItem
                                 sortingMenuItemName={"Price: High to Low"}
                                 handleSortingProducts={handleSortingProducts}
-                                sort={"-price"}
-                                order={-1}
+                                sort={"price"}
+                                order={"desc"}
                             />
                         </div>
                     </div>
@@ -81,7 +81,7 @@ const SortingMenu = ({
             <button
                 type="button"
                 className="-m-2 md:ml-5 p-2 text-gray-400 transition-all hover:text-green-500 ml-7"
-                onClick={() => setGridColumn(!gridColumn)}
+                onClick={setGridColumn}
             >
                 <span className="sr-only">View grid</span>
 
@@ -102,7 +102,7 @@ const SortingMenu = ({
             <button
                 type="button"
                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden block"
-                onClick={() => setOpenFilterMobileMenu(!openFilterMobileMenu)}
+                onClick={setOpenFilterMobileMenu}
             >
                 <span className="sr-only">Filters</span>
 

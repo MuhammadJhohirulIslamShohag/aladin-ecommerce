@@ -7,6 +7,13 @@ const productApiService = baseApi.injectEndpoints({
                 url: `products${queryParams ? `?${queryParams}` : ""}`,
             }),
         }),
+        getProductsByFilters: build.query({
+            query: ({ queryParams = null }) => ({
+                url: `products/by-filters${
+                    queryParams ? `?${queryParams}` : ""
+                }`,
+            }),
+        }),
         getProduct: build.query({
             query: (slug) => ({
                 url: `products/${slug}`,
@@ -49,4 +56,5 @@ export const {
     useGetProductsByCategoryIdQuery,
     useGetProductsBySubCategoryIdQuery,
     useAddReviewToProductMutation,
+    useGetProductsByFiltersQuery,
 } = productApiService;

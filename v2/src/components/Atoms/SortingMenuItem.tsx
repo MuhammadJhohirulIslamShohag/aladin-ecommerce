@@ -3,8 +3,8 @@ import React from "react";
 type SortingMenuItemType = {
     sortingMenuItemName: string;
     sort: string;
-    order: number | string;
-    handleSortingProducts: (sort: string, order: number | string) => void;
+    order: string;
+    handleSortingProducts: (sort: string, order: string) => void;
 };
 const SortingMenuItem = ({
     sortingMenuItemName,

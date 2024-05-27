@@ -1,7 +1,7 @@
 "use client";
 
 import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 
 import ShowBrand from "@/components/Molecules/FilterMenu/ShowBrand";
 import ShowCategory from "@/components/Molecules/FilterMenu/ShowCategory";
@@ -9,49 +9,51 @@ import ShowColors from "@/components/Molecules/FilterMenu/ShowColors";
 import ShowRatting from "@/components/Molecules/FilterMenu/ShowRatting";
 import ShowShipping from "@/components/Molecules/FilterMenu/ShowShipping";
 import ShowSubCategory from "@/components/Molecules/FilterMenu/ShowSubCategory";
-import ProductCard from "@/components/Molecules/Products/ProductCard";
 import ShowRange from "@/components/Molecules/ShowRange";
 import Skeleton from "@/components/Molecules/Skeleton/Skeleton";
 import FilterMenu from "@/components/Oraganisms/FilterMenu/FilterMenu";
 import FilterMobileMenu from "@/components/Oraganisms/FilterMenu/FilterMobileMenu/FilterMobileMenu";
 import SortingMenu from "@/components/Oraganisms/SortingMenu";
+import Pagination from "@/components/Molecules/Pagination/Pagination";
+import ShopProducts from "@/components/Oraganisms/Products/ShopProducts";
 
 import { useStoreContext } from "@/contexts/StoreContextProvider";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
 import { useGetBrandsQuery } from "@/redux/services/brand/brandApiService";
 import { useGetCategoriesQuery } from "@/redux/services/category/categoryApiService";
 import { useGetColorsQuery } from "@/redux/services/color/colorApiService";
-import { useGetProductsQuery } from "@/redux/services/product/productApiService";
+import { useGetProductsByFiltersQuery } from "@/redux/services/product/productApiService";
 import { useGetSubCategoriesQuery } from "@/redux/services/subCategory/subCategoryApiService";
-import { IProduct } from "@/types/product.type";
-import Pagination from "@/components/Molecules/Pagination/Pagination";
+import { shopInitialState, shopReducer } from "@/utils/shopReducer";
 
 const Shop = () => {
-    const [openSortingMenu, setOpenSortingMenu] = useState<boolean>(false);
-    const [openFilterMobileMenu, setOpenFilterMobileMenu] =
-        useState<boolean>(false);
-    const [gridColumn, setGridColumn] = useState<boolean>(true);
-    const [price, setPrice] = useState<number[]>([0, 3000]);
-    const [categoriesId, setCategoriesId] = useState<string[]>([]);
-    const [subCategoryId, setSubCategoryId] = useState<string[]>([]);
-    const [sortConfig, setSortConfig] = useState<string>("");
-    const [brand, setBrand] = useState<string>("");
-    const [color, setColor] = useState<string>("");
-    const [shipping, setShipping] = useState<string>("");
-    const [pageNumber, setPageNumber] = useState(1);
-
+    const [shopState, shopDispatch] = useReducer(shopReducer, shopInitialState);
     const { state, dispatch } = useStoreContext();
     const { text } = state;
+
+    const {
+        pageNumber,
+        sortConfig,
+        price,
+        brand,
+        categoriesId,
+        subCategoryId,
+        color,
+        shipping,
+        rating,
+        openSortingMenu,
+        openFilterMobileMenu,
+        gridColumn,
+    } = shopState;
 
     const query: Record<string, string> = {
         limit: String(6),
         page: String(pageNumber),
-        searchTerm: text,
-        sort: sortConfig,
-        minPrice: String(price[0]),
-        maxPrice: String(price[1]),
     };
 
+    if (text) {
+        query["searchTerm"] = text;
+    }
     if (brand) {
         query["brand.name"] = brand;
     }
@@ -64,11 +66,22 @@ const Shop = () => {
     if (color) {
         query["colors.name"] = color;
     }
+    if (rating > 0) {
+        query["rating"] = rating.toString();
+    }
+    if (price?.[0] > 0 && price?.[1] > 0) {
+        query["minPrice"] = price[0].toString();
+        query["maxPrice"] = price[1].toString();
+    }
+    if (sortConfig.sortBy && sortConfig.sortOrder) {
+        query["sortBy"] = sortConfig.sortBy;
+        query["sortOrder"] = sortConfig.sortOrder;
+    }
 
     const queryParams = new URLSearchParams(query);
 
     // redux wrapper
-    const { data: productsInfo, isLoading } = useGetProductsQuery({
+    const { data: productsInfo, isLoading } = useGetProductsByFiltersQuery({
         queryParams: queryParams.toString(),
     });
     const products = productsInfo?.data;
@@ -90,15 +103,17 @@ const Shop = () => {
             type: StoreActionType.SEARCH_FILTER_VALUE,
             payload: "",
         });
-        setCategoriesId([]);
-        setSubCategoryId([]);
-        setBrand("");
-        setColor("");
-        setShipping("");
+        shopDispatch({
+            type: "CLEAR_SHOP_STATE",
+        });
         setTimeout(() => {
-            setPrice(value);
+            shopDispatch({
+                type: "SET_SHOP_STATE",
+                payload: {
+                    price: value,
+                },
+            });
         }, 400);
-        setPageNumber(1)
     };
 
     // handle check for categories
@@ -108,25 +123,27 @@ const Shop = () => {
             type: StoreActionType.SEARCH_FILTER_VALUE,
             payload: "",
         });
-        setPrice([0, 3000]);
-        setBrand("");
-        setColor("");
-        setShipping("");
 
-        // console.log(e.target.value);
+        shopDispatch({
+            type: "CLEAR_SHOP_STATE",
+        });
+
         let inTheState = [...categoriesId];
         let justChecked = e.target.value;
-        let foundInTheState = inTheState.indexOf(justChecked); // index or -1
+        let foundInTheState = inTheState.indexOf(justChecked);
 
-        // indexOf method ?? if not found returns -1 else return index [1,2,3,4,5]
         if (foundInTheState === -1) {
             inTheState.push(justChecked);
         } else {
             // if found pull out one item from index
             inTheState.splice(foundInTheState, 1);
         }
-        setCategoriesId(inTheState);
-        setPageNumber(1)
+        shopDispatch({
+            type: "SET_SHOP_STATE",
+            payload: {
+                categoriesId: inTheState,
+            },
+        });
     };
 
     const clickRating = (num: number) => {
@@ -135,13 +152,15 @@ const Shop = () => {
             type: StoreActionType.SEARCH_FILTER_VALUE,
             payload: "",
         });
-        setPrice([0, 3000]);
-        setCategoriesId([]);
-        setSubCategoryId([]);
-        setBrand("");
-        setColor("");
-        setShipping("");
-        setPageNumber(1)
+        shopDispatch({
+            type: "CLEAR_SHOP_STATE",
+        });
+        shopDispatch({
+            type: "SET_SHOP_STATE",
+            payload: {
+                rating: num,
+            },
+        });
     };
 
     // check for sub-categories
@@ -153,10 +172,9 @@ const Shop = () => {
             type: StoreActionType.SEARCH_FILTER_VALUE,
             payload: "",
         });
-        setPrice([0, 3000]);
-        setBrand("");
-        setColor("");
-        setShipping("");
+        shopDispatch({
+            type: "CLEAR_SHOP_STATE",
+        });
         let inTheState = [...subCategoryId];
         let justChecked = e.target.value;
 
@@ -166,8 +184,12 @@ const Shop = () => {
         } else {
             inTheState.splice(foundTheState, 1);
         }
-        setPageNumber(1)
-        setSubCategoryId(inTheState);
+        shopDispatch({
+            type: "SET_SHOP_STATE",
+            payload: {
+                subCategoryId: inTheState,
+            },
+        });
     };
 
     // check for brand
@@ -177,13 +199,15 @@ const Shop = () => {
             type: StoreActionType.SEARCH_FILTER_VALUE,
             payload: "",
         });
-        setPrice([0, 3000]);
-        setCategoriesId([]);
-        setSubCategoryId([]);
-        setShipping("");
-        setColor("");
-        setPageNumber(1)
-        setBrand(event.target.value);
+        shopDispatch({
+            type: "CLEAR_SHOP_STATE",
+        });
+        shopDispatch({
+            type: "SET_SHOP_STATE",
+            payload: {
+                brand: event.target.value,
+            },
+        });
     };
 
     // check for brand
@@ -193,13 +217,15 @@ const Shop = () => {
             type: StoreActionType.SEARCH_FILTER_VALUE,
             payload: "",
         });
-        setPageNumber(1)
-        setPrice([0, 3000]);
-        setCategoriesId([]);
-        setSubCategoryId([]);
-        setBrand("");
-        setShipping("");
-        setColor(event.target.value);
+        shopDispatch({
+            type: "CLEAR_SHOP_STATE",
+        });
+        shopDispatch({
+            type: "SET_SHOP_STATE",
+            payload: {
+                color: event.target.value,
+            },
+        });
     };
 
     // check shipping
@@ -209,18 +235,37 @@ const Shop = () => {
             type: StoreActionType.SEARCH_FILTER_VALUE,
             payload: "",
         });
-        setPageNumber(1)
-        setPrice([0, 3000]);
-        setCategoriesId([]);
-        setSubCategoryId([]);
-        setBrand("");
-        setColor("");
-        setShipping(e.target.value);
+        shopDispatch({
+            type: "CLEAR_SHOP_STATE",
+        });
+        shopDispatch({
+            type: "SET_SHOP_STATE",
+            payload: {
+                shipping: e.target.value,
+            },
+        });
     };
     // sorting products
-    const handleSortingProducts = (sort: string, order: number | string) => {
-        setPageNumber(1)
-        setSortConfig(sort);
+    const handleSortingProducts = (sort: string, order: string) => {
+        shopDispatch({
+            type: "SET_SHOP_STATE",
+            payload: {
+                sortConfig: {
+                    sortBy: sort,
+                    sortOrder: order,
+                },
+                pageNumber: 1,
+            },
+        });
+    };
+
+    const handlePageSet = (page: number) => {
+        shopDispatch({
+            type: "SET_SHOP_STATE",
+            payload: {
+                pageNumber: page,
+            },
+        });
     };
     return (
         <>
@@ -270,7 +315,14 @@ const Shop = () => {
                         <ShowRange priceChangeHandler={priceChangeHandler} />
                     }
                     openFilterMobileMenu={openFilterMobileMenu}
-                    setOpenFilterMobileMenu={setOpenFilterMobileMenu}
+                    setOpenFilterMobileMenu={() =>
+                        shopDispatch({
+                            type: "SET_SHOP_STATE",
+                            payload: {
+                                openFilterMobileMenu: !openFilterMobileMenu,
+                            },
+                        })
+                    }
                 />
                 <div className="mx-auto max-w-7xl md:px-4 px-6 lg:px-8">
                     <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
@@ -281,11 +333,33 @@ const Shop = () => {
                         <SortingMenu
                             handleSortingProducts={handleSortingProducts}
                             openSortingMenu={openSortingMenu}
-                            setOpenSortingMenu={setOpenSortingMenu}
-                            setGridColumn={setGridColumn}
+                            setOpenSortingMenu={() =>
+                                shopDispatch({
+                                    type: "SET_SHOP_STATE",
+                                    payload: {
+                                        openSortingMenu: !openSortingMenu,
+                                    },
+                                })
+                            }
+                            setGridColumn={() =>
+                                shopDispatch({
+                                    type: "SET_SHOP_STATE",
+                                    payload: {
+                                        gridColumn: !gridColumn,
+                                    },
+                                })
+                            }
                             gridColumn={gridColumn}
                             openFilterMobileMenu={openFilterMobileMenu}
-                            setOpenFilterMobileMenu={setOpenFilterMobileMenu}
+                            setOpenFilterMobileMenu={() =>
+                                shopDispatch({
+                                    type: "SET_SHOP_STATE",
+                                    payload: {
+                                        openFilterMobileMenu:
+                                            !openFilterMobileMenu,
+                                    },
+                                })
+                            }
                         />
                     </div>
                     <section
@@ -369,19 +443,7 @@ const Shop = () => {
                                                     : `md:grid-cols-2 grid-cols-1`
                                             }`}
                                         >
-                                            {products &&
-                                                products.length &&
-                                                products.map(
-                                                    (product: IProduct) => (
-                                                        <div key={product._id}>
-                                                            <ProductCard
-                                                                product={
-                                                                    product
-                                                                }
-                                                            />
-                                                        </div>
-                                                    )
-                                                )}
+                                            <ShopProducts products={products} />
                                         </div>
                                     )}
                                 </div>
@@ -392,7 +454,7 @@ const Shop = () => {
                                             productsInfo?.meta?.totalPage || 10
                                         }
                                         page={pageNumber}
-                                        setPage={setPageNumber}
+                                        setPage={handlePageSet}
                                     />
                                 </div>
                             </div>

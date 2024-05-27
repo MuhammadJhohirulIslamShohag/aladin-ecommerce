@@ -1,6 +1,6 @@
+import { IBrand } from "@/types/brand.types";
 import React from "react";
 import CheckBox from "../../Atoms/Input/CheckBox";
-import { IBrand } from "@/types/brand.types";
 
 interface ShowBrandProps {
     brands: IBrand[];

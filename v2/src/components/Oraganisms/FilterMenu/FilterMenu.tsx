@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import FilterMenuItem from "../../Molecules/FilterMenu/FilterMenuItem";
 
 type FilterMenuType = {
