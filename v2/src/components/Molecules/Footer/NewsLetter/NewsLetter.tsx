@@ -12,7 +12,7 @@ const NewsLetter = () => {
                     <div className="w-11/12 md:w-4/5 lg:w-3/4 xl:w-2/3">
                         <div className="">
                             <div className="flex flex-col items-center justify-center">
-                                <div className="bg-gradient-to-br from-green-700 to-green-400 rounded-full shadow-lg flex justify-center items-center h-36 w-36 relative z-[999]">
+                                <div className="bg-gradient-to-br from-green-700 to-green-400 rounded-full shadow-lg flex justify-center items-center h-36 w-36 relative">
                                     <Image src={"/footer/icon.png"} alt="Not Available" className="h-24 w-24" height={100} width={100} />
                                 </div>
 

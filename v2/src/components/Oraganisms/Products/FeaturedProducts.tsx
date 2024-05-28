@@ -154,7 +154,7 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
                             spaceBetween: 16,
                         },
                     }}
-                    className="featured_products lg:h-[477px] md:h-[420px] h-[462px]"
+                    className="featured_products lg:h-[477px] md:h-[414px] h-[601px]"
                 >
                     {products?.map((product: IProduct) => (
                         <SwiperSlide key={product._id}>

@@ -52,7 +52,7 @@ const FlashDeals = ({ products }: FlashDealsPropsType) => {
                 }}
                 className="surprising_sales lg:h-[505px] md:h-[478px] h-[462px]"
             >
-                <div className="flex flex-wrap pl-1 md:justify-center sm:justify-center">
+                <div className="flex flex-wrap pl-1 justify-center">
                     {products?.map((product: IProduct) => (
                         <SwiperSlide key={product._id}>
                             <FlashDeal product={product} />
@@ -80,7 +80,7 @@ const FlashDeals = ({ products }: FlashDealsPropsType) => {
                 <SectionTitle title={'Surprising Sells'} className="lg:mb-6 mb-0" />
                 <CountDown date={new Date(2024, 11, 30)} />
             </div>
-            <div className="container">{content}</div>
+            <div>{content}</div>
         </div>
     );
 };

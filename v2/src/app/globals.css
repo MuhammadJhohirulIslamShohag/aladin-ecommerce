@@ -184,7 +184,7 @@
 
 @media only screen and (max-width: 767px) {
     .surprising_sales .swiper-button-prev {
-        left: 68% !important;
+        left: 76% !important;
     }
     .surprising_sales .swiper-button-next,
     .surprising_sales .swiper-button-prev {
@@ -193,7 +193,7 @@
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .surprising_sales .swiper-button-prev {
-        left: 87% !important;
+        left: 86% !important;
     }
 }
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
@@ -240,17 +240,20 @@
 }
 
 @media only screen and (max-width: 767px) {
-    .featured_products .swiper-button-prev {
-        left: 68% !important;
-    }
     .featured_products .swiper-button-next,
     .featured_products .swiper-button-prev {
-        margin-top: 177px !important;
+        margin-top: 265px !important;
+    }
+    .featured_products .swiper-button-prev {
+        left: 76% !important;
     }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .featured_products .swiper-button-prev {
-        left: 87% !important;
+        left: 86% !important;
+        margin-top: 177px !important;
+    }
+    .featured_products .swiper-button-next {
         margin-top: 177px !important;
     }
 }

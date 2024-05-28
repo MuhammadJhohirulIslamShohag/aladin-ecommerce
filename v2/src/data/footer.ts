@@ -36,7 +36,7 @@ const footerData = [
     },
     {
         id: 8,
-        path_url: "/blog",
+        path_url: "/blogs",
         path_name: "Blog",
     },
     {

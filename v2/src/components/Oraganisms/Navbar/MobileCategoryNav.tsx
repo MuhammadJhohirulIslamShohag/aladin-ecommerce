@@ -66,7 +66,7 @@ const MobileCategoryNav: React.FC<MobileCategoryNavProps> = ({
                                                 <Link
                                                     href={`/${subCategory?.title}`}
                                                 >
-                                                    <a className="text-[15px] font-medium pl-2  hover:underline underline-offset-2 hover:text-blue-700">
+                                                    <a className="text-[15px] font-medium pl-2  hover:underline underline-offset-2 hover:text-success">
                                                         {subCategory?.title}
                                                     </a>
                                                 </Link>
