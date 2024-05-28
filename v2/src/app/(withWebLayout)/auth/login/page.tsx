@@ -59,7 +59,7 @@ const Login = () => {
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <div className="bg-white">
+            <div className="pt-5 pb-16">
                 <div className="container md:!w-[69%]">
                     <div className="grid lg:grid-cols-2 grid-cols-1 place-items-center">
                         <LeftAuth />
