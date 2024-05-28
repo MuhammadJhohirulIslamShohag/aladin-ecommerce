@@ -20,6 +20,7 @@ export const compareProducts = (
         "subCategories",
         "clickedProductCount",
         "description",
+        "discount",
         "keyFeatures",
         "questions",
         "reviews",
@@ -31,6 +32,9 @@ export const compareProducts = (
         "sold",
         "sizes",
         "colors",
+        "user",
+        "averageRating",
+        "ratingLength",
     ];
 
     // initialize empty lists to store root properties and product value lists

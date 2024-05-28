@@ -4,20 +4,23 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 import { BiEdit } from "react-icons/bi";
+import { useRouter } from "next/navigation";
 
 import ProfileEditModal from "@/components/Molecules/Modal/ProfileEditModal/ProfileEditModal";
 import useCheckUser from "@/hooks/useCheckUser";
 import UpdatePasswordForm from "@/components/Oraganisms/Form/UpdatePasswordForm";
 
-import { getUserInfo, storeUserInfo } from "@/store/user/users";
+import { getUserInfo, removeUserInfo, storeUserInfo } from "@/store/user/users";
 import { useUpdateUserMutation } from "@/redux/services/user/userApiService";
 import { IProfileFormValue } from "@/types/auth.type";
+import { CustomFetchBaseQueryError } from "@/types/response";
 
 const UserAccountPage = () => {
     useCheckUser();
     const [showModal, setShowModal] = useState<boolean>(false);
 
     const user = getUserInfo();
+    const router = useRouter();
     const userInfo = user?.user;
 
     // redux api call
@@ -49,6 +52,13 @@ const UserAccountPage = () => {
             );
             toast.success("Profile Update Successfully!");
         } else {
+            if ("error" in result && result.error) {
+                const customError = result.error as CustomFetchBaseQueryError;
+                if (customError.data?.message.includes("jwt expired")) {
+                    removeUserInfo()
+                    router.push(`/auth/login?redirect=/user`);
+                }
+            }
             toast.error("Profile Update Failed!");
         }
     };

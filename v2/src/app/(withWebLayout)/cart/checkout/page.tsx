@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 
 import DeliveryAddress from "@/components/Oraganisms/Checkout/Payment/DeliveryAddress";
 import PaymentOrderSummary from "@/components/Oraganisms/Checkout/Payment/PaymentOrderSummary";
@@ -22,9 +22,10 @@ import {
 import { useUpdateUserMutation } from "@/redux/services/user/userApiService";
 import { getCarts, removeCart } from "@/store/cart/cart";
 import { storeShippingAddress } from "@/store/user/shippingAddress";
-import { getUserInfo, storeUserInfo } from "@/store/user/users";
+import { getUserInfo, removeUserInfo, storeUserInfo } from "@/store/user/users";
 import { IShippingAddress } from "@/types/user.type";
 import { checkEveryPropertiesHasValue } from "@/utils/checkObjectProValues";
+import { CustomFetchBaseQueryError } from "@/types/response";
 
 const Checkout = () => {
     useCheckUser();
@@ -114,18 +115,28 @@ const Checkout = () => {
                     router.push("/cart");
                 }, 5000);
             } else {
-                toast.error("Cart Delete Failed!");
                 setLoading({
                     ...loading,
                     emptyingCartLoading: false,
                 });
+                if ("error" in result && result.error) {
+                    const customError =
+                        result.error as CustomFetchBaseQueryError;
+                    if (customError.data?.message.includes("jwt expired")) {
+                        removeUserInfo()
+                        router.push(`/auth/login?redirect=/cart/checkout`);
+                    }
+                }
+                toast.error("Cart Delete Failed!");
             }
+        } else {
+            router.push(`/auth/login?redirect=/cart/checkout`);
         }
     };
 
     // save address to the database
     const submitShippingAddress = async (data: IShippingAddress) => {
-        if (user && user.token) {
+        if (user && user?.token) {
             setLoading({
                 ...loading,
                 shippingAddressLoading: true,
@@ -160,7 +171,17 @@ const Checkout = () => {
                     ...loading,
                     shippingAddressLoading: false,
                 });
+                if ("error" in result && result.error) {
+                    const customError =
+                        result.error as CustomFetchBaseQueryError;
+                    if (customError.data?.message.includes("jwt expired")) {
+                        removeUserInfo()
+                        router.push(`/auth/login?redirect=/cart/checkout`);
+                    }
+                }
             }
+        } else {
+            router.push(`/auth/login?redirect=/cart/checkout`);
         }
     };
 
@@ -194,6 +215,13 @@ const Checkout = () => {
                 ...loading,
                 couponLoading: false,
             });
+            if ("error" in result && result.error) {
+                const customError = result.error as CustomFetchBaseQueryError;
+                if (customError.data?.message.includes("jwt expired")) {
+                    removeUserInfo()
+                    router.push(`/auth/login?redirect=/cart/checkout`);
+                }
+            }
         }
     };
 
@@ -202,7 +230,7 @@ const Checkout = () => {
             ...loading,
             processingOrderLoading: true,
         });
-        if (user && user.token) {
+        if (user && user?.token) {
             const result = await cashOrderDelivery({
                 isCashOnDelivery,
                 isCouped,
@@ -236,12 +264,26 @@ const Checkout = () => {
                     router.push("/user/history");
                 }, 300);
             } else {
-                toast.error("Cart Delete Failed!");
                 setLoading({
                     ...loading,
                     processingOrderLoading: false,
                 });
+                if ("error" in result && result.error) {
+                    const customError =
+                        result.error as CustomFetchBaseQueryError;
+                    if (customError.data?.message.includes("jwt expired")) {
+                        removeUserInfo()
+                        router.push(`/auth/login?redirect=/cart/checkout`);
+                    }
+                }
+                toast.error("Cart Delete Failed!");
             }
+        } else {
+            setLoading({
+                ...loading,
+                processingOrderLoading: false,
+            });
+            router.push(`/auth/login?redirect=/cart/checkout`);
         }
     };
 

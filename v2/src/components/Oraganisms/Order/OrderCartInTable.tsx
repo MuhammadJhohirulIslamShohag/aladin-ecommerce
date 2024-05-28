@@ -26,10 +26,10 @@ const OrderCartInTable = ({ order }: OrderCartInTableProps) => {
                         <th className="px-6 py-3" scope="col">
                             Price
                         </th>
-                        <th className="px-6 py-3" scope="col">
+                        <th className="px-6 py-3 text-center" scope="col">
                             Count
                         </th>
-                        <th className="px-6 py-3" scope="col">
+                        <th className="px-6 py-3 text-center" scope="col">
                             Shipping
                         </th>
                     </tr>
@@ -70,7 +70,7 @@ const OrderCartInTable = ({ order }: OrderCartInTableProps) => {
                                     scope="row"
                                     className="px-6 py-4 font-semibold text-gray-900 "
                                 >
-                                    <span className="min-w-max flex">
+                                    <span className="min-w-max flex items-center justify-center">
                                         {item?.count}
                                     </span>
                                 </td>

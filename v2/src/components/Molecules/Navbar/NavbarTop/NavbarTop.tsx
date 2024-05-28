@@ -5,18 +5,21 @@ import { AiFillCaretDown } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { FaGift } from "react-icons/fa";
 import Typewriter from "typewriter-effect";
+import Link from "next/link";
 
 import DropdownListItem from "../../DropdownListItem";
 
 import { getUserInfo, removeUserInfo } from "@/store/user/users";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const NavbarTop: React.FC = (): JSX.Element => {
     const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
     const user = getUserInfo();
+    const router = useRouter();
 
     const handleLogOut = () => {
         removeUserInfo();
+        router.push("/");
     };
 
     return (
@@ -94,8 +97,19 @@ const NavbarTop: React.FC = (): JSX.Element => {
                             </li>
                         ) : (
                             <li className="relative py-2">
-                                <Link className=" hover:text-success/90 cursor-pointer transition-all" href={"/auth/login"}>Login</Link> Or{" "}
-                                <Link className="  hover:text-success/90 cursor-pointer transition-all" href={"/auth/register"}>Register</Link>
+                                <Link
+                                    className=" hover:text-primary cursor-pointer transition-all text-success/90"
+                                    href={"/auth/login"}
+                                >
+                                    Login
+                                </Link>{" "}
+                                Or{" "}
+                                <Link
+                                    className="hover:text-primary cursor-pointer transition-all text-success/90"
+                                    href={"/auth/register"}
+                                >
+                                    Register
+                                </Link>
                             </li>
                         )}
                     </ul>

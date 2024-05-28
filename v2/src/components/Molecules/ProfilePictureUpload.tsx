@@ -4,7 +4,6 @@ import React, { useState, useRef, ChangeEvent } from "react";
 import { ImSpinner10 } from "react-icons/im";
 import { getUserInfo, storeUserInfo } from "@/store/user/users";
 import toast from "react-hot-toast";
-import Image from "next/image";
 
 import { useUploadProfileImageMutation } from "@/redux/services/user/userApiService";
 
@@ -75,12 +74,13 @@ const ProfilePictureUpload: React.FC = () => {
                 </div>
             ) : (
                 <div className="w-28 h-28 object-cover rounded-full border-2 border-primary p-1">
-                    <img
-                        src={image as string}
-                        alt="Profile"
-                        className="w-full h-full object-cover rounded-full"
-                       
-                    />
+                    <picture>
+                        <img
+                            src={image as string}
+                            alt="Profile"
+                            className="w-full h-full object-cover rounded-full"
+                        />
+                    </picture>
 
                     {hovered && (
                         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white w-full h-full">

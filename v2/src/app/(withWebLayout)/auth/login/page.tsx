@@ -28,11 +28,9 @@ const Login = () => {
     const searchParams = useSearchParams();
     const search = searchParams.get("redirect");
 
-    console.log(search, "search", searchParams);
-
     useEffect(() => {
         if (user?.user) {
-            router.push("/");
+            router.push(search || "/");
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
@@ -49,8 +47,8 @@ const Login = () => {
                     token: data.token,
                 })
             );
-            if (typeof search === "string") {
-                router.push(`/${search}`);
+            if (search) {
+                router.push(`${search}`);
             } else {
                 router.push("/");
             }

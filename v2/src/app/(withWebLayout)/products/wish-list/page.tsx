@@ -1,14 +1,12 @@
+"use client";
+
 import WishlistProduct from "@/components/Oraganisms/Products/WishlistProducts";
-import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
+import useCheckUser from "@/hooks/useCheckUser";
 
 const WishLists = () => {
+    useCheckUser();
     return (
         <>
-            <HeadSeo
-                title={"wish list"}
-                content={`Product`}
-            />
-
             <WishlistProduct />
         </>
     );

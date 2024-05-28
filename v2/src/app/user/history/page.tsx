@@ -2,6 +2,7 @@
 
 import { PDFDownloadLink } from "@react-pdf/renderer";
 
+import useCheckUser from "@/hooks/useCheckUser";
 import OrderCartInTable from "@/components/Oraganisms/Order/OrderCartInTable";
 import OrderInvoiceDownload from "@/components/Oraganisms/Order/OrderInvoiceDownload";
 import OrderPaymentInfo from "@/components/Oraganisms/Order/OrderPaymentInfo";
@@ -12,6 +13,7 @@ import { getUserInfo } from "@/store/user/users";
 import { IOrder } from "@/types/order.types";
 
 const History = () => {
+    useCheckUser();
     const user = getUserInfo();
 
     const queryParams = new URLSearchParams({

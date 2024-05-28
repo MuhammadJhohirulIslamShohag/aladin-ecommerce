@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import { Document, Page, Text, StyleSheet, View } from "@react-pdf/renderer";
@@ -11,6 +11,12 @@ interface OrderInvoiceDownloadProps {
 const OrderInvoiceDownload: React.FC<OrderInvoiceDownloadProps> = ({
     order,
 }) => {
+    let formateTime;
+    if (
+        Math.ceil(Math.log(order.paymentIntents.created + 1) / Math.LN10) >= 11
+    ) {
+        formateTime = Math.floor(order.paymentIntents.created / 1000);
+    }
     return (
         <Document>
             <Page size="A4" style={styles.body}>
@@ -50,9 +56,15 @@ const OrderInvoiceDownload: React.FC<OrderInvoiceDownloadProps> = ({
                 <Text style={styles.text}>
                     <Text>
                         Date:{"               "}
-                        {new Date(
-                            order.paymentIntents.created * 1000
-                        ).toLocaleString()}
+                        {formateTime ? (
+                            <>{new Date(formateTime * 1000).toLocaleString()}</>
+                        ) : (
+                            <>
+                                {new Date(
+                                    order.paymentIntents.created * 1000
+                                ).toLocaleString()}
+                            </>
+                        )}
                     </Text>
                     {"\n"}
                     <Text>

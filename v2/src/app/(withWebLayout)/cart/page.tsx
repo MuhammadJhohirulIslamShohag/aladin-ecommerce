@@ -1,17 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import ShowingCarts from "@/components/Oraganisms/Cart/ShowingCarts";
 import OrderSummary from "@/components/Oraganisms/Checkout/OrderSummary";
 
 import { useStoreContext } from "@/contexts/StoreContextProvider";
-import { getUserInfo } from "@/store/user/users";
-import { CartType } from "@/types/cart.types";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
-import { getCarts } from "@/store/cart/cart";
 import { useAddCartMutation } from "@/redux/services/cart/cartApiService";
+import { getCarts } from "@/store/cart/cart";
+import { getUserInfo, removeUserInfo } from "@/store/user/users";
+import { CartType } from "@/types/cart.types";
+import { CustomFetchBaseQueryError } from "@/types/response";
 
 const Cart = () => {
     const user = getUserInfo();
@@ -43,7 +44,7 @@ const Cart = () => {
             ...loading,
             onlinePaymentCheckOut: true,
         });
-        if (user !== null) {
+        if (user && user?.user) {
             const result = await addCart(carts);
             // check if the request was successful
             if ("data" in result && result.data && result.data?.success) {
@@ -57,7 +58,17 @@ const Cart = () => {
                     ...loading,
                     onlinePaymentCheckOut: false,
                 });
+                if ("error" in result && result.error) {
+                    const customError =
+                        result.error as CustomFetchBaseQueryError;
+                    if (customError.data?.message.includes("jwt expired")) {
+                        removeUserInfo();
+                        router.push(`/auth/login?redirect=/cart`);
+                    }
+                }
             }
+        } else {
+            router.push(`/auth/login?redirect=/cart`);
         }
     };
 
@@ -66,7 +77,7 @@ const Cart = () => {
             ...loading,
             cashOnDelivery: true,
         });
-        if (user !== null) {
+        if (user && user?.user) {
             const result = await addCart(carts);
             // check if the request was successful
             if ("data" in result && result.data && result.data?.success) {
@@ -84,7 +95,21 @@ const Cart = () => {
                     ...loading,
                     cashOnDelivery: false,
                 });
+                if ("error" in result && result.error) {
+                    const customError =
+                        result.error as CustomFetchBaseQueryError;
+                    if (customError.data?.message.includes("jwt expired")) {
+                        removeUserInfo();
+                        router.push(`/auth/login?redirect=/cart`);
+                    }
+                }
             }
+        } else {
+            setLoading({
+                ...loading,
+                cashOnDelivery: false,
+            });
+            router.push(`/auth/login?redirect=/cart`);
         }
     };
 
