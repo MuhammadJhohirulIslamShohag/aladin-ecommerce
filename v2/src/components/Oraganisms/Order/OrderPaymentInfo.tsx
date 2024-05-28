@@ -11,9 +11,8 @@ const OrderPaymentInfo: React.FC<OrderPaymentInfoProps> = ({
     order,
     showStatus = true,
 }) => {
-    const { orderStatus } = order;
     const { id, amount, currency, created, payment_method_types, status } =
-        order.paymentIntents;
+        order?.paymentIntents;
 
     let formateTime;
     if (Math.ceil(Math.log(created + 1) / Math.LN10) >= 11) {
@@ -32,11 +31,11 @@ const OrderPaymentInfo: React.FC<OrderPaymentInfoProps> = ({
                     })}
                 </span>
                 {" / "}
-                <span>Currency: {currency.toUpperCase()}</span>
+                <span>Currency: {currency?.toUpperCase()}</span>
                 {" / "}
-                <span>Method: {payment_method_types[0]}</span>
+                <span>Method: {payment_method_types?.[0]}</span>
                 {" / "}
-                <span>Payment: {status.toUpperCase()}</span>
+                <span>Payment: {status?.toUpperCase()}</span>
                 {" / "}
                 <span>
                     Ordered On:{" "}
@@ -50,8 +49,8 @@ const OrderPaymentInfo: React.FC<OrderPaymentInfoProps> = ({
                 {showStatus && (
                     <>
                         {" / "}
-                        <span className="badge bg-success text-white">
-                            STATUS: {orderStatus}
+                        <span className="badge bg-success text-white capitalize">
+                            STATUS: {order?.trackingInfo?.title}
                         </span>
                     </>
                 )}

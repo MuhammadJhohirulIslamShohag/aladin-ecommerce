@@ -30,7 +30,8 @@ const UserAccountPage = () => {
 
     const handleProfileEditSubmit = async (data: IProfileFormValue) => {
         const result = await updateUser({
-            ...data,
+            id: userInfo?._id,
+            data: { ...data },
         });
 
         const updatedUser = {
@@ -93,7 +94,7 @@ const UserAccountPage = () => {
                                         About
                                     </p>
                                     <span className="text-black mt-1 inline-block">
-                                        {user?.about}
+                                        {userInfo?.about}
                                     </span>
                                 </li>
                             </ul>

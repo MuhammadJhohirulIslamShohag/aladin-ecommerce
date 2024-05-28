@@ -1,60 +1,30 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import React from "react";
+import {
+    UseFormRegister,
+    UseFormHandleSubmit,
+    FieldErrors,
+} from "react-hook-form";
 
 import RegisterInputGroup from "../../Molecules/Form/RegisterInputGroup";
 import { IShippingAddress } from "@/types/user.type";
-import { getUserInfo } from "@/store/user/users";
 
 interface ShippingAddressFormProps {
     loading: boolean;
     submitShippingAddress: (data: IShippingAddress) => Promise<void>;
+    register: UseFormRegister<IShippingAddress>;
+    handleSubmit: UseFormHandleSubmit<IShippingAddress, undefined>;
+    errors: FieldErrors<IShippingAddress>;
 }
 
 const ShippingAddressForm: React.FC<ShippingAddressFormProps> = ({
     loading,
     submitShippingAddress,
+    register,
+    handleSubmit,
+    errors,
 }) => {
-    const user = getUserInfo();
-    const address = user?.user?.shippingAddress;
-
-    const {
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors },
-    } = useForm<IShippingAddress>({
-        defaultValues: {
-            firstName: "",
-            lastName: "",
-            address1: "",
-            address2: "",
-            country: "",
-            city: "",
-            state: "",
-            postCode: "",
-            phoneNumber: "",
-        },
-    });
-
-    useEffect(() => {
-        if (address) {
-            reset({
-                firstName: address?.firstName,
-                lastName: address?.lastName,
-                address1: address?.address1,
-                address2: address?.address2,
-                country: address?.country,
-                city: address?.city,
-                state: address?.state,
-                postCode: address?.postCode,
-                phoneNumber: address?.phoneNumber,
-            });
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [reset]);
-
     return (
         <form
             onSubmit={handleSubmit(submitShippingAddress)}

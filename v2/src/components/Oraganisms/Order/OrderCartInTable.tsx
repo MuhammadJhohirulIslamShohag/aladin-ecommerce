@@ -5,6 +5,8 @@ import React from "react";
 import { IOrder } from "@/types/order.types";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 
+import PhotoViewProvider from "../../Molecules/Image/PhotoViewProvider";
+
 interface OrderCartInTableProps {
     order: IOrder;
 }
@@ -16,13 +18,13 @@ const OrderCartInTable = ({ order }: OrderCartInTableProps) => {
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th className="px-6 py-3" scope="col">
-                            Title
+                            Image
+                        </th>
+                        <th className="px-6 py-3" scope="col">
+                            Name
                         </th>
                         <th className="px-6 py-3" scope="col">
                             Price
-                        </th>
-                        <th className="px-6 py-3" scope="col">
-                            Color
                         </th>
                         <th className="px-6 py-3" scope="col">
                             Count
@@ -36,42 +38,38 @@ const OrderCartInTable = ({ order }: OrderCartInTableProps) => {
                     {order?.products &&
                         order?.products.map((item: any) => (
                             <tr
-                                key={item._id}
+                                key={item?._id}
                                 className="bg-white border-b hover:bg-gray-50 "
                             >
                                 <td
                                     scope="row"
                                     className="px-6 py-4 font-semibold text-gray-900 "
                                 >
-                                    {" "}
+                                    <PhotoViewProvider
+                                        imageURL={item?.product?.imageURLs?.[0]}
+                                        name={item?.product?.name}
+                                    />
+                                </td>
+                                <td
+                                    scope="row"
+                                    className="px-6 py-4 font-semibold text-gray-900 "
+                                >
                                     <span className="min-w-max flex">
-                                        {item.product?.title}
+                                        {item?.product?.name}
                                     </span>
                                 </td>
                                 <td
                                     scope="row"
                                     className="px-6 py-4 font-semibold text-gray-900 "
                                 >
-                                    {" "}
                                     <span className="min-w-max flex">
-                                        {item.product?.price}
-                                    </span>
-                                </td>
-
-                                <td
-                                    scope="row"
-                                    className="px-6 py-4 font-semibold text-gray-900 "
-                                >
-                                    {" "}
-                                    <span className="min-w-max flex">
-                                        {item?.color}
+                                        {item?.product?.price}
                                     </span>
                                 </td>
                                 <td
                                     scope="row"
                                     className="px-6 py-4 font-semibold text-gray-900 "
                                 >
-                                    {" "}
                                     <span className="min-w-max flex">
                                         {item?.count}
                                     </span>
@@ -80,8 +78,8 @@ const OrderCartInTable = ({ order }: OrderCartInTableProps) => {
                                     scope="row"
                                     className="px-6 py-4 font-semibold text-gray-900 "
                                 >
-                                    <span className="min-w-max flex">
-                                        {item.product?.shipping === "Yes" ? (
+                                    <span className="min-w-max flex items-center justify-center">
+                                        {order?.trackingInfo?.title === "delivered" ? (
                                             <AiOutlineCheckCircle
                                                 style={{ color: "green" }}
                                             />

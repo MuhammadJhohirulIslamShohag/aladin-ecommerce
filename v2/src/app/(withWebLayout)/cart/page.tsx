@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import ShowingCarts from "@/components/Oraganisms/Cart/ShowingCarts";
 import OrderSummary from "@/components/Oraganisms/Checkout/OrderSummary";
 
@@ -61,6 +60,7 @@ const Cart = () => {
             }
         }
     };
+
     const saveCashOrder = async () => {
         setLoading({
             ...loading,
@@ -87,13 +87,9 @@ const Cart = () => {
             }
         }
     };
+
     return (
         <>
-            <HeadSeo
-                title="Cart"
-                content="Aladin Industries Ltd. Providing reliable products since 2022"
-            />
-
             <div className="container mt-10 mb-28">
                 <div className="grid lg:grid-cols-12 lg:gap-5 grid-cols-1 gap-0">
                     {/* Showing Carts */}

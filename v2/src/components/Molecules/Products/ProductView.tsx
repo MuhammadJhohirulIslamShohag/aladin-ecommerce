@@ -34,7 +34,6 @@ const ProductView: React.FC<ProductViewProps> = ({
     const {
         name,
         imageURLs,
-        _id,
         averageRating,
         ratingLength,
         keyFeatures,

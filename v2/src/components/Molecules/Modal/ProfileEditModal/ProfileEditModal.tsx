@@ -3,12 +3,12 @@
 import CustomModal from "@/components/Atoms/Modal/CustomModal";
 import RegisterInputGroup from "../../Form/RegisterInputGroup";
 import FormTextAreaGroup from "../../Form/FormTextAreaGroup";
+import Label from "@/components/Atoms/Input/Label";
 
 import { useForm } from "react-hook-form";
 import { IProfileFormValue } from "@/types/auth.type";
 import { getUserInfo } from "@/store/user/users";
 import { useEffect } from "react";
-import Label from "@/components/Atoms/Input/Label";
 
 type ProfileEditModalProp = {
     title: string;
@@ -33,7 +33,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProp> = ({
         formState: { errors, isSubmitted },
     } = useForm<IProfileFormValue>({
         defaultValues: {
-            fullName: "",
+            name: "",
             about: "",
         },
     });
@@ -41,7 +41,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProp> = ({
     useEffect(() => {
         if (user) {
             reset({
-                fullName: user?.name,
+                name: user?.name,
                 about: user?.about,
             });
         }
@@ -86,10 +86,10 @@ const ProfileEditModal: React.FC<ProfileEditModalProp> = ({
                                 <div>
                                     <RegisterInputGroup
                                         register={register}
-                                        inputName={"fullName"}
+                                        inputName={"name"}
                                         labelName={"Full Name"}
                                         errorMessage="Please Enter Your Full Name"
-                                        errors={errors.fullName}
+                                        errors={errors.name}
                                         inputType={"text"}
                                         placeholder={
                                             "Please Enter Your Full Name"
@@ -98,7 +98,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProp> = ({
                                 </div>
                                 <div className="my-2">
                                     <Label name={"Email"} />
-                                    <div className="text-gray-800 text-sm rounded-lg  ring-0 block w-full pl-3 p-3 placeholder:text-[13px] placeholder-gray-600  border focus:outline-offset-0 focus:outline-0 bg-gray-300">
+                                    <div className="text-sm rounded-lg  ring-0 block w-full pl-3 p-3 placeholder:text-[13px] placeholder-gray-600  border focus:outline-offset-0 focus:outline-0 bg-gray-300 text-primary">
                                         {user?.email}
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProp> = ({
 
                                 <button
                                     type="submit"
-                                    className="border-2 px-5 py-2 border-primary text-white bg-primary hover:opacity-80 font-semibold hover:text-white  rounded-md transition duration-200 w-full max-w-[450px] disabled:cursor-wait"
+                                    className="border-2 px-4 py-2 border-primary text-white bg-primary hover:opacity-80 font-semibold hover:text-white  rounded-md transition duration-200 disabled:cursor-wait"
                                     disabled={isLoading}
                                 >
                                     {isLoading ? "Loading" : "Submit"}

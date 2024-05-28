@@ -7,6 +7,11 @@ import ShippingAddressForm from "../../Form/ShippingAddressForm";
 
 import { CartType } from "@/types/cart.types";
 import { IShippingAddress } from "@/types/user.type";
+import {
+    FieldErrors,
+    UseFormHandleSubmit,
+    UseFormRegister,
+} from "react-hook-form";
 
 interface DeliveryAddressProps {
     submitShippingAddress: (data: IShippingAddress) => Promise<void>;
@@ -16,6 +21,9 @@ interface DeliveryAddressProps {
     setCouponName: React.Dispatch<React.SetStateAction<string>>;
     carts: CartType[];
     couponLoading: boolean;
+    register: UseFormRegister<IShippingAddress>;
+    handleSubmit: UseFormHandleSubmit<IShippingAddress, undefined>;
+    errors: FieldErrors<IShippingAddress>;
 }
 
 const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
@@ -26,6 +34,9 @@ const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
     setCouponName,
     carts,
     couponLoading,
+    register,
+    handleSubmit,
+    errors,
 }) => {
     return (
         <div className="lg:col-span-7 col-span-0">
@@ -36,6 +47,9 @@ const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
             {/* Shipping Address Form*/}
             <ShippingAddressForm
                 loading={false}
+                register={register}
+                handleSubmit={handleSubmit}
+                errors={errors}
                 submitShippingAddress={submitShippingAddress}
             />
             <hr className="my-4" />

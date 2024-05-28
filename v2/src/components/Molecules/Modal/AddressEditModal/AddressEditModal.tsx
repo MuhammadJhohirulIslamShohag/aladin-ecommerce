@@ -1,9 +1,14 @@
 "use client";
 
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+
 import CustomModal from "@/components/Atoms/Modal/CustomModal";
 import ShippingAddressForm from "@/components/Oraganisms/Form/ShippingAddressForm";
 
 import { IAddressFormValue } from "@/types/auth.type";
+import { getUserInfo } from "@/store/user/users";
+import { IShippingAddress } from "@/types/user.type";
 
 type AddressEditModalProp = {
     title: string;
@@ -18,6 +23,45 @@ const AddressEditModal: React.FC<AddressEditModalProp> = ({
     title,
     loading,
 }) => {
+    const user = getUserInfo();
+    const address = user?.user?.shippingAddress;
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<IShippingAddress>({
+        defaultValues: {
+            firstName: "",
+            lastName: "",
+            address1: "",
+            address2: "",
+            country: "",
+            city: "",
+            state: "",
+            postCode: "",
+            phoneNumber: "",
+        },
+    });
+
+    useEffect(() => {
+        if (address) {
+            reset({
+                firstName: address?.firstName,
+                lastName: address?.lastName,
+                address1: address?.address1,
+                address2: address?.address2,
+                country: address?.country,
+                city: address?.city,
+                state: address?.state,
+                postCode: address?.postCode,
+                phoneNumber: address?.phoneNumber,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [reset]);
+
     return (
         <>
             <CustomModal onClose={() => closeModal()}>
@@ -53,6 +97,9 @@ const AddressEditModal: React.FC<AddressEditModalProp> = ({
                             <ShippingAddressForm
                                 loading={loading}
                                 submitShippingAddress={handleAddressEditSubmit}
+                                handleSubmit={handleSubmit}
+                                errors={errors}
+                                register={register}
                             />
                         </div>
                     </div>

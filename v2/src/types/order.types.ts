@@ -6,8 +6,19 @@ export interface IOrder {
     products: {
         product: IProduct;
         count: number;
+        price: number;
     }[];
-    paymentIntents: any;
+    paymentIntents: { [key: string]: any };
+    trackingInfo: {
+        title: string;
+        courier: string;
+        trackingNumber: string;
+    };
+    orderHistory: {
+        status: string;
+        timestamp: string;
+        isDone: boolean;
+    };
     orderStatus: string;
     orderedBy: IUser;
     paymentBy?: string;

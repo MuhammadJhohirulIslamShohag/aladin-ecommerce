@@ -1,7 +1,8 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
 import toast from "react-hot-toast";
 
 import DeliveryAddress from "@/components/Oraganisms/Checkout/Payment/DeliveryAddress";
@@ -18,11 +19,11 @@ import {
     useCashOrderDeliveryMutation,
     useGetTotalPriceAfterDiscountMutation,
 } from "@/redux/services/order/orderApiService";
+import { useUpdateUserMutation } from "@/redux/services/user/userApiService";
 import { getCarts, removeCart } from "@/store/cart/cart";
+import { storeShippingAddress } from "@/store/user/shippingAddress";
 import { getUserInfo, storeUserInfo } from "@/store/user/users";
 import { IShippingAddress } from "@/types/user.type";
-import { useUpdateUserMutation } from "@/redux/services/user/userApiService";
-import { storeShippingAddress } from "@/store/user/shippingAddress";
 import { checkEveryPropertiesHasValue } from "@/utils/checkObjectProValues";
 
 const Checkout = () => {
@@ -42,10 +43,6 @@ const Checkout = () => {
     const carts = getCarts();
     const router = useRouter();
 
-    const isAddressSave = checkEveryPropertiesHasValue(
-        user?.user?.shippingAddress
-    );
-
     const { state, dispatch } = useStoreContext();
     const { isCashOnDelivery, isCouped } = state;
 
@@ -58,6 +55,31 @@ const Checkout = () => {
     const [updateUser] = useUpdateUserMutation();
     const [getTotalPriceAfterDiscount] =
         useGetTotalPriceAfterDiscountMutation();
+
+    const address = user?.user?.shippingAddress;
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+        watch,
+    } = useForm<IShippingAddress>({
+        defaultValues: {
+            firstName: "",
+            lastName: "",
+            address1: "",
+            address2: "",
+            country: "",
+            city: "",
+            state: "",
+            postCode: "",
+            phoneNumber: "",
+        },
+    });
+
+    const shippingAddress = watch();
+    const isAddressSave = checkEveryPropertiesHasValue(shippingAddress as any);
 
     const handleEmptyCart = async () => {
         // remove cart from database
@@ -184,6 +206,7 @@ const Checkout = () => {
             const result = await cashOrderDelivery({
                 isCashOnDelivery,
                 isCouped,
+                billingAddress: user?.user?.shippingAddress,
             });
 
             // check if the request was successful
@@ -208,6 +231,7 @@ const Checkout = () => {
                     ...loading,
                     processingOrderLoading: false,
                 });
+                removeCart();
                 setTimeout(() => {
                     router.push("/user/history");
                 }, 300);
@@ -220,6 +244,24 @@ const Checkout = () => {
             }
         }
     };
+
+    useEffect(() => {
+        if (address) {
+            reset({
+                firstName: address?.firstName,
+                lastName: address?.lastName,
+                address1: address?.address1,
+                address2: address?.address2,
+                country: address?.country,
+                city: address?.city,
+                state: address?.state,
+                postCode: address?.postCode,
+                phoneNumber: address?.phoneNumber,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [reset]);
+
     return (
         <>
             <div className="container mt-10 px-40 pb-24">
@@ -231,6 +273,9 @@ const Checkout = () => {
                         couponName={couponName}
                         setCouponName={setCouponName}
                         carts={carts}
+                        register={register}
+                        handleSubmit={handleSubmit}
+                        errors={errors}
                         couponLoading={loading.couponLoading}
                     />
 

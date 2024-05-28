@@ -16,7 +16,7 @@ const History = () => {
 
     const queryParams = new URLSearchParams({
         orderedBy: user?.user?._id,
-        populate:"products.product,orderedBy"
+        populate: "products.product,orderedBy",
     });
 
     // redux api call
@@ -29,11 +29,11 @@ const History = () => {
     const showDownloadLink = (order: IOrder) => {
         return (
             <div className="mt-2">
-                <div className="">
+                <div>
                     <PDFDownloadLink
                         document={<OrderInvoiceDownload order={order} />}
                         fileName="invoice.pdf"
-                        className="btn btn-sm btn-block btn-outline-info text-gray-900 hover:text-white"
+                        className=" text-primary bg-transparent font-semibold hover:text-success  transition duration-200"
                         style={{ width: "100%" }}
                     >
                         DownLoad PDF
@@ -57,7 +57,7 @@ const History = () => {
                         <hr />
                         {ordersData &&
                             ordersData?.length > 0 &&
-                            ordersData?.reverse().map((order: IOrder) => (
+                            ordersData?.map((order: IOrder) => (
                                 <div
                                     className="mx-5 my-3 p-3 card"
                                     key={order?._id}

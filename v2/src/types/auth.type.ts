@@ -31,7 +31,7 @@ export interface IUpdatePasswordFormValue {
 }
 export interface IProfileFormValue {
     username: string;
-    fullName: string;
+    name: string;
     email: string;
     about: string;
 }
@@ -39,7 +39,6 @@ export interface IProfileFormValue {
 export interface IAddressFormValue {
     firstName: string;
     lastName: string;
-    company: string;
     address1: string;
     address2: string;
     city: string;
