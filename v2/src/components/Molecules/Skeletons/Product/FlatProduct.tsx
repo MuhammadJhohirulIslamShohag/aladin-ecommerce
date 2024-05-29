@@ -4,7 +4,7 @@ const FlatProduct = () => {
     return (
         <div className="w-full animate-pulse h-[186px] py-1 grid grid-cols-2 gap-3">
             <div className="h-full bg-success/20">
-                <div className="aspect-video bg-primary/20 rounded-md" />
+                <div className="aspect-video  rounded-md" />
             </div>
 
             <div className="flex flex-col justify-between py-3">

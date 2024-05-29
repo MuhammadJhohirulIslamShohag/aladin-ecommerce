@@ -9,7 +9,7 @@ const FlashDeal = () => {
                 </div>
             </div>
             <div className="relative py-1 h-[255px] bg-success/20">
-                <div className="aspect-video bg-primary/20 rounded-md " />
+                <div className="aspect-video rounded-md " />
             </div>
 
             <div className="mt-3">

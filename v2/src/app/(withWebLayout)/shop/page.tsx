@@ -10,12 +10,12 @@ import ShowRatting from "@/components/Molecules/FilterMenu/ShowRatting";
 import ShowShipping from "@/components/Molecules/FilterMenu/ShowShipping";
 import ShowSubCategory from "@/components/Molecules/FilterMenu/ShowSubCategory";
 import ShowRange from "@/components/Molecules/ShowRange";
-import Skeleton from "@/components/Molecules/Skeleton/Skeleton";
 import FilterMenu from "@/components/Oraganisms/FilterMenu/FilterMenu";
 import FilterMobileMenu from "@/components/Oraganisms/FilterMenu/FilterMobileMenu/FilterMobileMenu";
 import SortingMenu from "@/components/Oraganisms/SortingMenu";
 import Pagination from "@/components/Molecules/Pagination/Pagination";
 import ShopProducts from "@/components/Oraganisms/Products/ShopProducts";
+import ShopProductsSkeleton from "@/components/Oraganisms/Skeletons/Products/ShopProductsSkeleton";
 
 import { useStoreContext } from "@/contexts/StoreContextProvider";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
@@ -429,7 +429,7 @@ const Shop = () => {
                                                     : `md:grid-cols-2 grid-cols-1`
                                             }`}
                                         >
-                                            <Skeleton numbers={6} />
+                                            <ShopProductsSkeleton />
                                         </div>
                                     ) : products && products.length < 1 ? (
                                         <p className="text-center text-xl text-primary">

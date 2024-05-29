@@ -2,14 +2,12 @@ import React from "react";
 
 const Product = () => {
     return (
-        <div className="w-full animate-pulse h-[418px] py-2">
-            <div className="h-[20px]">
-                <p className="bg-success/20 text-slate-200 text-[8px] w-[60%]">
-                    Loading...
-                </p>
+        <div className="w-full animate-pulse h-[390px] py-2">
+            <div className="h-[16px] bg-success/20 w-[60%] text-center mb-1">
+                <p className=" text-slate-200 text-[8px]">Loading...</p>
             </div>
-            <div className="relative py-1 h-[255px] bg-success/20">
-                <div className="aspect-video bg-primary/20 rounded-md " />
+            <div className="relative py-1 h-[270px] bg-success/20">
+                <div className="aspect-video  rounded-md " />
             </div>
 
             <div className="mt-3">
