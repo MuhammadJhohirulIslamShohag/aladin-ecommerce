@@ -6,6 +6,7 @@ import useCheckUser from "@/hooks/useCheckUser";
 import OrderCartInTable from "@/components/Oraganisms/Order/OrderCartInTable";
 import OrderInvoiceDownload from "@/components/Oraganisms/Order/OrderInvoiceDownload";
 import OrderPaymentInfo from "@/components/Oraganisms/Order/OrderPaymentInfo";
+import OrderHistories from "@/components/Oraganisms/Skeletons/User/OrderHistory/OrderHistories";
 
 // import useCheckUser from "@/hooks/useCheckUser";
 import { useGetOrdersQuery } from "@/redux/services/order/orderApiService";
@@ -48,7 +49,7 @@ const History = () => {
         <>
             <div>
                 {isLoading ? (
-                    <h4 className="text-center">Loading...</h4>
+                    <OrderHistories />
                 ) : (
                     <>
                         <h4 className="text-center text-lg text-green-400 mt-2 mb-0">

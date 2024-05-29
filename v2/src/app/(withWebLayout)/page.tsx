@@ -5,10 +5,10 @@ import { getCategories } from "@/api/category";
 import { getProductsByFilter } from "@/api/products";
 import { getAllSubCategories } from "@/api/sub-categories";
 
-import Loader from "@/components/Molecules/Loader/Loader";
 import Advertise from "@/components/Oraganisms/Advertise/Advertise";
 import Blogs from "@/components/Oraganisms/Blogs";
 import Categories from "@/components/Oraganisms/Categories";
+import FeaturedSubCategories from "@/components/Oraganisms/Home/FeaturedSubCategories";
 import FlashDeals from "@/components/Oraganisms/Home/FlashDeals";
 import FollowUsSocial from "@/components/Oraganisms/Home/FollowUsSocial";
 import FunFactArea from "@/components/Oraganisms/Home/FunFactArea";
@@ -18,7 +18,14 @@ import FeaturedProducts from "@/components/Oraganisms/Products/FeaturedProducts"
 import NewArrivals from "@/components/Oraganisms/Products/NewArrivals";
 import TopProducts from "@/components/Oraganisms/Products/TopProducts";
 import Services from "@/components/Oraganisms/Services";
-import FeaturedSubCategories from "@/components/Oraganisms/Home/FeaturedSubCategories";
+import HeroSkeleton from "@/components/Oraganisms/Skeletons/Home/HeroSkeleton";
+import CategoriesSkeleton from "@/components/Oraganisms/Skeletons/Home/CategoriesSkeleton";
+import FlashDealsSkeleton from "@/components/Oraganisms/Skeletons/Home/FlashDealsSkeleton";
+import ProductsSkeleton from "@/components/Oraganisms/Skeletons/Products/Products";
+import TopProductsSkeleton from "@/components/Oraganisms/Skeletons/Home/TopProductsSkeleton";
+import NewArrivalsSkeleton from "@/components/Oraganisms/Skeletons/Home/NewArrivalsSkeleton";
+import CategoryBaseProducts from "@/components/Oraganisms/Skeletons/Home/CategoryBaseProducts";
+import SubCategoriesSkeleton from "@/components/Oraganisms/Skeletons/Home/SubCategoriesSkeleton";
 
 const Home = async () => {
     // Initiate both requests in parallel
@@ -37,35 +44,35 @@ const Home = async () => {
 
     return (
         <>
-            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+            <Suspense fallback={<HeroSkeleton />}>
                 <Hero products={products.data?.data} />
             </Suspense>
 
             <Services />
 
-            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+            <Suspense fallback={<CategoriesSkeleton />}>
                 <Categories data={categories.data?.data} />
             </Suspense>
 
-            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+            <Suspense fallback={<FlashDealsSkeleton />}>
                 <FlashDeals products={products?.data?.data} />
             </Suspense>
 
-            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+            <Suspense fallback={<ProductsSkeleton />}>
                 <FeaturedProducts products={products?.data?.data} />
             </Suspense>
 
             <Advertise />
 
-            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+            <Suspense fallback={<TopProductsSkeleton />}>
                 <TopProducts products={products?.data?.data} />
             </Suspense>
 
-            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+            <Suspense fallback={<NewArrivalsSkeleton />}>
                 <NewArrivals products={products?.data?.data} />
             </Suspense>
 
-            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+            <Suspense fallback={<CategoryBaseProducts />}>
                 <SmallProductSlider
                     title="Best Food"
                     products={products?.data?.data}
@@ -75,7 +82,7 @@ const Home = async () => {
 
             <FunFactArea />
 
-            <Suspense fallback={<Loader height={"h-[360px]"} />}>
+            <Suspense fallback={<CategoryBaseProducts />}>
                 <SmallProductSlider
                     title="Best Clothes"
                     products={products?.data?.data}
@@ -83,13 +90,15 @@ const Home = async () => {
                 />
             </Suspense>
 
-            <FeaturedSubCategories />
+            <Suspense fallback={<SubCategoriesSkeleton />}>
+                <FeaturedSubCategories />
+            </Suspense>
 
-            <Suspense fallback={<Loader height={"h-[450px]"} />}>
+            <Suspense fallback={<ProductsSkeleton />}>
                 <Blogs blogs={blogs?.data?.data} />
             </Suspense>
-            
-            <Suspense fallback={<Loader height={"h-[450px]"} />}>
+
+            <Suspense fallback={<SubCategoriesSkeleton />}>
                 <FollowUsSocial products={products?.data?.data} />
             </Suspense>
         </>
