@@ -7,8 +7,7 @@ import { MdLogout } from "react-icons/md";
 
 import Notifications from "./Notifications/Notifications";
 
-import { useAppDispatch, useAppSelector } from "../../../redux/hook";
-import { logOut } from "../../../redux/features/user/userSlice";
+import { getUserInfo, removeUserInfo } from "../../../store/user/users";
 
 type NavbarPropsType = {
     openSideBar: boolean;
@@ -19,14 +18,14 @@ const Navbar = ({ openSideBar, setOpenSideBar }: NavbarPropsType) => {
     const [showNotification, setShowNotification] = useState(false);
     const [showProfile, setShowProfile] = useState<boolean>(false);
 
-    const user = useAppSelector((state) => state.user.user);
+    const userInfo = getUserInfo();
+    const user = userInfo?.user;
 
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const handleLogOut = () => {
-        dispatch(logOut());
-        navigate("/");
+        removeUserInfo();
+        navigate("/login");
     };
 
     return (

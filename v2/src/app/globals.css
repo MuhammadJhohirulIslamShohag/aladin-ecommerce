@@ -12,6 +12,10 @@
     background-color: #0f172a !important;
 }
 
+.custom-toaster {
+    z-index: 99999999999 !important;
+}
+
 /* Start React Select */
 .select-placeholder-text {
     color: #d1d5db !important;

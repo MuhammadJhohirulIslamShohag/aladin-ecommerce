@@ -1,3 +1,4 @@
+
 import Login from "../../pages/Authentication/Login/Login";
 import Register from "../../pages/Authentication/Register/Register";
 import CouponPage from "../../pages/Coupon/Coupon";
@@ -21,7 +22,7 @@ export const allCommonRoutes = {
     ],
     single: [
         {
-            path: "/",
+            path: "/login",
             element: <Login />,
         },
         {

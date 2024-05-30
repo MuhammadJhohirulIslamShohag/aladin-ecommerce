@@ -1,30 +1,26 @@
-import { IUser } from "../../../types/user.type";
 import { baseApi } from "../../api/baseApi";
 
-const userApi = baseApi.injectEndpoints({
+const userApiService = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        createUser: build.mutation({
-            query: (payload: IUser) => ({
-                url: "auth/signup",
-                method: "POST",
-                body: payload,
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                },
+        getSingleUser: build.query({
+            query: ({ id }) => ({
+                url: `admins/${id}`,
             }),
+            providesTags: ["Users"],
         }),
-        loginUser: build.mutation({
-            query: (payload: Pick<IUser, "email" | "password">) => ({
-                url: "auth/login",
-                method: "POST",
-                body: payload,
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                },
+        updateUser: build.mutation({
+            query: ({data, id}) => ({
+                url: `admins/${id}`,
+                method: "PATCH",
+                body: data
             }),
+            invalidatesTags: ["Users"],
         }),
     }),
     overrideExisting: false,
 });
 
-export const { useCreateUserMutation, useLoginUserMutation } = userApi;
+export const {
+    useGetSingleUserQuery,
+    useUpdateUserMutation,
+} = userApiService;

@@ -18,6 +18,6 @@ export const getUserInfo = () => {
     }
 };
 
-export const removeUserInfo = (key: string) => {
-    return localStorage.removeItem(key);
+export const removeUserInfo = () => {
+    return localStorage.removeItem(userKey);
 };

@@ -4,42 +4,42 @@ const authApiService = baseApi.injectEndpoints({
     endpoints: (build) => ({
         register: build.mutation({
             query: (payload) => ({
-                url: "auth/register",
+                url: "admins/register",
                 method: "POST",
                 body: payload,
             }),
         }),
         login: build.mutation({
             query: (payload) => ({
-                url: `auth/login`,
+                url: `admins/login`,
                 method: "POST",
                 body: payload,
             }),
         }),
         forgotPassword: build.mutation({
             query: (payload) => ({
-                url: `auth/forgot-password`,
+                url: `admins/forgot-password`,
                 method: "PATCH",
                 body: payload,
             }),
         }),
         changePassword: build.mutation({
             query: (payload) => ({
-                url: `auth/change-password`,
+                url: `admins/change-password`,
                 method: "PATCH",
                 body: payload,
             }),
         }),
         updateProfile: build.mutation({
             query: ({ id, data }) => ({
-                url: `users/${id}`,
+                url: `admins/${id}`,
                 method: "PATCH",
                 body: data,
             }),
         }),
         refreshToken: build.mutation({
             query: (payload) => ({
-                url: `auth/refresh-token`,
+                url: `admins/refresh-token`,
                 method: "POST",
                 body: payload,
             }),

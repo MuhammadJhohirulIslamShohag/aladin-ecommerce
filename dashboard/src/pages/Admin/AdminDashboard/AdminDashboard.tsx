@@ -9,7 +9,7 @@ import RecentOrder from "../../../components/shared/Dashboard/RecentOrder/Recent
 import RecentProduct from "../../../components/shared/Dashboard/RecentProduct/RecentProducts";
 import RecentUsers from "../../../components/shared/Dashboard/RecentUsers/RecentUsers";
 
-const Dashboard = () => {
+const AdminDashboard = () => {
     return (
         <>
             <div>
@@ -69,4 +69,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default AdminDashboard;

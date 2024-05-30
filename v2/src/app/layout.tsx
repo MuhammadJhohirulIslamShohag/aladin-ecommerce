@@ -1,9 +1,9 @@
-import "./globals.css";
+import StoreContextProvider from "@/contexts/StoreContextProvider";
+import ReduxProvider from "@/lib/Providers/ReduxProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import ReduxProvider from "@/lib/Providers/ReduxProvider";
-import StoreContextProvider from "@/contexts/StoreContextProvider";
 import { Toaster } from "react-hot-toast";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +20,12 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={"bg-[#F8F8FF]"}>
-                <Toaster position="top-center" />
+                <Toaster
+                    position="top-center"
+                    containerStyle={{
+                        zIndex: 9999999999999
+                    }}
+                />
                 <StoreContextProvider>
                     <ReduxProvider>{children}</ReduxProvider>
                 </StoreContextProvider>

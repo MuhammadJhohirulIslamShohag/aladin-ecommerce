@@ -28,12 +28,6 @@ export interface ForgotPasswordFormValues {
     otp: string;
 }
 
-export interface ResetPasswordFormValues {
-    otp: string;
-    password: string;
-    confirmPassword: string;
-}
-
 export interface IUpdatePasswordFormValue {
     oldPassword: string;
     newPassword: string;

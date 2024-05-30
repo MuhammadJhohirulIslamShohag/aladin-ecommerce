@@ -6,24 +6,22 @@ import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
 import LeftAuth from "@/components/Molecules/Auth/LeftAuth";
-import LoginForm from "@/components/Oraganisms/Form/LoginForm";
-import ForgotPasswordForm from "@/components/Oraganisms/Form/ForgotPasswordForm";
-import ResendOTPForm from "@/components/Oraganisms/Form/ResendOTPForm";
 import AuthFormFooter from "@/components/Molecules/Auth/AuthFormFooter";
+import LoginForm from "@/components/Oraganisms/Form/Auth/LoginForm";
+import OTPSendForgotPassForm from "@/components/Oraganisms/Form/Auth/ForgotPasswordForm/OTPSendForgotPassForm";
 
 import { useLoginMutation } from "@/redux/services/auth/authApiService";
 import { getUserInfo, storeUserInfo } from "@/store/user/users";
 import { LoginFormValues } from "@/types/auth.type";
 
 const Login = () => {
-    const [login, { isLoading }] = useLoginMutation();
     const [openForgotPasswordModal, setOpenForgotPasswordModal] =
-        useState(false);
-    const [openResendOTPModal, setOpenResendOTPModal] = useState(false);
-
+    useState(false);
+    
     const user = getUserInfo();
-
     const router = useRouter();
+
+    const [login, { isLoading }] = useLoginMutation();
 
     const searchParams = useSearchParams();
     const search = searchParams.get("redirect");
@@ -84,15 +82,9 @@ const Login = () => {
             </div>
 
             {openForgotPasswordModal && (
-                <ForgotPasswordForm
-                    openForgotPasswordModal={openForgotPasswordModal}
-                    setOpenForgotPasswordModal={setOpenForgotPasswordModal}
-                />
-            )}
-            {openResendOTPModal && (
-                <ResendOTPForm
-                    openResendOTPModal={openResendOTPModal}
-                    setOpenResendOTPModal={setOpenResendOTPModal}
+                <OTPSendForgotPassForm
+                    isModalOpen={openForgotPasswordModal}
+                    setIsModalOpen={setOpenForgotPasswordModal}
                 />
             )}
         </Suspense>
