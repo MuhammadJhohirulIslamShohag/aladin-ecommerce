@@ -39,6 +39,14 @@ const orderApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["Orders"],
         }),
+        updateOrderStatus: build.mutation({
+            query: (payload) => ({
+                url: `orders/order-tracking-status/${payload?.id}`,
+                method: "PATCH",
+                body: payload?.data,
+            }),
+            invalidatesTags: ["Orders"],
+        }),
     }),
     overrideExisting: false,
 });
@@ -49,4 +57,5 @@ export const {
     useGetOrderQuery,
     useRemovedOrderMutation,
     useUpdateOrderMutation,
+    useUpdateOrderStatusMutation,
 } = orderApi;

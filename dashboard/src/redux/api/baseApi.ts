@@ -30,5 +30,6 @@ export const baseApi = createApi({
         "Coupon",
         "Orders",
         "Dashboard",
+        "Admins",
     ],
 });

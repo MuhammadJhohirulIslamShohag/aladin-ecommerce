@@ -3,7 +3,6 @@ import { Outlet } from "react-router-dom";
 
 import Navbar from "../../components/shared/Navbar/Navbar";
 import SidebarList from "../../components/shared/Sidebar/SidebarList/SidebarList";
-import Footer from "../../components/shared/Footer/Footer";
 
 const MainLayout = () => {
     const [openSideBar, setOpenSideBar] = useState<boolean>(true);
@@ -45,7 +44,6 @@ const MainLayout = () => {
                 <div className={`px-5 py-5 `}>
                     <Outlet />
                 </div>
-                <Footer />
             </section>
         </>
     );

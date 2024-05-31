@@ -8,9 +8,30 @@ import CategoriesPage from "../../pages/Admin/Category/Categories";
 import ColorPage from "../../pages/Admin/Color/Color";
 import SizePage from "../../pages/Admin/Size/Size";
 import SubCategoryPage from "../../pages/Admin/SubCategory/SubCategory";
+import AdminDashboard from "../../pages/Admin/AdminDashboard/AdminDashboard";
+import SellerDashboard from "../../pages/Seller/SellerDashboard/SellerDashboard";
 
+import { getUserInfo } from "../../store/user/users";
+import { USER_ROLES } from "../../constants/role";
+import RoleBasedPrivateRouter from "../ProtectRoute/RoleBasedPrivateRouter";
+
+const user = getUserInfo();
+const userInfo = user?.user;
 export const allCommonRoutes = {
     children: [
+        {
+            path: "/",
+            element:
+                userInfo?.role === USER_ROLES.admin ? (
+                    <RoleBasedPrivateRouter role={USER_ROLES.admin}>
+                        <AdminDashboard />
+                    </RoleBasedPrivateRouter>
+                ) : (
+                    <RoleBasedPrivateRouter role={USER_ROLES.seller}>
+                        <SellerDashboard />
+                    </RoleBasedPrivateRouter>
+                ),
+        },
         {
             path: "/products",
             element: <ProductPage />,
@@ -24,23 +45,23 @@ export const allCommonRoutes = {
             element: <CouponPage />,
         },
         {
-            path: "sizes",
+            path: "/sizes",
             element: <SizePage />,
         },
         {
-            path: "sub-categories",
+            path: "/sub-categories",
             element: <SubCategoryPage />,
         },
         {
-            path: "brands",
+            path: "/brands",
             element: <BrandPage />,
         },
         {
-            path: "categories",
+            path: "/categories",
             element: <CategoriesPage />,
         },
         {
-            path: "colors",
+            path: "/colors",
             element: <ColorPage />,
         },
     ],

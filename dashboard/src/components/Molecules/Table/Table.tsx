@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import AntdCheckBox from "../../Atoms/Form/AntdCheckBox";
 import Empty from "../../Atoms/EmptyData/Empty";
+import TableSkeleton from "../Skeletons/TableSkeleton/TableSkeleton";
 
 interface Column {
     name: string;
@@ -70,10 +71,6 @@ const Table: React.FC<TableProps> = ({
             handleSelectedRowItem();
         }
     }, [selectedRow, handleSelectedRowItem]);
-
-    if (isLoading) {
-        return <h2>Loading....</h2>;
-    }
 
     if (isError) {
         return <div>Something went wrong</div>;
@@ -171,11 +168,15 @@ const Table: React.FC<TableProps> = ({
         content = (
             <tr className={`text-gray-600 text-center`}>
                 <td className="py-24 text-xl" colSpan={numberOfColumns}>
-                    <Empty/>
+                    <Empty />
                 </td>
             </tr>
-           
         );
+    }
+    // check if data not available
+    if (isLoading) {
+        const numberOfColumns = columns?.length + 1;
+        content = <TableSkeleton rowLength={5} colLength={numberOfColumns} />;
     }
 
     return (

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -8,24 +8,15 @@ import OTPSendForgotPassForm from "../../../components/Organisms/Form/Auth/Forgo
 import LoginForm from "../../../components/Organisms/Form/Auth/LoginForm";
 
 import { useLoginMutation } from "../../../redux/services/auth/authApiService";
-import { getUserInfo, storeUserInfo } from "../../../store/user/users";
+import { storeUserInfo } from "../../../store/user/users";
 import { LoginFormValues } from "../../../types/auth.type";
 
 const Login = () => {
     const [openForgotPasswordModal, setOpenForgotPasswordModal] =
         useState(false);
-
-    const user = getUserInfo();
     const router = useNavigate();
 
     const [login, { isLoading }] = useLoginMutation();
-
-    useEffect(() => {
-        if (user?.user) {
-            router("/");
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user]);
 
     const handleLogin = async (data: LoginFormValues) => {
         const result = await login({ ...data });

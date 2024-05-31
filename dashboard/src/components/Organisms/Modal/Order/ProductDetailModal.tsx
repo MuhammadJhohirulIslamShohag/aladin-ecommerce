@@ -1,6 +1,7 @@
-import { OrderProductType } from "../../../../types/product.type";
 import AntdModal from "../../../Atoms/Modal/AntdModal";
 import AntdImage from "../../../Molecules/Image/Image";
+
+import { OrderProductType } from "../../../../types/product.type";
 
 type ProductDetailModalProps = {
     isModalOpen: boolean;
@@ -37,7 +38,7 @@ const ProductDetailModal = ({
                         <tr className="text-sm">
                             {[
                                 "Images",
-                                "Count"
+                                "Count",
                                 "Name",
                                 "Price",
                                 "Quantity",
@@ -102,7 +103,7 @@ const ProductDetailModal = ({
                                 >
                                     <div className={`flex justify-center`}>
                                         <span className="text-nowrap">
-                                            {data?.price}
+                                            {data?.product?.name}
                                         </span>
                                     </div>
                                 </td>
@@ -111,10 +112,11 @@ const ProductDetailModal = ({
                                 >
                                     <div className={`flex justify-center`}>
                                         <span className="text-nowrap">
-                                            {data?.product?.name}
+                                            {data?.price}
                                         </span>
                                     </div>
                                 </td>
+
                                 <td
                                     className={`px-3 py-2.5 border-t border-t-success/20 whitespace-normal align-middle `}
                                 >
@@ -150,7 +152,7 @@ const ProductDetailModal = ({
                                             {data?.product?.brand?.name}
                                         </span>
                                     </div>
-                                </td>  
+                                </td>
                             </tr>
                         ))}
                     </tbody>

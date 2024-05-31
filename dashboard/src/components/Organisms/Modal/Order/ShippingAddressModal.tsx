@@ -1,7 +1,7 @@
 import { IShippingAddress } from "../../../../types/user.type";
 import AntdModal from "../../../Atoms/Modal/AntdModal";
 
-type CreateSizeFormType = {
+type ShippingAddressModalType = {
     isModalOpen: boolean;
     setIsModalOpen: React.Dispatch<
         React.SetStateAction<{
@@ -16,7 +16,7 @@ const ShippingAddressModal = ({
     isModalOpen,
     setIsModalOpen,
     shippingAddressData,
-}: CreateSizeFormType) => {
+}: ShippingAddressModalType) => {
     return (
         <AntdModal
             title={shippingAddressData?.modalName || ""}

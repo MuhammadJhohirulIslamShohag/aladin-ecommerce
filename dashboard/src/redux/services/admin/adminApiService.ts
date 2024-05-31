@@ -1,42 +1,42 @@
 import { baseApi } from "../../api/baseApi";
 
-const userApiService = baseApi.injectEndpoints({
+const adminApiService = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        getSingleUser: build.query({
+        getSingleAdmin: build.query({
             query: ({ id }) => ({
                 url: `admins/${id}`,
             }),
-            providesTags: ["Users"],
+            providesTags: ["Admins"],
         }),
-        getAllUsers: build.query({
+        getAllAdmins: build.query({
             query: () => ({
-                url: `users`,
+                url: `Admins`,
             }),
-            providesTags: ["Users"],
+            providesTags: ["Admins"],
         }),
-        updateUser: build.mutation({
+        updateAdmin: build.mutation({
             query: ({ data, id }) => ({
                 url: `admins/${id}`,
                 method: "PATCH",
                 body: data,
             }),
-            invalidatesTags: ["Users"],
+            invalidatesTags: ["Admins"],
         }),
-        deleteUser: build.mutation({
+        deleteAdmin: build.mutation({
             query: ({ data, id }) => ({
-                url: `users/${id}`,
+                url: `admins/${id}`,
                 method: "DELETE",
                 body: data,
             }),
-            invalidatesTags: ["Users"],
+            invalidatesTags: ["Admins"],
         }),
     }),
     overrideExisting: false,
 });
 
 export const {
-    useGetSingleUserQuery,
-    useUpdateUserMutation,
-    useGetAllUsersQuery,
-    useDeleteUserMutation
-} = userApiService;
+    useGetSingleAdminQuery,
+    useUpdateAdminMutation,
+    useGetAllAdminsQuery,
+    useDeleteAdminMutation
+} = adminApiService;

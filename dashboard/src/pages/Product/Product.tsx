@@ -136,11 +136,6 @@ const ProductPage = () => {
                                 key: "_id",
                             },
                             {
-                                name: "Description",
-                                dataIndex: "description",
-                                key: "_id",
-                            },
-                            {
                                 name: "Price",
                                 dataIndex: "price",
                                 key: "_id",
