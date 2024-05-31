@@ -5,7 +5,7 @@ import cn from "../../../utils/cn";
 interface AntdImageProps {
     width: number;
     height: number;
-    key?: number | undefined;
+    key?: number | undefined | string;
     src: string;
     alt: string;
     className?: string | undefined;

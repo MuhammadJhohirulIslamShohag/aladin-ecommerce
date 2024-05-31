@@ -4,7 +4,6 @@ import { IColor } from "./color.types";
 import { ISize } from "./size.types";
 import { ISubCategory } from "./sub-category.type";
 
-
 export interface IProduct {
     _id: string;
     name: string;
@@ -24,4 +23,11 @@ export interface IProduct {
     brand: IBrand;
     updatedAt: Date;
     __v: number;
+}
+
+export interface OrderProductType {
+    count: number;
+    price: number;
+    product: IProduct;
+    _id: string;
 }

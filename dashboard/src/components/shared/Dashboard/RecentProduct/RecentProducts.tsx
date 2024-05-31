@@ -1,10 +1,12 @@
-
 import { Link } from "react-router-dom";
 import RecentProductRow from "./RecentProductRow";
-import { RecentProductType } from "./RecentProducts.types";
+import { IProduct } from "../../../../types/product.type";
 
-const RecentProduct = (props: RecentProductType) => {
-    const { products } = props;
+interface RecentProductProps {
+    products: IProduct[];
+}
+
+const RecentProduct: React.FC<RecentProductProps> = ({ products = [] }) => {
     return (
         <div className="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl shadow-md  rounded-2xl bg-clip-border">
             <div className="flex justify-between px-4 py-3">
@@ -21,11 +23,11 @@ const RecentProduct = (props: RecentProductType) => {
                 <table className="w-full text-sm text-left text-gray-500 ">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
-                            <th scope="col" className="px-6 py-3">
-                                <span className="sr-only">Image</span>
+                            <th scope="col" className="px-6 py-3 text-center">
+                                Image
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Product
+                                Name
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 Price
@@ -33,15 +35,13 @@ const RecentProduct = (props: RecentProductType) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {products.length &&
-                            products
-                                .slice(0, 4)
-                                .map((product) => (
-                                    <RecentProductRow
-                                        key={product._id}
-                                        product={product}
-                                    />
-                                ))}
+                        {products?.length &&
+                            products?.map((product) => (
+                                <RecentProductRow
+                                    key={product?._id}
+                                    product={product}
+                                />
+                            ))}
                     </tbody>
                 </table>
             </div>

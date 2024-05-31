@@ -29,6 +29,7 @@ export interface IShippingAddress {
     city: string;
     postCode: string;
     country: string;
+    phoneNumber: string;
     state: string;
-    defaultAddress: boolean;
+    modalName?:string
 }

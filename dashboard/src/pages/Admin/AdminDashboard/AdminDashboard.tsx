@@ -9,7 +9,12 @@ import RecentOrder from "../../../components/shared/Dashboard/RecentOrder/Recent
 import RecentProduct from "../../../components/shared/Dashboard/RecentProduct/RecentProducts";
 import RecentUsers from "../../../components/shared/Dashboard/RecentUsers/RecentUsers";
 
+import { useGetDashWidgetInfosQuery } from "../../../redux/services/dashboard/dashboardApi";
+
 const AdminDashboard = () => {
+    const { data: dashWidgetInfosData } = useGetDashWidgetInfosQuery({});
+    const dashWidgetInfos = dashWidgetInfosData?.data;
+
     return (
         <>
             <div>
@@ -19,48 +24,58 @@ const AdminDashboard = () => {
                         <DashWidget
                             icon={<AiOutlineUserAdd />}
                             title={"Users"}
-                            account={10}
+                            account={dashWidgetInfos?.users?.total}
                         />
                         <DashWidget
                             icon={<SlHandbag />}
                             title={"Orders"}
-                            account={10}
+                            account={dashWidgetInfos?.orders?.total}
                         />
                         <DashWidget
                             icon={<MdOutlineProductionQuantityLimits />}
                             title={"Products"}
-                            account={10}
+                            account={dashWidgetInfos?.products?.total}
                         />
                         <DashWidget
                             icon={<GiTakeMyMoney />}
                             title={"Total Earnings"}
-                            account={10}
+                            account={dashWidgetInfos?.orders?.totalEarnings}
                         />
                     </div>
                 </section>
 
                 {/* Recent Order And Product Table */}
                 <section className="mt-10">
-                    <div className="grid grid-cols-12 space-x-3 sm:grid-cols-1 md:grid-cols-1 sm:space-x-0 md:space-y-4 sm:space-y-4">
+                    <div className="grid lg:grid-cols-12 grid-cols-1 md:grid-cols-1 gap-3">
                         <div className="col-span-8">
-                            <RecentOrder orders={[]} />
+                            <RecentOrder
+                                orders={dashWidgetInfos?.orders?.orders || []}
+                            />
                         </div>
                         <div className="col-span-4">
-                            <RecentProduct products={[]} />
+                            <RecentProduct
+                                products={dashWidgetInfos?.products?.products || []}
+                            />
                         </div>
                     </div>
                 </section>
 
                 {/* Recent Users And Line Chart */}
                 <section className="mt-10 sm:mt-5">
-                    <div className="grid grid-cols-12 space-x-3 sm:grid-cols-1 md:grid-cols-1 sm:space-x-0 sm:space-y-4 md:space-y-4">
+                    <div className="grid lg:grid-cols-12 grid-cols-1 gap-3">
                         <div className="col-span-6">
                             <LineChart
-                                data={{ users: 1, orders: 1, products: 1 }}
+                                data={{
+                                    users: dashWidgetInfos?.users?.total,
+                                    orders: dashWidgetInfos?.orders?.total,
+                                    products: dashWidgetInfos?.products?.total,
+                                }}
                             />
                         </div>
-                        <div className="col-span-6">
-                            <RecentUsers users={[]} />
+                        <div className="col-span-6  mt-6">
+                            <RecentUsers
+                                users={dashWidgetInfos?.users?.users || []}
+                            />
                         </div>
                     </div>
                 </section>

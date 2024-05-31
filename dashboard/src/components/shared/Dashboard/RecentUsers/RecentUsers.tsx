@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 
-import { RecentUsersType } from "./RecentUsers.types";
 import RecentUserRow from "./RecentUserRow";
+import { IUser } from "../../../../types/user.type";
 
-const RecentUsers = (props: RecentUsersType) => {
-    const { users } = props;
+interface RecentUsersProps {
+    users: IUser[];
+}
+
+const RecentUsers: React.FC<RecentUsersProps> = ({ users = [] }) => {
     return (
         <div className="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl shadow-md  rounded-2xl bg-clip-border ">
             <div className="flex justify-between px-4 py-3">
@@ -21,7 +24,7 @@ const RecentUsers = (props: RecentUsersType) => {
                 <table className="w-full text-sm text-left text-gray-500 ">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-6 py-3 text-center">
                                 Image
                             </th>
                             <th scope="col" className="px-6 py-3">
@@ -34,11 +37,9 @@ const RecentUsers = (props: RecentUsersType) => {
                     </thead>
                     <tbody>
                         {users.length &&
-                            users
-                                .slice(0, 6)
-                                .map((user) => (
-                                    <RecentUserRow key={user._id} user={user} />
-                                ))}
+                            users?.map((user) => (
+                                <RecentUserRow key={user?._id} user={user} />
+                            ))}
                     </tbody>
                 </table>
             </div>

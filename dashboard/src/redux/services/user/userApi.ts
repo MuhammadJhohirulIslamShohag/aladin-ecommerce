@@ -8,11 +8,17 @@ const userApiService = baseApi.injectEndpoints({
             }),
             providesTags: ["Users"],
         }),
+        getAllUsers: build.query({
+            query: () => ({
+                url: `users`,
+            }),
+            providesTags: ["Users"],
+        }),
         updateUser: build.mutation({
-            query: ({data, id}) => ({
+            query: ({ data, id }) => ({
                 url: `admins/${id}`,
                 method: "PATCH",
-                body: data
+                body: data,
             }),
             invalidatesTags: ["Users"],
         }),
@@ -23,4 +29,5 @@ const userApiService = baseApi.injectEndpoints({
 export const {
     useGetSingleUserQuery,
     useUpdateUserMutation,
+    useGetAllUsersQuery,
 } = userApiService;
