@@ -7,10 +7,14 @@ import { MdFlashOn } from "react-icons/md";
 import { IProduct } from "@/types/product.type";
 
 const FlashDeal = ({ product }: { product: IProduct }) => {
+    const soldPer = (
+        (product.sold || 0 / product.quantity || 0) * 100
+    )?.toFixed(0);
+
     return (
         <div className="h-[420px]">
             <div className="relative w-full cursor-pointer overflow-hidden h-80">
-                {product.imageURLs && product.imageURLs.length && (
+                {product?.imageURLs && product?.imageURLs?.length && (
                     <Link href={`products/${product?.slug}`}>
                         <Image
                             src={product?.imageURLs[0]}
@@ -47,19 +51,10 @@ const FlashDeal = ({ product }: { product: IProduct }) => {
                     <div
                         className="bg-green-300 text-xs font-medium text-black text-center p-0.5 leading-none rounded-full"
                         style={{
-                            width: `${
-                                product?.sold &&
-                                product?.quantity &&
-                                ((product?.sold / product?.quantity) * 100)?.toFixed(0)
-                            }%`,
+                            width: `${soldPer}%`,
                         }}
                     >
-                        {product?.sold &&
-                            product?.quantity &&
-                            ((product?.sold / product?.quantity) * 100)?.toFixed(
-                                0
-                            )}
-                        %
+                        {soldPer}%
                     </div>
                 </div>
             </div>
