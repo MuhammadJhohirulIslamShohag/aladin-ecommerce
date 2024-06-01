@@ -37,7 +37,7 @@ const MobileCategoryNav: React.FC<MobileCategoryNavProps> = ({
                 />
             </div>
             <div className="space-y-2 font-Quicksand p-4">
-                {categoriesData?.map((data, index) => (
+                {categoriesData?.map((category, index) => (
                     <div key={index}>
                         <div className=" ">
                             <div
@@ -45,7 +45,7 @@ const MobileCategoryNav: React.FC<MobileCategoryNavProps> = ({
                                 onClick={() => handleOpenMenu(index)}
                             >
                                 <h4 className="font-semibold font-Quicksand">
-                                    {data?.category}
+                                    {category?.name}
                                 </h4>
                                 {openMenu === index ? (
                                     <AiOutlineMinus size={20} />
@@ -55,7 +55,7 @@ const MobileCategoryNav: React.FC<MobileCategoryNavProps> = ({
                             </div>
                             {openMenu === index && (
                                 <div>
-                                    {data?.menu?.map((subCategory, idx) => (
+                                    {category?.subcategories?.map((subCategory, idx) => (
                                         <div key={idx}>
                                             <div
                                                 className="flex justify-between cursor-pointer p-2 bg-[#f2f4f8] border-b-2"
@@ -64,10 +64,10 @@ const MobileCategoryNav: React.FC<MobileCategoryNavProps> = ({
                                                 }
                                             >
                                                 <Link
-                                                    href={`/${subCategory?.title}`}
+                                                    href={`/${subCategory?.name}`}
                                                 >
                                                     <a className="text-[15px] font-medium pl-2  hover:underline underline-offset-2 hover:text-success">
-                                                        {subCategory?.title}
+                                                        {subCategory?.name}
                                                     </a>
                                                 </Link>
                                             </div>

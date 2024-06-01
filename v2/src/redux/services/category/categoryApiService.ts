@@ -12,9 +12,17 @@ const categoryApiService = baseApi.injectEndpoints({
                 url: `categories/${id}`,
             }),
         }),
+        getCategoriesMenu: build.query({
+            query: () => ({
+                url: `categories/get-categories-menu`,
+            }),
+        }),
     }),
     overrideExisting: false,
 });
 
-export const { useGetCategoriesQuery, useGetCategoryQuery } =
-    categoryApiService;
+export const {
+    useGetCategoriesQuery,
+    useGetCategoryQuery,
+    useGetCategoriesMenuQuery,
+} = categoryApiService;

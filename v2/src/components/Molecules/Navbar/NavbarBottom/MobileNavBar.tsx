@@ -10,7 +10,7 @@ interface MobileNavBarProps {
     categoriesData: IMenuCategory[];
 }
 
-const MobileNavBar: React.FC<MobileNavBarProps> = ({ categoriesData }) => {
+const MobileNavBar: React.FC<MobileNavBarProps> = ({ categoriesData = {} }) => {
     const [openMobileNavBar, setOpenMobileNavBar] = useState(false);
 
     return (
@@ -33,18 +33,20 @@ const MobileNavBar: React.FC<MobileNavBarProps> = ({ categoriesData }) => {
                 } top-full absolute bg-white divide-y divide-gray-100 rounded-lg shadow right-[0%] w-[170px]`}
             >
                 <ul className="py-2 text-sm text-gray-700   ">
-                    {["home", "about", "blog", "contact us"]?.map((data, idx) => (
-                        <li
-                            key={idx}
-                            className="flex justify-between items-center px-4 py-2 hover:bg-green-400 transition-all duration-300 group relative"
-                        >
-                            <Link href={`/${data}`}>
-                                <span className="transition-all duration-300 group-hover:text-white capitalize">
-                                    {data}
-                                </span>
-                            </Link>
-                        </li>
-                    ))}
+                    {["home", "about", "blog", "contact us"]?.map(
+                        (data, idx) => (
+                            <li
+                                key={idx}
+                                className="flex justify-between items-center px-4 py-2 hover:bg-green-400 transition-all duration-300 group relative"
+                            >
+                                <Link href={`/${data}`}>
+                                    <span className="transition-all duration-300 group-hover:text-white capitalize">
+                                        {data}
+                                    </span>
+                                </Link>
+                            </li>
+                        )
+                    )}
                 </ul>
             </div>
         </>

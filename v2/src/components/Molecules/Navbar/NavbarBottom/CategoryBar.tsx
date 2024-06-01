@@ -48,31 +48,41 @@ const CategoryBar: React.FC<CategoryBarProps> = ({ categoriesData }) => {
                     className="lg:hidden block"
                 />
                 <ul className="py-2 text-sm text-gray-700 lg:block hidden">
-                    {categoriesData?.map((data, idx) => (
+                    {categoriesData?.map((category, idx) => (
                         <li
                             key={idx}
                             className="flex justify-between items-center px-4 py-2 hover:bg-green-400 transition-all duration-300 group relative"
                         >
-                            <Link href={`/${data?.category}`}>
+                            <Link href={`/category/${category?.name}`}>
                                 <span className="transition-all duration-300 group-hover:text-white">
-                                    {data?.category}
+                                    {category?.name}
                                 </span>
                             </Link>
                             <span>
                                 <FaAngleRight className="transition-all duration-300 group-hover:text-white" />
                             </span>
-                            <ul className="left-full absolute hidden text-sm text-gray-700 group-hover:block bg-white w-[270px] top-0 shadow rounded-t-lg pt-2">
-                                {data?.menu?.map((data, idx) => (
-                                    <li key={idx} className="px-4 py-2 hover:bg-green-400 transition-all duration-300 group relative">
-                                        {" "}
-                                        <Link href={`/${data?.title}`}>
-                                            <span className="transition-all duration-300 group-hover/subMenu:text-white">
-                                                {data?.title}
-                                            </span>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
+                            {category?.subcategories?.length ? (
+                                <ul className="left-full absolute hidden text-sm text-gray-700 group-hover:block bg-white w-[270px] top-0 shadow rounded-t-lg pt-2">
+                                    {category?.subcategories?.map(
+                                        (subcategory, idx) => (
+                                            <li
+                                                key={idx}
+                                                className="px-4 py-2 hover:bg-green-400 transition-all duration-300 group relative hover:text-white"
+                                            >
+                                                <Link
+                                                    href={`/sub-category/${subcategory?.name}`}
+                                                >
+                                                    <span className="transition-all duration-300 group-hover/subMenu:text-white">
+                                                        {subcategory?.name}
+                                                    </span>
+                                                </Link>
+                                            </li>
+                                        )
+                                    )}
+                                </ul>
+                            ) : (
+                                ""
+                            )}
                         </li>
                     ))}
                 </ul>

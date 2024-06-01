@@ -1,8 +1,9 @@
 export interface IMenuCategory {
     id: number;
-    category: string;
-    menu: {
-        title: string;
+    name: string;
+    subcategories: {
+        id: number;
+        name: string;
     }[];
 }
 
