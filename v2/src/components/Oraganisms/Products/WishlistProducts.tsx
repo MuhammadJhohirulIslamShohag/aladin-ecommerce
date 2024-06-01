@@ -8,6 +8,7 @@ import SectionTitle from "../../Molecules/SectionTitle";
 import CustomModal from "../../Atoms/Modal/CustomModal";
 import ProductCartPreview from "../../Molecules/Products/ProductCartPreview";
 import WishListProductCard from "../../Molecules/Products/WishListProductCard";
+import Empty from "../../Molecules/Empty";
 
 import { storeWishListProducts } from "@/store/wishList/wishList.product";
 import { useStoreContext } from "@/contexts/StoreContextProvider";
@@ -86,20 +87,32 @@ const WishlistProduct = () => {
         }));
     };
 
+    let content = null;
+
+    if (wishListProductsOptimistic?.length) {
+        content = (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-8 gap-4 px-2 lg:px-0">
+                {wishListProductsOptimistic?.map((product: IProduct) => (
+                    <WishListProductCard
+                        key={product._id}
+                        product={product}
+                        handleAddCart={handleAddCart}
+                        handleWishListProduct={handleRemovedToWishList}
+                    />
+                ))}
+            </div>
+        );
+    }
+
+    if (!wishListProductsOptimistic?.length) {
+        content = <Empty description="No Wishlist Products Data" />;
+    }
+
     return (
         <>
-            <div className="container mx-auto px-6 mt-10">
+            <div className="container mx-auto px-6 mt-10 lg:mb-36 md:mb-20 mb-16">
                 <SectionTitle title={"Wishlist Products"} />
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-8 gap-4 px-2 lg:px-0">
-                    {wishListProductsOptimistic?.map((product: IProduct) => (
-                        <WishListProductCard
-                            key={product._id}
-                            product={product}
-                            handleAddCart={handleAddCart}
-                            handleWishListProduct={handleRemovedToWishList}
-                        />
-                    ))}
-                </div>
+                <div>{content}</div>
             </div>
 
             {cartModal?.open && cartModal?.data && (

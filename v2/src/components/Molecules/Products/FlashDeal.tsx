@@ -50,13 +50,13 @@ const FlashDeal = ({ product }: { product: IProduct }) => {
                             width: `${
                                 product?.sold &&
                                 product?.quantity &&
-                                (product.sold / product.quantity) * 100
+                                ((product?.sold / product?.quantity) * 100)?.toFixed(0)
                             }%`,
                         }}
                     >
                         {product?.sold &&
                             product?.quantity &&
-                            ((product.sold / product.quantity) * 100).toFixed(
+                            ((product?.sold / product?.quantity) * 100)?.toFixed(
                                 0
                             )}
                         %

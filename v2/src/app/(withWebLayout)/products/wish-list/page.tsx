@@ -5,11 +5,8 @@ import useCheckUser from "@/hooks/useCheckUser";
 
 const WishLists = () => {
     useCheckUser();
-    return (
-        <>
-            <WishlistProduct />
-        </>
-    );
+    
+    return <WishlistProduct />;
 };
 
 export default WishLists;

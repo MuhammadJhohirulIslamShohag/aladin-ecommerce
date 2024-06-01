@@ -1,10 +1,11 @@
 "use client";
+
 import React from "react";
-import { MdFlashOn } from "react-icons/md";
 
 import FlashDeal from "@/components/Molecules/Products/FlashDeal";
 import CountDown from "@/components/Molecules/CountDown";
 import SectionTitle from "../../Molecules/SectionTitle";
+import Empty from "../../Molecules/Empty";
 
 import { IProduct } from "@/types/product.type";
 
@@ -64,7 +65,7 @@ const FlashDeals = ({ products }: FlashDealsPropsType) => {
     }
 
     if (!products.length) {
-        content = <h1> There is no products</h1>;
+        content = <Empty description="No Product Data" />;
     }
 
     return (

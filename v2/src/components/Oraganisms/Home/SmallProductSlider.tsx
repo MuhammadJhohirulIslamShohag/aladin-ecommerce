@@ -1,10 +1,12 @@
-"use client"
+"use client";
 
 import SectionTitle from "../../Molecules/SectionTitle";
 import SmallProduct from "../../Molecules/Products/SmallProduct";
 import SecondLevelHeading from "../../Atoms/SecondLevelHeading";
-import { IProduct } from "@/types/product.type";
 import cn from "@/lib/cn";
+import Empty from "@/components/Molecules/Empty";
+
+import { IProduct } from "@/types/product.type";
 
 interface SmallProductSliderProps {
     products: IProduct[];
@@ -17,9 +19,10 @@ const SmallProductSlider: React.FC<SmallProductSliderProps> = ({
     products = [],
     className = "",
 }) => {
-    return (
-        <div className={cn("container mx-auto px-6", className)}>
-            <SectionTitle title={title} />
+    let content = null;
+
+    if (products?.length) {
+        content = (
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
                 <div className="">
                     <SecondLevelHeading
@@ -52,6 +55,16 @@ const SmallProductSlider: React.FC<SmallProductSliderProps> = ({
                     <SmallProduct products={products} />
                 </div>
             </div>
+        );
+    }
+
+    if (!products?.length) {
+        content = <Empty description="No Product Data" />;
+    }
+    return (
+        <div className={cn("container mx-auto px-6", className)}>
+            <SectionTitle title={title} />
+            <div>{content}</div>
         </div>
     );
 };

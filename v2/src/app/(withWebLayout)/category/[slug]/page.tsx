@@ -1,7 +1,8 @@
-import { getSingleCategory } from "@/api/category";
+// import { Suspense } from "react";
 import { getProducts } from "@/api/products";
 
 import ProductByCategory from "@/components/Oraganisms/Products/ProductByCategory";
+// import Loading from "./loading";
 
 const ProductByCategoryPage = async ({
     params,
@@ -15,13 +16,11 @@ const ProductByCategoryPage = async ({
     const products = productData?.data?.data;
 
     return (
-        <>
-            <ProductByCategory
-                title={`Product by ${params?.slug}`}
-                products={products}
-                name={params?.slug}
-            />
-        </>
+        <ProductByCategory
+            title={`Product by ${params?.slug}`}
+            products={products}
+            name={params?.slug}
+        />
     );
 };
 

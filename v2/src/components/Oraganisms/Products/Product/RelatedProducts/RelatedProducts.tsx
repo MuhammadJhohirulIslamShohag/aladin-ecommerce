@@ -2,15 +2,17 @@
 
 import React, { startTransition, useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter,usePathname  } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import cn from "@/lib/cn";
 import _ from "lodash";
 
 import ProductCard from "@/components/Molecules/Products/ProductCard";
-import CustomModal from "../../Atoms/Modal/CustomModal";
-import CompareProductInfo from "../../Molecules/Products/CompareProductInfo";
-import ProductCartPreview from "../../Molecules/Products/ProductCartPreview";
-import ProductView from "../../Molecules/Products/ProductView";
-
+import CustomModal from "../../../../Atoms/Modal/CustomModal";
+import CompareProductInfo from "../../../../Molecules/Products/CompareProductInfo";
+import ProductCartPreview from "../../../../Molecules/Products/ProductCartPreview";
+import ProductView from "../../../../Molecules/Products/ProductView";
+import Empty from "../../../../Molecules/Empty";
+import SectionTitle from "../../../../Molecules/SectionTitle";
 
 import { IProduct } from "@/types/product.type";
 import { getUserInfo } from "@/store/user/users";
@@ -20,12 +22,11 @@ import {
     storeWishListProducts,
 } from "@/store/wishList/wishList.product";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
-import cn from "@/lib/cn";
 import { useAddWishlistMutation } from "@/redux/services/wishlist/wishListApiService";
 
 interface RelatedProductProps {
     products: IProduct[];
-    className: string;
+    className?: string;
 }
 
 interface IModalState {
@@ -33,14 +34,14 @@ interface IModalState {
     data: IProduct | null;
 }
 
-const RelatedProduct: React.FC<RelatedProductProps> = ({
+const RelatedProducts: React.FC<RelatedProductProps> = ({
     products = [],
     className = "",
 }) => {
     const user = getUserInfo();
     const { dispatch } = useStoreContext();
     const router = useRouter();
-    const pathname = usePathname()
+    const pathname = usePathname();
 
     // redux api call
     const [addWishList] = useAddWishlistMutation();
@@ -115,16 +116,18 @@ const RelatedProduct: React.FC<RelatedProductProps> = ({
                 }
             });
             toast.success(`Added Product Wish List`);
-        }else{
+        } else {
             return router.push(`/auth/login?redirect=${pathname}`);
         }
     };
 
-    return (
-        <>
+    let content = null;
+
+    if (products?.length) {
+        content = (
             <div
                 className={cn(
-                    "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-8 gap-4 px-2 lg:px-0",
+                    "grid mt-5 gap-5 lg:grid-cols-5 md:grid-cols-2 grid-cols-1",
                     className
                 )}
             >
@@ -139,6 +142,19 @@ const RelatedProduct: React.FC<RelatedProductProps> = ({
                     />
                 ))}
             </div>
+        );
+    }
+
+    if (!products?.length) {
+        content = <Empty description="No Related Products Data" />;
+    }
+
+    return (
+        <>
+            <section className="mt-10">
+                <SectionTitle title="Related Products" className="z-10"/>
+                {content}
+            </section>
 
             {cartModal?.open && cartModal?.data && (
                 <CustomModal
@@ -211,4 +227,4 @@ const RelatedProduct: React.FC<RelatedProductProps> = ({
     );
 };
 
-export default RelatedProduct;
+export default RelatedProducts;

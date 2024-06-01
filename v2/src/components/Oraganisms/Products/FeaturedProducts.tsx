@@ -1,7 +1,7 @@
 "use client";
 import _ from "lodash";
 import React, { startTransition, useState } from "react";
-import { useRouter,usePathname  } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 // Import Swiper React components
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -27,6 +27,7 @@ import {
 } from "@/store/wishList/wishList.product";
 import { IProduct } from "@/types/product.type";
 import { useAddWishlistMutation } from "@/redux/services/wishlist/wishListApiService";
+import Empty from "@/components/Molecules/Empty";
 
 interface FeaturedProductsProps {
     products: IProduct[];
@@ -43,7 +44,7 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
     const user = getUserInfo();
     const { dispatch } = useStoreContext();
     const router = useRouter();
-    const pathname = usePathname()
+    const pathname = usePathname();
 
     // redux api call
     const [addWishList] = useAddWishlistMutation();
@@ -118,57 +119,69 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
                 }
             });
             toast.success(`Added Product Wish List`);
-        }else{
+        } else {
             return router.push(`/auth/login?redirect=${pathname}`);
         }
     };
+
+    let content = null;
+
+    if (products?.length) {
+        content = (
+            <Swiper
+                slidesPerView={1}
+                spaceBetween={15}
+                navigation={true}
+                autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                }}
+                modules={[Navigation, Autoplay]}
+                breakpoints={{
+                    640: {
+                        slidesPerView: 1,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                        spaceBetween: 15,
+                    },
+                    1024: {
+                        slidesPerView: 5,
+                        spaceBetween: 16,
+                    },
+                    1200: {
+                        slidesPerView: 5,
+                        spaceBetween: 16,
+                    },
+                }}
+                className="featured_products lg:h-[477px] md:h-[414px] h-[601px]"
+            >
+                {products?.map((product: IProduct) => (
+                    <SwiperSlide key={product._id}>
+                        <ProductCard
+                            handleAddCart={handleAddCart}
+                            handleCompare={handleCompare}
+                            handleWishListProduct={handleWishListProduct}
+                            handleProductView={handleProductView}
+                            key={product._id}
+                            product={product}
+                        />
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        );
+    }
+
+    if (!products?.length) {
+        content = <Empty description="No Product Data" />;
+    }
 
     return (
         <>
             <div className="container">
                 <SectionTitle title={"Feature Products"} />
-                <Swiper
-                    slidesPerView={1}
-                    spaceBetween={15}
-                    navigation={true}
-                    autoplay={{
-                        delay: 3000,
-                        disableOnInteraction: false,
-                        pauseOnMouseEnter: true,
-                    }}
-                    modules={[Navigation, Autoplay]}
-                    breakpoints={{
-                        640: {
-                            slidesPerView: 1,
-                        },
-                        768: {
-                            slidesPerView: 3,
-                            spaceBetween: 15,
-                        },
-                        1024: {
-                            slidesPerView: 5,
-                            spaceBetween: 16,
-                        },
-                        1200: {
-                            slidesPerView: 5,
-                            spaceBetween: 16,
-                        },
-                    }}
-                    className="featured_products lg:h-[477px] md:h-[414px] h-[601px]"
-                >
-                    {products?.map((product: IProduct) => (
-                        <SwiperSlide key={product._id}>
-                            <ProductCard
-                                handleAddCart={handleAddCart}
-                                handleCompare={handleCompare}
-                                handleWishListProduct={handleWishListProduct}
-                                handleProductView={handleProductView}
-                                key={product._id}
-                                product={product}
-                            />
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
+                <div>{content}</div>
             </div>
             {cartModal?.open && cartModal?.data && (
                 <CustomModal

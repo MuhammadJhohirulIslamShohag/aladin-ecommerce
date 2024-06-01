@@ -38,7 +38,7 @@ const CategoryBar: React.FC<CategoryBarProps> = ({ categoriesData }) => {
                 </div>
             </button>
             <div
-                className={`z-10 origin-top transition-all ${
+                className={`z-[9999999] origin-top transition-all ${
                     openCategory ? "scale-100" : "scale-0"
                 } top-full absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-[270px] `}
             >
@@ -62,17 +62,17 @@ const CategoryBar: React.FC<CategoryBarProps> = ({ categoriesData }) => {
                                 <FaAngleRight className="transition-all duration-300 group-hover:text-white" />
                             </span>
                             {category?.subcategories?.length ? (
-                                <ul className="left-full absolute hidden text-sm text-gray-700 group-hover:block bg-white w-[270px] top-0 shadow rounded-t-lg pt-2">
+                                <ul className="left-full absolute hidden text-sm text-gray-700 group-hover:block bg-white w-[270px] top-0 shadow rounded-t-lg pt-2 z-50">
                                     {category?.subcategories?.map(
                                         (subcategory, idx) => (
                                             <li
                                                 key={idx}
-                                                className="px-4 py-2 hover:bg-green-400 transition-all duration-300 group relative hover:text-white"
+                                                className="px-4 py-2 hover:bg-green-400 transition-all duration-300 group relative "
                                             >
                                                 <Link
                                                     href={`/sub-category/${subcategory?.name}`}
                                                 >
-                                                    <span className="transition-all duration-300 group-hover/subMenu:text-white">
+                                                    <span className="hover:text-white">
                                                         {subcategory?.name}
                                                     </span>
                                                 </Link>

@@ -30,14 +30,7 @@ const MobileCategoryNav: React.FC<MobileCategoryNavProps> = ({
     };
 
     return (
-        <div className={cn("", className)}>
-            {/* <div className="pr-4 pt-2 ">
-                <RxCross1
-                    className="text-red-500 cursor-pointer ml-auto hover:bg-red-100 rounded-full duration-300 p-2"
-                    size={35}
-                    onClick={closeMobileCategory}
-                />
-            </div> */}
+        <div className={cn("relative z-[99999]", className)}>
             <div className="space-y-2 font-Quicksand p-4">
                 {categoriesData?.map((category, index) => (
                     <div key={index}>
@@ -46,9 +39,7 @@ const MobileCategoryNav: React.FC<MobileCategoryNavProps> = ({
                                 className="flex justify-between cursor-pointer p-2"
                                 onClick={() => handleOpenMenu(index)}
                             >
-                                <Link
-                                    href={`/category/${category?.name}`}
-                                >
+                                <Link href={`/category/${category?.name}`}>
                                     <h4 className="font-semibold font-Quicksand">
                                         {category?.name}
                                     </h4>

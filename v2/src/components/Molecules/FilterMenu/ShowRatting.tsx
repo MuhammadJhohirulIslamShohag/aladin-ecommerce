@@ -9,7 +9,7 @@ interface ShowRattingProps {
 
 const ShowRatting: React.FC<ShowRattingProps> = ({ clickRating }) => {
     return (
-        <div className="pl-4 pr-4 mt-3">
+        <div className="pl-4 pr-4 mt-4">
             <Star numberOfStars={5} clickRating={clickRating} />
             <Star numberOfStars={4} clickRating={clickRating} />
             <Star numberOfStars={3} clickRating={clickRating} />

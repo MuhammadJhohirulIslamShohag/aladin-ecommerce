@@ -1,5 +1,9 @@
-import { getProducts } from "@/api/products";
+
+
 import ProductByCategory from "@/components/Oraganisms/Products/ProductByCategory";
+
+
+import { getProducts } from "@/api/products";
 
 const ProductBySubCategory = async ({
     params,
@@ -13,14 +17,11 @@ const ProductBySubCategory = async ({
     const products = productData?.data?.data;
 
     return (
-        <>
-            
-            <ProductByCategory
-                title={`Product by ${params?.slug}`}
-                products={products}
-                name={params?.slug}
-            />
-        </>
+        <ProductByCategory
+            title={`Product by ${params?.slug}`}
+            products={products}
+            name={params?.slug}
+        />
     );
 };
 

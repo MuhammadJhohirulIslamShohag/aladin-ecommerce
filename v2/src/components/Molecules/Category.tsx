@@ -1,12 +1,13 @@
-"use client"
+"use client";
 
-import { ICategory } from "@/types/category.type";
 import Image from "next/image";
 import Link from "next/link";
 
+import { ICategory } from "@/types/category.type";
+
 const Category = ({ category }: { category: ICategory }) => {
-    const { name, imageURL } = category;
-    
+    const { name, imageURLs } = category;
+
     return (
         <Link href={`/category/${name}`} className="group transition-all">
             <div className="max-w-sm cursor-pointer bg-white border border-gray-200 rounded-lg drop-shadow-xl p-4 h-[420px]">
@@ -19,15 +20,17 @@ const Category = ({ category }: { category: ICategory }) => {
                     </span>
                 </div>
                 <div className="grid grid-cols-2 gap-1 mt-5">
-                    <div className="shadow-lg relative">
-                        <Image
-                            src={imageURL}
-                            alt={name}
-                            width={100}
-                            height={100}
-                            className="h-[164px] w-full bg-no-repeat bg-center after:content-[''] after:bg-black after:h-full after:opacity-40 after:absolute after:top-0 after:left-0 after:w-full"
-                        />
-                    </div>
+                    {imageURLs?.map((imageURL, idx) => (
+                        <div key={idx} className="shadow-lg relative">
+                            <Image
+                                src={imageURL}
+                                alt={name}
+                                width={100}
+                                height={100}
+                                className="h-[164px] w-full bg-no-repeat bg-center after:content-[''] after:bg-black after:h-full after:opacity-40 after:absolute after:top-0 after:left-0 after:w-full"
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
         </Link>

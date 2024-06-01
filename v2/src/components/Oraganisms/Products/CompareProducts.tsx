@@ -4,7 +4,6 @@ import { useOptimistic } from "react";
 import CompareProductTop from "../../Molecules/Compare/CompareProductTop";
 import ComparisonProduct from "../../Molecules/Compare/ComparisonProduct";
 import ComparisonSpecification from "../../Molecules/Compare/ComparisonSpecification";
-import SectionTitle from "../../Molecules/SectionTitle";
 
 import { getCompareProducts } from "@/store/compare/compare.product";
 import { CompareProduct, IProduct, RootProperty } from "@/types/product.type";
@@ -41,7 +40,6 @@ const CompareProducts: React.FC<CompareProductsProps> = ({ products }) => {
 
     return (
         <div className="md:container md:mx-auto md:px-6 px-2 bg-white pt-10">
-            <SectionTitle title="Product Comparison" className={"-mb-4"} />
             <div className="px-4 lg:px-20 font-Quicksand py-6">
                 <div className="mt-4">
                     {comProductOptimistic?.length > 0 ? (

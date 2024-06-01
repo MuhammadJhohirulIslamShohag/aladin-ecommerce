@@ -12,6 +12,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
+import Empty from "../Molecules/Empty";
 
 const SubCategories = ({ data }: { data: ISubCategory[] }) => {
     let content = null;
@@ -27,7 +28,7 @@ const SubCategories = ({ data }: { data: ISubCategory[] }) => {
                     pauseOnMouseEnter: true,
                 }}
                 modules={[Navigation, Autoplay]}
-                className="sm:h-64 h-[374px] md:h-[288px] sub_categories_swiper"
+                className="lg:h-[374px] md:h-[288px] h-64  sub_categories_swiper"
                 breakpoints={{
                     640: {
                         slidesPerView: 1,
@@ -59,7 +60,7 @@ const SubCategories = ({ data }: { data: ISubCategory[] }) => {
     }
 
     if (!data.length) {
-        content = <h1> There is no sub-category</h1>;
+        content = <Empty description="No Sub Category Data" />;
     }
 
     return (
@@ -69,7 +70,7 @@ const SubCategories = ({ data }: { data: ISubCategory[] }) => {
             data-aos-delay="1"
             data-aos-duration="1000"
             data-aos-easing="ease-in-out"
-            className="container py-24 md:py-20 sm:py-12 "
+            className="container lg:py-24 md:py-20 py-12"
         >
             <SectionTitle title="Sub Category" />
 

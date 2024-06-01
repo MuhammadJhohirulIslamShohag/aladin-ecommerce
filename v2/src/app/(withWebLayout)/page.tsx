@@ -6,7 +6,7 @@ import { getProductsByFilter } from "@/api/products";
 import { getAllSubCategories } from "@/api/sub-categories";
 
 import Advertise from "@/components/Oraganisms/Advertise/Advertise";
-import Blogs from "@/components/Oraganisms/Blogs";
+import Blogs from "@/components/Oraganisms/Blogs/Blogs";
 import Categories from "@/components/Oraganisms/Categories";
 import FeaturedSubCategories from "@/components/Oraganisms/Home/FeaturedSubCategories";
 import FlashDeals from "@/components/Oraganisms/Home/FlashDeals";
@@ -18,14 +18,14 @@ import FeaturedProducts from "@/components/Oraganisms/Products/FeaturedProducts"
 import NewArrivals from "@/components/Oraganisms/Products/NewArrivals";
 import TopProducts from "@/components/Oraganisms/Products/TopProducts";
 import Services from "@/components/Oraganisms/Services";
-import HeroSkeleton from "@/components/Oraganisms/Skeletons/Home/HeroSkeleton";
 import CategoriesSkeleton from "@/components/Oraganisms/Skeletons/Home/CategoriesSkeleton";
-import FlashDealsSkeleton from "@/components/Oraganisms/Skeletons/Home/FlashDealsSkeleton";
-import ProductsSkeleton from "@/components/Oraganisms/Skeletons/Products/Products";
-import TopProductsSkeleton from "@/components/Oraganisms/Skeletons/Home/TopProductsSkeleton";
-import NewArrivalsSkeleton from "@/components/Oraganisms/Skeletons/Home/NewArrivalsSkeleton";
 import CategoryBaseProducts from "@/components/Oraganisms/Skeletons/Home/CategoryBaseProducts";
+import FlashDealsSkeleton from "@/components/Oraganisms/Skeletons/Home/FlashDealsSkeleton";
+import HeroSkeleton from "@/components/Oraganisms/Skeletons/Home/HeroSkeleton";
+import NewArrivalsSkeleton from "@/components/Oraganisms/Skeletons/Home/NewArrivalsSkeleton";
 import SubCategoriesSkeleton from "@/components/Oraganisms/Skeletons/Home/SubCategoriesSkeleton";
+import TopProductsSkeleton from "@/components/Oraganisms/Skeletons/Home/TopProductsSkeleton";
+import ProductsSkeleton from "@/components/Oraganisms/Skeletons/Products/Products";
 
 const Home = async () => {
     // Initiate both requests in parallel

@@ -138,7 +138,7 @@ const ProductDetailsTab = ({
             {/*Show Rating Modal */}
             {showReviewModal && (
                 <RatingModal
-                    productName={name}
+                    productName={product?.name}
                     handleReviewSubmit={handleReviewSubmit}
                     setShowReviewModal={setShowReviewModal}
                     showReviewModal={showReviewModal}

@@ -16,6 +16,14 @@
     z-index: 99999999999 !important;
 }
 
+.checkbox-success {
+    @apply bg-green-500 text-white border-green-500;
+}
+
+.checkbox-success:checked {
+    @apply bg-green-500 border-green-500;
+}
+
 /* Start React Select */
 .select-placeholder-text {
     color: #d1d5db !important;

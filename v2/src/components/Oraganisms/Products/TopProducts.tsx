@@ -1,7 +1,7 @@
 "use client";
 
 import React, { startTransition, useState } from "react";
-import { useRouter,usePathname  } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import toast from "react-hot-toast";
 import _ from "lodash";
 
@@ -29,6 +29,7 @@ import {
 } from "@/store/wishList/wishList.product";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
 import { useAddWishlistMutation } from "@/redux/services/wishlist/wishListApiService";
+import Empty from "@/components/Molecules/Empty";
 
 interface TopProductsProps {
     products: IProduct[];
@@ -42,7 +43,7 @@ interface IModalState {
 const TopProducts: React.FC<TopProductsProps> = ({ products }) => {
     const user = getUserInfo();
     const { dispatch } = useStoreContext();
-    const pathname = usePathname()
+    const pathname = usePathname();
     const router = useRouter();
 
     // redux api call
@@ -123,96 +124,109 @@ const TopProducts: React.FC<TopProductsProps> = ({ products }) => {
         }
     };
 
+    let content = null;
+
+    if (products?.length) {
+        content = (
+            <div className="lg:grid grid-cols-12 justify-between gap-6 lg:space-y-0 space-y-7 ">
+                <div className="xl:col-span-9 lg:col-span-7">
+                    <div className="lg:block hidden">
+                        <Swiper
+                            slidesPerView={2}
+                            grid={{
+                                rows: 2,
+                                fill: "row",
+                            }}
+                            autoplay={{
+                                delay: 152000,
+                                disableOnInteraction: false,
+                            }}
+                            spaceBetween={10}
+                            modules={[Grid, Autoplay]}
+                            className="top_product"
+                        >
+                            {products?.map((product) => (
+                                <div key={product?._id}>
+                                    <SwiperSlide>
+                                        <FlatProductCard
+                                            product={product}
+                                            handleAddCart={handleAddCart}
+                                            handleCompare={handleCompare}
+                                            handleWishListProduct={
+                                                handleWishListProduct
+                                            }
+                                            handleProductView={
+                                                handleProductView
+                                            }
+                                        />
+                                    </SwiperSlide>
+                                </div>
+                            ))}
+                        </Swiper>
+                    </div>
+                    <div className="lg:hidden block">
+                        <Swiper
+                            slidesPerView={2}
+                            breakpoints={{
+                                0: {
+                                    slidesPerView: 1,
+                                },
+                                768: {
+                                    slidesPerView: 2,
+                                },
+                            }}
+                            spaceBetween={10}
+                            navigation={true}
+                            modules={[Navigation, Autoplay]}
+                            className="top_product"
+                        >
+                            {products?.map((product) => (
+                                <div key={product?._id}>
+                                    <SwiperSlide>
+                                        <FlatProductCard
+                                            product={product}
+                                            handleAddCart={handleAddCart}
+                                            handleCompare={handleCompare}
+                                            handleWishListProduct={
+                                                handleWishListProduct
+                                            }
+                                            handleProductView={
+                                                handleProductView
+                                            }
+                                        />
+                                    </SwiperSlide>
+                                </div>
+                            ))}
+                        </Swiper>
+                    </div>
+                </div>
+                <div className="xl:col-span-3 lg:col-span-5  text-white lg:flex hidden justify-center items-center  rounded-md py-3 lg:h-full xl:h-[380px]">
+                    {products?.slice(0, 1)?.map((product) => (
+                        <ProductCard
+                            key={product._id}
+                            product={product}
+                            handleAddCart={handleAddCart}
+                            handleCompare={handleCompare}
+                            handleWishListProduct={handleWishListProduct}
+                            handleProductView={handleProductView}
+                        />
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
+    if (!products?.length) {
+        content = <Empty description="No Top Products Data" />;
+    }
+
     return (
         <>
             <div className="container">
                 <SectionTitle title={"Top Products"} />
-                <div className="lg:grid grid-cols-12 justify-between gap-6 lg:space-y-0 space-y-7 ">
-                    <div className="xl:col-span-9 lg:col-span-7">
-                        <div className="lg:block hidden">
-                            <Swiper
-                                slidesPerView={2}
-                                grid={{
-                                    rows: 2,
-                                    fill: "row",
-                                }}
-                                autoplay={{
-                                    delay: 152000,
-                                    disableOnInteraction: false,
-                                }}
-                                spaceBetween={10}
-                                modules={[Grid, Autoplay]}
-                                className="top_product"
-                            >
-                                {products?.map((product) => (
-                                    <div key={product?._id}>
-                                        <SwiperSlide>
-                                            <FlatProductCard
-                                                product={product}
-                                                handleAddCart={handleAddCart}
-                                                handleCompare={handleCompare}
-                                                handleWishListProduct={
-                                                    handleWishListProduct
-                                                }
-                                                handleProductView={
-                                                    handleProductView
-                                                }
-                                            />
-                                        </SwiperSlide>
-                                    </div>
-                                ))}
-                            </Swiper>
-                        </div>
-                        <div className="lg:hidden block">
-                            <Swiper
-                                slidesPerView={2}
-                                breakpoints={{
-                                    0: {
-                                        slidesPerView: 1,
-                                    },
-                                    768: {
-                                        slidesPerView: 2,
-                                    },
-                                }}
-                                spaceBetween={10}
-                                navigation={true}
-                                modules={[Navigation, Autoplay]}
-                                className="top_product"
-                            >
-                                {products?.map((product) => (
-                                    <div key={product?._id}>
-                                        <SwiperSlide>
-                                            <FlatProductCard
-                                                product={product}
-                                                handleAddCart={handleAddCart}
-                                                handleCompare={handleCompare}
-                                                handleWishListProduct={
-                                                    handleWishListProduct
-                                                }
-                                                handleProductView={
-                                                    handleProductView
-                                                }
-                                            />
-                                        </SwiperSlide>
-                                    </div>
-                                ))}
-                            </Swiper>
-                        </div>
-                    </div>
-                    <div className="xl:col-span-3 lg:col-span-5  text-white lg:flex hidden justify-center items-center  rounded-md py-3 lg:h-full xl:h-[380px]">
-                        {products?.slice(0, 1)?.map((product) => (
-                            <ProductCard
-                                key={product._id}
-                                product={product}
-                                handleAddCart={handleAddCart}
-                                handleCompare={handleCompare}
-                                handleWishListProduct={handleWishListProduct}
-                                handleProductView={handleProductView}
-                            />
-                        ))}
-                    </div>
-                </div>
+                <div>{content}</div>
             </div>
+
             {cartModal?.open && cartModal?.data && (
                 <CustomModal
                     onClose={() =>

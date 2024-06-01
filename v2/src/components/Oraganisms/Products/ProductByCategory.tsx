@@ -2,7 +2,7 @@
 
 import React, { startTransition, useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter,usePathname  } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import _ from "lodash";
 
 import ProductCard from "@/components/Molecules/Products/ProductCard";
@@ -11,6 +11,7 @@ import CompareProductInfo from "../../Molecules/Products/CompareProductInfo";
 import ProductCartPreview from "../../Molecules/Products/ProductCartPreview";
 import ProductView from "../../Molecules/Products/ProductView";
 import SectionTitle from "../../Molecules/SectionTitle";
+import Empty from "../../Molecules/Empty";
 
 import { IProduct } from "@/types/product.type";
 import { getUserInfo } from "@/store/user/users";
@@ -41,7 +42,7 @@ const ProductByCategory: React.FC<NewArrivalsProps> = ({
     const user = getUserInfo();
     const { dispatch } = useStoreContext();
     const router = useRouter();
-    const pathname = usePathname()
+    const pathname = usePathname();
 
     // redux api call
     const [addWishList] = useAddWishlistMutation();
@@ -116,36 +117,40 @@ const ProductByCategory: React.FC<NewArrivalsProps> = ({
                 }
             });
             toast.success(`Added Product Wish List`);
-        }else{
+        } else {
             return router.push(`/auth/login?redirect=${pathname}`);
         }
     };
 
+    let content = null;
+
+    if (products?.length) {
+        content = (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-8 gap-4 px-2 lg:px-0">
+                {products?.map((product: IProduct) => (
+                    <ProductCard
+                        key={product._id}
+                        handleAddCart={handleAddCart}
+                        handleCompare={handleCompare}
+                        handleWishListProduct={handleWishListProduct}
+                        handleProductView={handleProductView}
+                        product={product}
+                    />
+                ))}
+            </div>
+        );
+    }
+
+    if (!products?.length) {
+        content = <Empty description={`No Product Data By The ${name}`} />;
+    }
+
     return (
         <>
-            <div className="container mx-auto px-6 mt-10">
+            <div className="container mx-auto px-6 mt-10 lg:mb-36 md:mb-20 mb-16">
                 <SectionTitle title={title} />
 
-                {products && products?.length < 1 ? (
-                    <div className="h-80 flex items-center justify-center">
-                        <p className="text-center text-xl text-primary capitalize ">
-                            No Product Found By The {name}
-                        </p>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-8 gap-4 px-2 lg:px-0">
-                        {products?.map((product: IProduct) => (
-                            <ProductCard
-                                key={product._id}
-                                handleAddCart={handleAddCart}
-                                handleCompare={handleCompare}
-                                handleWishListProduct={handleWishListProduct}
-                                handleProductView={handleProductView}
-                                product={product}
-                            />
-                        ))}
-                    </div>
-                )}
+                {content}
             </div>
             {cartModal?.open && cartModal?.data && (
                 <CustomModal

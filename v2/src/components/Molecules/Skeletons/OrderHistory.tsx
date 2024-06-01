@@ -2,7 +2,7 @@ import React from "react";
 
 const OrderHistory = () => {
     return (
-        <div className="w-full animate-pulse bg-success/20 h-[252px] px-3 py-5">
+        <div className="w-full animate-pulse h-[252px] px-3 py-5">
             <div className="w-full flex flex-col justify-center items-center gap-3">
                 <div className="h-[20px] w-[100%] bg-success/20 flex justify-center items-center">
                     <p className=" text-slate-200 text-[8px]">Loading...</p>

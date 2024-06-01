@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
 import Category from "../Molecules/Category";
 import { ICategory } from "@/types/category.type";
+import Empty from "../Molecules/Empty";
 
 const Categories = ({ data }: { data: ICategory[] }) => {
     let content = null;
@@ -13,7 +14,7 @@ const Categories = ({ data }: { data: ICategory[] }) => {
     }
 
     if (!data.length) {
-        content = <h1>There is no category</h1>;
+        content = <Empty description="No Category Data" />;
     }
 
     return (

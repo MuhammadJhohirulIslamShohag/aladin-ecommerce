@@ -23,7 +23,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
                     {title?.split(" ")[0]}
                 </span>{" "}
                 {modifiedTitle}
-                <span className="absolute leading-10 -top-1 left-0 text-black/60 opacity-5 text-6xl lg:text-6xl md:text-4xl text-3xl w-full">
+                <span className="absolute leading-10 -top-1 left-0 text-black/60 opacity-5 lg:text-6xl md:text-4xl text-3xl w-full">
                     {title}
                 </span>
             </h2>

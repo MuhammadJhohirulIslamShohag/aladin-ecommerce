@@ -2,6 +2,7 @@
 
 import featuredCategoryData from "./../../../data/featuredCategoryData";
 import FeaturedSubCategory from "../../Molecules/Home/FeaturedSubCategory";
+import Empty from "../../Molecules/Empty";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,8 +11,10 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 
 const FeaturedSubCategories = () => {
-    return (
-        <div className="lg:pb-10 md:pb-7 pb-5">
+    let content = null;
+
+    if (featuredCategoryData?.length) {
+        content = (
             <Swiper
                 slidesPerView={8}
                 autoplay={{
@@ -45,8 +48,13 @@ const FeaturedSubCategories = () => {
                     </SwiperSlide>
                 ))}
             </Swiper>
-        </div>
-    );
+        );
+    }
+
+    if (!featuredCategoryData?.length) {
+        content = <Empty description="No Product Data" />;
+    }
+    return <div className="lg:pb-10 md:pb-7 pb-5">{content}</div>;
 };
 
 export default FeaturedSubCategories;

@@ -7,8 +7,8 @@ import OrderCartInTable from "@/components/Oraganisms/Order/OrderCartInTable";
 import OrderInvoiceDownload from "@/components/Oraganisms/Order/OrderInvoiceDownload";
 import OrderPaymentInfo from "@/components/Oraganisms/Order/OrderPaymentInfo";
 import OrderHistories from "@/components/Oraganisms/Skeletons/User/OrderHistory/OrderHistories";
+import Empty from "@/components/Molecules/Empty";
 
-// import useCheckUser from "@/hooks/useCheckUser";
 import { useGetOrdersQuery } from "@/redux/services/order/orderApiService";
 import { getUserInfo } from "@/store/user/users";
 import { IOrder } from "@/types/order.types";
@@ -45,36 +45,28 @@ const History = () => {
             </div>
         );
     };
-    return (
-        <>
-            <div>
-                {isLoading ? (
-                    <OrderHistories />
-                ) : (
-                    <>
-                        <h4 className="text-center text-lg text-green-400 mt-2 mb-0">
-                            {ordersData && ordersData.length > 0
-                                ? "User Purchase Order"
-                                : "No Purchase Order"}
-                        </h4>
-                        <hr />
-                        {ordersData &&
-                            ordersData?.length > 0 &&
-                            ordersData?.map((order: IOrder) => (
-                                <div
-                                    className="mx-5 my-3 p-3 card"
-                                    key={order?._id}
-                                >
-                                    <OrderPaymentInfo order={order} />
-                                    <OrderCartInTable order={order} />
-                                    {showDownloadLink(order)}
-                                </div>
-                            ))}
-                    </>
-                )}
+
+    let content = null;
+
+    if (ordersData?.length) {
+        content = ordersData?.map((order: IOrder) => (
+            <div className="mx-5 my-3 p-3 card" key={order?._id}>
+                <OrderPaymentInfo order={order} />
+                <OrderCartInTable order={order} />
+                {showDownloadLink(order)}
             </div>
-        </>
-    );
+        ));
+    }
+
+    if (!ordersData?.length) {
+        content = <Empty description={`No Purchase Order`} />;
+    }
+
+    if (isLoading) {
+        content = <OrderHistories />;
+    }
+
+    return <div>{content}</div>;
 };
 
 export default History;

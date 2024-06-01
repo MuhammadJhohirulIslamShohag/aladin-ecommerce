@@ -25,6 +25,7 @@ import { useGetColorsQuery } from "@/redux/services/color/colorApiService";
 import { useGetProductsByFiltersQuery } from "@/redux/services/product/productApiService";
 import { useGetSubCategoriesQuery } from "@/redux/services/subCategory/subCategoryApiService";
 import { shopInitialState, shopReducer } from "@/utils/shopReducer";
+import Empty from "@/components/Molecules/Empty";
 
 const Shop = () => {
     const [shopState, shopDispatch] = useReducer(shopReducer, shopInitialState);
@@ -420,7 +421,7 @@ const Shop = () => {
 
                             {/* Filter Products */}
                             <div className="col-span-3">
-                                <div className="">
+                                <div className="lg:h-[87%] md:h-[94%] h-[97%]">
                                     {isLoading ? (
                                         <div
                                             className={`grid gap-5 ${
@@ -432,9 +433,7 @@ const Shop = () => {
                                             <ShopProductsSkeleton />
                                         </div>
                                     ) : products && products.length < 1 ? (
-                                        <p className="text-center text-xl text-primary">
-                                            No Product Found
-                                        </p>
+                                        <Empty description="No Shop Product Data" />
                                     ) : (
                                         <div
                                             className={`grid gap-5 ${

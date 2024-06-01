@@ -1,18 +1,18 @@
 "use client";
 
-import React from "react";
-import Blog from "../Molecules/Blog";
-import SectionTitle from "../Molecules/SectionTitle";
+import Blog from "../../Molecules/Blog";
+import SectionTitle from "../../Molecules/SectionTitle";
 
 import { IBlog } from "@/types/blog.types";
 
 // Import Swiper React components
+import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
+import Empty from "@/components/Molecules/Empty";
 
 const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
     let content = null;
@@ -57,7 +57,7 @@ const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
     }
 
     if (!blogs.length) {
-        content = <h1> There is no blog</h1>;
+        content = <Empty description="No Blog Data" />;
     }
 
     return (
@@ -67,7 +67,7 @@ const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
             data-aos-delay="1"
             data-aos-duration="1000"
             data-aos-easing="ease-in-out"
-            className="container py-16 md:py-12 sm:py-2"
+            className="container lg:py-16 md:py-12 py-2"
             id="blogs"
         >
             <SectionTitle title="Popular Blogs" />
