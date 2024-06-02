@@ -5,10 +5,10 @@ type SideBarCollapseButtonPropType = {
     setToggleAdminSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const SideBarCollapseButton = ({
+const SideBarCollapseButton: React.FC<SideBarCollapseButtonPropType> = ({
     toggleAdminSidebar,
     setToggleAdminSidebar,
-}: SideBarCollapseButtonPropType) => {
+}) => {
     return (
         <div className="block border-t-2 w-full border-white">
             <label

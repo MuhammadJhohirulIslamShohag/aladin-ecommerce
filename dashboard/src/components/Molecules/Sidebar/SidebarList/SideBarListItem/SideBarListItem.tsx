@@ -13,7 +13,7 @@ type SideBarListItemPropType = {
     isDropdownList?: boolean;
 };
 
-const SideBarListItem = ({
+const SideBarListItem: React.FC<SideBarListItemPropType> = ({
     children,
     navigationLink,
     icon,
@@ -22,8 +22,8 @@ const SideBarListItem = ({
     setOpen,
     open,
     isDropdownList = false,
-}: SideBarListItemPropType) => {
-    const location = useLocation()
+}) => {
+    const location = useLocation();
     return (
         <>
             {isDropdownList ? (
@@ -63,7 +63,13 @@ const SideBarListItem = ({
                     </ul>
                 </li>
             ) : (
-                <li className={location.pathname == navigationLink ? "bg-gray-100 rounded-lg" : ""}>
+                <li
+                    className={
+                        location.pathname == navigationLink
+                            ? "bg-gray-100 rounded-lg"
+                            : ""
+                    }
+                >
                     {!isLabel ? (
                         <Link
                             to={navigationLink!}

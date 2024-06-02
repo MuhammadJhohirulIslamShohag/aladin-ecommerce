@@ -6,8 +6,8 @@ import { FaUsers } from "react-icons/fa";
 import { MdLogout, MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { RiCoupon4Line } from "react-icons/ri";
 
-import SideBarDropdownListItem from "./SideBarDropdownListItem/SideBarDropdownListItem";
-import SideBarListItem from "./SideBarListItem/SideBarListItem";
+import SideBarListItem from "../../../Molecules/Sidebar/SidebarList/SideBarListItem/SideBarListItem";
+import SideBarDropdownListItem from "../../../Molecules/Sidebar/SidebarList/SideBarDropdownListItem/SideBarDropdownListItem";
 
 import { getUserInfo, removeUserInfo } from "../../../../store/user/users";
 import { USER_ROLES } from "../../../../constants/role";

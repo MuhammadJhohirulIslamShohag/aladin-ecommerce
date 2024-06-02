@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { NotificationType } from "./Notification.types";
 
 interface NotificationProps {
-    image: string;
-    message: string;
-    user: string;
-    date: string;
+    notification: {
+        image: string;
+        message: string;
+        user: string;
+        date: string;
+    };
 }
 
 const Notification: React.FC<NotificationProps> = ({ notification }) => {

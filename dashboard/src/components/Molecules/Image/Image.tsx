@@ -1,5 +1,6 @@
-import { ConfigProvider, Image } from "antd";
 import { FC } from "react";
+import { ConfigProvider, Image } from "antd";
+
 import cn from "../../../utils/cn";
 
 interface AntdImageProps {
