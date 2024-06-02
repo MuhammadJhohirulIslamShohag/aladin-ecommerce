@@ -49,7 +49,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
     return (
         <div
             className={cn(
-                `overflow-y-auto origin-top-right transition-all duration-700 overflow-x-hidden fixed top-0 right-0 left-0  justify-center items-center w-full inset-0 h-[calc(100%)] bg-primary/20 flex modal-overlay z-[9999999] ${
+                `overflow-y-auto origin-top-right transition-all duration-700 overflow-x-hidden fixed top-0 right-0 left-0  justify-center items-center w-full inset-0 h-[calc(100%)] bg-primary/30 flex modal-overlay z-[9999999] ${
                     isModalOpen ? "scale-100" : "scale-0"
                 }`,
                 className

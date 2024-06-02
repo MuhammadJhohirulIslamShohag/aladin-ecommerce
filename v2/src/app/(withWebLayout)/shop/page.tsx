@@ -421,7 +421,7 @@ const Shop = () => {
 
                             {/* Filter Products */}
                             <div className="col-span-3">
-                                <div className="lg:h-[87%] md:h-[94%] h-[97%]">
+                                <div className="">
                                     {isLoading ? (
                                         <div
                                             className={`grid gap-5 ${

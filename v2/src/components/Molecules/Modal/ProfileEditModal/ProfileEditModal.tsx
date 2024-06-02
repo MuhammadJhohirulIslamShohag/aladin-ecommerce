@@ -54,6 +54,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProp> = ({
         <>
             <CustomModal
                 title={title}
+                modalWidth={"w-[500px]"}
                 isModalOpen={showModal}
                 onClose={() => setShowModal((prev) => !prev)}
             >

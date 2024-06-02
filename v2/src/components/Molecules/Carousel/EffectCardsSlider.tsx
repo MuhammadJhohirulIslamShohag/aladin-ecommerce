@@ -23,7 +23,7 @@ const EffectCardsSlider: React.FC<Props> = ({ products }) => {
                 >
                     {products?.map((product: IProduct) => (
                         <SwiperSlide key={product._id}>
-                            <Link href={`products/${product._id}`}>
+                            <Link href={`products/${product.slug}`}>
                                 <ValidateImage
                                     className="max-h-full h-full w-full object-fill"
                                     imageUrl={product.imageURLs?.[0]}

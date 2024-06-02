@@ -29,11 +29,6 @@ const Address = () => {
 
     const [updateUser, { isLoading }] = useUpdateUserMutation();
 
-    // show model for update profile
-    const handleShowModal = () => {
-        setShowModal((prev) => !prev);
-    };
-
     // save address to the database
     const handleAddressEditSubmit = async (data: IAddressFormValue) => {
         if (user && user?.token) {
@@ -62,14 +57,14 @@ const Address = () => {
                     type: StoreActionType.ADD_SHIPPING_ADDRESS,
                     payload: data,
                 });
-                handleShowModal();
+                setShowModal((prev) => !prev)
                 toast.success("Save Address!");
             } else {
                 if ("error" in result && result.error) {
                     const customError =
                         result.error as CustomFetchBaseQueryError;
                     if (customError.data?.message.includes("jwt expired")) {
-                        removeUserInfo()
+                        removeUserInfo();
                         router.push(`/auth/login?redirect=/user/address`);
                     }
                 }
@@ -91,7 +86,7 @@ const Address = () => {
                             <span
                                 className="text-green-500 text-md hover:text-black transition-all cursor-pointer"
                                 id="my-profile-update-modal"
-                                onClick={handleShowModal}
+                                onClick={() => setShowModal((prev) => !prev)}
                             >
                                 <BiEdit />
                             </span>
@@ -107,7 +102,8 @@ const Address = () => {
             {showModal && (
                 <AddressEditModal
                     loading={isLoading}
-                    closeModal={handleShowModal}
+                    showModal={showModal}
+                    setShowModal={setShowModal}
                     title="Address Information Update"
                     handleAddressEditSubmit={handleAddressEditSubmit}
                 />
