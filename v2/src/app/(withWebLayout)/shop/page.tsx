@@ -447,7 +447,7 @@ const Shop = () => {
                                     )}
                                 </div>
                                 {productsInfo?.meta?.totalItems > 0 && (
-                                    <div className="mt-5">
+                                    <div className="mt-7">
                                         <Pagination
                                             pages={
                                                 productsInfo?.meta?.totalPage ||

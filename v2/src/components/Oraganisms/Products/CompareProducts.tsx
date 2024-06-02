@@ -39,8 +39,8 @@ const CompareProducts: React.FC<CompareProductsProps> = ({ products }) => {
         : "p-4 border-y border-r border-blue-gray-50";
 
     return (
-        <div className="md:container md:mx-auto md:px-6 px-2 bg-white pt-10">
-            <div className="px-4 lg:px-20 font-Quicksand py-6">
+        <div className="md:container md:mx-auto md:px-6 px-2 bg-white pt-10 lg:pb-40 md:pb-20 pb-12">
+            <div className="px-4 lg:px-20">
                 <div className="mt-4">
                     {comProductOptimistic?.length > 0 ? (
                         <div className="grid grid-cols-12">

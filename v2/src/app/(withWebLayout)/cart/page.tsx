@@ -115,7 +115,7 @@ const Cart = () => {
 
     return (
         <>
-            <div className="container mt-10 mb-28">
+            <div className="container mt-10 lg:mb-40 mb-28">
                 <div className="grid lg:grid-cols-12 lg:gap-5 grid-cols-1 gap-0">
                     {/* Showing Carts */}
                     <ShowingCarts carts={carts} />

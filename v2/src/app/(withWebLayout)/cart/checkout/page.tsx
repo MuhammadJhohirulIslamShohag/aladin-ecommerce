@@ -306,7 +306,7 @@ const Checkout = () => {
 
     return (
         <>
-            <div className="container mt-10 px-40 pb-24">
+            <div className="container mt-10 px-40 lg:pb-40 pb-24">
                 <div className="grid lg:grid-cols-12 lg:gap-16 grid-cols-1 gap-0 md:grid-cols-1">
                     <DeliveryAddress
                         submitShippingAddress={submitShippingAddress}
