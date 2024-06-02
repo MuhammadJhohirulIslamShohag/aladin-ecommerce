@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BiCategoryAlt } from "react-icons/bi";
+import { TbCategoryPlus } from "react-icons/tb";
+import { TbDiscountCheckFilled } from "react-icons/tb";
+import { TbTextSize } from "react-icons/tb";
 import { AiFillDashboard, AiFillSetting } from "react-icons/ai";
 import { BsCartCheck } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
+import { IoColorPaletteOutline } from "react-icons/io5";
 import { MdLogout, MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { RiCoupon4Line } from "react-icons/ri";
 
@@ -48,26 +53,26 @@ const SidebarList = () => {
                 <span className="flex-1 ml-3 whitespace-nowrap">Coupons</span>
             </SideBarListItem>
             <SideBarListItem navigationLink="/categories">
-                <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
+                <BiCategoryAlt className="h-[20px] w-[20px] text-green-400" />
                 <span className="flex-1 ml-3 whitespace-nowrap">Category</span>
             </SideBarListItem>
             <SideBarListItem navigationLink="/sub-categories">
-                <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
+                <TbCategoryPlus className="h-[20px] w-[20px] text-green-400" />
                 <span className="flex-1 ml-3 whitespace-nowrap">
                     SubCategory
                 </span>
             </SideBarListItem>
             <SideBarListItem navigationLink="/colors">
-                <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
+                <IoColorPaletteOutline className="h-[20px] w-[20px] text-green-400" />
                 <span className="flex-1 ml-3 whitespace-nowrap">Color</span>
             </SideBarListItem>
             <SideBarListItem navigationLink="/sizes">
-                <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
+                <TbTextSize className="h-[21px] w-[21px] text-green-400" />
                 <span className="flex-1 ml-3 whitespace-nowrap">Size</span>
             </SideBarListItem>
             <SideBarListItem navigationLink="/brands">
-                <RiCoupon4Line className="h-[19px] w-[19px] text-green-400" />
-                <span className="flex-1 ml-3 whitespace-nowrap">Brand</span>
+                <TbDiscountCheckFilled className="h-[22px] w-[22px] text-green-400" />
+                <span className="flex-1 ml-2.5 whitespace-nowrap">Brand</span>
             </SideBarListItem>
             <SideBarListItem
                 open={openProduct}
