@@ -58,7 +58,7 @@ const Navbar = ({ openSideBar, setOpenSideBar }: NavbarPropsType) => {
                         to="/"
                         className="text-green-400 font-bold text-3xl sm:text-xl"
                     >
-                        <img src={Logo} alt="logo" className="w-[60%]" />
+                        <img src={Logo} alt="logo" className="lg:w-[60%] md:w-[88%] w-[89%] h-full" />
                     </Link>
                 </div>
 
@@ -91,9 +91,9 @@ const Navbar = ({ openSideBar, setOpenSideBar }: NavbarPropsType) => {
                     </div>
                 </form>
 
-                <div className="flex items-center justify-end w-1/4 space-x-4">
+                <div className="flex items-center justify-end md:w-1/4 w-[34%] space-x-4">
                     <div
-                        className="relative"
+                        className="relative top-1"
                         onMouseOver={() => setShowNotification(true)}
                         onMouseLeave={() => setShowNotification(false)}
                     >

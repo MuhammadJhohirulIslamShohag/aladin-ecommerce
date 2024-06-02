@@ -44,7 +44,7 @@ const SidebarList = () => {
                 <span className="ml-3">Dashboard</span>
             </SideBarListItem>
 
-            {userInfo?.role !== USER_ROLES.admin && (
+            {userInfo?.role === USER_ROLES.admin && (
                 <SideBarListItem navigationLink="/admin/orders">
                     <BsCartCheck className="h-[19px] w-[19px] text-green-400" />
                     <span className="flex-1 ml-3 whitespace-nowrap">
@@ -97,7 +97,7 @@ const SidebarList = () => {
                     name="Add Product"
                 />
             </SideBarListItem>
-            {userInfo?.role !== USER_ROLES.admin && (
+            {userInfo?.role === USER_ROLES.admin && (
                 <SideBarListItem
                     open={openUser}
                     setOpen={setOpenUser}

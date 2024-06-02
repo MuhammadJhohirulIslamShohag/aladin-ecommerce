@@ -53,7 +53,7 @@ const SellerDashboard = () => {
 
                 {/* Recent Order And Product Table */}
                 <section className="mt-10">
-                    <div className="md:grid block lg:grid-cols-12 grid-cols-1 gap-3 ">
+                    <div className="lg:grid block lg:grid-cols-12 grid-cols-1 gap-3 ">
                         <div className="col-span-8 lg:mb-0 mb-6">
                             <RecentOrder
                                 orders={dashWidgetInfos?.orders?.orders || []}
