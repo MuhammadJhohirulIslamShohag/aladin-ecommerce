@@ -48,7 +48,7 @@ const RecentUsers: React.FC<RecentUsersProps> = ({
                     </h6>
                 </div>
                 <div className="text-gray-500 text-sm font-bold hover:text-green-500 transition-all cursor-pointer">
-                    <Link to="/dashboard/admin/customers">View All</Link>
+                    <Link to="/admin/buyers">View All</Link>
                 </div>
             </div>
             <div className="relative overflow-x-auto sm:rounded-lg scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-gray-100">

@@ -6,6 +6,7 @@ import { AiFillDashboard } from "react-icons/ai";
 import { MdLogout } from "react-icons/md";
 
 import Notifications from "./Notifications/Notifications";
+import Logo from "../../../assets/images/logo-big.png";
 
 import { getUserInfo, removeUserInfo } from "../../../store/user/users";
 
@@ -30,7 +31,7 @@ const Navbar = ({ openSideBar, setOpenSideBar }: NavbarPropsType) => {
 
     return (
         <nav className="bg-white fixed top-0 z-50 w-full border-b border-gray-200 py-3">
-            <div className="container flex lg:justify-between md:justify-between justify-none">
+            <div className="px-8 flex lg:justify-between md:justify-between justify-none">
                 <div className="lg:w-1/4 md:w-1/4 w-2/3 flex">
                     <button
                         onClick={() => setOpenSideBar(!openSideBar)}
@@ -55,7 +56,7 @@ const Navbar = ({ openSideBar, setOpenSideBar }: NavbarPropsType) => {
                         to="/"
                         className="text-green-400 font-bold text-3xl sm:text-xl"
                     >
-                        Aladin
+                        <img src={Logo} alt="logo" className="w-[60%]" />
                     </Link>
                 </div>
 
@@ -151,7 +152,7 @@ const Navbar = ({ openSideBar, setOpenSideBar }: NavbarPropsType) => {
                                         <ul className="text-sm text-gray-700">
                                             <li>
                                                 <Link
-                                                    to="/dashboard/admin"
+                                                    to="/"
                                                     className="flex  py-2 px-4 hover:bg-gray-100 text-gray-600  transition duration-75"
                                                 >
                                                     <AiFillDashboard className="text-green-300 mr-1 mt-[2px]" />
@@ -160,7 +161,7 @@ const Navbar = ({ openSideBar, setOpenSideBar }: NavbarPropsType) => {
                                             </li>
                                             <li>
                                                 <Link
-                                                    to="/dashboard/admin/setting/profile"
+                                                    to="/setting/profile"
                                                     className="flex  py-2 px-4 hover:bg-gray-100 text-gray-600 transition duration-75 "
                                                 >
                                                     <FaUser className="text-green-300 mr-1 mt-[2px]" />

@@ -50,7 +50,7 @@ const RecentOrder: React.FC<RecentOrderProps> = ({
                     </h6>
                 </div>
                 <div className="text-gray-500 text-sm font-bold hover:text-green-500 transition-all cursor-pointer">
-                    <Link to="/dashboard/admin/orders">View All</Link>
+                    <Link to="/admin/orders">View All</Link>
                 </div>
             </div>
             <div className="relative overflow-x-auto sm:rounded-lg">

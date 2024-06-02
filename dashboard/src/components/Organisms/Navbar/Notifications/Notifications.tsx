@@ -1,8 +1,7 @@
 import { GrOverview } from "react-icons/gr";
 
-import Notification from "./Notification";
+import Notification from "../../../Molecules/Navbar/Notifications/Notification";
 
-import { NotificationType } from "./Notification.types";
 import { notificationsData } from "../../../../data/notifications";
 
 const Notifications = ({ showNotification }: { showNotification: boolean }) => {
@@ -17,15 +16,10 @@ const Notifications = ({ showNotification }: { showNotification: boolean }) => {
             </div>
             <div>
                 <>
-                    {notificationsData.length &&
-                        notificationsData.map(
-                            (notification: NotificationType, i: number) => (
-                                <Notification
-                                    key={i}
-                                    notification={notification}
-                                />
-                            )
-                        )}
+                    {notificationsData?.length &&
+                        notificationsData.map((notification, i: number) => (
+                            <Notification key={i} notification={notification} />
+                        ))}
                 </>
             </div>
             <a

@@ -1,8 +1,8 @@
 import { useState, useSyncExternalStore } from "react";
 import { Outlet } from "react-router-dom";
 
-import Navbar from "../../components/shared/Navbar/Navbar";
-import SidebarList from "../../components/shared/Sidebar/SidebarList/SidebarList";
+import Navbar from "../../components/Organisms/Navbar/Navbar";
+import SidebarList from "../../components/Organisms/Sidebar/SidebarList/SidebarList";
 
 const MainLayout = () => {
     const [openSideBar, setOpenSideBar] = useState<boolean>(true);
