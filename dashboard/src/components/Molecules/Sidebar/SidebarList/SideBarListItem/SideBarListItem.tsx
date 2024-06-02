@@ -29,7 +29,7 @@ const SideBarListItem: React.FC<SideBarListItemPropType> = ({
             {isDropdownList ? (
                 <li>
                     <button
-                        onClick={() => setOpen!(!open)}
+                        onClick={() => setOpen!((prev) => !prev)}
                         type="button"
                         className={`flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 `}
                     >

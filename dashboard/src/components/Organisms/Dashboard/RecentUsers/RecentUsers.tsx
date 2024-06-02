@@ -5,6 +5,7 @@ import Empty from "../../../Molecules/Empty";
 import RecentUserRow from "../../../Molecules/Dashboard/RecentUsers/RecentUserRow";
 
 import { IUser } from "../../../../types/user.type";
+import { useOpenSetting } from "../../../../context/OpenSettingContext";
 
 interface RecentUsersProps {
     users: IUser[];
@@ -15,6 +16,8 @@ const RecentUsers: React.FC<RecentUsersProps> = ({
     users = [],
     isLoading = false,
 }) => {
+    const { setOpenUser } = useOpenSetting();
+
     let content = null;
 
     // check if data not available
@@ -47,7 +50,10 @@ const RecentUsers: React.FC<RecentUsersProps> = ({
                         Recent Users
                     </h6>
                 </div>
-                <div className="text-gray-500 text-sm font-bold hover:text-green-500 transition-all cursor-pointer">
+                <div
+                    onClick={() => setOpenUser((prev) => !prev)}
+                    className="text-gray-500 text-sm font-bold hover:text-green-500 transition-all cursor-pointer"
+                >
                     <Link to="/admin/buyers">View All</Link>
                 </div>
             </div>

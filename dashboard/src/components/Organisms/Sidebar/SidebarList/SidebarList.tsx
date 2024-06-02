@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiCategoryAlt } from "react-icons/bi";
 import { TbCategoryPlus } from "react-icons/tb";
@@ -16,11 +15,17 @@ import SideBarDropdownListItem from "../../../Molecules/Sidebar/SidebarList/Side
 
 import { getUserInfo, removeUserInfo } from "../../../../store/user/users";
 import { USER_ROLES } from "../../../../constants/role";
+import { useOpenSetting } from "../../../../context/OpenSettingContext";
 
 const SidebarList = () => {
-    const [openProduct, setOpenProduct] = useState<boolean>(false);
-    const [openAllUsers, setOpenAllUsers] = useState<boolean>(false);
-    const [openSetting, setOpenSetting] = useState<boolean>(false);
+    const {
+        openSetting,
+        setOpenSetting,
+        openProduct,
+        setOpenProduct,
+        openUser,
+        setOpenUser,
+    } = useOpenSetting();
 
     const user = getUserInfo();
     const userInfo = user?.user;
@@ -71,8 +76,8 @@ const SidebarList = () => {
                 <span className="flex-1 ml-3 whitespace-nowrap">Size</span>
             </SideBarListItem>
             <SideBarListItem navigationLink="/brands">
-                <TbDiscountCheckFilled className="h-[22px] w-[22px] text-green-400" />
-                <span className="flex-1 ml-2.5 whitespace-nowrap">Brand</span>
+                <TbDiscountCheckFilled className="h-[21px] w-[21px] text-green-400" />
+                <span className="flex-1 ml-3 whitespace-nowrap">Brand</span>
             </SideBarListItem>
             <SideBarListItem
                 open={openProduct}
@@ -94,8 +99,8 @@ const SidebarList = () => {
             </SideBarListItem>
             {userInfo?.role !== USER_ROLES.admin && (
                 <SideBarListItem
-                    open={openAllUsers}
-                    setOpen={setOpenAllUsers}
+                    open={openUser}
+                    setOpen={setOpenUser}
                     icon={
                         <FaUsers className="h-[19px] w-[19px] text-green-400" />
                     }

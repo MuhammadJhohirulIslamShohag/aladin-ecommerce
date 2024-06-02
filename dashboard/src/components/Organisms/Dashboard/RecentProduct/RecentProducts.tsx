@@ -5,6 +5,7 @@ import Empty from "../../../Molecules/Empty";
 import RecentProductRow from "../../../Molecules/Dashboard/RecentProduct/RecentProductRow";
 
 import { IProduct } from "../../../../types/product.type";
+import { useOpenSetting } from "../../../../context/OpenSettingContext";
 
 interface RecentProductProps {
     products: IProduct[];
@@ -15,6 +16,8 @@ const RecentProduct: React.FC<RecentProductProps> = ({
     products = [],
     isLoading = false,
 }) => {
+    const { setOpenProduct } = useOpenSetting();
+
     let content = null;
 
     // check if data not available
@@ -47,7 +50,10 @@ const RecentProduct: React.FC<RecentProductProps> = ({
                         Recent Products
                     </h6>
                 </div>
-                <div className="text-gray-500 text-sm font-bold hover:text-green-500 transition-all cursor-pointer">
+                <div
+                    onClick={() => setOpenProduct((prev) => !prev)}
+                    className="text-gray-500 text-sm font-bold hover:text-green-500 transition-all cursor-pointer"
+                >
                     <Link to="/products">View All</Link>
                 </div>
             </div>
