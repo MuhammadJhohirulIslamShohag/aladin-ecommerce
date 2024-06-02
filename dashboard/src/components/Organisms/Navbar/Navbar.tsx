@@ -9,6 +9,7 @@ import Notifications from "./Notifications/Notifications";
 import Logo from "../../../assets/images/logo-big.png";
 
 import { getUserInfo, removeUserInfo } from "../../../store/user/users";
+import { useOpenSetting } from "../../../context/OpenSettingContext";
 
 type NavbarPropsType = {
     openSideBar: boolean;
@@ -18,6 +19,7 @@ type NavbarPropsType = {
 const Navbar = ({ openSideBar, setOpenSideBar }: NavbarPropsType) => {
     const [showNotification, setShowNotification] = useState(false);
     const [showProfile, setShowProfile] = useState<boolean>(false);
+    const { setOpenSetting } = useOpenSetting();
 
     const userInfo = getUserInfo();
     const user = userInfo?.user;
@@ -155,16 +157,22 @@ const Navbar = ({ openSideBar, setOpenSideBar }: NavbarPropsType) => {
                                                     to="/"
                                                     className="flex  py-2 px-4 hover:bg-gray-100 text-gray-600  transition duration-75"
                                                 >
-                                                    <AiFillDashboard className="text-green-300 mr-1 mt-[2px]" />
+                                                    <AiFillDashboard className="text-green-300 mr-1 mt-[3px]" />
                                                     Dashboard
                                                 </Link>
                                             </li>
-                                            <li>
+                                            <li
+                                                onClick={() =>
+                                                    setOpenSetting(
+                                                        (prev) => !prev
+                                                    )
+                                                }
+                                            >
                                                 <Link
                                                     to="/setting/profile"
-                                                    className="flex  py-2 px-4 hover:bg-gray-100 text-gray-600 transition duration-75 "
+                                                    className="flex py-2 px-4 hover:bg-gray-100 text-gray-600 transition duration-75 "
                                                 >
-                                                    <FaUser className="text-green-300 mr-1 mt-[2px]" />
+                                                    <FaUser className="text-green-300 mr-1 mt-[3px]" />
                                                     Profile
                                                 </Link>
                                             </li>
