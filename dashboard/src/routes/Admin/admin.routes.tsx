@@ -9,7 +9,7 @@ export const adminSingleRoutes = [
     {
         path: "orders",
         element: (
-            <RoleBasedPrivateRouter role={USER_ROLES.admin}>
+            <RoleBasedPrivateRouter role={USER_ROLES.seller}>
                 <AllOrders />
             </RoleBasedPrivateRouter>
         ),
@@ -17,7 +17,7 @@ export const adminSingleRoutes = [
     {
         path: "buyers",
         element: (
-            <RoleBasedPrivateRouter role={USER_ROLES.admin}>
+            <RoleBasedPrivateRouter role={USER_ROLES.seller}>
                 <AllBuyers />
             </RoleBasedPrivateRouter>
         ),
@@ -25,7 +25,7 @@ export const adminSingleRoutes = [
     {
         path: "sellers",
         element: (
-            <RoleBasedPrivateRouter role={USER_ROLES.admin}>
+            <RoleBasedPrivateRouter role={USER_ROLES.seller}>
                 <AllSellers />
             </RoleBasedPrivateRouter>
         ),

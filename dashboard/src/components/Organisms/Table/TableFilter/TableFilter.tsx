@@ -24,7 +24,7 @@ const TableFilter: React.FC<TableFilterProps> = ({
     className,
 }) => {
     return (
-        <div className={cn("flex justify-between", className || "")}>
+        <div className={cn("lg:flex block justify-between", className || "")}>
             <div className="flex space-x-3">
                 <AntdSelect
                     defaultValues="5"

@@ -14,7 +14,7 @@ const Pagination: React.FC<PaginationProps> = ({ pages, page, setPage }) => {
 
     return (
         <div className="flex flex-col lg:flex-row justify-between">
-            <nav className="flex justify-center items-center text-primary mt-8 lg:mt-0">
+            <nav className="flex justify-center items-center text-primary my-5 lg:my-0">
                 <Button
                     label={
                         <svg

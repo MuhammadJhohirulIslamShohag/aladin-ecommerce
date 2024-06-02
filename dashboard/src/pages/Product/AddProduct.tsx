@@ -17,8 +17,8 @@ const AddProductPage = () => {
     
     return (
         <div>
-            <div className="bg-secondary px-9 pt-10  pb-9 rounded-lg">
-                <h2 className="text-center font-semibold text-primary text-2xl">
+            <div className="bg-secondary md:px-9 px-5 md:pt-10 pt-6 md:pb-9 pb-6 rounded-lg">
+                <h2 className="text-center font-semibold text-primary md:text-2xl text-xl md:mb-0 mb-3">
                     Add New Product
                 </h2>
                 <CreateProductForm

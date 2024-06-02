@@ -125,7 +125,7 @@ const CreateProductForm = ({
                 />
             </div>
             <div className="grid md:gap-x-5 lg:mb-5 lg:grid-cols-2 grid-cols-1 md:grid-cols-1 mb-2 md:mb-0 gap-x-3 gap-y-2">
-                <div>
+                <div className="lg:col-span-1 col-span-2">
                     <FormGroup
                         register={register}
                         inputName={"name"}
@@ -137,7 +137,7 @@ const CreateProductForm = ({
                         className={"drop-shadow-md"}
                     />
                 </div>
-                <div>
+                <div className="lg:col-span-1 col-span-2">
                     <FormGroup
                         register={register}
                         inputName={"price"}
@@ -163,7 +163,7 @@ const CreateProductForm = ({
                     />
                 </div>
 
-                <div>
+                <div className="lg:col-span-1 col-span-2">
                     <FormGroup
                         register={register}
                         inputName={"discount"}
@@ -175,7 +175,7 @@ const CreateProductForm = ({
                         className={"drop-shadow-md"}
                     />
                 </div>
-                <div>
+                <div className="lg:col-span-1 col-span-2">
                     <FormGroup
                         register={register}
                         inputName={"quantity"}
@@ -187,7 +187,7 @@ const CreateProductForm = ({
                         errorMessage="Product Price Quantity Is Required!"
                     />
                 </div>
-                <div>
+                <div className="lg:col-span-1 col-span-2">
                     <FormSelectGroup
                         options={ArrayDataModifyHelpers.arrayDataToOptions(
                             categories,
@@ -209,7 +209,7 @@ const CreateProductForm = ({
                         errorMessage={"Product Category Is Required!"}
                     />
                 </div>
-                <div>
+                <div className="lg:col-span-1 col-span-2">
                     <FormSelectGroup
                         options={ArrayDataModifyHelpers.arrayDataToOptions(
                             subCategories,
@@ -232,7 +232,7 @@ const CreateProductForm = ({
                         errorMessage={"Product Sub Category Is Required!"}
                     />
                 </div>
-                <div>
+                <div className="lg:col-span-1 col-span-2">
                     <FormSelectGroup
                         options={ArrayDataModifyHelpers.arrayDataToOptions(
                             brands,
@@ -254,7 +254,7 @@ const CreateProductForm = ({
                         errorMessage={"Product Brand Is Required!"}
                     />
                 </div>
-                <div>
+                <div className="lg:col-span-1 col-span-2">
                     <FormSelectGroup
                         options={ArrayDataModifyHelpers.arrayDataToOptions(
                             colors,
@@ -277,7 +277,7 @@ const CreateProductForm = ({
                         errorMessage={"Product Color Is Required!"}
                     />
                 </div>
-                <div>
+                <div className="lg:col-span-1 col-span-2">
                     <FormSelectGroup
                         options={ArrayDataModifyHelpers.arrayDataToOptions(
                             sizes,
@@ -300,7 +300,7 @@ const CreateProductForm = ({
                         errorMessage={"Product Size Is Required!"}
                     />
                 </div>
-                <div>
+                <div className="lg:col-span-1 col-span-2">
                     <FormSelectGroup
                         options={[
                             {
@@ -322,7 +322,7 @@ const CreateProductForm = ({
                 </div>
             </div>
 
-            <div>
+            <div className="lg:col-span-1 col-span-2">
                 <FormRichTextGroup
                     inputName={"description"}
                     labelName={"Description"}

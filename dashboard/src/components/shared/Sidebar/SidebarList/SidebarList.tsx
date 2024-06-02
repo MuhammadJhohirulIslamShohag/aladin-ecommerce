@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AiFillDashboard } from "react-icons/ai";
+import { AiFillDashboard, AiFillSetting } from "react-icons/ai";
 import { BsCartCheck } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
 import { MdLogout, MdOutlineProductionQuantityLimits } from "react-icons/md";
@@ -15,7 +15,7 @@ import { USER_ROLES } from "../../../../constants/role";
 const SidebarList = () => {
     const [openProduct, setOpenProduct] = useState<boolean>(false);
     const [openAllUsers, setOpenAllUsers] = useState<boolean>(false);
-    // const [openSetting, setOpenSetting] = useState<boolean>(false);
+    const [openSetting, setOpenSetting] = useState<boolean>(false);
 
     const user = getUserInfo();
     const userInfo = user?.user;
@@ -34,7 +34,7 @@ const SidebarList = () => {
                 <span className="ml-3">Dashboard</span>
             </SideBarListItem>
 
-            {userInfo?.role === USER_ROLES.admin && (
+            {userInfo?.role !== USER_ROLES.admin && (
                 <SideBarListItem navigationLink="/admin/orders">
                     <BsCartCheck className="h-[19px] w-[19px] text-green-400" />
                     <span className="flex-1 ml-3 whitespace-nowrap">
@@ -87,7 +87,7 @@ const SidebarList = () => {
                     name="Add Product"
                 />
             </SideBarListItem>
-            {userInfo?.role === USER_ROLES.admin && (
+            {userInfo?.role !== USER_ROLES.admin && (
                 <SideBarListItem
                     open={openAllUsers}
                     setOpen={setOpenAllUsers}
@@ -108,7 +108,7 @@ const SidebarList = () => {
                 </SideBarListItem>
             )}
 
-            {/* <SideBarListItem
+            <SideBarListItem
                 open={openSetting}
                 setOpen={setOpenSetting}
                 icon={
@@ -125,7 +125,7 @@ const SidebarList = () => {
                     dropdownNavigationLink="/setting/address"
                     name="Address"
                 />
-            </SideBarListItem> */}
+            </SideBarListItem>
 
             <SideBarListItem isLabel>
                 <MdLogout className="h-[19px] w-[19px] text-green-400" />

@@ -77,7 +77,6 @@ const SubCategoryPage = () => {
         setIsModalOpen((prev) => !prev);
     };
 
-    console.log(data, "data");
     return (
         <>
             <div>
@@ -86,7 +85,7 @@ const SubCategoryPage = () => {
                     buttonClassName={
                         "text-gray-800 hover:shadow-white/50 bg-white shadow-white/30 py-3 px-4"
                     }
-                    className={"mt-10 mb-7"}
+                    className={"lg:mt-10 mt-5 mb-7"}
                     headerTitle={"All SubCategory"}
                     onClick={() => handleAddSubCategory()}
                     headerClassName={"text-white text-4xl font-bold mb-2"}

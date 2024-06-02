@@ -3,16 +3,19 @@ import { GiTakeMyMoney } from "react-icons/gi";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { SlHandbag } from "react-icons/sl";
 
-import DashWidget from "../../../components/shared/Dashboard/DashWidget/DashWidget";
-import LineChart from "../../../components/shared/Dashboard/LineChart/LineChart";
-import RecentOrder from "../../../components/shared/Dashboard/RecentOrder/RecentOrders";
-import RecentProduct from "../../../components/shared/Dashboard/RecentProduct/RecentProducts";
-import RecentUsers from "../../../components/shared/Dashboard/RecentUsers/RecentUsers";
+import DashWidget from "../../../components/Molecules/Dashboard/DashWidget/DashWidget";
+import RecentOrder from "../../../components/Organisms/Dashboard/RecentOrder/RecentOrders";
+import RecentProduct from "../../../components/Organisms/Dashboard/RecentProduct/RecentProducts";
+import LineChart from "../../../components/Molecules/Dashboard/LineChart/LineChart";
+import RecentUsers from "../../../components/Organisms/Dashboard/RecentUsers/RecentUsers";
 
 import { useGetDashWidgetInfosQuery } from "../../../redux/services/dashboard/dashboardApi";
+import { convertToKFormat } from "../../../utils/convertToKFormat";
 
 const AdminDashboard = () => {
-    const { data: dashWidgetInfosData } = useGetDashWidgetInfosQuery({});
+    const { data: dashWidgetInfosData, isLoading } = useGetDashWidgetInfosQuery(
+        {}
+    );
     const dashWidgetInfos = dashWidgetInfosData?.data;
 
     return (
@@ -39,22 +42,29 @@ const AdminDashboard = () => {
                         <DashWidget
                             icon={<GiTakeMyMoney />}
                             title={"Total Earnings"}
-                            account={dashWidgetInfos?.orders?.totalEarnings}
+                            account={convertToKFormat(
+                                dashWidgetInfos?.orders?.totalEarnings
+                            )}
+                            isEarning
                         />
                     </div>
                 </section>
 
                 {/* Recent Order And Product Table */}
                 <section className="mt-10">
-                    <div className="grid lg:grid-cols-12 grid-cols-1 md:grid-cols-1 gap-3">
-                        <div className="col-span-8">
+                    <div className="md:grid block lg:grid-cols-12 grid-cols-1 gap-3">
+                        <div className="col-span-8 lg:mb-0 mb-6">
                             <RecentOrder
                                 orders={dashWidgetInfos?.orders?.orders || []}
+                                isLoading={isLoading}
                             />
                         </div>
-                        <div className="col-span-4">
+                        <div className="md:col-span-4 col-span-1">
                             <RecentProduct
-                                products={dashWidgetInfos?.products?.products || []}
+                                products={
+                                    dashWidgetInfos?.products?.products || []
+                                }
+                                isLoading={isLoading}
                             />
                         </div>
                     </div>
@@ -75,6 +85,7 @@ const AdminDashboard = () => {
                         <div className="col-span-6  mt-6">
                             <RecentUsers
                                 users={dashWidgetInfos?.users?.users || []}
+                                isLoading={isLoading}
                             />
                         </div>
                     </div>

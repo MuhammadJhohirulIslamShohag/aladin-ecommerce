@@ -23,7 +23,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
     isAddButtonShow = false,
 }) => {
     return (
-        <div className={cn("flex justify-between", className || "")}>
+        <div className={cn("flex justify-between items-center", className || "")}>
             <Heading title={headerTitle} className={headerClassName} />
             {isAddButtonShow ? (
                 <div>

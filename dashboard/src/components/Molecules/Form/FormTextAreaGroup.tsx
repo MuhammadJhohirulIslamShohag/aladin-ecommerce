@@ -10,7 +10,7 @@ import TextArea from "../../Atoms/Form/TextArea";
 
 type FormGroupType<T extends FieldValues> = {
     labelName: string;
-    className: string | undefined;
+    className?: string | undefined;
     inputName: Path<T>;
     register: UseFormRegister<T>;
     errors?: FieldError | undefined;
@@ -24,7 +24,7 @@ const FormTextAreaGroup = <T extends FieldValues>({
     register,
     errors,
     placeholder,
-    className,
+    className="",
     errorMessage,
 }: FormGroupType<T>) => {
     return (

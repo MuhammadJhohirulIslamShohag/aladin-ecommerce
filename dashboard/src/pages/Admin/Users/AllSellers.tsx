@@ -81,7 +81,7 @@ const AllSellers = () => {
                     buttonClassName={
                         "text-gray-800 hover:shadow-white/50 bg-white shadow-white/30 py-3 px-4"
                     }
-                    className={"mt-10 mb-7"}
+                    className={"lg:mt-10 mt-5 mb-7"}
                     headerTitle={"All Orders"}
                     onClick={() => navigate("/products/add-product")}
                     headerClassName={"text-white text-4xl font-bold mb-2"}

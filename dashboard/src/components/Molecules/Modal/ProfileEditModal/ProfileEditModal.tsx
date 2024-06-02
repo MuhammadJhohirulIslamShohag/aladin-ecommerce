@@ -1,14 +1,13 @@
-"use client";
-
-import RegisterInputGroup from "../../Form/RegisterInputGroup";
-import FormTextAreaGroup from "../../Form/FormTextAreaGroup";
-import Label from "@/components/Atoms/Input/Label";
-import CustomModal from "../CustomModal";
-
 import { useForm } from "react-hook-form";
-import { IProfileFormValue } from "@/types/auth.type";
-import { getUserInfo } from "@/store/user/users";
 import { useEffect } from "react";
+
+import AntdModal from "../../../Atoms/Modal/AntdModal";
+import RegisterInputGroup from "../../Form/RegisterInputGroup";
+import Label from "../../../Atoms/Form/Label";
+import FormTextAreaGroup from "../../Form/FormTextAreaGroup";
+
+import { getUserInfo } from "../../../../store/user/users";
+import { IProfileFormValue } from "../../../../types/auth.type";
 
 type ProfileEditModalProp = {
     title: string;
@@ -32,7 +31,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProp> = ({
         handleSubmit,
         register,
         reset,
-        formState: { errors, isSubmitted },
+        formState: { errors },
     } = useForm<IProfileFormValue>({
         defaultValues: {
             name: "",
@@ -52,10 +51,10 @@ const ProfileEditModal: React.FC<ProfileEditModalProp> = ({
 
     return (
         <>
-            <CustomModal
-                title={title}
+            <AntdModal
                 isModalOpen={showModal}
-                onClose={() => setShowModal((prev) => !prev)}
+                onCancel={() => setShowModal((prev) => !prev)}
+                title={title}
             >
                 <form
                     className="p-6 space-y-6"
@@ -97,7 +96,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProp> = ({
                         {isLoading ? "Loading" : "Submit"}
                     </button>
                 </form>
-            </CustomModal>
+            </AntdModal>
         </>
     );
 };

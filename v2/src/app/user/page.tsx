@@ -26,11 +26,6 @@ const UserAccountPage = () => {
     // redux api call
     const [updateUser, { isLoading }] = useUpdateUserMutation();
 
-    // show model for update profile
-    const handleShowModal = () => {
-        setShowModal((prev) => !prev);
-    };
-
     const handleProfileEditSubmit = async (data: IProfileFormValue) => {
         const result = await updateUser({
             id: userInfo?._id,
@@ -75,7 +70,9 @@ const UserAccountPage = () => {
                             <span
                                 className="text-green-500 text-md hover:text-black transition-all cursor-pointer"
                                 id="my-profile-update-modal"
-                                onClick={handleShowModal}
+                                onClick={() =>
+                                    setShowModal((prev) => !prev)
+                                }
                             >
                                 <BiEdit />
                             </span>
@@ -125,7 +122,8 @@ const UserAccountPage = () => {
             {showModal && (
                 <ProfileEditModal
                     isLoading={isLoading}
-                    closeModal={handleShowModal}
+                    setShowModal={setShowModal}
+                    showModal={showModal}
                     handleProfileEditSubmit={handleProfileEditSubmit}
                     title="Profile Information Update"
                 />

@@ -10,10 +10,12 @@ import SizePage from "../../pages/Admin/Size/Size";
 import SubCategoryPage from "../../pages/Admin/SubCategory/SubCategory";
 import AdminDashboard from "../../pages/Admin/AdminDashboard/AdminDashboard";
 import SellerDashboard from "../../pages/Seller/SellerDashboard/SellerDashboard";
+import ProfilePage from "../../pages/Profile/Profile";
 
 import { getUserInfo } from "../../store/user/users";
 import { USER_ROLES } from "../../constants/role";
 import RoleBasedPrivateRouter from "../ProtectRoute/RoleBasedPrivateRouter";
+import AddressPage from "../../pages/Profile/Address/Address";
 
 const user = getUserInfo();
 const userInfo = user?.user;
@@ -64,6 +66,16 @@ export const allCommonRoutes = {
             path: "/colors",
             element: <ColorPage />,
         },
+        // Start Profile Address
+        {
+            path: "/setting/profile",
+            element: <ProfilePage />,
+        },
+        {
+            path: "/setting/address",
+            element: <AddressPage />,
+        },
+        // End Profile Address
     ],
     single: [
         {

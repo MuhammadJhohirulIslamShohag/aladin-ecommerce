@@ -23,7 +23,6 @@ export interface IUser {
 export interface IShippingAddress {
     firstName: string;
     lastName: string;
-    company: string;
     address1: string;
     address2: string;
     city: string;
