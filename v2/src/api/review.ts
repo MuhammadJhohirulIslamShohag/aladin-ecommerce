@@ -1,10 +1,11 @@
+import { config } from "@/config/envConfig";
 import axios from "axios";
 
 // for getting all reviews
 export const getReviews = async (query: Record<string, unknown>) => {
     try {
         return await axios.get(
-            `${process.env.NEXT_PUBLIC_SERVER_API}/reviews`,
+            `${config.baseURL}/reviews`,
             {
                 params: query,
             }
@@ -18,7 +19,7 @@ export const getReviews = async (query: Record<string, unknown>) => {
 export const getSingleReview = async (payload: string) => {
     try {
         return await axios.get(
-            `${process.env.NEXT_PUBLIC_SERVER_API}/reviews/${payload}`
+            `${config.baseURL}/reviews/${payload}`
         );
     } catch (error) {
         throw new Error("Failed to fetch data");

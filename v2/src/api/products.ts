@@ -1,10 +1,11 @@
+import { config } from "@/config/envConfig";
 import axios from "axios";
 
 // for getting all products
 export const getProducts = async (query: Record<string, unknown>) => {
     try {
         return await axios.get(
-            `${process.env.NEXT_PUBLIC_SERVER_API}/products`,
+            `${config.baseURL}/products`,
             {
                 params: query,
             }
@@ -18,7 +19,7 @@ export const getProducts = async (query: Record<string, unknown>) => {
 export const getProductsByFilter = async (query: Record<string, unknown>) => {
     try {
         return await axios.get(
-            `${process.env.NEXT_PUBLIC_SERVER_API}/products/by-filters`,
+            `${config.baseURL}/products/by-filters`,
             {
                 params: query,
             }
@@ -32,7 +33,7 @@ export const getProductsByFilter = async (query: Record<string, unknown>) => {
 export const getSingleProduct = async (payload: string) => {
     try {
         return await axios.get(
-            `${process.env.NEXT_PUBLIC_SERVER_API}/products/${payload}`
+            `${config.baseURL}/products/${payload}`
         );
     } catch (error) {
         throw new Error("Failed to fetch data");
