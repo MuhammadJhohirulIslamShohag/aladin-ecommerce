@@ -6,7 +6,7 @@ export const baseApi = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({
         baseUrl:  `${process.env.NEXT_PUBLIC_SERVER_API}`,
-        prepareHeaders: (headers, { getState }) => {
+        prepareHeaders: (headers) => {
             const user = getUserInfo();
             if (user && user?.token?.accessToken) {
                 headers.set("authorization", `Bearer ${user?.token?.accessToken}`);
