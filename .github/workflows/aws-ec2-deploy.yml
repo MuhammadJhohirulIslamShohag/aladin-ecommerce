@@ -1,0 +1,26 @@
+name: Deploy Docker Image To AWS
+
+on:
+  workflow_run:
+    workflows: ['Publish Docker Image']
+    types: [completed]
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Stop The Old Container
+        run: docker stop e-commerce-web || true
+
+      - name: Delete The Old Container
+        run: docker rm e-commerce-web || true
+
+      - name: Delete The Old Image
+        run: docker rmi ${{secrets.DOCKERHUB_USERNAME}}/e-commerce-web:latest || true
+
+      - name: Pull The Image From DockerHub
+        run: docker pull ${{secrets.DOCKERHUB_USERNAME}}/e-commerce-web:latest
+
+      - name: Run The Image
+        run: docker compose up -d
