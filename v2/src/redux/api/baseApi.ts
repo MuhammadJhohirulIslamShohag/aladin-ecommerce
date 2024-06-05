@@ -6,13 +6,13 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const baseApi = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({
-        baseUrl:  `${config.baseURL}` || "/api",
+        baseUrl: config.baseURL, 
         prepareHeaders: (headers) => {
             const user = getUserInfo();
             if (user && user?.token?.accessToken) {
                 headers.set("authorization", `Bearer ${user?.token?.accessToken}`);
-                return headers;
             }
+            return headers;
         },
     }),
     endpoints: () => ({}),
