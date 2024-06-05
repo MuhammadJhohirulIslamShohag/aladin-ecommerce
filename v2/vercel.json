@@ -2,10 +2,7 @@
     "rewrites": [
         {
             "source": "/api/:path*",
-            "destination": "/api/:path*"
+            "destination": "http://54.204.167.67/api/v1/:path*"
         }
-    ],
-    "env": {
-        "NEXT_PUBLIC_SERVER_API": "http://54.204.167.67/api/v1"
-    }
+    ]
 }
