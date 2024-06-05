@@ -2,8 +2,9 @@
 
 import React, { Suspense } from "react";
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter,useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
+import dynamic from "next/dynamic";
 
 import LeftAuth from "@/components/Molecules/Auth/LeftAuth";
 import AuthFormFooter from "@/components/Molecules/Auth/AuthFormFooter";
@@ -16,8 +17,8 @@ import { LoginFormValues } from "@/types/auth.type";
 
 const Login = () => {
     const [openForgotPasswordModal, setOpenForgotPasswordModal] =
-    useState(false);
-    
+        useState(false);
+
     const user = getUserInfo();
     const router = useRouter();
 
@@ -91,4 +92,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default dynamic(() => Promise.resolve(Login), { ssr: false });

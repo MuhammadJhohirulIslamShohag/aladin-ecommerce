@@ -1,4 +1,4 @@
-import { config } from "@/config/envConfig";
+// import { config } from "@/config/envConfig";
 import { getUserInfo } from "@/store/user/users";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -6,7 +6,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const baseApi = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({
-        baseUrl: config.baseURL || "/api", 
+        baseUrl: "https://aladin-e-commerce-server-monolith.vercel.app/api/v1", 
         prepareHeaders: (headers) => {
             const user = getUserInfo();
             if (user && user?.token?.accessToken) {

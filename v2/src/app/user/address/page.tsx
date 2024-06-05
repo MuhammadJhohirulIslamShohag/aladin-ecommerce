@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import toast from "react-hot-toast";
 
 import AddressEditModal from "@/components/Molecules/Modal/AddressEditModal/AddressEditModal";
@@ -57,7 +58,7 @@ const Address = () => {
                     type: StoreActionType.ADD_SHIPPING_ADDRESS,
                     payload: data,
                 });
-                setShowModal((prev) => !prev)
+                setShowModal((prev) => !prev);
                 toast.success("Save Address!");
             } else {
                 if ("error" in result && result.error) {
@@ -112,4 +113,5 @@ const Address = () => {
     );
 };
 
-export default Address;
+export default dynamic(() => Promise.resolve(Address), { ssr: false });
+

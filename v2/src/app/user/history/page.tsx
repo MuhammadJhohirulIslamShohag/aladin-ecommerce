@@ -1,6 +1,7 @@
 "use client";
 
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import dynamic from "next/dynamic";
 
 import useCheckUser from "@/hooks/useCheckUser";
 import OrderCartInTable from "@/components/Oraganisms/Order/OrderCartInTable";
@@ -69,4 +70,4 @@ const History = () => {
     return <div>{content}</div>;
 };
 
-export default History;
+export default dynamic(() => Promise.resolve(History), { ssr: false });

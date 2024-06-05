@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 
 import DeliveryAddress from "@/components/Oraganisms/Checkout/Payment/DeliveryAddress";
 import PaymentOrderSummary from "@/components/Oraganisms/Checkout/Payment/PaymentOrderSummary";
@@ -340,4 +341,4 @@ const Checkout = () => {
     );
 };
 
-export default Checkout;
+export default dynamic(() => Promise.resolve(Checkout), { ssr: false });

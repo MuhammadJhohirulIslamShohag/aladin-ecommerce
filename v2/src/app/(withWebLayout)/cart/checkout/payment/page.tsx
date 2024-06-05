@@ -3,6 +3,7 @@
 import { config } from "@/config/envConfig";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import dynamic from "next/dynamic";
 
 import StripeCheckout from "@/components/Oraganisms/Checkout/StripeCheckout/StripeCheckout";
 import useCheckUser from "@/hooks/useCheckUser";
@@ -25,4 +26,4 @@ const Payment = () => {
     );
 };
 
-export default Payment;
+export default dynamic(() => Promise.resolve(Payment), { ssr: false });
