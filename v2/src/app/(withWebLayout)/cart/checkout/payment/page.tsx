@@ -8,7 +8,7 @@ import dynamic from "next/dynamic";
 import StripeCheckout from "@/components/Oraganisms/Checkout/StripeCheckout/StripeCheckout";
 import useCheckUser from "@/hooks/useCheckUser";
 
-const stripePromise = loadStripe(config.stripeKey);
+const stripePromise = loadStripe(config.stripeKey as string);
 
 const Payment = () => {
     useCheckUser();
