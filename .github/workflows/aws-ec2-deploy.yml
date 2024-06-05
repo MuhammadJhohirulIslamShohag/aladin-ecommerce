@@ -11,16 +11,16 @@ jobs:
 
     steps:
       - name: Stop The Old Container
-        run: docker stop e-commerce-web || true
+        run: docker stop e-commerce-website || true
 
       - name: Delete The Old Container
-        run: docker rm e-commerce-web || true
+        run: docker rm e-commerce-website || true
 
       - name: Delete The Old Image
-        run: docker rmi ${{secrets.DOCKERHUB_USERNAME}}/e-commerce-web:latest || true
+        run: docker rmi ${{secrets.DOCKERHUB_USERNAME}}/e-commerce-website:latest || true
 
       - name: Pull The Image From DockerHub
-        run: docker pull ${{secrets.DOCKERHUB_USERNAME}}/e-commerce-web:latest
+        run: docker pull ${{secrets.DOCKERHUB_USERNAME}}/e-commerce-website:latest
 
       - name: Run The Image
         run: docker compose up -d

@@ -1,8 +1,8 @@
 version: '3.5'
 services:
-  dashboard-app:
-    image: muhammadshohagislam/e-commerce-web:latest
-    container_name: e-commerce-web
+  main-app:
+    image: muhammadshohagislam/e-commerce-website:latest
+    container_name: e-commerce-website
     network_mode: 'host'
     env_file:
       - .env.local
