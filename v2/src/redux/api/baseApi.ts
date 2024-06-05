@@ -6,7 +6,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const baseApi = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({
-        baseUrl:  `${config.baseURL}`,
+        baseUrl:  `${config.baseURL}` || "/api",
         prepareHeaders: (headers) => {
             const user = getUserInfo();
             if (user && user?.token?.accessToken) {
