@@ -26,13 +26,14 @@ import NewArrivalsSkeleton from "@/components/Oraganisms/Skeletons/Home/NewArriv
 import SubCategoriesSkeleton from "@/components/Oraganisms/Skeletons/Home/SubCategoriesSkeleton";
 import TopProductsSkeleton from "@/components/Oraganisms/Skeletons/Home/TopProductsSkeleton";
 import ProductsSkeleton from "@/components/Oraganisms/Skeletons/Products/Products";
+import { IProduct } from "@/types/product.type";
 
 const Home = async () => {
     // Initiate both requests in parallel
-    const blogsData = getListOfBlogs({ limit: 3 });
+    const blogsData = getListOfBlogs({ limit: 20, page: 1 });
     const productsData = getProductsByFilter({ limit: 0 });
     const categoriesData = getCategories({ limit: 4 });
-    const subCategoriesData = getAllSubCategories({ limit: 4 });
+    const subCategoriesData = getAllSubCategories({ limit: 0 });
 
     // Wait for the promises to resolve
     const [products, blogs, categories, subCategories] = await Promise.all([
@@ -55,7 +56,17 @@ const Home = async () => {
             </Suspense>
 
             <Suspense fallback={<FlashDealsSkeleton />}>
-                <FlashDeals products={products?.data?.data} />
+                <FlashDeals
+                    products={products?.data?.data?.sort(
+                        (a: IProduct, b: IProduct) => b.discount - a.discount
+                    )}
+                />
+            </Suspense>
+
+            <Suspense fallback={<SubCategoriesSkeleton />}>
+                <FeaturedSubCategories
+                    subCategories={subCategories?.data?.data}
+                />
             </Suspense>
 
             <Suspense fallback={<ProductsSkeleton />}>
@@ -65,7 +76,11 @@ const Home = async () => {
             <Advertise />
 
             <Suspense fallback={<TopProductsSkeleton />}>
-                <TopProducts products={products?.data?.data} />
+                <TopProducts
+                    products={products?.data?.data?.sort(
+                        (a: IProduct, b: IProduct) => b.sold - a.sold
+                    )}
+                />
             </Suspense>
 
             <Suspense fallback={<NewArrivalsSkeleton />}>
@@ -88,10 +103,6 @@ const Home = async () => {
                     products={products?.data?.data}
                     className="lg:py-28 md:py-16 py-12 "
                 />
-            </Suspense>
-
-            <Suspense fallback={<SubCategoriesSkeleton />}>
-                <FeaturedSubCategories />
             </Suspense>
 
             <Suspense fallback={<ProductsSkeleton />}>

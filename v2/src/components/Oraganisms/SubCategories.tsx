@@ -1,10 +1,9 @@
 "use client";
 
 import SubCategory from "../Molecules/SubCategory";
-import SectionTitle from "../Molecules/SectionTitle";
+import Empty from "../Molecules/Empty";
 
 import { ISubCategory } from "@/types/sub-category.type";
-
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -12,7 +11,6 @@ import { Navigation, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
-import Empty from "../Molecules/Empty";
 
 const SubCategories = ({ data }: { data: ISubCategory[] }) => {
     let content = null;
@@ -72,9 +70,7 @@ const SubCategories = ({ data }: { data: ISubCategory[] }) => {
             data-aos-easing="ease-in-out"
             className="container lg:py-24 md:py-20 py-12"
         >
-            <SectionTitle title="Sub Category" />
-
-            <div className="mt-10 sm:mt-5">{content}</div>
+            <div className="md:mt-10 mt-5">{content}</div>
         </section>
     );
 };

@@ -1,7 +1,6 @@
 "use client";
 
 import { MouseEvent } from "react";
-import Image from "next/image";
 
 import useCheckImage from "@/hooks/useCheckImage";
 import cn from "@/lib/cn";
@@ -35,8 +34,8 @@ const ValidateImage: React.FC<ValidateImageProps> = ({
     const finalImageUrl = imageUrl;
 
     return (
-        <>
-            <Image
+        <picture>
+            <img
                 className={cn(
                     "mx-auto w-full max-h-[400px] rounded-md ",
                     className
@@ -51,10 +50,8 @@ const ValidateImage: React.FC<ValidateImageProps> = ({
                 onClick={handleClick}
                 alt={alt ? alt : ""}
                 title={title ? title : ""}
-                width={100}
-                height={100}
             />
-        </>
+        </picture>
     );
 };
 

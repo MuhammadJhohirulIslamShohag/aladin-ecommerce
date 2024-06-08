@@ -1,19 +1,25 @@
 "use client";
 
-import featuredCategoryData from "./../../../data/featuredCategoryData";
 import FeaturedSubCategory from "../../Molecules/Home/FeaturedSubCategory";
 import Empty from "../../Molecules/Empty";
 
+import { ISubCategory } from "@/types/sub-category.type";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 // Import Swiper styles
 import "swiper/css";
 
-const FeaturedSubCategories = () => {
+interface FeaturedSubCategoryProps {
+    subCategories: ISubCategory[];
+}
+
+const FeaturedSubCategories: React.FC<FeaturedSubCategoryProps> = ({
+    subCategories,
+}) => {
     let content = null;
 
-    if (featuredCategoryData?.length) {
+    if (subCategories?.length) {
         content = (
             <Swiper
                 slidesPerView={8}
@@ -42,16 +48,16 @@ const FeaturedSubCategories = () => {
                 }}
                 className="featured_sub_categories"
             >
-                {featuredCategoryData.map((featuredItem) => (
-                    <SwiperSlide key={featuredItem?.id}>
-                        <FeaturedSubCategory data={featuredItem} />
+                {subCategories.map((subCategory) => (
+                    <SwiperSlide key={subCategory?._id}>
+                        <FeaturedSubCategory data={subCategory} />
                     </SwiperSlide>
                 ))}
             </Swiper>
         );
     }
 
-    if (!featuredCategoryData?.length) {
+    if (!subCategories?.length) {
         content = <Empty description="No Product Data" />;
     }
     return <div className="lg:pb-10 md:pb-7 pb-5">{content}</div>;

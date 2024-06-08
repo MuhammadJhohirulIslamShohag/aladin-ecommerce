@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 import AntdModal from "../../../../Atoms/Modal/AntdModal";
 import FormInputGroup from "../../../../Molecules/Form/FormInputGroup";
 import Button from "../../../../Atoms/Button/Button";
-import AntdDatePicker from "../../../../Molecules/Form/DatePicker";
+import RadioInputGroup from "../../../../Molecules/Form/RadioInputGroup";
 
 import { TUpdateCouponForm } from "./UpdateCoupon.type";
 import { useUpdateCouponMutation } from "../../../../../redux/services/coupon/couponApi";
-
 import { ICoupon } from "../../../../../types/coupon.types";
-import RadioInputGroup from "../../../../Molecules/Form/RadioInputGroup";
+import { CustomFetchBaseQueryError } from "../../../../../types/response";
+
 
 type UpdateCouponFormType = {
     isModalOpen: boolean;
@@ -29,9 +29,6 @@ const UpdateCoupon = ({
     setIsModalOpen,
     updateData,
 }: UpdateCouponFormType) => {
-    // state
-    const [errorMessage, setErrorMessage] = useState<string>("");
-
     // redux api call
     const [updateCoupon, { isLoading }] = useUpdateCouponMutation();
 
@@ -59,7 +56,6 @@ const UpdateCoupon = ({
 
         // check if the request was successful
         if ("data" in result && result.data && result.data?.success) {
-            setErrorMessage("");
             setIsModalOpen((prev) => ({
                 ...prev,
                 data: null,
@@ -69,10 +65,12 @@ const UpdateCoupon = ({
             toast.success(result.data.message);
         } else {
             if ("error" in result && result.error) {
-                setErrorMessage("Failed to Create Coupon!");
-            } else {
-                setErrorMessage("Internal Server Error!");
+                const customError = result.error as CustomFetchBaseQueryError;
+                const errorMessage =
+                    customError.data?.message || "Failed to create Coupon";
+                toast.error(errorMessage);
             }
+           
         }
     };
 
@@ -82,14 +80,17 @@ const UpdateCoupon = ({
             reset({
                 code: updateData?.code,
                 discountType: updateData?.discountType,
-                discountAmount: updateData?.discountAmount
+                discountAmount: updateData?.discountAmount,
+                expiresAt: new Date(updateData?.expiresAt)
+                    .toISOString()
+                    .slice(0, 10),
             });
         }
     }, [updateData, reset]);
 
     return (
         <AntdModal
-            title="Add New Coupon"
+            title="Update Coupon"
             isModalOpen={isModalOpen}
             modalWidth={890}
             isCentered
@@ -106,17 +107,17 @@ const UpdateCoupon = ({
                 className="lg:mt-5 md:mt-0 mt-0  pt-4 pb-7 px-6"
             >
                 <div className="mb-3">
-                    <AntdDatePicker
-                        control={control}
-                        dateName={"expiresAt"}
+                    <FormInputGroup
+                        register={register}
+                        inputName={"expiresAt"}
                         labelName={"Expires Date"}
                         errors={errors.expiresAt}
+                        inputType={"date"}
                         errorMessage={"Expires Date Is Required!"}
                         className={"drop-shadow-md"}
-                        defaultValue={updateData?.expiresAt}
                     />
                 </div>
-                <div className="grid grid-cols-2 gap-y-2 gap-x-5">
+                <div className="grid md:grid-cols-2 grid-cols-1 gap-y-2 gap-x-5">
                     <div>
                         <FormInputGroup
                             register={register}
@@ -153,10 +154,10 @@ const UpdateCoupon = ({
                     </div>
                 </div>
 
-                <div className="mt-5">
+                <div className="md:mt-4 mt-2">
                     <Button
-                        className={`text-white py-3 px-4 disabled:cursor-not-allowed hover:shadow-green-500/40 bg-green-500 shadow-green-500/20`}
-                        label={isLoading ? "Loading" : "Add Coupon"}
+                        className={`text-white py-3 px-4 disabled:cursor-not-allowed hover:shadow-green-500/40 bg-green-500 shadow-green-500/20 capitalize`}
+                        label={isLoading ? "Loading" : "Update Coupon"}
                         type="submit"
                         disabled={isLoading}
                     />

@@ -3,10 +3,6 @@ export interface ISubCategory {
     name: string;
     imageURL: string;
     createdAt: Date;
-    categories: [
-        {
-            categoryId: string;
-        }
-    ];
+    categoryId: string;
     updatedAt: Date;
 }
