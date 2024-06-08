@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import { getListOfBlogs } from "@/api/blog";
@@ -26,7 +27,12 @@ import NewArrivalsSkeleton from "@/components/Oraganisms/Skeletons/Home/NewArriv
 import SubCategoriesSkeleton from "@/components/Oraganisms/Skeletons/Home/SubCategoriesSkeleton";
 import TopProductsSkeleton from "@/components/Oraganisms/Skeletons/Home/TopProductsSkeleton";
 import ProductsSkeleton from "@/components/Oraganisms/Skeletons/Products/Products";
-import { IProduct } from "@/types/product.type";
+
+export const metadata: Metadata = {
+    title: "Aladin-Home",
+    description:
+        "Welcome to Aladin-E-Commerce Online Shopping Platform, your gateway to a diverse array of content and products. Explore our curated selection of blogs, discover the latest products across various categories, and delve into a world of deals and new arrivals. From featured products to insightful blogs, Aladin-Home offers a dynamic and engaging experience for all your needs.",
+};
 
 const Home = async () => {
     // Initiate both requests in parallel
@@ -56,11 +62,7 @@ const Home = async () => {
             </Suspense>
 
             <Suspense fallback={<FlashDealsSkeleton />}>
-                <FlashDeals
-                    products={products?.data?.data?.sort(
-                        (a: IProduct, b: IProduct) => b.discount - a.discount
-                    )}
-                />
+                <FlashDeals products={products?.data?.data} />
             </Suspense>
 
             <Suspense fallback={<SubCategoriesSkeleton />}>
@@ -76,11 +78,7 @@ const Home = async () => {
             <Advertise />
 
             <Suspense fallback={<TopProductsSkeleton />}>
-                <TopProducts
-                    products={products?.data?.data?.sort(
-                        (a: IProduct, b: IProduct) => b.sold - a.sold
-                    )}
-                />
+                <TopProducts products={products?.data?.data} />
             </Suspense>
 
             <Suspense fallback={<NewArrivalsSkeleton />}>

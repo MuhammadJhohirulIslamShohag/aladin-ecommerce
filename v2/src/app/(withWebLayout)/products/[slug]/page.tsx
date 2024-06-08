@@ -6,7 +6,24 @@ import RelatedProducts from "@/components/Oraganisms/Products/Product/RelatedPro
 import { getProducts, getSingleProduct } from "@/api/products";
 import { getReviews } from "@/api/review";
 
-const ProductDetails = async ({ params }: { params: { slug: string } }) => {
+type ProductDetailsParamType = {
+    params: { slug: string };
+};
+
+export async function generateMetadata({ params }: ProductDetailsParamType) {
+    const productResponse = await getSingleProduct(params?.slug);
+    const product = productResponse?.data?.data;
+
+    return {
+        title: `${product?.name}`,
+        description:
+            "Discover more about this product on Aladin-E-Commerce Online Shopping Platform. Explore its features, specifications, and reviews to make an informed purchase decision.",
+    };
+}
+
+const ProductDetails: React.FC<ProductDetailsParamType> = async ({
+    params,
+}) => {
     const productsData = getSingleProduct(params?.slug);
 
     // Wait for the promises to resolve

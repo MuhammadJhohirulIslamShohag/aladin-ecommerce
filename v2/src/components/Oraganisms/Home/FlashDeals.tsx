@@ -19,7 +19,7 @@ import "swiper/css/navigation";
 type FlashDealsPropsType = {
     products: IProduct[];
 };
-const FlashDeals = ({ products }: FlashDealsPropsType) => {
+const FlashDeals = ({ products = [] }: FlashDealsPropsType) => {
     let content = null;
 
     if (products.length) {
@@ -54,11 +54,16 @@ const FlashDeals = ({ products }: FlashDealsPropsType) => {
                 className="surprising_sales lg:h-[505px] md:h-[478px] h-[462px]"
             >
                 <div className="flex flex-wrap pl-1 justify-center">
-                    {products?.map((product: IProduct) => (
-                        <SwiperSlide key={product._id}>
-                            <FlashDeal product={product} />
-                        </SwiperSlide>
-                    ))}
+                    {products
+                        ?.sort(
+                            (a: IProduct, b: IProduct) =>
+                                b.discount - a.discount
+                        )
+                        ?.map((product: IProduct) => (
+                            <SwiperSlide key={product._id}>
+                                <FlashDeal product={product} />
+                            </SwiperSlide>
+                        ))}
                 </div>
             </Swiper>
         );
@@ -78,7 +83,10 @@ const FlashDeals = ({ products }: FlashDealsPropsType) => {
             className="container mb-12"
         >
             <div className="flex items-center justify-between lg:mb-3 md:mb-7 mb-7">
-                <SectionTitle title={'Surprising Sells'} className="lg:mb-6 mb-0" />
+                <SectionTitle
+                    title={"Surprising Sells"}
+                    className="lg:mb-6 mb-0"
+                />
                 <CountDown date={new Date(2024, 11, 30)} />
             </div>
             <div>{content}</div>

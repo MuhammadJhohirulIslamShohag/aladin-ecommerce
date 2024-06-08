@@ -157,18 +157,20 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
                 }}
                 className="featured_products lg:h-[477px] md:h-[414px] h-[601px]"
             >
-                {products?.map((product: IProduct) => (
-                    <SwiperSlide key={product._id}>
-                        <ProductCard
-                            handleAddCart={handleAddCart}
-                            handleCompare={handleCompare}
-                            handleWishListProduct={handleWishListProduct}
-                            handleProductView={handleProductView}
-                            key={product._id}
-                            product={product}
-                        />
-                    </SwiperSlide>
-                ))}
+                {products
+                    .filter((product: IProduct) => product.isFeatured)
+                    ?.map((product: IProduct) => (
+                        <SwiperSlide key={product._id}>
+                            <ProductCard
+                                handleAddCart={handleAddCart}
+                                handleCompare={handleCompare}
+                                handleWishListProduct={handleWishListProduct}
+                                handleProductView={handleProductView}
+                                key={product._id}
+                                product={product}
+                            />
+                        </SwiperSlide>
+                    ))}
             </Swiper>
         );
     }

@@ -1,6 +1,5 @@
 "use client";
 
-import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 import React, { useReducer } from "react";
 
 import ShowBrand from "@/components/Molecules/FilterMenu/ShowBrand";
@@ -16,6 +15,7 @@ import SortingMenu from "@/components/Oraganisms/SortingMenu";
 import Pagination from "@/components/Molecules/Pagination/Pagination";
 import ShopProducts from "@/components/Oraganisms/Products/ShopProducts";
 import ShopProductsSkeleton from "@/components/Oraganisms/Skeletons/Products/ShopProductsSkeleton";
+import Empty from "@/components/Molecules/Empty";
 
 import { useStoreContext } from "@/contexts/StoreContextProvider";
 import { StoreActionType } from "@/contexts/storeReducer/storeReducer.type";
@@ -25,7 +25,8 @@ import { useGetColorsQuery } from "@/redux/services/color/colorApiService";
 import { useGetProductsByFiltersQuery } from "@/redux/services/product/productApiService";
 import { useGetSubCategoriesQuery } from "@/redux/services/subCategory/subCategoryApiService";
 import { shopInitialState, shopReducer } from "@/utils/shopReducer";
-import Empty from "@/components/Molecules/Empty";
+
+
 
 const Shop = () => {
     const [shopState, shopDispatch] = useReducer(shopReducer, shopInitialState);
@@ -270,10 +271,6 @@ const Shop = () => {
     };
     return (
         <>
-            <HeadSeo
-                title="Shopping"
-                content="Aladin Industries Ltd. Providing reliable products since 2022"
-            />
             <div>
                 {/* Filter Mobile Side Bar Menu */}
                 <FilterMobileMenu

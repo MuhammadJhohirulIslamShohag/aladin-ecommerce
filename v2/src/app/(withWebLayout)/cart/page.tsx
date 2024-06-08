@@ -1,7 +1,8 @@
-"use client";
-
+"use client"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+// import { Metadata } from "next";
+import dynamic from "next/dynamic";
 
 import ShowingCarts from "@/components/Oraganisms/Cart/ShowingCarts";
 import OrderSummary from "@/components/Oraganisms/Checkout/OrderSummary";
@@ -13,6 +14,8 @@ import { getCarts } from "@/store/cart/cart";
 import { getUserInfo, removeUserInfo } from "@/store/user/users";
 import { CartType } from "@/types/cart.types";
 import { CustomFetchBaseQueryError } from "@/types/response";
+
+
 
 const Cart = () => {
     const user = getUserInfo();
@@ -135,4 +138,4 @@ const Cart = () => {
     );
 };
 
-export default Cart;
+export default dynamic(() => Promise.resolve(Cart), { ssr: false });

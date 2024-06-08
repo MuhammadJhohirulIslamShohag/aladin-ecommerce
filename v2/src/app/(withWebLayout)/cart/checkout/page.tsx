@@ -27,6 +27,7 @@ import { getUserInfo, removeUserInfo, storeUserInfo } from "@/store/user/users";
 import { IShippingAddress } from "@/types/user.type";
 import { checkEveryPropertiesHasValue } from "@/utils/checkObjectProValues";
 import { CustomFetchBaseQueryError } from "@/types/response";
+import HeadSeo from "@/lib/seo/HeadSeo/HeadSeo";
 
 const Checkout = () => {
     useCheckUser();
@@ -124,7 +125,7 @@ const Checkout = () => {
                     const customError =
                         result.error as CustomFetchBaseQueryError;
                     if (customError.data?.message.includes("jwt expired")) {
-                        removeUserInfo()
+                        removeUserInfo();
                         router.push(`/auth/login?redirect=/cart/checkout`);
                     }
                 }
@@ -176,7 +177,7 @@ const Checkout = () => {
                     const customError =
                         result.error as CustomFetchBaseQueryError;
                     if (customError.data?.message.includes("jwt expired")) {
-                        removeUserInfo()
+                        removeUserInfo();
                         router.push(`/auth/login?redirect=/cart/checkout`);
                     }
                 }
@@ -219,7 +220,7 @@ const Checkout = () => {
             if ("error" in result && result.error) {
                 const customError = result.error as CustomFetchBaseQueryError;
                 if (customError.data?.message.includes("jwt expired")) {
-                    removeUserInfo()
+                    removeUserInfo();
                     router.push(`/auth/login?redirect=/cart/checkout`);
                 }
             }
@@ -273,7 +274,7 @@ const Checkout = () => {
                     const customError =
                         result.error as CustomFetchBaseQueryError;
                     if (customError.data?.message.includes("jwt expired")) {
-                        removeUserInfo()
+                        removeUserInfo();
                         router.push(`/auth/login?redirect=/cart/checkout`);
                     }
                 }
@@ -307,6 +308,7 @@ const Checkout = () => {
 
     return (
         <>
+          
             <div className="container mt-10 px-40 lg:pb-40 pb-24">
                 <div className="grid lg:grid-cols-12 lg:gap-16 grid-cols-1 gap-0 md:grid-cols-1">
                     <DeliveryAddress

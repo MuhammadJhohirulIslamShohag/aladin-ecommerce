@@ -40,7 +40,7 @@ interface IModalState {
     data: IProduct | null;
 }
 
-const TopProducts: React.FC<TopProductsProps> = ({ products }) => {
+const TopProducts: React.FC<TopProductsProps> = ({ products = [] }) => {
     const user = getUserInfo();
     const { dispatch } = useStoreContext();
     const pathname = usePathname();
@@ -145,23 +145,28 @@ const TopProducts: React.FC<TopProductsProps> = ({ products }) => {
                             modules={[Grid, Autoplay]}
                             className="top_product"
                         >
-                            {products?.map((product) => (
-                                <div key={product?._id}>
-                                    <SwiperSlide>
-                                        <FlatProductCard
-                                            product={product}
-                                            handleAddCart={handleAddCart}
-                                            handleCompare={handleCompare}
-                                            handleWishListProduct={
-                                                handleWishListProduct
-                                            }
-                                            handleProductView={
-                                                handleProductView
-                                            }
-                                        />
-                                    </SwiperSlide>
-                                </div>
-                            ))}
+                            {products
+                                ?.sort(
+                                    (a: IProduct, b: IProduct) =>
+                                        b.sold - a.sold
+                                )
+                                ?.map((product) => (
+                                    <div key={product?._id}>
+                                        <SwiperSlide>
+                                            <FlatProductCard
+                                                product={product}
+                                                handleAddCart={handleAddCart}
+                                                handleCompare={handleCompare}
+                                                handleWishListProduct={
+                                                    handleWishListProduct
+                                                }
+                                                handleProductView={
+                                                    handleProductView
+                                                }
+                                            />
+                                        </SwiperSlide>
+                                    </div>
+                                ))}
                         </Swiper>
                     </div>
                     <div className="lg:hidden block">

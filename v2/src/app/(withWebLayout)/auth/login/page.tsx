@@ -2,7 +2,7 @@
 
 import React, { Suspense } from "react";
 import { useState, useEffect } from "react";
-import { useRouter,useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 
@@ -57,38 +57,40 @@ const Login = () => {
     };
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <div className="pt-5 pb-16">
-                <div className="container md:!w-[69%]">
-                    <div className="grid lg:grid-cols-2 grid-cols-1 place-items-center">
-                        <LeftAuth />
-                        <div className="mx-auto w-full max-w-[450px] my-8 py-6 px-7 bg-white/80 shadow-lg rounded-md">
-                            <LoginForm
-                                handleLogin={handleLogin}
-                                setOpenForgotPasswordModal={
-                                    setOpenForgotPasswordModal
-                                }
-                                isLoading={isLoading}
-                            />
-                            <AuthFormFooter
-                                href={"/auth/register"}
-                                content={[
-                                    "Don't have an account?",
-                                    " Create Your Account",
-                                ]}
-                            />
+        <>
+            <Suspense fallback={<div>Loading...</div>}>
+                <div className="pt-5 pb-16">
+                    <div className="container md:!w-[69%]">
+                        <div className="grid lg:grid-cols-2 grid-cols-1 place-items-center">
+                            <LeftAuth />
+                            <div className="mx-auto w-full max-w-[450px] my-8 py-6 px-7 bg-white/80 shadow-lg rounded-md">
+                                <LoginForm
+                                    handleLogin={handleLogin}
+                                    setOpenForgotPasswordModal={
+                                        setOpenForgotPasswordModal
+                                    }
+                                    isLoading={isLoading}
+                                />
+                                <AuthFormFooter
+                                    href={"/auth/register"}
+                                    content={[
+                                        "Don't have an account?",
+                                        " Create Your Account",
+                                    ]}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {openForgotPasswordModal && (
-                <OTPSendForgotPassForm
-                    isModalOpen={openForgotPasswordModal}
-                    setIsModalOpen={setOpenForgotPasswordModal}
-                />
-            )}
-        </Suspense>
+                {openForgotPasswordModal && (
+                    <OTPSendForgotPassForm
+                        isModalOpen={openForgotPasswordModal}
+                        setIsModalOpen={setOpenForgotPasswordModal}
+                    />
+                )}
+            </Suspense>
+        </>
     );
 };
 

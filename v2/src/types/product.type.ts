@@ -21,6 +21,7 @@ export interface IProduct {
     shipping: string;
     colors: IColor[];
     sizes: ISize[];
+    isFeatured: boolean;
     brand: IBrand;
     averageRating: number;
     ratingLength: number;
