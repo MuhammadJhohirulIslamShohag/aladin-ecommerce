@@ -158,7 +158,7 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = ({
                 className="featured_products lg:h-[477px] md:h-[414px] h-[601px]"
             >
                 {products
-                    .filter((product: IProduct) => product.isFeatured)
+                    ?.filter((product: IProduct) => product.isFeatured)
                     ?.map((product: IProduct) => (
                         <SwiperSlide key={product._id}>
                             <ProductCard

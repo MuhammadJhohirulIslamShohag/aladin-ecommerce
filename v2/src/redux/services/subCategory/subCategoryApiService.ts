@@ -3,7 +3,7 @@ import { baseApi } from "../../api/baseApi";
 const subCategoryApiService = baseApi.injectEndpoints({
     endpoints: (build) => ({
         getSubCategories: build.query({
-            query: ({queryParams = null}) => ({
+            query: ({ queryParams = null }) => ({
                 url: `sub-categories${queryParams ? `?${queryParams}` : ""}`,
             }),
         }),

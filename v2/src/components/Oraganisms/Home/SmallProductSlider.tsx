@@ -42,7 +42,11 @@ const SmallProductSlider: React.FC<SmallProductSliderProps> = ({
                         title={"Top Sells"}
                     />
 
-                    <SmallProduct products={products} />
+                    <SmallProduct
+                        products={products?.sort(
+                            (a: IProduct, b: IProduct) => b.sold - a.sold
+                        )}
+                    />
                 </div>
                 <div className="">
                     <SecondLevelHeading
@@ -52,7 +56,11 @@ const SmallProductSlider: React.FC<SmallProductSliderProps> = ({
                         title={"Featured Products"}
                     />
 
-                    <SmallProduct products={products} />
+                    <SmallProduct
+                        products={products?.filter(
+                            (product: IProduct) => product.isFeatured
+                        )}
+                    />
                 </div>
             </div>
         );

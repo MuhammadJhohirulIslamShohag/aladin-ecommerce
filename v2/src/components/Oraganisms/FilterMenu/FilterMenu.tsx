@@ -4,7 +4,7 @@ import FilterMenuItem from "../../Molecules/FilterMenu/FilterMenuItem";
 
 type FilterMenuType = {
     checkboxColor: JSX.Element;
-    checkboxShipping: JSX.Element;
+    checkboxFeatured: JSX.Element;
     checkboxBrands: JSX.Element;
     checkboxSubCategories: JSX.Element;
     starRatingFilter: JSX.Element;
@@ -14,13 +14,12 @@ type FilterMenuType = {
 };
 const FilterMenu = ({
     checkboxColor,
-    checkboxShipping,
+    checkboxFeatured,
     checkboxBrands,
     checkboxSubCategories,
     starRatingFilter,
     showCategories,
     showRange,
-    openFilterMobileMenu,
 }: FilterMenuType) => {
     return (
         <form className="lg:block hidden">
@@ -51,8 +50,8 @@ const FilterMenu = ({
                 filterMenuSubItems={checkboxBrands}
             />
             <FilterMenuItem
-                filterMenuItemName={"Shipping"}
-                filterMenuSubItems={checkboxShipping}
+                filterMenuItemName={"Featured Products"}
+                filterMenuSubItems={checkboxFeatured}
             />
         </form>
     );

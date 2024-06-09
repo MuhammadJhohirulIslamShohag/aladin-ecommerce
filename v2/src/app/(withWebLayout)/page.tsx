@@ -38,15 +38,32 @@ const Home = async () => {
     // Initiate both requests in parallel
     const blogsData = getListOfBlogs({ limit: 20, page: 1 });
     const productsData = getProductsByFilter({ limit: 0 });
+    const furnitureProductsData = getProductsByFilter({
+        limit: 0,
+        searchTerm: "Furniture",
+    });
+    const foodProductsData = getProductsByFilter({
+        limit: 0,
+        searchTerm: "Food",
+    });
     const categoriesData = getCategories({ limit: 4 });
     const subCategoriesData = getAllSubCategories({ limit: 0 });
 
     // Wait for the promises to resolve
-    const [products, blogs, categories, subCategories] = await Promise.all([
+    const [
+        products,
+        blogs,
+        categories,
+        subCategories,
+        furnitureProducts,
+        foodProducts,
+    ] = await Promise.all([
         productsData,
         blogsData,
         categoriesData,
         subCategoriesData,
+        furnitureProductsData,
+        foodProductsData,
     ]);
 
     return (
@@ -88,7 +105,7 @@ const Home = async () => {
             <Suspense fallback={<CategoryBaseProducts />}>
                 <SmallProductSlider
                     title="Best Food"
-                    products={products?.data?.data}
+                    products={foodProducts?.data?.data}
                     className="lg:py-8 md:py-16 py-12"
                 />
             </Suspense>
@@ -97,8 +114,8 @@ const Home = async () => {
 
             <Suspense fallback={<CategoryBaseProducts />}>
                 <SmallProductSlider
-                    title="Best Clothes"
-                    products={products?.data?.data}
+                    title="Best Furniture"
+                    products={furnitureProducts?.data?.data}
                     className="lg:py-28 md:py-16 py-12 "
                 />
             </Suspense>

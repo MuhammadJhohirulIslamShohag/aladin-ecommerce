@@ -1,7 +1,9 @@
-"use client"
+"use client";
 
 import React from "react";
 import CheckBox from "../../Atoms/Input/CheckBox";
+import styles from "../../../assets/styles/scrollbar.module.css";
+
 import { ISubCategory } from "@/types/sub-category.type";
 
 interface ShowSubCategoryProps {
@@ -16,9 +18,11 @@ const ShowSubCategory: React.FC<ShowSubCategoryProps> = ({
     checkValue,
 }) => {
     return (
-        <>
+        <div
+            className={`mt-7 h-[145px] overflow-y-scroll ${styles.sidebar_scrollbar} overflow-x-hidden`}
+        >
             {subCategories.map((data: ISubCategory) => (
-                <div key={data?._id} className="pt-6">
+                <div key={data?._id} className="pb-4">
                     <div className="space-y-4">
                         <CheckBox
                             handleCheck={handleChange}
@@ -30,7 +34,7 @@ const ShowSubCategory: React.FC<ShowSubCategoryProps> = ({
                     </div>
                 </div>
             ))}
-        </>
+        </div>
     );
 };
 

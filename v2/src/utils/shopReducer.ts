@@ -13,6 +13,7 @@ interface IShopInitialState {
     brand: string;
     color: string;
     shipping: string;
+    featured: string;
     pageNumber: number;
 }
 
@@ -36,6 +37,7 @@ const shopInitialState: IShopInitialState = {
     brand: "",
     color: "",
     shipping: "",
+    featured: "",
     pageNumber: 1,
 };
 
@@ -59,6 +61,7 @@ const shopReducer = (state: IShopInitialState, action: any) => {
                 brand: "",
                 color: "",
                 shipping: "",
+                featured: "",
                 pageNumber: 1,
             };
         default:

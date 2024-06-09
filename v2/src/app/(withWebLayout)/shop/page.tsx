@@ -6,7 +6,7 @@ import ShowBrand from "@/components/Molecules/FilterMenu/ShowBrand";
 import ShowCategory from "@/components/Molecules/FilterMenu/ShowCategory";
 import ShowColors from "@/components/Molecules/FilterMenu/ShowColors";
 import ShowRatting from "@/components/Molecules/FilterMenu/ShowRatting";
-import ShowShipping from "@/components/Molecules/FilterMenu/ShowShipping";
+import ShowFeatured from "@/components/Molecules/FilterMenu/ShowFeatured";
 import ShowSubCategory from "@/components/Molecules/FilterMenu/ShowSubCategory";
 import ShowRange from "@/components/Molecules/ShowRange";
 import FilterMenu from "@/components/Oraganisms/FilterMenu/FilterMenu";
@@ -26,8 +26,6 @@ import { useGetProductsByFiltersQuery } from "@/redux/services/product/productAp
 import { useGetSubCategoriesQuery } from "@/redux/services/subCategory/subCategoryApiService";
 import { shopInitialState, shopReducer } from "@/utils/shopReducer";
 
-
-
 const Shop = () => {
     const [shopState, shopDispatch] = useReducer(shopReducer, shopInitialState);
     const { state, dispatch } = useStoreContext();
@@ -41,7 +39,7 @@ const Shop = () => {
         categoriesId,
         subCategoryId,
         color,
-        shipping,
+        featured,
         rating,
         openSortingMenu,
         openFilterMobileMenu,
@@ -78,6 +76,9 @@ const Shop = () => {
     if (sortConfig.sortBy && sortConfig.sortOrder) {
         query["sortBy"] = sortConfig.sortBy;
         query["sortOrder"] = sortConfig.sortOrder;
+    }
+    if (featured) {
+        query["isFeatured"] = featured === "No" ? "false" : "true";
     }
 
     const queryParams = new URLSearchParams(query);
@@ -231,7 +232,7 @@ const Shop = () => {
     };
 
     // check shipping
-    const handleShipping = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFeatured = (e: React.ChangeEvent<HTMLInputElement>) => {
         // reset
         dispatch({
             type: StoreActionType.SEARCH_FILTER_VALUE,
@@ -243,7 +244,7 @@ const Shop = () => {
         shopDispatch({
             type: "SET_SHOP_STATE",
             payload: {
-                shipping: e.target.value,
+                featured: e.target.value,
             },
         });
     };
@@ -281,10 +282,10 @@ const Shop = () => {
                             values={colors}
                         />
                     }
-                    checkboxShipping={
-                        <ShowShipping
-                            handleChange={handleShipping}
-                            checkValue={shipping}
+                    checkboxFeatured={
+                        <ShowFeatured
+                            handleChange={handleFeatured}
+                            checkValue={featured}
                         />
                     }
                     checkboxBrands={
@@ -379,10 +380,10 @@ const Shop = () => {
                                         values={colors}
                                     />
                                 }
-                                checkboxShipping={
-                                    <ShowShipping
-                                        handleChange={handleShipping}
-                                        checkValue={shipping}
+                                checkboxFeatured={
+                                    <ShowFeatured
+                                        handleChange={handleFeatured}
+                                        checkValue={featured}
                                     />
                                 }
                                 checkboxBrands={

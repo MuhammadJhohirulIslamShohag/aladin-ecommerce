@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
 import React from "react";
 import CheckBox from "../../Atoms/Input/CheckBox";
 
-interface ShowShippingProps {
+interface ShowFeaturedProps {
     handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     checkValue: string;
 }
 
-const ShowShipping: React.FC<ShowShippingProps> = ({
+const ShowFeatured: React.FC<ShowFeaturedProps> = ({
     handleChange,
     checkValue,
 }) => {
@@ -22,7 +22,7 @@ const ShowShipping: React.FC<ShowShippingProps> = ({
                             checked={checkValue === data}
                             value={data}
                             label={data}
-                            name={"shopping"}
+                            name={"featured"}
                         />
                     </div>
                 </div>
@@ -31,4 +31,4 @@ const ShowShipping: React.FC<ShowShippingProps> = ({
     );
 };
 
-export default ShowShipping;
+export default ShowFeatured;
