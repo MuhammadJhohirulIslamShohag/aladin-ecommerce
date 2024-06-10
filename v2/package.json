@@ -34,15 +34,9 @@
     "react-slider": "^2.0.6",
     "react-star-ratings": "^2.3.0",
     "react-tooltip": "^5.26.4",
-    "sharp": "^0.33.4",
-    "@img/sharp-darwin-arm64": "^0.33.4",
     "swiper": "^11.0.7",
     "tailwind-merge": "^2.3.0",
     "typewriter-effect": "^2.21.0"
-  },
-  "resolutions": {
-    "**/sharp": "^0.33.4",
-    "**/@img/sharp-darwin-arm64": "^0.33.4"
   },
   "devDependencies": {
     "@types/aos": "^3.0.7",
