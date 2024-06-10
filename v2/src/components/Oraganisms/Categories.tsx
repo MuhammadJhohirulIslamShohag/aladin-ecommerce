@@ -62,7 +62,7 @@ const Categories = ({ data }: { data: ICategory[] }) => {
             <div
                 data-aos="fade-up"
                 data-aos-delay="1"
-                className="lg:pb-28 md:pb-16 pb-10"
+                className="lg:pb-24 md:pb-16 pb-10"
             >
                 {content}
             </div>

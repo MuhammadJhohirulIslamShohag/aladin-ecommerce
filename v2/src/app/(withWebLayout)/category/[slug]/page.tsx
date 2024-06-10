@@ -7,7 +7,7 @@ type ProductByCategoryParamType = {
 
 export async function generateMetadata({ params }: ProductByCategoryParamType) {
     return {
-        title: `Category-${params?.slug}`,
+        title: `${decodeURIComponent(params?.slug)}`,
         description:
             "Explore a wide range of products curated under the category of Aladin-E-Commerce. Find quality items and enjoy a seamless shopping experience.",
     };

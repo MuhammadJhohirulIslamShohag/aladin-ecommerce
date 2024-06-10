@@ -1,29 +1,35 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import ReactImageMagnify from "react-image-magnify";
 import Image from "next/image";
 
-const CardZoomCarousel = ({ images, title }: { images: string[]; title: string }) => {
+const CardZoomCarousel = ({
+    images,
+    title,
+}: {
+    images: string[];
+    title: string;
+}) => {
     const [imageUrl, setImageUrl] = useState(`${images[0]}` as string);
 
     return (
         <>
-            <div className="lg:h-[396px] h-auto overflow-hidden">
+            <div className="magnify-container">
                 <ReactImageMagnify
                     {...{
                         smallImage: {
                             alt: "Wristwatch by Ted Baker London",
                             isFluidWidth: true,
                             src: `${imageUrl}`,
-                            sizes: '(max-width: 480px) 100vw, (max-width: 1200px) 30vw, 360px'
+                            sizes: "(max-width: 480px) 100vw, (max-width: 1200px) 30vw, 360px",
                         },
                         largeImage: {
                             src: `${imageUrl}`,
                             width: 900,
                             height: 1800,
                         },
-                        isHintEnabled: true,
+                        isHintEnabled: false,
                         shouldHideHintAfterFirstActivation: false,
                         shouldUsePositiveSpaceLens: true,
                     }}

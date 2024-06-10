@@ -43,7 +43,7 @@ const ProductDetails: React.FC<ProductDetailsParamType> = async ({
     const relatedProduct = relatedProductData?.data?.data;
 
     return (
-        <div className="bg-white container lg:mt-10 md:mt-5 mt-5 lg:mb-36 md:mb-20 mb-10 lg:pb-16 md:pb-10 pb-8">
+        <div className="bg-white container px-6 lg:mt-10 md:mt-5 mt-5 lg:mb-36 md:mb-20 mb-10 lg:pb-16 md:pb-10 pb-8">
             <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 md:gap-4 pt-6">
                 <div className="z-10">
                     {product && name && imageURLs && imageURLs.length ? (
