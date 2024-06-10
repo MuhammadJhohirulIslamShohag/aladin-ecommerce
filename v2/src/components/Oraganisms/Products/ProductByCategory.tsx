@@ -142,7 +142,13 @@ const ProductByCategory: React.FC<NewArrivalsProps> = ({
     }
 
     if (!products?.length) {
-        content = <Empty description={`No Product Data By The ${name}`} />;
+        content = (
+            <Empty
+                description={`No Product Data By The ${decodeURIComponent(
+                    name
+                )}`}
+            />
+        );
     }
 
     return (

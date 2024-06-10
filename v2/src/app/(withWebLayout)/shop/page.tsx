@@ -14,6 +14,7 @@ import FilterMobileMenu from "@/components/Oraganisms/FilterMenu/FilterMobileMen
 import SortingMenu from "@/components/Oraganisms/SortingMenu";
 import Pagination from "@/components/Molecules/Pagination/Pagination";
 import ShopProducts from "@/components/Oraganisms/Products/ShopProducts";
+import FilterMenuSkeleton from "@/components/Oraganisms/Skeletons/Products/FilterMenuSkeleton";
 import ShopProductsSkeleton from "@/components/Oraganisms/Skeletons/Products/ShopProductsSkeleton";
 import Empty from "@/components/Molecules/Empty";
 
@@ -84,11 +85,6 @@ const Shop = () => {
     const queryParams = new URLSearchParams(query);
 
     // redux wrapper
-    const { data: productsInfo, isLoading } = useGetProductsByFiltersQuery({
-        queryParams: queryParams.toString(),
-    });
-    const products = productsInfo?.data;
-
     const { data: colorsInfo } = useGetColorsQuery({});
     const colors = colorsInfo?.data;
 
@@ -100,6 +96,11 @@ const Shop = () => {
 
     const { data: brandsData } = useGetBrandsQuery({});
     const brands = brandsData?.data;
+
+    const { data: productsInfo, isLoading } = useGetProductsByFiltersQuery({
+        queryParams: queryParams.toString(),
+    });
+    const products = productsInfo?.data;
 
     const priceChangeHandler = (value: number[]) => {
         dispatch({
@@ -369,53 +370,63 @@ const Shop = () => {
                             Products
                         </h2>
 
-                        <div className="grid grid-cols-1 md:grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+                        <div className="grid lg:grid-cols-4 grid-cols-1 gap-x-8 gap-y-10 ">
                             {/* Filter Side Bar Menu */}
-                            <FilterMenu
-                                openFilterMobileMenu={openFilterMobileMenu}
-                                checkboxColor={
-                                    <ShowColors
-                                        handleChange={handleColorChange}
-                                        checkValue={color}
-                                        values={colors}
-                                    />
-                                }
-                                checkboxFeatured={
-                                    <ShowFeatured
-                                        handleChange={handleFeatured}
-                                        checkValue={featured}
-                                    />
-                                }
-                                checkboxBrands={
-                                    <ShowBrand
-                                        handleChange={handleBrandChange}
-                                        checkValue={brand}
-                                        brands={brands}
-                                    />
-                                }
-                                checkboxSubCategories={
-                                    <ShowSubCategory
-                                        subCategories={subCategories}
-                                        checkValue={subCategoryId}
-                                        handleChange={changeHandlerSubCategory}
-                                    />
-                                }
-                                starRatingFilter={
-                                    <ShowRatting clickRating={clickRating} />
-                                }
-                                showCategories={
-                                    <ShowCategory
-                                        categories={categories}
-                                        checkValue={categoriesId}
-                                        handleChange={handleCheck}
-                                    />
-                                }
-                                showRange={
-                                    <ShowRange
-                                        priceChangeHandler={priceChangeHandler}
-                                    />
-                                }
-                            />
+                            {isLoading ? (
+                                <FilterMenuSkeleton />
+                            ) : (
+                                <FilterMenu
+                                    openFilterMobileMenu={openFilterMobileMenu}
+                                    checkboxColor={
+                                        <ShowColors
+                                            handleChange={handleColorChange}
+                                            checkValue={color}
+                                            values={colors}
+                                        />
+                                    }
+                                    checkboxFeatured={
+                                        <ShowFeatured
+                                            handleChange={handleFeatured}
+                                            checkValue={featured}
+                                        />
+                                    }
+                                    checkboxBrands={
+                                        <ShowBrand
+                                            handleChange={handleBrandChange}
+                                            checkValue={brand}
+                                            brands={brands}
+                                        />
+                                    }
+                                    checkboxSubCategories={
+                                        <ShowSubCategory
+                                            subCategories={subCategories}
+                                            checkValue={subCategoryId}
+                                            handleChange={
+                                                changeHandlerSubCategory
+                                            }
+                                        />
+                                    }
+                                    starRatingFilter={
+                                        <ShowRatting
+                                            clickRating={clickRating}
+                                        />
+                                    }
+                                    showCategories={
+                                        <ShowCategory
+                                            categories={categories}
+                                            checkValue={categoriesId}
+                                            handleChange={handleCheck}
+                                        />
+                                    }
+                                    showRange={
+                                        <ShowRange
+                                            priceChangeHandler={
+                                                priceChangeHandler
+                                            }
+                                        />
+                                    }
+                                />
+                            )}
 
                             {/* Filter Products */}
                             <div className="col-span-3">

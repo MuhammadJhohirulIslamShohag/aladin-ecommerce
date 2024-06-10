@@ -26,7 +26,7 @@ const ProductBySubCategory: React.FC<ProductBySubCategoryParamType> = async ({
 
     return (
         <ProductByCategory
-            title={`Product by ${params?.slug}`}
+            title={`Product by ${decodeURIComponent(params?.slug)}`}
             products={products}
             name={params?.slug}
         />

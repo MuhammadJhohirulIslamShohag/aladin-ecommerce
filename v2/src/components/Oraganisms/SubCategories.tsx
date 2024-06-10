@@ -4,6 +4,7 @@ import SubCategory from "../Molecules/SubCategory";
 import Empty from "../Molecules/Empty";
 
 import { ISubCategory } from "@/types/sub-category.type";
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles

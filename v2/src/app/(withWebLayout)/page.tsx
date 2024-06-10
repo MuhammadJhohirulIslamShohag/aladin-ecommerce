@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
-import { getListOfBlogs } from "@/api/blog";
 import { getCategories } from "@/api/category";
 import { getProductsByFilter } from "@/api/products";
 import { getAllSubCategories } from "@/api/sub-categories";
@@ -39,13 +38,13 @@ const Home = async () => {
     const productsData = getProductsByFilter({ limit: 0 });
     const furnitureProductsData = getProductsByFilter({
         limit: 0,
-        searchTerm: "Furniture",
+        searchTerm: "Home & Kitchen",
     });
     const foodProductsData = getProductsByFilter({
         limit: 0,
-        searchTerm: "Food",
+        searchTerm: "Foods & Delights",
     });
-    const categoriesData = getCategories({ limit: 4 });
+    const categoriesData = getCategories({ limit: 0 });
     const subCategoriesData = getAllSubCategories({ limit: 0 });
 
     // Wait for the promises to resolve

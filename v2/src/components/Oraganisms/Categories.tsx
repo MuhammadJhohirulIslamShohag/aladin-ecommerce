@@ -1,16 +1,56 @@
 "use client";
 
 import Category from "../Molecules/Category";
-import { ICategory } from "@/types/category.type";
 import Empty from "../Molecules/Empty";
+
+import { ICategory } from "@/types/category.type";
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+// Import Swiper styles
+import "swiper/css";
 
 const Categories = ({ data }: { data: ICategory[] }) => {
     let content = null;
 
     if (data.length) {
-        content = data.map((category: ICategory) => (
-            <Category key={category._id} category={category} />
-        ));
+        content = (
+            <Swiper
+                slidesPerView={4}
+                autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                }}
+                spaceBetween={20}
+                modules={[Autoplay]}
+                breakpoints={{
+                    0: {
+                        slidesPerView: 1,
+                    },
+                    640: {
+                        slidesPerView: 1,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                    },
+                }}
+                className="h-[463px] categories"
+            >
+                {data.map((category: ICategory) => (
+                    <SwiperSlide key={category?._id}>
+                        <Category key={category._id} category={category} />
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        );
     }
 
     if (!data.length) {
@@ -22,7 +62,7 @@ const Categories = ({ data }: { data: ICategory[] }) => {
             <div
                 data-aos="fade-up"
                 data-aos-delay="1"
-                className="md:grid lg:grid-cols-4 gap-4 px-3 grid-cols-1 md:grid-cols-2 hidden lg:pb-28 md:pb-16 pb-10"
+                className="lg:pb-28 md:pb-16 pb-10"
             >
                 {content}
             </div>

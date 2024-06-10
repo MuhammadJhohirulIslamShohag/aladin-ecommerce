@@ -24,7 +24,7 @@ const ProductByCategoryPage: React.FC<ProductByCategoryParamType> = async ({
 
     return (
         <ProductByCategory
-            title={`Product by ${params?.slug}`}
+            title={`Product by ${decodeURIComponent(params?.slug)}`}
             products={products}
             name={params?.slug}
         />
