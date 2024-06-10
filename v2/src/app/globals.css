@@ -24,6 +24,7 @@
     @apply bg-green-500 border-green-500;
 }
 
+/* Start React Magnify */
 .magnify-container {
     height: 396px;
     width: auto;
@@ -31,6 +32,8 @@
 .magnify-container img {
     height: 396px !important
 }
+
+/* End React Magnify */
 
 /* Start React Select */
 .select-placeholder-text {
