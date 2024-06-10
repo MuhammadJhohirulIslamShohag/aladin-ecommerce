@@ -9,14 +9,14 @@ export const navbarBottomData = [
     },
     {
         title: "About",
-        path: "/about-us",
+        path: "#about-us",
     },
     {
         title: "Blog",
-        path: "/blogs",
+        path: "#blogs",
     },
     {
         title: "Contact",
-        path: "/contact-us",
+        path: "#contact-us",
     },
 ];

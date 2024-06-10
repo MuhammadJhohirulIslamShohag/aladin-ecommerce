@@ -9,7 +9,7 @@ const CardZoomCarousel = ({ images, title }: { images: string[]; title: string }
 
     return (
         <>
-            <div>
+            <div className="lg:h-[396px] h-auto overflow-hidden">
                 <ReactImageMagnify
                     {...{
                         smallImage: {
@@ -31,15 +31,15 @@ const CardZoomCarousel = ({ images, title }: { images: string[]; title: string }
             </div>
             <div className="grid grid-cols-5 gap-2 cursor-pointer mt-4">
                 {images &&
-                    images.length > 0 &&
-                    images.map((image: string) => (
+                    images?.length > 0 &&
+                    images?.map((image: string) => (
                         <div
                             key={image}
                             className="border border-gray-400"
                             onClick={() => setImageUrl(image)}
                         >
                             <Image
-                                className="w-full"
+                                className="w-full h-full"
                                 alt={title}
                                 width={80}
                                 height={80}

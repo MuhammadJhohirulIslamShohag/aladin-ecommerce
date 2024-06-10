@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 interface EmptyProps {
-    description?: string;
+    description?: string | React.ReactNode;
 }
 
 const Empty: FC<EmptyProps> = ({ description = "No Data" }) => {

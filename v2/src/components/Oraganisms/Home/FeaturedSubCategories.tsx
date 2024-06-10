@@ -60,7 +60,7 @@ const FeaturedSubCategories: React.FC<FeaturedSubCategoryProps> = ({
     if (!subCategories?.length) {
         content = <Empty description="No Product Data" />;
     }
-    return <div className="lg:pb-10 md:pb-7 pb-5">{content}</div>;
+    return <div className="lg:pb-24 md:pb-16 pb-10">{content}</div>;
 };
 
 export default FeaturedSubCategories;

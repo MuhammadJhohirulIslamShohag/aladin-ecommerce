@@ -308,10 +308,10 @@ const ProductInfo = ({
                         </RadioGroup>
                     </div>
 
-                    <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-4">
+                    <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
                         <CustomButton
                             buttonType="button"
-                            className="lg:mt-10 md:mt-10 mt-5 w-full"
+                            className="lg:mt-10 mt-5 w-full"
                             handleClick={handleAddCart}
                         >
                             <BsHandbagFill className="mr-1" />
@@ -325,7 +325,7 @@ const ProductInfo = ({
                         {existingWishList ? (
                             <CustomButton
                                 buttonType="button"
-                                className="lg:mt-10 md:mt-10 mt-0 w-full"
+                                className="lg:mt-10 mt-0 w-full"
                                 handleClick={handleAddToWishList}
                             >
                                 <BsFillHeartFill className="mr-1" />
@@ -334,7 +334,7 @@ const ProductInfo = ({
                         ) : (
                             <CustomButton
                                 buttonType="button"
-                                className="lg:mt-10 md:mt-10 mt-0 w-full"
+                                className="lg:mt-10 mt-0 w-full"
                                 handleClick={handleAddToWishList}
                             >
                                 <BsFillHeartFill className="mr-1" />

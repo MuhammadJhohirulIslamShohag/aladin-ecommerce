@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
 import React from "react";
 import CheckBox from "../../Atoms/Input/CheckBox";
+import styles from "../../../assets/styles/scrollbar.module.css";
 import { IColor } from "@/types/color.types";
 
 interface ShowColorsProps {
@@ -16,9 +17,11 @@ const ShowColors: React.FC<ShowColorsProps> = ({
     checkValue,
 }) => {
     return (
-        <>
+        <div
+            className={`mt-7 h-[145px] overflow-y-scroll ${styles.sidebar_scrollbar} overflow-x-hidden`}
+        >
             {values.map((value: IColor) => (
-                <div key={value?._id} className="pt-6">
+                <div key={value?._id} className="pb-4">
                     <div className="space-y-4">
                         <CheckBox
                             handleCheck={handleChange}
@@ -31,7 +34,7 @@ const ShowColors: React.FC<ShowColorsProps> = ({
                     </div>
                 </div>
             ))}
-        </>
+        </div>
     );
 };
 

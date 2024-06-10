@@ -21,7 +21,7 @@ const FooterContent = () => {
                             10AM - 7PM
                         </p>
                         <p className="text-xl text-green-200 font-medium">
-                            16793
+                            (+880)-177-6897598
                         </p>
                     </div>
                 </div>

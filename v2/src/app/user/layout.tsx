@@ -1,15 +1,22 @@
+import { Metadata } from "next";
 
 import NavbarMiddle from "@/components/Molecules/Navbar/NavbarMiddle/NavbarMiddle";
 import NavbarTop from "@/components/Molecules/Navbar/NavbarTop/NavbarTop";
 import Footer from "@/components/Oraganisms/Footer/Footer";
 import UserSideBar from "@/components/Oraganisms/SideBar/UserSideBar/UserSideBar";
 
+export const metadata: Metadata = {
+    title: "User Dashboard",
+    description:
+        "Welcome to the User Dashboard page of Aladin-E-Commerce Online Shopping Platform",
+};
+
 const UserLayout = ({ children }: React.PropsWithChildren<{}>) => {
     return (
         <>
             <header>
                 <NavbarTop />
-                <NavbarMiddle/>
+                <NavbarMiddle />
             </header>
             <main>
                 <section className="container mt-8 lg:mt-4 md:mt-4 lg:mb-36 mb-20">

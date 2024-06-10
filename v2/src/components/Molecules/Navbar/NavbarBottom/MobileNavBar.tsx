@@ -2,16 +2,13 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 
-import { IMenuCategory } from "@/types/menu.category.type";
 import { FaBarsStaggered } from "react-icons/fa6";
 
-interface MobileNavBarProps {
-    categoriesData: IMenuCategory[];
-}
-
-const MobileNavBar: React.FC<MobileNavBarProps> = ({ categoriesData = {} }) => {
+const MobileNavBar = () => {
     const [openMobileNavBar, setOpenMobileNavBar] = useState(false);
+    const pathName = usePathname();
 
     return (
         <>
@@ -33,14 +30,20 @@ const MobileNavBar: React.FC<MobileNavBarProps> = ({ categoriesData = {} }) => {
                 } top-full absolute bg-white divide-y divide-gray-100 rounded-lg shadow right-[0%] w-[170px]`}
             >
                 <ul className="py-2 text-sm text-gray-700   ">
-                    {["home", "about", "blog", "contact us"]?.map(
+                    {["/", "#about-us", "#blogs", "#contact-us", "/shop"]?.map(
                         (data, idx) => (
                             <li
                                 key={idx}
                                 className="flex justify-between items-center px-4 py-2 hover:bg-green-400 transition-all duration-300 group relative"
                             >
-                                <Link href={`/${data}`}>
-                                    <span className="transition-all duration-300 group-hover:text-white capitalize">
+                                <Link href={`${data}`}>
+                                    <span
+                                        className={`transition-all duration-300 group-hover:text-white capitalize ${
+                                            pathName === data
+                                                ? "text-white"
+                                                : ""
+                                        }`}
+                                    >
                                         {data}
                                     </span>
                                 </Link>

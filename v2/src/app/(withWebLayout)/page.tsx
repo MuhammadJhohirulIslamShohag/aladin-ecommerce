@@ -36,7 +36,6 @@ export const metadata: Metadata = {
 
 const Home = async () => {
     // Initiate both requests in parallel
-    const blogsData = getListOfBlogs({ limit: 20, page: 1 });
     const productsData = getProductsByFilter({ limit: 0 });
     const furnitureProductsData = getProductsByFilter({
         limit: 0,
@@ -52,14 +51,12 @@ const Home = async () => {
     // Wait for the promises to resolve
     const [
         products,
-        blogs,
         categories,
         subCategories,
         furnitureProducts,
         foodProducts,
     ] = await Promise.all([
         productsData,
-        blogsData,
         categoriesData,
         subCategoriesData,
         furnitureProductsData,
@@ -121,7 +118,7 @@ const Home = async () => {
             </Suspense>
 
             <Suspense fallback={<ProductsSkeleton />}>
-                <Blogs blogs={blogs?.data?.data} />
+                <Blogs />
             </Suspense>
 
             <Suspense fallback={<SubCategoriesSkeleton />}>

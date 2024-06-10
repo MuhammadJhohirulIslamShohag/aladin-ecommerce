@@ -314,16 +314,20 @@
 
 @media only screen and (max-width: 767px) {
     .blog_swiper .swiper-button-prev {
-        left: 68% !important;
+        left: 72% !important;
     }
     .blog_swiper .swiper-button-next,
     .blog_swiper .swiper-button-prev {
-        margin-top: 220px !important;
+        margin-top: 226px !important;
     }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .blog_swiper .swiper-button-prev {
-        left: 87% !important;
+        left: 86% !important;
+    }
+    .blog_swiper .swiper-button-next,
+    .blog_swiper .swiper-button-prev {
+        margin-top: 256px !important;
     }
 }
 @media only screen and (min-width: 992px) and (max-width: 1200px) {

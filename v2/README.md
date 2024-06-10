@@ -98,14 +98,21 @@
 - TypeScript
 - Next JS
 - Twilwind CSS
+- Tailwind-Merge
 - Stripe Payment System
 - Axios
 - React-Icons
-- Sweetalert2
 - Typewriter-Effect
-- React-Scroll-to-Top
-- React-Image-File-Resizer
+- React-Scroll-To-Top
 - Swiper
-- React-hot-toast
-- React-hook-form
+- React-Image-Magnify
+- React-Photo-View
+- Html-React-Parser
+- Redux.js-Toolkit
+- React-PDF
+- AOS
+- Lodash
+- React-Hot-Toast
+- React-Star-Ratings
+- React-Hook-Form
 - HeadlessUi

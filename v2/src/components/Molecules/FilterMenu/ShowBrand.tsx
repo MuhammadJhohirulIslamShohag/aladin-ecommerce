@@ -1,8 +1,9 @@
-"use client"
+"use client";
 
-import { IBrand } from "@/types/brand.types";
 import React from "react";
+import styles from "../../../assets/styles/scrollbar.module.css";
 import CheckBox from "../../Atoms/Input/CheckBox";
+import { IBrand } from "@/types/brand.types";
 
 interface ShowBrandProps {
     brands: IBrand[];
@@ -16,9 +17,11 @@ const ShowBrand: React.FC<ShowBrandProps> = ({
     checkValue,
 }) => {
     return (
-        <>
+        <div
+            className={`mt-7 h-[145px] overflow-y-scroll ${styles.sidebar_scrollbar} overflow-x-hidden`}
+        >
             {brands.map((data: IBrand) => (
-                <div key={data?._id} className="pt-6">
+                <div key={data?._id} className="pb-4">
                     <div className="space-y-4">
                         <CheckBox
                             handleCheck={handleChange}
@@ -30,7 +33,7 @@ const ShowBrand: React.FC<ShowBrandProps> = ({
                     </div>
                 </div>
             ))}
-        </>
+        </div>
     );
 };
 

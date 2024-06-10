@@ -4,8 +4,8 @@ export interface IBlog {
     description: string;
     link: string;
     publisherName: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
     __v: number;
     _id: string;
 }

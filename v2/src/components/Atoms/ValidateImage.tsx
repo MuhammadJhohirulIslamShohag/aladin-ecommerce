@@ -31,7 +31,7 @@ const ValidateImage: React.FC<ValidateImageProps> = ({
     };
 
     // Check if imageUrl is empty or undefined, and use notFoundImage in that case
-    const finalImageUrl = imageUrl;
+    const finalImageUrl = imageUrl || "/placeholder.jpg";
 
     return (
         <picture>

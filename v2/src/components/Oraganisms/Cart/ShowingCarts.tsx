@@ -26,14 +26,19 @@ const ShowingCarts: React.FC<ShowingCartsProps> = ({ carts }) => {
     if (!carts?.length) {
         content = (
             <Empty
-                description={`No Cart Yet ${(
-                    <Link
-                        className="text-green-400 hover:text-green-600 transition-all"
-                        href={"/shop"}
-                    >
-                        Continue Shopping
-                    </Link>
-                )}`}
+                description={
+                    <>
+                        <span>
+                            No Cart Yet
+                            <Link
+                                className="text-green-400 hover:text-green-600 ml-2 transition-all"
+                                href={"/shop"}
+                            >
+                                Continue Shopping
+                            </Link>
+                        </span>
+                    </>
+                }
             />
         );
     }

@@ -2,22 +2,21 @@
 
 import Blog from "../../Molecules/Blog";
 import SectionTitle from "../../Molecules/SectionTitle";
-
-import { IBlog } from "@/types/blog.types";
+import Empty from "@/components/Molecules/Empty";
 
 // Import Swiper React components
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { blogsData } from "@/data/blogs";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-import Empty from "@/components/Molecules/Empty";
 
-const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
+const Blogs = () => {
     let content = null;
 
-    if (blogs.length) {
+    if (blogsData.length) {
         content = (
             <Swiper
                 slidesPerView={1}
@@ -28,7 +27,7 @@ const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
                     pauseOnMouseEnter: true,
                 }}
                 modules={[Navigation, Autoplay]}
-                className="h-[610px] sm:h-[570px] blog_swiper"
+                className="md:h-[582px] h-[570px] blog_swiper"
                 breakpoints={{
                     640: {
                         slidesPerView: 1,
@@ -47,7 +46,7 @@ const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
                     },
                 }}
             >
-                {blogs?.map((blog) => (
+                {blogsData?.map((blog) => (
                     <SwiperSlide key={blog._id}>
                         <Blog key={blog._id} blog={blog} />
                     </SwiperSlide>
@@ -56,7 +55,7 @@ const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
         );
     }
 
-    if (!blogs.length) {
+    if (!blogsData.length) {
         content = <Empty description="No Blog Data" />;
     }
 
@@ -67,7 +66,7 @@ const Blogs = ({ blogs }: { blogs: IBlog[] }) => {
             data-aos-delay="1"
             data-aos-duration="1000"
             data-aos-easing="ease-in-out"
-            className="container lg:py-16 md:py-12 py-2"
+            className="container lg:pt-16 md:pt-12 pt-2"
             id="blogs"
         >
             <SectionTitle title="Popular Blogs" />
