@@ -27,7 +27,7 @@ const Blogs = () => {
                     pauseOnMouseEnter: true,
                 }}
                 modules={[Navigation, Autoplay]}
-                className="md:h-[582px] h-[570px] blog_swiper"
+                className="md:h-[600px] h-[555px] blog_swiper"
                 breakpoints={{
                     640: {
                         slidesPerView: 1,

@@ -295,7 +295,7 @@
 .blog_swiper .swiper-button-prev {
     position: absolute;
     bottom: 0 !important;
-    margin-top: 263px !important;
+    margin-top: 262px !important;
 }
 .blog_swiper .swiper-button-next:after,
 .blog_swiper .swiper-button-prev:after {
@@ -318,7 +318,7 @@
     }
     .blog_swiper .swiper-button-next,
     .blog_swiper .swiper-button-prev {
-        margin-top: 226px !important;
+        margin-top: 223px !important;
     }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
