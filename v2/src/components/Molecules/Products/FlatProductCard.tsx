@@ -54,17 +54,17 @@ const FlatProductCard: React.FC<FlatProductCardProps> = ({
                         href={`/products/${slug}`}
                     >
                         <h3 className="font-bold text-primary mb-[4px] hover:text-success duration-300 hover:underline px-5">
-                            {name?.length && name?.length > 35
-                                ? name.slice(0, 35) + "..."
+                            {name?.length && name?.length > 20
+                                ? name.slice(0, 20) + "..."
                                 : name}
                         </h3>
                         <div className="px-5">
                             <div className="flex gap-3">
                                 <span className="text-success">
-                                    ৳ {numberWithCommas(netPrice)}
+                                    $ {numberWithCommas(netPrice)}
                                 </span>
                                 <span className="line-through text-primary">
-                                    ৳ {numberWithCommas(price)}
+                                    $ {numberWithCommas(price)}
                                 </span>
                             </div>
                         </div>
