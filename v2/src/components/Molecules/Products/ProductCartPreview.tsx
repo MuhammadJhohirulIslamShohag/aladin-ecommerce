@@ -117,8 +117,8 @@ const ProductCartPreview: React.FC<ProductCartViewProps> = ({
                 <div className="grid grid-cols-3 mt-5">
                     <div className="justify-self-start ">
                         <div className="text-md font-semibold mb-2">
-                            {name?.length > 35
-                                ? name.slice(0, 35) + "..."
+                            {name?.length > 16
+                                ? name.slice(0, 16) + "..."
                                 : name}
                         </div>
                         <div className="mt-2">

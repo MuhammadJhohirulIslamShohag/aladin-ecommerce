@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { startTransition } from "react";
 import Link from "next/link";
@@ -58,12 +58,14 @@ const CompareProductTop: React.FC<CompareProductTopProps> = ({
             </Link>
             <h1 className="mt-2 text-center text-black font-bold capitalize cursor-pointer text-xs lg:text-[15px] hover:text-primary hover:underline">
                 <Link href={`/products/${removeSpace(compareProduct?.slug)}`}>
-                    {compareProduct?.name}
+                    {compareProduct?.name?.length > 17
+                        ? compareProduct?.name?.slice(0, 17) + "..."
+                        : compareProduct?.name}
                 </Link>
             </h1>
             <p className="text-center text-primary font-semibold lg:text-2xl md:text-xl text-base mt-4">
                 {numberWithCommas(compareProduct?.price)}
-                <span className="text-xl">৳</span>
+                <span className="text-xl">$</span>
             </p>
             <button
                 onClick={() => removeCompareProduct(compareProduct?._id)}

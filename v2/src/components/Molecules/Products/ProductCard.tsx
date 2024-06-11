@@ -159,7 +159,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
                 <p className="bg-primary w-fit px-2 py-0.5 text-white font-semibold text-xs rounded-r-md absolute top-3 left-0">
                     <span>
-                        {numberWithCommas(discountPrice)}৳ Discount on Online
+                        {numberWithCommas(discountPrice)}$ Discount on Online
                         Order
                     </span>
                 </p>

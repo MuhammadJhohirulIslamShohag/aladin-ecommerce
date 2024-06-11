@@ -60,10 +60,10 @@ const SmallProductCard: React.FC<SmallProductCardProps> = ({
                     <div className="">
                         <div className="flex gap-3">
                             <span className="text-success">
-                                ৳ {numberWithCommas(netPrice)}
+                                $ {numberWithCommas(netPrice)}
                             </span>
                             <span className="line-through text-primary/90">
-                                ৳ {numberWithCommas(product?.price)}
+                                $ {numberWithCommas(product?.price)}
                             </span>
                         </div>
                     </div>

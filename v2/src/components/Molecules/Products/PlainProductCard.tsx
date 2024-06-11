@@ -39,11 +39,11 @@ const PlainProductCard: React.FC<{ data: IProduct }> = ({ data }) => {
                     <div className="px-5">
                         <div className="flex gap-3">
                             <span className="text-primary">
-                                ৳ {numberWithCommas(netPrice)}
+                                $ {numberWithCommas(netPrice)}
                             </span>
                             {data?.price && (
                                 <span className="line-through">
-                                    ৳ {numberWithCommas(data?.price)}
+                                    $ {numberWithCommas(data?.price)}
                                 </span>
                             )}
                         </div>
