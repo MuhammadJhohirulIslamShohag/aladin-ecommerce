@@ -17,7 +17,7 @@ const ProductByCategoryPage: React.FC<ProductByCategoryParamType> = async ({
     params,
 }) => {
     const productData = await getProducts({
-        ["category.name"]: params?.slug,
+        ["category.name"]: `${decodeURIComponent(params?.slug)}`,
         limit: 0,
     });
     const products = productData?.data?.data;
