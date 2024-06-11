@@ -127,8 +127,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
                             className="text-xs lg:text-[15px] text-primary font-bold hover:text-success hover:underline"
                             title={name}
                         >
-                            {name?.length > 35
-                                ? name.slice(0, 35) + "..."
+                            {name?.length > 18
+                                ? name.slice(0, 18) + "..."
                                 : name}
                         </Link>
 
@@ -136,15 +136,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
                             {discount ? (
                                 <div className="flex items-center gap-3">
                                     <p className="text-lg text-primary font-bold">
-                                        {numberWithCommas(netPrice)}৳
+                                        ${numberWithCommas(netPrice)}
                                     </p>
                                     <del className="text-sm text-textGray">
-                                        {numberWithCommas(price)}৳
+                                        ${numberWithCommas(price)}
                                     </del>
                                 </div>
                             ) : (
                                 <p className="text-lg text-primary font-bold">
-                                    {numberWithCommas(price)}৳
+                                    ${numberWithCommas(price)}
                                 </p>
                             )}
                         </div>
