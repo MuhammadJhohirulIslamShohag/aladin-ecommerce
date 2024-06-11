@@ -2,7 +2,7 @@
 
 # Let's Talk About My Aladin Application
 
-### Aladin Application Live: [http://34.205.110.78/](http://34.205.110.78/)
+### Aladin Application Live: [https://aladin-ecommerce-one.vercel.app//](https://aladin-ecommerce-one.vercel.app//)
 
 ### User Email: admin@gmail.com
 ### User Password: 123456
