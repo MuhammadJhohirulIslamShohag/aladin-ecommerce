@@ -16,6 +16,7 @@
     "@stripe/stripe-js": "^3.4.0",
     "aos": "^2.3.4",
     "axios": "^1.6.8",
+    "caniuse-lite": "^1.0.30001700",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.10",
     "html-react-parser": "^5.1.10",
